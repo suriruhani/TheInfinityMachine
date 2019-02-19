@@ -36,7 +36,7 @@ Responsibilities: X
 
 '''
 
-=== Ruhani
+=== Ruhani Suri
 image::m133225.jpg[width="150", align="left"]
 {empty}[https://github.com/suriruhani[github]]
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= The Infinity Machine - User Guide
 :site-section: UserGuide
 :toc:
 :toc-title:
@@ -18,7 +18,7 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+An application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
 
 == Quick Start
 
@@ -26,9 +26,6 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 .  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
@@ -58,70 +55,25 @@ Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a new source to the list of sources +
+Format: `add n/NAME p/TYPE s/SOURCE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A source can have any number of tags (including 0)
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/Algorithms Wikipedia y/Website s/https://en.wikipedia.org/wiki/Algorithm t/Algorithm t/Wikipedia`
+* `add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI`
 
-=== Listing all persons : `list`
+=== Deleting a source : `delete`
 
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
-
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
+Deletes the specified source. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
+* Deletes the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
@@ -129,57 +81,98 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
+Deletes the 2nd source in the database.
+* `search algorithms` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st source in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Editing a source : `edit`
 
-Selects the person identified by the index number used in the displayed person list. +
-Format: `select INDEX`
+Edits an existing source in the database. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* For the editing of tags, any existing tags to be kept must be re-entered.
+* If the existing tags are `Algorithm` and `Wikipedia` and the user wants to keep only `Algorithm`, they must enter the command `edit 1 t/Algorithm`.
+* Entering just `t/` without any thing after that will simply delete all tags for that entry.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
+Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
+* `edit 5 t/` +
+Edits the 5th source and clears all its existing tags.
+
+=== Searching a source: `search`
+
+Searches for entries amongst the list of sources based on the tag entered by the user. +
+Format: `search t/TAG [t/TAG]...`
+
+****
+* The search is case insensitive. e.g `hans` will match `Hans`
+* There can have any number of tags but minimally 1.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+****
+
+Examples:
+
+* `search t/Algorithms` +
+Returns the source with the tag `algorithms`
+* `search t/Artificial Intelligence t/Science Journal t/AI` +
+Returns any source having tags `Artificial Intelligence`, `Science Journal`, or `AI`
+
+=== Listing all sources : `list`
+
+Displays a list of all sources currently in the database. Also allows listing of all tags and types of records. +
+Format: `list` `list tags` `list types`
+
+=== Generate bibliography entry : `biblio`
+
+Allows user to generate bibliography using the links user entered as their sources. +
+Format: `biblio`
+
+Examples:
+
+* `biblio https://en.wikipedia.org/wiki/Algorithm` +
+Generates bibliography for Algorithms source.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-[NOTE]
-====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
-====
+=== Listing history of searches made : `searchhistory`
+
+Lists the results of all searches made using the `search` command recently. +
+Format: `searchhistory`
+
+=== Define custom commands : `definecommand`
+
+Allows the user to give aliases to frequently used verbose commands. +
+Format: `definecommand c/COMMAND a/ALIAS`
+
+Examples:
+* `definecommand c/biblio a/b`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Allows the user to reverse the last performed undoable action. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the source's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
 
-* `delete 1` +
+* `delete Algorithms` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete Algorithms` command) +
 
 * `select 1` +
 `list` +
@@ -193,7 +186,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+Allows user to redo the last performed action. +
 Format: `redo`
 
 Examples:
@@ -224,6 +217,15 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
+=== Autocorrect ('Did you mean') : <no command>
+
+Suggests commands to the users when they get the spelling wrong. +
+
+Examples:
+
+* `delete Algorith` +
+`Did you mean: Algorithms`
+
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -242,19 +244,21 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME y/TYPE s/SOURCE [t/TAG]...` +
+e.g. `add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
+* *Edit* : `edit INDEX n/NAME y/TYPE s/SOURCE [t/TAG]...` +
+e.g. `edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
+* *Search* : `search [KEYWORD] [KEYWORD]...` +
+e.g. `search algorithm journal`
 * *List* : `list`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
+* *Biblio* : `biblio`
 * *History* : `history`
+* *Search History* : `searchhistory`
+* *Define Command* : `definecommand c/COMMAND a/ALIAS` +
+e.g. `definecommand c/edit a/e`
 * *Undo* : `undo`
 * *Redo* : `redo`

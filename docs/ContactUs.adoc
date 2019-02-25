@@ -3,6 +3,7 @@
 :stylesDir: stylesheets
 
 * *Bug reports, Suggestions* : Post in our https://github.com/CS2103-AY1819S2-W13-3/main/issues[issue tracker] if you noticed bugs or have suggestions on how to improve.
+
 * *Contributing* : We welcome pull requests.
 * *Email us* : You can also reach us individually at:
 
@@ -11,3 +12,5 @@
 - Fabian:
 - Ruhani: `suriruhani [at] u.nus.edu`
 - Yang Yang:
+=======
+

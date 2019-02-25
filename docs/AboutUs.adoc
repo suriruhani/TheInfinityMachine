@@ -4,13 +4,13 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 Tutorial W-13 Group 3: The Infinite Machine
 
 == Project Team
 
 === Cassey Low
+
 image::damithc.jpg[width="150", align="left"]
 {empty}[https://github.com/case141[github]]
 
@@ -22,10 +22,13 @@ Responsibilities:
 - Undo command
 - Redo command
 - Listing command usage under help
+=======
+
 
 '''
 
 === Darren Lee
+
 image::lejolly.jpg[width="150", align="left"]
 {empty}[https://github.com/DarrenDragonLee[github]]
 
@@ -36,10 +39,13 @@ Responsibilities:
 - Adding a source
 - Editting a source
 - Listing command usage under help
+=======
+
 
 '''
 
 === Fabian Terh
+
 image::yijinl.jpg[width="150", align="left"]
 {empty}[https://github.com/fterhl[github]]
 
@@ -50,10 +56,12 @@ Responsibilities:
 - Generating hisotry of searches made
 - Allowing custom command names (aliases)
 - Listing command usage under help
+=======
 
 '''
 
 === Ruhani Suri
+
 image::m133225.jpg[width="150", align="left"]
 {empty}[https://github.com/suriruhani[github]]
 
@@ -64,10 +72,13 @@ Responsibilities:
 - Searching a source
 - Listing all sources
 - Listing command usage under help
+=======
+
 
 '''
 
 === Yang Yang
+
 image::yl_coder.jpg[width="150", align="left"]
 {empty}[https://github.com/DoItTomorrow[github]]
 
@@ -78,5 +89,7 @@ Responsibilities:
 - Generating bibliography
 - Generating history of commands entered
 - Listing command usage under help
+=======
 
 '''
+

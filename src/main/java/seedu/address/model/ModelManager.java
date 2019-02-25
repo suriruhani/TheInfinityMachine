@@ -7,6 +7,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
+import java.util.Optional;
 
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -17,17 +18,20 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.logic.commands.PanicMode;
 
 /**
  * Represents the in-memory model of the address book data.
  */
-public class ModelManager implements Model {
+public class ModelManager implements Model, PanicMode {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedAddressBook versionedAddressBook;
+    private VersionedAddressBook versionedAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final SimpleObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
+    private boolean panicMode = false;
+    private VersionedAddressBook addressBookBackup = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,6 +50,26 @@ public class ModelManager implements Model {
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+    // Implement PanicMode
+    public void enablePanicMode() {
+        logger.fine("Enabling panic mode");
+        panicMode = true;
+        addressBookBackup = new VersionedAddressBook(versionedAddressBook);
+        versionedAddressBook.resetData(new AddressBook());
+    }
+
+    public void disablePanicMode() {
+        logger.fine("Disabling panic mode");
+        panicMode = false;
+
+        if (addressBookBackup == null) {
+            logger.fine("Nothing to restore, addressBookBackup is null");
+            return;
+        }
+
+        versionedAddressBook.resetData(addressBookBackup);
     }
 
     //=========== UserPrefs ==================================================================================

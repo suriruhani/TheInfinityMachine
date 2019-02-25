@@ -4,7 +4,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
 Tutorial W-13 Group 3: The Infinite Machine
 
 == Project Team

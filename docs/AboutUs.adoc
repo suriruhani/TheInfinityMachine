@@ -4,55 +4,88 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-The Infinity Machine was developed by the https://github.com/CS2103-AY1819S2-W13-3[W13-3] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
+Tutorial W-13 Group 3: The Infinite Machine
 
 == Project Team
 
 === Cassey Low
+
 image::Cassey.jpg[width="150", align="left"]
 {empty}[https://github.com/case141[github]]
 
-Role: Developer +
-Responsibilities: Coding some part of the application
+Role: Developer
+
+Responsibilities:
+
+- Deleting a source
+- Undo command
+- Redo command
+- Listing command usage under help
+
 
 '''
 
 === Darren Lee
+
 image::Darren.jpg[width="150", align="left"]
 {empty}[https://github.com/DarrenDragonLee[github]]
 
-Role: Developer +
-Responsibilities: Coding some part of the application
+Role: Developer
+
+Responsibilities:
+
+- Adding a source
+- Editting a source
+- Listing command usage under help
+
 
 '''
 
 === Fabian Terh
-image::Fabian.jpg[width="150", align="left"]
-{empty}[https://github.com/fterh[github]]
 
-Role: Developer +
-Responsibilities: Coding some part of the application
+image::Fabian.jpg[width="150", align="left"]
+{empty}[https://github.com/fterhl[github]]
+
+Role: Developer
+
+Responsibilities:
+
+- Generating history of searches made
+- Allowing custom command names (aliases)
+- Listing command usage under help
+
 
 '''
 
 === Ruhani Suri
+
 image::Ruhani.jpg[width="150", align="left"]
 {empty}[https://github.com/suriruhani[github]]
 
-Role: Developer +
-Responsibilities: Coding some part of the application
+Role: Developer
+
+Responsibilities:
+
+- Searching a source
+- Listing all sources
+- Listing command usage under help
+
 
 '''
 
 === Yang Yang
+
 image::Yang.jpg[width="150", align="left"]
 {empty}[https://github.com/DoItTomorrow[github]]
 
-Role: Developer +
-Responsibilities: Coding some part of the application
+Role: Developer
+
+Responsibilities:
+
+- Generating bibliography
+- Generating history of commands entered
+- Listing command usage under help
 
 '''
 

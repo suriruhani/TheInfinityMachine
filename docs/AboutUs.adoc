@@ -22,7 +22,6 @@ Responsibilities:
 - Undo command
 - Redo command
 - Listing command usage under help
-=======
 
 
 '''
@@ -39,7 +38,6 @@ Responsibilities:
 - Adding a source
 - Editting a source
 - Listing command usage under help
-=======
 
 
 '''
@@ -53,10 +51,10 @@ Role: Developer
 
 Responsibilities:
 
-- Generating hisotry of searches made
+- Generating history of searches made
 - Allowing custom command names (aliases)
 - Listing command usage under help
-=======
+
 
 '''
 
@@ -72,7 +70,6 @@ Responsibilities:
 - Searching a source
 - Listing all sources
 - Listing command usage under help
-=======
 
 
 '''
@@ -89,7 +86,6 @@ Responsibilities:
 - Generating bibliography
 - Generating history of commands entered
 - Listing command usage under help
-=======
 
 '''
 

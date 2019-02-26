@@ -6,12 +6,13 @@ import java.util.function.Predicate;
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.person.Person;
 
 /**
  * The API of the Model component.
  */
-public interface Model {
+public interface Model extends PanicMode {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
@@ -127,4 +128,16 @@ public interface Model {
      * Sets the selected person in the filtered person list.
      */
     void setSelectedPerson(Person person);
+
+    /**
+     * Default implementation to prevent compilation errors when implementors of Model
+     * do not implement PanicMode.
+     */
+    default void enablePanicMode() {}
+
+    /**
+     * Default implementation to prevent compilation errors when implementors of Model
+     * do not implement PanicMode.
+     */
+    default void disablePanicMode() {}
 }

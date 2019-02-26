@@ -128,4 +128,16 @@ public interface Model extends PanicMode {
      * Sets the selected person in the filtered person list.
      */
     void setSelectedPerson(Person person);
+
+    /**
+     * Default implementation to prevent compilation errors when implementors of Model
+     * do not implement PanicMode.
+     */
+    default void enablePanicMode() {}
+
+    /**
+     * Default implementation to prevent compilation errors when implementors of Model
+     * do not implement PanicMode.
+     */
+    default void disablePanicMode() {}
 }

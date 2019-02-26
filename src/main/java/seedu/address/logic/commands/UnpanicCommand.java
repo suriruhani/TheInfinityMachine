@@ -2,7 +2,6 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 
 /**
  * Deactivate panic mode!
@@ -19,7 +18,7 @@ public class UnpanicCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
-        ((ModelManager) model).disablePanicMode();
+        model.disablePanicMode();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

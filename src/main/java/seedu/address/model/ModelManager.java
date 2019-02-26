@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
-import java.util.Optional;
 
 import javafx.beans.property.ReadOnlyProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -16,9 +15,9 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.logic.commands.PanicMode;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -52,7 +51,9 @@ public class ModelManager implements Model, PanicMode {
         this(new AddressBook(), new UserPrefs());
     }
 
-    // Implement PanicMode
+    /**
+     * Activates panic mode. Backs up address book and displays an empty one.
+     */
     public void enablePanicMode() {
         logger.fine("Enabling panic mode");
         panicMode = true;
@@ -60,6 +61,9 @@ public class ModelManager implements Model, PanicMode {
         versionedAddressBook.resetData(new AddressBook());
     }
 
+    /**
+     * Deactivates panic mode. Restores original address book.
+     */
     public void disablePanicMode() {
         logger.fine("Disabling panic mode");
         panicMode = false;

@@ -9,13 +9,13 @@ public class Source {
     // Title of the source as detailed by the user, can be anything
     private String sourceTitle;
 
-    // Type of the source, defined by the user but should follow some convention like "Book" or "Website" 
+    // Type of the source, defined by the user but should follow some convention like "Book" or "Website"
     private String sourceType;
 
-    // Details of the source as detailed by the user, summary of source materials, can be anything 
+    // Details of the source as detailed by the user, summary of source materials, can be anything
     private String sourceDetails;
 
-    // List of tags for this source, while user defined, should follow some conventions to avoid duplicates 
+    // List of tags for this source, while user defined, should follow some conventions to avoid duplicates
     private ArrayList<String> sourceTags;
 
     public Source (String sourceTitle, String sourceType, String sourceDetails, ArrayList<String> sourceTags) {

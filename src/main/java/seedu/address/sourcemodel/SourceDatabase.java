@@ -2,6 +2,9 @@ package seedu.address.sourcemodel;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the model of a source database.
+ */
 public class SourceDatabase {
 
     private ArrayList<Source> database = new ArrayList<Source>();

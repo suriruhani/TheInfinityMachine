@@ -2,6 +2,9 @@ package seedu.address.sourcemodel;
 
 import java.util.ArrayList;
 
+/**
+ * Represents the model of a source.
+ */
 public class Source {
     /** Title of the source as detailed by the user, can be anything **/
     private String sourceTitle;

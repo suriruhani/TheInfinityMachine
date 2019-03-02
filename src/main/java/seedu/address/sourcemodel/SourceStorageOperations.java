@@ -4,26 +4,32 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+/**
+ * Class to handle storage options.
+ */
 public class SourceStorageOperations {
 
     // File path for database text file
     private static final String DATABASE_PATH = "database.txt";
 
-    // Adapted from addressbook, '/' used a delimiter since nothing else should use it, can accept variable number of tags
+    // Adapted from addressbook, '/' used a delimiter since nothing else should use it, can accept any number of tags
     private static final Pattern DATABASE_STORAGE_FORMAT = Pattern.compile(
-        "(?<sourceTitle>[^/]+)" +
-        " y/(?<sourceType>[^/]+)" +
-        " d/(?<sourceDetails>[^/]+)" +
-        "(?<sourceTags>(?: t/[^/]+)*)");
+        "(?<sourceTitle>[^/]+)"
+        + " y/(?<sourceType>[^/]+)"
+        + " d/(?<sourceDetails>[^/]+)"
+        + "(?<sourceTags>(?: t/[^/]+)*)");
 
     // Establishes a path object using the name of the database file defined above
     private static final Path FILE_PATH = Paths.get(DATABASE_PATH);
 
+    /**
+     * Loads the existing database
+     */
     public static ArrayList<Source> loadExistingDatabase () {
 
         // Create a new empty ArrayList of decoded elements
@@ -40,13 +46,13 @@ public class SourceStorageOperations {
         }
 
         // If the returned list is empty, then there is nothing to load, return an empty decoded list
-        if(encodedSources.isEmpty() == true) {
+        if (encodedSources.isEmpty() == true) {
             return decodedSources;
         }
 
         // Cycle through the list of encoded sources to get all the sources stored within
         for (int i = 0; i < encodedSources.size(); i++) {
-            // Adapted from addressbook, create a new matcher file to see if the format of the database is in the form of the designated pattern
+            // Adapted from addressbook, see if the format of the database is in the form of the designated pattern
             final Matcher matcher = DATABASE_STORAGE_FORMAT.matcher(encodedSources.get(i));
 
             // Loads and stores basic information into Strings for use later
@@ -75,6 +81,9 @@ public class SourceStorageOperations {
         return decodedSources;
     }
 
+    /**
+     * Saves to the database
+     */
     public static void writeToDatabase (ArrayList<Source> databaseToSave) {
         // Create a new empty List of encoded elements
         List<String> encodedSources = new ArrayList<String>();

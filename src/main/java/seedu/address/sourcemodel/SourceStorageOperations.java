@@ -39,7 +39,7 @@ public class SourceStorageOperations {
             System.out.println("Error loading file.");
         }
 
-        // If the returned list is empty, then there is nothing to load, return an empty decoded list.  
+        // If the returned list is empty, then there is nothing to load, return an empty decoded list
         if(encodedSources.isEmpty() == true) {
             return decodedSources;
         }

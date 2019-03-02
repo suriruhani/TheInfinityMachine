@@ -1,11 +1,15 @@
 package seedu.address.sourcemodel;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.storage.StorageManager;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,8 +18,8 @@ import java.util.regex.Pattern;
  */
 public class SourceStorageOperations {
 
-    // File path for database text file
     private static final String DATABASE_PATH = "database.txt";
+    private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
 
     // Adapted from addressbook, '/' used a delimiter since nothing else should use it, can accept any number of tags
     private static final Pattern DATABASE_STORAGE_FORMAT = Pattern.compile(
@@ -28,7 +32,10 @@ public class SourceStorageOperations {
     private static final Path FILE_PATH = Paths.get(DATABASE_PATH);
 
     /**
-     * Loads the existing database
+     * Returns an array list of decoded sources.
+     * If there are no sources in the database, then an empty list is returned.
+     *
+     * @return ArrayList of decoded sources.
      */
     public static ArrayList<Source> loadExistingDatabase () {
 
@@ -42,7 +49,7 @@ public class SourceStorageOperations {
             // Attempt to load the data from the txt file into the empty list created earlier
             encodedSources = Files.readAllLines(FILE_PATH);
         } catch (IOException e) {
-            System.out.println("Error loading file.");
+            logger.severe("Error loading file.");
         }
 
         // If the returned list is empty, then there is nothing to load, return an empty decoded list
@@ -59,9 +66,10 @@ public class SourceStorageOperations {
             String loadedTitle = matcher.group("sourceTitle");
             String loadedType = matcher.group("sourceType");
             String loadedDetails = matcher.group("sourceDetails");
-            String loadedTags = matcher.group("sourceTags");
 
             // sourceTags contains a line of tags separated by "/t", need to split them up and store into an ArrayList
+            String loadedTags = matcher.group("sourceTags");
+
             // Adapted from addressbook, replaces first delimiter prefix, then splits into an array of strings
             final String[] loadedTagArray = loadedTags.replaceFirst(" t/", "").split(" t/");
 
@@ -82,7 +90,9 @@ public class SourceStorageOperations {
     }
 
     /**
-     * Saves to the database
+     * Saves the input database into an external file in the appropriate format.
+     *
+     * @param databaseToSave The database which is to be saved into the external txt file.
      */
     public static void writeToDatabase (ArrayList<Source> databaseToSave) {
         // Create a new empty List of encoded elements
@@ -115,7 +125,7 @@ public class SourceStorageOperations {
         try {
             Files.write(FILE_PATH, encodedSources);
         } catch (IOException e) {
-            System.out.println("Error writing to file.");
+            logger.severe("Error writing to file.");
         }
     }
 }

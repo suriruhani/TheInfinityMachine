@@ -3,15 +3,15 @@ package seedu.address.sourcemodel;
 import java.util.ArrayList;
 
 public class SourceDatabase {
-    
+
     private ArrayList<Source> database = new ArrayList<Source>();
-    
+
     // Constructor for the main database object, will automatically load any existing entries in the database file
     // The database will be empty otherwise
     public SourceDatabase() {
         this.database = SourceStorageOperations.loadExistingDatabase();
     }
-    
+
     // Functions to manipulate source objects in the database
     public void addNewSource (Source sourceToAdd) {
         this.database.add(sourceToAdd);
@@ -34,7 +34,7 @@ public class SourceDatabase {
     public void editSourceTagsAtIndex (int index, ArrayList<String> newSourceTags) {
         this.database.get(index).setSourceTags(newSourceTags);
     }
-    
+
     // Function to save the database to the txt file, only use when about to close
     public void saveDatabase () {
         SourceStorageOperations.writeToDatabase(this.database);

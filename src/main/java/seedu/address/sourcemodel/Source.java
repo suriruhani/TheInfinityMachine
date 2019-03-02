@@ -14,8 +14,7 @@ public class Source {
 
     /** List of tags for this source, while user defined, should follow some conventions to avoid duplicates **/
     private ArrayList<String> sourceTags;
-    
-    
+
     public Source (String sourceTitle, String sourceType, String sourceDetails, ArrayList<String> sourceTags) {
         this.sourceTitle = sourceTitle;
         this.sourceType = sourceType;

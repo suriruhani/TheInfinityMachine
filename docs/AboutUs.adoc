@@ -11,7 +11,7 @@ Tutorial W-13 Group 3: The Infinite Machine
 
 === Cassey Low
 
-image::Cassey.jpg[width="150", align="left"]
+image::case141.png[width="150", align="left"]
 {empty}[https://github.com/case141[github]]
 
 Role: Developer
@@ -28,7 +28,7 @@ Responsibilities:
 
 === Darren Lee
 
-image::Darren.jpg[width="150", align="left"]
+image::darrendragonlee.png[width="150", align="left"]
 {empty}[https://github.com/DarrenDragonLee[github]]
 
 Role: Developer
@@ -44,8 +44,8 @@ Responsibilities:
 
 === Fabian Terh
 
-image::Fabian.jpg[width="150", align="left"]
-{empty}[https://github.com/fterhl[github]]
+image::fterh.png[width="150", align="left"]
+{empty}[https://github.com/fterh[github]]
 
 Role: Developer
 
@@ -60,7 +60,7 @@ Responsibilities:
 
 === Ruhani Suri
 
-image::Ruhani.jpg[width="150", align="left"]
+image::suriruhani.png[width="150", align="left"]
 {empty}[https://github.com/suriruhani[github]]
 
 Role: Developer
@@ -76,7 +76,7 @@ Responsibilities:
 
 === Yang Yang
 
-image::Yang.jpg[width="150", align="left"]
+image::doittomorrow.png[width="150", align="left"]
 {empty}[https://github.com/DoItTomorrow[github]]
 
 Role: Developer

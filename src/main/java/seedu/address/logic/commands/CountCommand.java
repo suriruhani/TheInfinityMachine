@@ -2,8 +2,10 @@ package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
 
+/**
+ * Returns the total number of sources in the database.
+ */
 public class CountCommand extends Command {
 
     public static final String COMMAND_WORD = "count";

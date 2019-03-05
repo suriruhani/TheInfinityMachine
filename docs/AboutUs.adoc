@@ -44,8 +44,8 @@ Responsibilities:
 
 === Fabian Terh
 
-image::fterhl.png[width="150", align="left"]
-{empty}[https://github.com/fterhl[github]]
+image::fterh.png[width="150", align="left"]
+{empty}[https://github.com/fterh[github]]
 
 Role: Developer
 

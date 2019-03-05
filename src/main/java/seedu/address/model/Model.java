@@ -140,4 +140,9 @@ public interface Model extends PanicMode {
      * do not implement PanicMode.
      */
     default void disablePanicMode() {}
+
+    /**
+     * Returns the total number of sources in the database.
+     */
+    int getCount();
 }

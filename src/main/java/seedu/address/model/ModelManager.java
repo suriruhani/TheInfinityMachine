@@ -15,19 +15,22 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents the in-memory model of the address book data.
  */
-public class ModelManager implements Model {
+public class ModelManager implements Model, PanicMode {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final VersionedAddressBook versionedAddressBook;
+    private VersionedAddressBook versionedAddressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
     private final SimpleObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
+    private boolean panicMode = false;
+    private VersionedAddressBook addressBookBackup = null;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -46,6 +49,31 @@ public class ModelManager implements Model {
 
     public ModelManager() {
         this(new AddressBook(), new UserPrefs());
+    }
+
+    /**
+     * Activates panic mode. Backs up address book and displays an empty one.
+     */
+    public void enablePanicMode() {
+        logger.fine("Enabling panic mode");
+        panicMode = true;
+        addressBookBackup = new VersionedAddressBook(versionedAddressBook);
+        versionedAddressBook.resetData(new AddressBook());
+    }
+
+    /**
+     * Deactivates panic mode. Restores original address book.
+     */
+    public void disablePanicMode() {
+        logger.fine("Disabling panic mode");
+        panicMode = false;
+
+        if (addressBookBackup == null) {
+            logger.fine("Nothing to restore, addressBookBackup is null");
+            return;
+        }
+
+        versionedAddressBook.resetData(addressBookBackup);
     }
 
     //=========== UserPrefs ==================================================================================

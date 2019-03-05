@@ -12,6 +12,5 @@ public class BiblioCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
 
     public BiblioCommand() {}
-
-    }
+    
 }

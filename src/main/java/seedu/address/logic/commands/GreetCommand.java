@@ -10,7 +10,8 @@ public class GreetCommand extends Command {
 
     public static final String COMMAND_WORD = "greet";
 
-    public static final String MESSAGE_SUCCESS = "Greeting you";
+    public static final String MESSAGE_SUCCESS = "Hello there, beautiful human! Hope you have a good experience"
+            + " with our product and a even better day ahead! Come again :)";
 
 
     @Override

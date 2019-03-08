@@ -147,6 +147,11 @@ public class ModelManager implements Model, PanicMode {
         versionedAddressBook.setPerson(target, editedPerson);
     }
 
+    @Override
+    public int getCount() {
+        return filteredPersons.size();
+    }
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**

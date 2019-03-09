@@ -198,7 +198,7 @@ public class MainApp extends Application {
                 launch(args);
                 break;
             case "2":
-                System.out.println("Starting Model Test.\n" + 
+                System.out.println("Starting Model Test.\n" +
                         "=============== Establishing Battlefield Control ===============\n");
 
                 SourceDatabaseCoordinationCenter coordCenter = new SourceDatabaseCoordinationCenter();

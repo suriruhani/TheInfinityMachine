@@ -100,7 +100,7 @@ public class SourceDatabaseCoordinationCenter {
 
             // ArrayLists start from index 0, so a user entering 1 means deleting the first, or 0 index, item
             int actualIndex = index - 1;
-            if (actualIndex < sourceDatabase.getDatabaseSize() && actualIndex > 0){
+            if (actualIndex < sourceDatabase.getDatabaseSize() && actualIndex > 0) {
                 sourceDatabase.deleteSourceAtIndex(actualIndex);
                 System.out.println("Source has been deleted.\n");
             } else {
@@ -109,7 +109,7 @@ public class SourceDatabaseCoordinationCenter {
             break;
 
         case "list":
-            for (int i = 0; i < sourceDatabase.getDatabaseSize(); i++){
+            for (int i = 0; i < sourceDatabase.getDatabaseSize(); i++) {
                 Source source = sourceDatabase.getSourceAtIndex(i);
 
                 System.out.println("=====================================\n"

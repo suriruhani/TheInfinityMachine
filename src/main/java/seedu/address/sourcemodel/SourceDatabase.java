@@ -17,6 +17,10 @@ public class SourceDatabase {
         this.database = SourceStorageOperations.loadExistingDatabase();
     }
 
+    public int getDatabaseSize() {
+        return database.size();
+    }
+
     /**
      * Series of functions to manipulate the sources in the database
      */
@@ -28,6 +32,9 @@ public class SourceDatabase {
     }
     public void deleteAllSources () {
         database.clear();
+    }
+    public Source getSourceAtIndex (int index) {
+        return database.get(index);
     }
     public void editSourceTitleAtIndex (int index, String newTitle) {
         database.get(index).setSourceTitle(newTitle);

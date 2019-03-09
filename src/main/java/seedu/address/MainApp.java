@@ -3,8 +3,8 @@ package seedu.address;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.logging.Logger;
 import java.util.Scanner;
+import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -183,6 +183,13 @@ public class MainApp extends Application {
         }
     }
 
+    /**
+     * This the main method.  The one method that starts the entire program.
+     * The program cannot run if this main method is not here.
+     * This is only here because travis demands it.
+     *
+     * @param args The user input.
+     */
     public static void main(String[] args) {
         System.out.println("Select start mode:\n"
                 + "   1) Normal Addressbook Operation.\n"
@@ -193,40 +200,40 @@ public class MainApp extends Application {
         String input = scanner.nextLine();
 
         switch (input) {
-            case "1":
-                System.out.println("Starting Addressbook 4.");
-                launch(args);
-                break;
-            case "2":
-                System.out.println("Starting Model Test.\n" +
-                        "=============== Establishing Battlefield Control ===============\n");
+        case "1":
+            System.out.println("Starting Addressbook 4.");
+            launch(args);
+            break;
+        case "2":
+            System.out.println("Starting Model Test.\n"
+                    + "=============== Establishing Battlefield Control ===============\n");
 
-                SourceDatabaseCoordinationCenter coordCenter = new SourceDatabaseCoordinationCenter();
-                System.out.println("Database initialisation complete\n");
+            SourceDatabaseCoordinationCenter coordCenter = new SourceDatabaseCoordinationCenter();
+            System.out.println("Database initialisation complete\n");
 
-                System.out.println("Instructions for commands:\n"
-                        + "add TITLE y/TYPE d/DETAILS [t/TAG]\n"
-                        + "delete INDEX\n"
-                        + "list\n"
-                        + "exit\n");
+            System.out.println("Instructions for commands:\n"
+                    + "add TITLE y/TYPE d/DETAILS [t/TAG]\n"
+                    + "delete INDEX\n"
+                    + "list\n"
+                    + "exit\n");
 
-                boolean loopCondition = true;
-                while (loopCondition == true) {
+            boolean loopCondition = true;
+            while (loopCondition == true) {
 
-                    System.out.println("Standing by for orders...");
+                System.out.println("Standing by for orders...");
 
-                    String order = scanner.nextLine();
+                String order = scanner.nextLine();
 
-                    loopCondition = coordCenter.executeOrders(order);
-                }
+                loopCondition = coordCenter.executeOrders(order);
+            }
 
-                break;
-            case "0":
-                System.out.println("Exiting program.");
-                break;
-            default:
-                System.out.println("Invalid command.  Please try again.");
-                break;
+            break;
+        case "0":
+            System.out.println("Exiting program.");
+            break;
+        default:
+            System.out.println("Invalid command.  Please try again.");
+            break;
         }
 
         System.out.println("\n=============== Battle Control Terminated ===============");

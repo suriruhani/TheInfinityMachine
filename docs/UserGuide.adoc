@@ -207,6 +207,16 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+=== Enabling panic mode : `panic`
+
+Allows user to temporarily hide data. +
+Format: `panic`
+
+=== Enabling panic mode : `unpanic`
+
+Restores user data. +
+Format: `unpanic`
+
 === Clearing all entries : `clear`
 
 Clears all entries from the address book. +
@@ -262,3 +272,5 @@ e.g. `search algorithm journal`
 e.g. `definecommand c/edit a/e`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Panic* : `panic`
+* *Unpanic* : `unpanic`

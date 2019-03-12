@@ -36,7 +36,7 @@ public class SourceDatabaseCoordinationCenter {
     public boolean executeOrders(String order) {
         String [] orderSplit = order.split(" ", 2);
 
-        // There will always be a "first" element, so no array out of bounds exception can happen here
+        // There will always be a "first" element, so no array out of bounds exceptions can happen here
         String orderCommand = orderSplit[0];
 
         switch(orderCommand) {

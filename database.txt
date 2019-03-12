@@ -1,3 +1,4 @@
 Algorithms Wikipedia y/Website d/Algorithm basics from wikipedia t/Algorithms t/Wikipedia
 Telecomms: A New Insight y/Journal d/Better way to manage telecommunications t/Telecommunications
 some title y/some type d/details of thing t/some tag
+ALGORITHMS ARTICLE y/website d/something  t/

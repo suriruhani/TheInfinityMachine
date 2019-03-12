@@ -1,13 +1,13 @@
 package seedu.address.model.source;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.model.tag.Tag;
-
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
  * Represents a Source in the address book.
@@ -21,7 +21,7 @@ public class Source {
 
     private final Set<Tag> tags = new HashSet<>();
 
-    public Source(Title title, Type type, Detail detail, Set<Tag> tags){
+    public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
         this.title = title;
         this.type = type;

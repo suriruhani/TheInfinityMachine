@@ -17,7 +17,7 @@ public class Detail {
     /**
      * Constructs a {@code Tag}.
      *
-     * @param detail A valid tag name.
+     * @param detail A valid detail.
      */
     public Detail(String detail) {
         requireNonNull(detail);
@@ -26,7 +26,7 @@ public class Detail {
     }
 
     /**
-     * Returns true if a given string is a valid tag name.
+     * Returns true if a given string is a valid detail
      */
     public static boolean isValidDetail(String test) {
         return test.matches(VALIDATION_REGEX);

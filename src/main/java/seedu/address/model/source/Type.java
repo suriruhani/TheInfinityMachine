@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Type {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Titles should only contain alphanumeric characters and spaces.";
+            "Types should only contain alphanumeric characters and spaces.";
 
     /*
      * The first character of the address must not be a whitespace,

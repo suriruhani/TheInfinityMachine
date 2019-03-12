@@ -47,6 +47,7 @@ public class Detail {
     /**
      * Format state as text for viewing.
      */
+    @Override
     public String toString() {
         return '[' + detail + ']';
     }

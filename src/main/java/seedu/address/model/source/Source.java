@@ -29,11 +29,17 @@ public class Source {
         this.tags.addAll(tags);
     }
 
-    public Title getTitle() { return title; }
+    public Title getTitle() {
+        return title;
+    }
 
-    public Type getType() { return type; }
+    public Type getType() {
+        return type;
+    }
 
-    public Detail getDetail() { return detail; }
+    public Detail getDetail() {
+        return detail;
+    }
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}

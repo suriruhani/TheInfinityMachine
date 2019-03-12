@@ -9,7 +9,6 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Detail {
 
-
     public static final String MESSAGE_CONSTRAINTS = "Details should be alphanumeric";
     public static final String VALIDATION_REGEX = "\\p{Alnum}+";
 

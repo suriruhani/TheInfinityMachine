@@ -62,6 +62,11 @@ public class SourceStorageOperations {
             // Adapted from addressbook, see if the format of the database is in the form of the designated pattern
             final Matcher matcher = DATABASE_STORAGE_FORMAT.matcher(encodedSources.get(i));
 
+            if (!matcher.matches()) {
+                logger.severe("Error decoding source from file. Skipping entry...");
+                continue;
+            }
+
             // Loads and stores basic information into Strings for use later
             String loadedTitle = matcher.group("sourceTitle");
             String loadedType = matcher.group("sourceType");

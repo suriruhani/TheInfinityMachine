@@ -2,6 +2,7 @@ package seedu.address.model.source;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.source.Source.validateSourceAttribute;
 
 /**
  * Represents a Source's Detail in the infinity machine.
@@ -21,15 +22,8 @@ public class Detail {
      */
     public Detail(String detail) {
         requireNonNull(detail);
-        checkArgument(isValidDetail(detail), MESSAGE_CONSTRAINTS);
+        checkArgument(validateSourceAttribute(detail, VALIDATION_REGEX), MESSAGE_CONSTRAINTS);
         this.detail = detail;
-    }
-
-    /**
-     * Returns true if a given string is a valid detail
-     */
-    public static boolean isValidDetail(String test) {
-        return test.matches(VALIDATION_REGEX);
     }
 
     @Override

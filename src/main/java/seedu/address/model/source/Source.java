@@ -1,13 +1,18 @@
 package seedu.address.model.source;
 
-import seedu.address.model.person.Person;
-import seedu.address.model.tag.Tag;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.tag.Tag;
+
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+/**
+ * Represents a Source in the address book.
+ * Guarantees: details are present and not null, field values are validated, immutable.
+ */
 public class Source {
 
     private final Title title;
@@ -16,12 +21,12 @@ public class Source {
 
     private final Set<Tag> tags = new HashSet<>();
 
-    public Source(Title title, Type type, Detail detail){
-
+    public Source(Title title, Type type, Detail detail, Set<Tag> tags){
+        requireAllNonNull(title, type, detail, tags);
         this.title = title;
         this.type = type;
         this.detail = detail;
-
+        this.tags.addAll(tags);
     }
 
     public Title getTitle() { return title; }

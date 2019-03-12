@@ -3,6 +3,10 @@ package seedu.address.model.source;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Source's Detail in the infinity machine.
+ * Guarantees: immutable; is valid as declared in {@link #isValidDetail(String)}
+ */
 public class Detail {
 
 

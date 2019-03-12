@@ -3,6 +3,10 @@ package seedu.address.model.source;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+/**
+ * Represents a Source's Title in the infinity machine.
+ * Guarantees: immutable; is valid as declared in {@link #isValidTitle(String)}
+ */
 public class Title {
 
     public static final String MESSAGE_CONSTRAINTS =

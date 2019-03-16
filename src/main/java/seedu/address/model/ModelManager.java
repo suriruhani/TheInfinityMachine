@@ -56,9 +56,19 @@ public class ModelManager implements Model, PanicMode {
      */
     public void enablePanicMode() {
         logger.fine("Enabling panic mode");
+
+        if (panicMode) {
+            // Prevent enabling panic mode twice, which causes a bug where by
+            // the empty mock database is backed up and overwrites the actual database
+            logger.fine("Panic mode already enabled.");
+            return;
+        }
+
         panicMode = true;
         addressBookBackup = new VersionedAddressBook(versionedAddressBook);
+        logger.fine("Backed up address book.");
         versionedAddressBook.resetData(new AddressBook());
+        logger.fine("Reset visible address book to an empty address book.");
     }
 
     /**
@@ -66,6 +76,12 @@ public class ModelManager implements Model, PanicMode {
      */
     public void disablePanicMode() {
         logger.fine("Disabling panic mode");
+
+        if (!panicMode) {
+            logger.fine("Panic mode alrady disabled.");
+            return;
+        }
+
         panicMode = false;
 
         if (addressBookBackup == null) {

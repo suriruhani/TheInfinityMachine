@@ -1,3 +1,4 @@
+// To deprecate
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;

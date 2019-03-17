@@ -49,7 +49,7 @@ public class EditSourceDescriptorBuilder {
     /**
      * Sets the {@code Type} of the {@code EditSourceDescriptor} that we are building.
      */
-    public EditSourceDescriptorBuilder withTypel(String type) {
+    public EditSourceDescriptorBuilder withType(String type) {
         descriptor.setType(new Type(type));
         return this;
     }

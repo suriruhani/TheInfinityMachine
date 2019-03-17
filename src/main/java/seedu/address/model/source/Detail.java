@@ -26,6 +26,10 @@ public class Detail {
         this.detail = detail;
     }
 
+    public static boolean isValidDetail(String test) {
+        return Source.validateSourceAttribute(test, VALIDATION_REGEX);
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

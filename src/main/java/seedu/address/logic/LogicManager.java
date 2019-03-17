@@ -37,7 +37,7 @@ public class LogicManager implements Logic {
         history = new CommandHistory();
         sourceManagerParser = new SourceManagerParser();
 
-        // Set addressBookModified to true whenever the models' source manager is modified.
+        // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);
     }
 
@@ -55,7 +55,7 @@ public class LogicManager implements Logic {
         }
 
         if (sourceManagerModified) {
-            logger.info("Address book modified, saving to file.");
+            logger.info("Source manager modified, saving to file.");
             try {
                 storage.saveSourceManager(model.getSourceManager());
             } catch (IOException ioe) {

@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
 /**
- * Adds a person to the address book.
+ * Adds a source to the infinity machine.
  */
 public class AddCommand extends Command {
 

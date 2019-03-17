@@ -33,6 +33,10 @@ public class Type {
         this.type = type;
     }
 
+    public static boolean isValidType(String test) {
+        return Source.validateSourceAttribute(test, VALIDATION_REGEX);
+    }
+
     @Override
     public String toString() {
         return this.type;

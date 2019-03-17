@@ -31,6 +31,9 @@ public class Title {
         this.title = title;
     }
 
+    public static boolean isValidTitle(String test) {
+        return Source.validateSourceAttribute(test, VALIDATION_REGEX);
+    }
 
     @Override
     public String toString() {

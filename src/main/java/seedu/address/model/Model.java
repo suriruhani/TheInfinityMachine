@@ -7,14 +7,14 @@ import javafx.beans.property.ReadOnlyProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.PanicMode;
-import seedu.address.model.person.Person;
+import seedu.address.model.source.Source;
 
 /**
  * The API of the Model component.
  */
 public interface Model extends PanicMode {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Source> PREDICATE_SHOW_ALL_SOURCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -37,97 +37,97 @@ public interface Model extends PanicMode {
     void setGuiSettings(GuiSettings guiSettings);
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' source manager file path.
      */
-    Path getAddressBookFilePath();
+    Path getSourceManagerFilePath();
 
     /**
-     * Sets the user prefs' address book file path.
+     * Sets the user prefs' source manager file path.
      */
-    void setAddressBookFilePath(Path addressBookFilePath);
+    void setSourceManagerFilePath(Path sourceManagerFilePath);
 
     /**
-     * Replaces address book data with the data in {@code addressBook}.
+     * Replaces source manager data with the data in {@code sourceManager}.
      */
-    void setAddressBook(ReadOnlyAddressBook addressBook);
+    void setSourceManager(ReadOnlySourceManager sourceManager);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the SourceManager */
+    ReadOnlySourceManager getSourceManager();
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a source with the same identity as {@code source} exists in the source manager.
      */
-    boolean hasPerson(Person person);
+    boolean hasSource(Source source);
 
     /**
-     * Deletes the given person.
-     * The person must exist in the address book.
+     * Deletes the given source.
+     * The source must exist in the source manager.
      */
-    void deletePerson(Person target);
+    void deleteSource(Source target);
 
     /**
-     * Adds the given person.
-     * {@code person} must not already exist in the address book.
+     * Adds the given source.
+     * {@code source} must not already exist in the source manager.
      */
-    void addPerson(Person person);
+    void addSource(Source source);
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * Replaces the given source {@code target} with {@code editedSource}.
+     * {@code target} must exist in the source manager.
+     * The source identity of {@code editedSource} must not be the same as another existing source in the source manager.
      */
-    void setPerson(Person target, Person editedPerson);
+    void setSource(Source target, Source editedSource);
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered source list */
+    ObservableList<Source> getFilteredSourceList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+     * Updates the filter of the filtered source list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredSourceList(Predicate<Source> predicate);
 
     /**
-     * Returns true if the model has previous address book states to restore.
+     * Returns true if the model has previous source manager states to restore.
      */
-    boolean canUndoAddressBook();
+    boolean canUndoSourceManager();
 
     /**
-     * Returns true if the model has undone address book states to restore.
+     * Returns true if the model has undone source manager states to restore.
      */
-    boolean canRedoAddressBook();
+    boolean canRedoSourceManager();
 
     /**
-     * Restores the model's address book to its previous state.
+     * Restores the model's source manager to its previous state.
      */
-    void undoAddressBook();
+    void undoSourceManager();
 
     /**
-     * Restores the model's address book to its previously undone state.
+     * Restores the model's source manager to its previously undone state.
      */
-    void redoAddressBook();
+    void redoSourceManager();
 
     /**
-     * Saves the current address book state for undo/redo.
+     * Saves the current source manager state for undo/redo.
      */
-    void commitAddressBook();
+    void commitSourceManager();
 
     /**
-     * Selected person in the filtered person list.
-     * null if no person is selected.
+     * Selected source in the filtered source list.
+     * null if no source is selected.
      */
-    ReadOnlyProperty<Person> selectedPersonProperty();
+    ReadOnlyProperty<Source> selectedSourceProperty();
 
     /**
-     * Returns the selected person in the filtered person list.
-     * null if no person is selected.
+     * Returns the selected source in the filtered source list.
+     * null if no source is selected.
      */
-    Person getSelectedPerson();
+    Source getSelectedSource();
 
     /**
-     * Sets the selected person in the filtered person list.
+     * Sets the selected source in the filtered source list.
      */
-    void setSelectedPerson(Person person);
+    void setSelectedSource(Source source);
 
     /**
      * Default implementation to prevent compilation errors when implementors of Model
@@ -143,7 +143,7 @@ public interface Model extends PanicMode {
 
     /**
      * Returns the total number of sources in the database.
-     * 0 if no sources in list
+     * 0 if no sources in list.
      */
     int getCount();
 }

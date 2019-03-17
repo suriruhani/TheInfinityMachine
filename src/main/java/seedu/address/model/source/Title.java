@@ -2,6 +2,7 @@ package seedu.address.model.source;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.source.Source.validateSourceAttribute;
 
 /**
  * Represents a Source's Title in the infinity machine.
@@ -26,15 +27,8 @@ public class Title {
      */
     public Title(String title) {
         requireNonNull(title);
-        checkArgument(isValidTitle(title), MESSAGE_CONSTRAINTS);
+        checkArgument(validateSourceAttribute(title, VALIDATION_REGEX), MESSAGE_CONSTRAINTS);
         this.title = title;
-    }
-
-    /**
-     * Returns true if a given string is a valid name.
-     */
-    public static boolean isValidTitle(String test) {
-        return test.matches(VALIDATION_REGEX);
     }
 
 

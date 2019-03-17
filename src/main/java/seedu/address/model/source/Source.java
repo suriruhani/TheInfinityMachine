@@ -6,7 +6,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.logging.Logger;
+import java.util.regex.PatternSyntaxException;
 
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.ModelManager;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -14,6 +18,7 @@ import seedu.address.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Source {
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Title title;
     private final Type type;
@@ -27,6 +32,28 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+    }
+
+    /**
+     * A static utility method to validate a source attribute with a regex expression.
+     */
+
+    /**
+     * A private utility method to validate a source attribute with a regex expression.
+     * @param attribute An attribute of the source class, e.g. title.
+     * @param regex A regex expression with which to validate `attribute`.
+     * @return true if `attribute` is valid, and false if either `attribute` or `regex` is invalid.
+     */
+    public static boolean validateSourceAttribute(String attribute, String regex) {
+        boolean validationResult;
+        try {
+            validationResult = attribute.matches(regex);
+        } catch (PatternSyntaxException e) {
+            logger.severe(e.toString());
+            return false;
+        }
+
+        return validationResult;
     }
 
     public Title getTitle() {

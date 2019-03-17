@@ -2,6 +2,7 @@ package seedu.address.model.source;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.model.source.Source.validateSourceAttribute;
 
 /**
  * Represents a Source's Type in the infinity machine.
@@ -10,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Type {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Titles should only contain alphanumeric characters and spaces.";
+            "Types should only contain alphanumeric characters and spaces.";
 
     /*
      * The first character of the address must not be a whitespace,
@@ -28,17 +29,9 @@ public class Type {
      */
     public Type(String type) {
         requireNonNull(type);
-        checkArgument(isValidType(type), MESSAGE_CONSTRAINTS);
+        checkArgument(validateSourceAttribute(type, VALIDATION_REGEX), MESSAGE_CONSTRAINTS);
         this.type = type;
     }
-
-    /**
-     * Returns true if a given string is a valid name.
-     */
-    public static boolean isValidType(String test) {
-        return test.matches(VALIDATION_REGEX);
-    }
-
 
     @Override
     public String toString() {

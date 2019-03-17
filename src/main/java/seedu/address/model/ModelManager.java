@@ -17,42 +17,43 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.source.exceptions.SourceNotFoundException;
+import seedu.address.model.source.Source;
 
 /**
- * Represents the in-memory model of the address book data.
+ * Represents the in-memory model of the source manager data.
  */
 public class ModelManager implements Model, PanicMode {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private VersionedAddressBook versionedAddressBook;
+    private VersionedSourceManager versionedSourceManager;
     private final UserPrefs userPrefs;
-    private final FilteredList<Person> filteredPersons;
-    private final SimpleObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
+    private final FilteredList<Source> filteredSources;
+    private final SimpleObjectProperty<Source> selectedSource = new SimpleObjectProperty<>();
     private boolean panicMode = false;
-    private VersionedAddressBook addressBookBackup = null;
+    private VersionedSourceManager sourceManagerBackup = null;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given sourceManager and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(sourceManager, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs);
 
-        versionedAddressBook = new VersionedAddressBook(addressBook);
+        versionedSourceManager = new VersionedSourceManager(sourceManager);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(versionedAddressBook.getPersonList());
-        filteredPersons.addListener(this::ensureSelectedPersonIsValid);
+        filteredSources = new FilteredList<>(versionedSourceManager.getSourceList());
+        filteredSources.addListener(this::ensureSelectedSourceIsValid);
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new SourceManager(), new UserPrefs());
     }
 
     /**
-     * Activates panic mode. Backs up address book and displays an empty one.
+     * Activates panic mode. Backs up source manager and displays an empty one.
      */
     public void enablePanicMode() {
         logger.fine("Enabling panic mode");
@@ -65,31 +66,31 @@ public class ModelManager implements Model, PanicMode {
         }
 
         panicMode = true;
-        addressBookBackup = new VersionedAddressBook(versionedAddressBook);
-        logger.fine("Backed up address book.");
-        versionedAddressBook.resetData(new AddressBook());
-        logger.fine("Reset visible address book to an empty address book.");
+        sourceManagerBackup = new VersionedSourceManager(versionedSourceManager);
+        logger.fine("Backed up source manager.");
+        versionedSourceManager.resetData(new SourceManager());
+        logger.fine("Reset visible source manager to an empty source manager.");
     }
 
     /**
-     * Deactivates panic mode. Restores original address book.
+     * Deactivates panic mode. Restores original source manager.
      */
     public void disablePanicMode() {
         logger.fine("Disabling panic mode");
 
         if (!panicMode) {
-            logger.fine("Panic mode alrady disabled.");
+            logger.fine("Panic mode already disabled.");
             return;
         }
 
         panicMode = false;
 
-        if (addressBookBackup == null) {
-            logger.fine("Nothing to restore, addressBookBackup is null");
+        if (sourceManagerBackup == null) {
+            logger.fine("Nothing to restore, sourceManagerBackup is null");
             return;
         }
 
-        versionedAddressBook.resetData(addressBookBackup);
+        versionedSourceManager.resetData(sourceManagerBackup);
     }
 
     //=========== UserPrefs ==================================================================================
@@ -117,146 +118,146 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
-    public Path getAddressBookFilePath() {
-        return userPrefs.getAddressBookFilePath();
+    public Path getSourceManagerFilePath() {
+        return userPrefs.getSourceManagerFilePath();
     }
 
     @Override
-    public void setAddressBookFilePath(Path addressBookFilePath) {
-        requireNonNull(addressBookFilePath);
-        userPrefs.setAddressBookFilePath(addressBookFilePath);
+    public void setSourceManagerFilePath(Path sourceManagerFilePath) {
+        requireNonNull(sourceManagerFilePath);
+        userPrefs.setSourceManagerFilePath(sourceManagerFilePath);
     }
 
     //=========== AddressBook ================================================================================
 
     @Override
-    public void setAddressBook(ReadOnlyAddressBook addressBook) {
-        versionedAddressBook.resetData(addressBook);
+    public void setSourceManager(ReadOnlySourceManager sourceManager) {
+        versionedSourceManager.resetData(sourceManager);
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return versionedAddressBook;
+    public ReadOnlySourceManager getSourceManager() {
+        return versionedSourceManager;
     }
 
     @Override
-    public boolean hasPerson(Person person) {
-        requireNonNull(person);
-        return versionedAddressBook.hasPerson(person);
+    public boolean hasSource(Source source) {
+        requireNonNull(source);
+        return versionedSourceManager.hasSource(source);
     }
 
     @Override
-    public void deletePerson(Person target) {
-        versionedAddressBook.removePerson(target);
+    public void deleteSource(Source target) {
+        versionedSourceManager.removeSource(target);
     }
 
     @Override
-    public void addPerson(Person person) {
-        versionedAddressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    public void addSource(Source source) {
+        versionedSourceManager.addSource(source);
+        updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
     }
 
     @Override
-    public void setPerson(Person target, Person editedPerson) {
-        requireAllNonNull(target, editedPerson);
+    public void setSource(Source target, Source editedSource) {
+        requireAllNonNull(target, editedSource);
 
-        versionedAddressBook.setPerson(target, editedPerson);
+        versionedSourceManager.setSource(target, editedSource);
     }
 
     @Override
     public int getCount() {
-        return filteredPersons.size();
+        return filteredSources.size();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //=========== Filtered Source List Accessors =============================================================
 
     /**
-     * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code versionedAddressBook}
+     * Returns an unmodifiable view of the list of {@code Source} backed by the internal list of
+     * {@code versionedSourceManager}
      */
     @Override
-    public ObservableList<Person> getFilteredPersonList() {
-        return filteredPersons;
+    public ObservableList<Source> getFilteredSourceList() {
+        return filteredSources;
     }
 
     @Override
-    public void updateFilteredPersonList(Predicate<Person> predicate) {
+    public void updateFilteredSourceList(Predicate<Source> predicate) {
         requireNonNull(predicate);
-        filteredPersons.setPredicate(predicate);
+        filteredSources.setPredicate(predicate);
     }
 
     //=========== Undo/Redo =================================================================================
 
     @Override
-    public boolean canUndoAddressBook() {
-        return versionedAddressBook.canUndo();
+    public boolean canUndoSourceManager() {
+        return versionedSourceManager.canUndo();
     }
 
     @Override
-    public boolean canRedoAddressBook() {
-        return versionedAddressBook.canRedo();
+    public boolean canRedoSourceManager() {
+        return versionedSourceManager.canRedo();
     }
 
     @Override
-    public void undoAddressBook() {
-        versionedAddressBook.undo();
+    public void undoSourceManager() {
+        versionedSourceManager.undo();
     }
 
     @Override
-    public void redoAddressBook() {
-        versionedAddressBook.redo();
+    public void redoSourceManager() {
+        versionedSourceManager.redo();
     }
 
     @Override
-    public void commitAddressBook() {
-        versionedAddressBook.commit();
+    public void commitSourceManager() {
+        versionedSourceManager.commit();
     }
 
     //=========== Selected person ===========================================================================
 
     @Override
-    public ReadOnlyProperty<Person> selectedPersonProperty() {
-        return selectedPerson;
+    public ReadOnlyProperty<Source> selectedSourceProperty() {
+        return selectedSource;
     }
 
     @Override
-    public Person getSelectedPerson() {
-        return selectedPerson.getValue();
+    public Source getSelectedSource() {
+        return selectedSource.getValue();
     }
 
     @Override
-    public void setSelectedPerson(Person person) {
-        if (person != null && !filteredPersons.contains(person)) {
-            throw new PersonNotFoundException();
+    public void setSelectedSource(Source source) {
+        if (source != null && !filteredSources.contains(source)) {
+            throw new SourceNotFoundException();
         }
-        selectedPerson.setValue(person);
+        selectedSource.setValue(source);
     }
 
     /**
-     * Ensures {@code selectedPerson} is a valid person in {@code filteredPersons}.
+     * Ensures {@code selectedSource} is a valid source in {@code filteredSources}.
      */
-    private void ensureSelectedPersonIsValid(ListChangeListener.Change<? extends Person> change) {
+    private void ensureSelectedSourceIsValid(ListChangeListener.Change<? extends Source> change) {
         while (change.next()) {
-            if (selectedPerson.getValue() == null) {
-                // null is always a valid selected person, so we do not need to check that it is valid anymore.
+            if (selectedSource.getValue() == null) {
+                // null is always a valid selected source, so we do not need to check that it is valid anymore.
                 return;
             }
 
-            boolean wasSelectedPersonReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
-                    && change.getRemoved().contains(selectedPerson.getValue());
-            if (wasSelectedPersonReplaced) {
-                // Update selectedPerson to its new value.
-                int index = change.getRemoved().indexOf(selectedPerson.getValue());
-                selectedPerson.setValue(change.getAddedSubList().get(index));
+            boolean wasSelectedSourceReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedSource.getValue());
+            if (wasSelectedSourceReplaced) {
+                // Update selectedSource to its new value.
+                int index = change.getRemoved().indexOf(selectedSource.getValue());
+                selectedSource.setValue(change.getAddedSubList().get(index));
                 continue;
             }
 
-            boolean wasSelectedPersonRemoved = change.getRemoved().stream()
-                    .anyMatch(removedPerson -> selectedPerson.getValue().isSamePerson(removedPerson));
-            if (wasSelectedPersonRemoved) {
-                // Select the person that came before it in the list,
-                // or clear the selection if there is no such person.
-                selectedPerson.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+            boolean wasSelectedSourceRemoved = change.getRemoved().stream()
+                    .anyMatch(removedSource -> selectedSource.getValue().isSameSource(removedSource));
+            if (wasSelectedSourceRemoved) {
+                // Select the source that came before it in the list,
+                // or clear the selection if there is no such source.
+                selectedSource.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
             }
         }
     }
@@ -275,10 +276,10 @@ public class ModelManager implements Model, PanicMode {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return versionedAddressBook.equals(other.versionedAddressBook)
+        return versionedSourceManager.equals(other.versionedSourceManager)
                 && userPrefs.equals(other.userPrefs)
-                && filteredPersons.equals(other.filteredPersons)
-                && Objects.equals(selectedPerson.get(), other.selectedPerson.get());
+                && filteredSources.equals(other.filteredSources)
+                && Objects.equals(selectedSource.get(), other.selectedSource.get());
     }
 
 }

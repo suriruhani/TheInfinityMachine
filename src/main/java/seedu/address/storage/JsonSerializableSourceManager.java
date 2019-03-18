@@ -9,46 +9,45 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
+import seedu.address.model.ReadOnlySourceManager;
+import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
 
 /**
- * An Immutable Source Database that is serializable to JSON format.
+ * An Immutable Source Manager that is serializable to JSON format.
  */
-@JsonRootName(value = "sourcedatabase")
-class JsonSerializableSourceDatabase {
+@JsonRootName(value = "sourcemanager")
+class JsonSerializableSourceManager {
 
     public static final String MESSAGE_DUPLICATE_PERSON = "Source list contains duplicate entires.";
 
     private final List<JsonAdaptedSource> sources = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonSerializableSourceDatabase} with the given persons.
+     * Constructs a {@code JsonSerializableSourceManager} with the given sources.
      */
     @JsonCreator
-    public JsonSerializableSourceDatabase(@JsonProperty("sources") List<JsonAdaptedSource> sources) {
+    public JsonSerializableSourceManager(@JsonProperty("sources") List<JsonAdaptedSource> sources) {
         this.sources.addAll(sources);
     }
 
     /**
-     * Converts a given {@code ReadOnlySourceDatabase} into this class for Jackson use.
+     * Converts a given {@code ReadOnlySourceManager} into this class for Jackson use.
      *
-     * @param source future changes to this will not affect the created {@code JsonSerializableSourceDatabase}.
+     * @param source future changes to this will not affect the created {@code JsonSerializableSourceManager}.
      */
-    public JsonSerializableSourceDatabase(ReadOnlySourceDatabase source) {
+    public JsonSerializableSourceManager(ReadOnlySourceManager source) {
         sources.addAll(source.getSourceList().stream().map(JsonAdaptedSource::new).collect(Collectors.toList()));
     }
 
     /**
-     * Converts this source database into the model's {@code SourceDatabase} object.
+     * Converts this source manager into the model's {@code SourceManager} object.
      *
      * @throws IllegalValueException if there were any data constraints violated.
      */
-    public SourceDatabase toModelType() throws IllegalValueException {
-        SourceDatabase sourceDB = new SourceDatabase();
-        for (JsonAdaptedSource jsonAdaptedSource : persons) {
+    public SourceManager toModelType() throws IllegalValueException {
+        SourceManager sourceDB = new SourceManager();
+        for (JsonAdaptedSource jsonAdaptedSource : sources) {
             Source source = jsonAdaptedSource.toModelType();
             if (sourceDB.hasSource(source)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);

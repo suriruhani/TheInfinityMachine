@@ -144,7 +144,7 @@ public abstract class SourceManagerSystemTest {
     /**
      * Displays all sources with any parts of their titles matching {@code keyword} (case-insensitive).
      */
-    protected void showSourcesWithName(String keyword) {
+    protected void showSourcesWithTitle(String keyword) {
         executeCommand(FindCommand.COMMAND_WORD + " " + keyword);
         assertTrue(getModel().getFilteredSourceList().size() < getModel().getSourceManager().getSourceList().size());
     }

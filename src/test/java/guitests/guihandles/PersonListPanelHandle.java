@@ -6,38 +6,38 @@ import java.util.Set;
 
 import javafx.scene.Node;
 import javafx.scene.control.ListView;
-import seedu.address.model.source.Source;
+import seedu.address.model.person.Person;
 
 /**
  * Provides a handle for {@code SourceListPanel} containing the list of {@code SourceCard}.
  */
-public class SourceListPanelHandle extends NodeHandle<ListView<Source>> {
-    public static final String SOURCE_LIST_VIEW_ID = "#sourceListView";
+public class PersonListPanelHandle extends NodeHandle<ListView<Person>> {
+    public static final String PERSON_LIST_VIEW_ID = "#personListView";
 
     private static final String CARD_PANE_ID = "#cardPane";
 
-    private Optional<Source> lastRememberedSelectedSourceCard;
+    private Optional<Person> lastRememberedSelectedPersonCard;
 
-    public SourceListPanelHandle(ListView<Source> sourceListPanelNode) {
-        super(sourceListPanelNode);
+    public PersonListPanelHandle(ListView<Person> personListPanelNode) {
+        super(personListPanelNode);
     }
 
     /**
-     * Returns a handle to the selected {@code SourceCardHandle}.
+     * Returns a handle to the selected {@code PersonCardHandle}.
      * A maximum of 1 item can be selected at any time.
      * @throws AssertionError if no card is selected, or more than 1 card is selected.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public SourceCardHandle getHandleToSelectedCard() {
-        List<Source> selectedSourceList = getRootNode().getSelectionModel().getSelectedItems();
+    public PersonCardHandle getHandleToSelectedCard() {
+        List<Person> selectedPersonList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (selectedSourceList.size() != 1) {
-            throw new AssertionError("Source list size expected 1.");
+        if (selectedPersonList.size() != 1) {
+            throw new AssertionError("Person list size expected 1.");
         }
 
         return getAllCardNodes().stream()
-                .map(SourceCardHandle::new)
-                .filter(handle -> handle.equals(selectedSourceList.get(0)))
+                .map(PersonCardHandle::new)
+                .filter(handle -> handle.equals(selectedPersonList.get(0)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
@@ -53,7 +53,7 @@ public class SourceListPanelHandle extends NodeHandle<ListView<Source>> {
      * Returns true if a card is currently selected.
      */
     public boolean isAnyCardSelected() {
-        List<Source> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
+        List<Person> selectedCardsList = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedCardsList.size() > 1) {
             throw new AssertionError("Card list size expected 0 or 1.");
@@ -63,15 +63,15 @@ public class SourceListPanelHandle extends NodeHandle<ListView<Source>> {
     }
 
     /**
-     * Navigates the listview to display {@code source}.
+     * Navigates the listview to display {@code person}.
      */
-    public void navigateToCard(Source source) {
-        if (!getRootNode().getItems().contains(source)) {
-            throw new IllegalArgumentException("Source does not exist.");
+    public void navigateToCard(Person person) {
+        if (!getRootNode().getItems().contains(person)) {
+            throw new IllegalArgumentException("Person does not exist.");
         }
 
         guiRobot.interact(() -> {
-            getRootNode().scrollTo(source);
+            getRootNode().scrollTo(person);
         });
         guiRobot.pauseForHuman();
     }
@@ -98,18 +98,18 @@ public class SourceListPanelHandle extends NodeHandle<ListView<Source>> {
     }
 
     /**
-     * Returns the source card handle of a source associated with the {@code index} in the list.
+     * Returns the person card handle of a person associated with the {@code index} in the list.
      * @throws IllegalStateException if the selected card is currently not in the scene graph.
      */
-    public SourceCardHandle getSourceCardHandle(int index) {
+    public PersonCardHandle getPersonCardHandle(int index) {
         return getAllCardNodes().stream()
-                .map(SourceCardHandle::new)
-                .filter(handle -> handle.equals(getSource(index)))
+                .map(PersonCardHandle::new)
+                .filter(handle -> handle.equals(getPerson(index)))
                 .findFirst()
                 .orElseThrow(IllegalStateException::new);
     }
 
-    private Source getSource(int index) {
+    private Person getPerson(int index) {
         return getRootNode().getItems().get(index);
     }
 
@@ -125,28 +125,28 @@ public class SourceListPanelHandle extends NodeHandle<ListView<Source>> {
     /**
      * Remembers the selected {@code SourceCard} in the list.
      */
-    public void rememberSelectedSourceCard() {
-        List<Source> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public void rememberSelectedPersonCard() {
+        List<Person> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            lastRememberedSelectedSourceCard = Optional.empty();
+            lastRememberedSelectedPersonCard = Optional.empty();
         } else {
-            lastRememberedSelectedSourceCard = Optional.of(selectedItems.get(0));
+            lastRememberedSelectedPersonCard = Optional.of(selectedItems.get(0));
         }
     }
 
     /**
      * Returns true if the selected {@code SourceCard} is different from the value remembered by the most recent
-     * {@code rememberSelectedSourceCard()} call.
+     * {@code rememberSelectedPersonCard()} call.
      */
-    public boolean isSelectedSourceCardChanged() {
-        List<Source> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
+    public boolean isSelectedPersonCardChanged() {
+        List<Person> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {
-            return lastRememberedSelectedSourceCard.isPresent();
+            return lastRememberedSelectedPersonCard.isPresent();
         } else {
-            return !lastRememberedSelectedSourceCard.isPresent()
-                    || !lastRememberedSelectedSourceCard.get().equals(selectedItems.get(0));
+            return !lastRememberedSelectedPersonCard.isPresent()
+                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
         }
     }
 

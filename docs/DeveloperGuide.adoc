@@ -233,6 +233,38 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::alias[]
+=== Command Alias feature
+The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`.
+
+Users may do one of the following:
+1) Add a new alias
+2) Remove an existing alias
+3) List all aliases
+4) Delete all aliases
+
+This feature is backed by an in-memory database implemented as a Java `HashMap<String, Command>`.
+A HashMap is chosen for several reasons:
+* Adding and removing an alias is simple
+* Checking whether an alias exists is fast (`O(1)` performance, as opposed to `O(N)` in an unsorted list)
+* HashMaps naturally facilitate the process of looking up an associated value with a given key
+* HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
+
+*Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
+as there needs to be a way of associating a `String`-type alias with a `Command` object. 
+For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
+That is, however, inelegant and contrived, as opposed to a `HashMap` solution.
+Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
+
+*Operation*: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
+"original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
+original commands) with an additional `default` block, such that if the command word is not an original command, we check if
+it is a registered alias of a command. 
+
+If so, we run the command by looking up the `Command` object in our `HashMap`.
+
+Otherwise, it is a situation of invalid user input.
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation

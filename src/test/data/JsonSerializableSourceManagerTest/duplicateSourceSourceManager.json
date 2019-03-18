@@ -1,0 +1,12 @@
+{
+  "sources": [ {
+    "title": "Alice Pauline",
+    "type": "94351253",
+    "detail": "alice@example.com",
+    "tagged": [ "friends" ]
+  }, {
+    "title": "Alice Pauline",
+    "type": "94351253",
+    "detail": "pauline@example.com"
+  } ]
+}

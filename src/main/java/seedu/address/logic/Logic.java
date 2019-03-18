@@ -25,7 +25,7 @@ public interface Logic {
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
     /**
-     * Returns the AddressBook.
+     * Returns the SourceManager.
      *
      * @see seedu.address.model.Model#getSourceManager()
      */
@@ -41,7 +41,7 @@ public interface Logic {
     ObservableList<String> getHistory();
 
     /**
-     * Returns the user prefs' address book file path.
+     * Returns the user prefs' source manager file path.
      */
     Path getSourceManagerFilePath();
 

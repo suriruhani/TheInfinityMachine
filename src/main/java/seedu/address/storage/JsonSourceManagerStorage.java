@@ -12,41 +12,41 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySourceManager;
 
 /**
- * A class to access Source Database data stored as a json file on the hard disk.
+ * A class to access Source Manager data stored as a json file on the hard disk.
  */
-public class JsonSourceDatabaseStorage implements SourceDatabaseStorage {
+public class JsonSourceManagerStorage implements SourceManagerStorage {
 
-    private static final Logger logger = LogsCenter.getLogger(JsonSourceDatabaseStorage.class);
+    private static final Logger logger = LogsCenter.getLogger(JsonSourceManagerStorage.class);
 
     private Path filePath;
 
-    public JsonSourceDatabaseStorage(Path filePath) {
+    public JsonSourceManagerStorage(Path filePath) {
         this.filePath = filePath;
     }
 
-    public Path getSourceDatabaseFilePath() {
+    public Path getSourceManagerFilePath() {
         return filePath;
     }
 
     @Override
-    Optional<ReadOnlySourceDatabase> readSourceDatabase() throws DataConversionException {
-        return readSourceDatabase(filePath);
+    public Optional<ReadOnlySourceManager> readSourceManager() throws DataConversionException {
+        return readSourceManager(filePath);
     }
 
     /**
-     * Similar to {@link #readAddressBook()}.
+     * Similar to {@link #readSourceManager()}.
      *
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlySourceDatabase> readSourceDatabase(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlySourceManager> readSourceManager(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableSourceDatabase> jsonSourceDB = JsonUtil.readJsonFile(
-                filePath, JsonSerializableSourceDatabase.class);
+        Optional<JsonSerializableSourceManager> jsonSourceDB = JsonUtil.readJsonFile(
+                filePath, JsonSerializableSourceManager.class);
         if (!jsonSourceDB.isPresent()) {
             return Optional.empty();
         }
@@ -60,21 +60,21 @@ public class JsonSourceDatabaseStorage implements SourceDatabaseStorage {
     }
 
     @Override
-    public void saveSourceDatabase(ReadOnlySourceDatabase sourceDatabase) throws IOException {
-        saveSourceDatabase(sourceDatabase, filePath);
+    public void saveSourceManager(ReadOnlySourceManager sourceManager) throws IOException {
+        saveSourceManager(sourceManager, filePath);
     }
 
     /**
-     * Similar to {@link #saveSourceDatabase(ReadOnlySourceDatabase, Path)}.
+     * Similar to {@link #saveSourceManager(ReadOnlySourceManager, Path)}.
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveSourceDatabase(ReadOnlySourceDatabase sourceDatabase, Path filePath) throws IOException {
-        requireNonNull(sourceDatabase);
+    public void saveSourceManager(ReadOnlySourceManager sourceManager, Path filePath) throws IOException {
+        requireNonNull(sourceManager);
         requireNonNull(filePath);
 
         FileUtil.createIfMissing(filePath);
-        JsonUtil.saveJsonFile(new JsonSerializableSourceDatabase(sourceDatabase), filePath);
+        JsonUtil.saveJsonFile(new JsonSerializableSourceManager(sourceManager), filePath);
     }
 
 }

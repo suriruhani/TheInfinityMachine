@@ -29,8 +29,8 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.model.source.Detail;
-import seedu.address.model.source.Title;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.Title;
 import seedu.address.model.source.Type;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.SourceBuilder;

@@ -3,7 +3,6 @@ package seedu.address;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 import javafx.application.Application;
@@ -16,17 +15,16 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
+import seedu.address.model.SourceManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.sourcemodel.SourceDatabaseCoordinationCenter;
-import seedu.address.storage.AddressBookStorage;
-import seedu.address.storage.JsonAddressBookStorage;
+import seedu.address.storage.JsonSourceManagerStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.SourceManagerStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
@@ -50,7 +48,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing SourceManager ]===========================");
         super.init();
 
         AppParameters appParameters = AppParameters.parse(getParameters());
@@ -58,8 +56,8 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new JsonAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        SourceManagerStorage sourceManagerStorage = new JsonSourceManagerStorage(userPrefs.getSourceManagerFilePath());
+        storage = new StorageManager(sourceManagerStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -76,20 +74,20 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlySourceManager> sourceManagerOptional;
+        ReadOnlySourceManager initialData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            sourceManagerOptional = storage.readSourceManager();
+            if (!sourceManagerOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample SourceManager");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialData = sourceManagerOptional.orElseGet(SampleDataUtil::getSampleSourceManager);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty SourceManager");
+            initialData = new SourceManager();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty SourceManager");
+            initialData = new SourceManager();
         }
 
         return new ModelManager(initialData, userPrefs);
@@ -153,7 +151,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty SourceManager");
             initializedPrefs = new UserPrefs();
         }
 
@@ -169,7 +167,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting SourceManager " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
@@ -191,52 +189,6 @@ public class MainApp extends Application {
      * @param args The user input.
      */
     public static void main(String[] args) {
-        System.out.println("Select start mode:\n"
-                + "   1) Normal Addressbook Operation.\n"
-                + "   2) New Model Test.\n"
-                + "   0) Exit the program.");
-
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-
-        switch (input) {
-        case "1":
-            System.out.println("Starting Addressbook 4.");
-            launch(args);
-            break;
-        case "2":
-            System.out.println("Starting Model Test.\n"
-                    + "=============== Establishing Battlefield Control ===============\n");
-
-            SourceDatabaseCoordinationCenter coordCenter = new SourceDatabaseCoordinationCenter();
-            System.out.println("Database initialisation complete\n");
-
-            System.out.println("Instructions for commands:\n"
-                    + "add TITLE y/TYPE d/DETAILS [t/TAG]\n"
-                    + "delete INDEX\n"
-                    + "list\n"
-                    + "exit\n");
-
-            boolean loopCondition = true;
-            while (loopCondition == true) {
-
-                System.out.println("Standing by for orders...");
-
-                String order = scanner.nextLine();
-
-                loopCondition = coordCenter.executeOrders(order);
-            }
-
-            break;
-        case "0":
-            System.out.println("Exiting program.");
-            break;
-        default:
-            System.out.println("Invalid command.  Please try again.");
-            break;
-        }
-
-        System.out.println("\n=============== Battle Control Terminated ===============");
-        System.exit(0);
+        launch(args);
     }
 }

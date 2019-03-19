@@ -209,7 +209,8 @@ public class VersionedSourceManagerTest {
 
     @Test
     public void equals() {
-        VersionedSourceManager versionedSourceManager = prepareSourceManagerList(sourceManagerWithAlice, sourceManagerWithBenson);
+        VersionedSourceManager versionedSourceManager =
+                prepareSourceManagerList(sourceManagerWithAlice, sourceManagerWithBenson);
 
         // same values -> returns true
         VersionedSourceManager copy = prepareSourceManagerList(sourceManagerWithAlice, sourceManagerWithBenson);
@@ -225,7 +226,8 @@ public class VersionedSourceManagerTest {
         assertFalse(versionedSourceManager.equals(1));
 
         // different state list -> returns false
-        VersionedSourceManager differentSourceManagerList = prepareSourceManagerList(sourceManagerWithBenson, sourceManagerWithCarl);
+        VersionedSourceManager differentSourceManagerList =
+                prepareSourceManagerList(sourceManagerWithBenson, sourceManagerWithCarl);
         assertFalse(versionedSourceManager.equals(differentSourceManagerList));
 
         // different current pointer index -> returns false
@@ -236,9 +238,12 @@ public class VersionedSourceManagerTest {
     }
 
     /**
-     * Asserts that {@code versionedSourceManager} is currently pointing at {@code expectedCurrentState},
-     * states before {@code versionedSourceManager#currentStatePointer} is equal to {@code expectedStatesBeforePointer},
-     * and states after {@code versionedSourceManager#currentStatePointer} is equal to {@code expectedStatesAfterPointer}.
+     * Asserts that {@code versionedSourceManager}
+     * is currently pointing at {@code expectedCurrentState},
+     * states before {@code versionedSourceManager#currentStatePointer}
+     * is equal to {@code expectedStatesBeforePointer},
+     * and states after {@code versionedSourceManager#currentStatePointer}
+     * is equal to {@code expectedStatesAfterPointer}.
      */
     private void assertSourceManagerListStatus(VersionedSourceManager versionedSourceManager,
                                                List<ReadOnlySourceManager> expectedStatesBeforePointer,

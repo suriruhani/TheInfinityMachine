@@ -17,11 +17,12 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.SourceManager;
 import seedu.address.model.ReadOnlySourceManager;
+import seedu.address.model.SourceManager;
 
 public class JsonSourceManagerStorageTest {
-    private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSourceManagerStorageTest");
+    private static final Path TEST_DATA_FOLDER =
+            Paths.get("src", "test", "data", "JsonSourceManagerStorageTest");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -36,7 +37,8 @@ public class JsonSourceManagerStorageTest {
     }
 
     private java.util.Optional<ReadOnlySourceManager> readSourceManager(String filePath) throws Exception {
-        return new JsonSourceManagerStorage(Paths.get(filePath)).readSourceManager(addToTestDataPathIfNotNull(filePath));
+        return new JsonSourceManagerStorage(Paths.get(filePath))
+                .readSourceManager(addToTestDataPathIfNotNull(filePath));
     }
 
     private Path addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {

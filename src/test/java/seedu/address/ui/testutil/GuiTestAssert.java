@@ -5,9 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SourceCardHandle;
 import guitests.guihandles.SourceListPanelHandle;
-import guitests.guihandles.ResultDisplayHandle;
 import seedu.address.model.source.Source;
 
 /**

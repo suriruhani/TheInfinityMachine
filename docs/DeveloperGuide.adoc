@@ -251,7 +251,7 @@ A HashMap is chosen for several reasons:
 * HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
 
 *Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
-as there needs to be a way of associating a `String`-type alias with a `Command` object. 
+as there needs to be a way of associating a `String`-type alias with a `Command` object.
 For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
 That is, however, inelegant and contrived, as opposed to a `HashMap` solution.
 Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
@@ -259,7 +259,7 @@ Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
 *Operation*: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
 "original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
 original commands) with an additional `default` block, such that if the command word is not an original command, we check if
-it is a registered alias of a command. 
+it is a registered alias of a command.
 
 If so, we run the command by looking up the `Command` object in our `HashMap`.
 

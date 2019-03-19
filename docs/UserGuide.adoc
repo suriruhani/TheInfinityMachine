@@ -108,8 +108,10 @@ Edits the 5th source and clears all its existing tags.
 
 === Searching a source: `search`
 
-Searches for entries amongst the list of sources by title based on the user input. +
-Finds all entries with a matching title as entered by the user. It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
+Searches for entries amongst the list of sources by title. +
+Finds all entries with an (exact, case insensitive) matching title as entered by the user. +
+It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
+Matching is exact (eg. `Algorithm` will not match with `Algorithms`) +
 Format: `search title`
 
 ****
@@ -129,6 +131,11 @@ Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
 Displays a list of all sources currently in the database, with no filtering. +
 Format: `list`
+
+****
+* Lists all sources present in the database in the order of their addition
+* Tags, Details, Type are also displayed along with the sources
+****
 
 === Generate bibliography entry : `biblio`
 

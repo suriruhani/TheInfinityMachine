@@ -7,8 +7,6 @@ import java.util.List;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.InvalidationListenerManager;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.UniqueSourceList;
 
@@ -84,7 +82,8 @@ public class SourceManager implements ReadOnlySourceManager {
     /**
      * Replaces the given source {@code target} in the list with {@code editedSource}.
      * {@code target} must exist in the source manager.
-     * The source identity of {@code editedSource} must not be the same as another existing source in the source manager.
+     * The source identity of {@code editedSource} must not be the
+     * same as another existing source in the source manager.
      */
     public void setSource(Source target, Source editedSource) {
         requireNonNull(editedSource);

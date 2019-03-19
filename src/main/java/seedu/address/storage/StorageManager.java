@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
 
@@ -17,13 +17,13 @@ import seedu.address.model.UserPrefs;
 public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private SourceDatabaseStorage sourceDatabaseStorage;
+    private SourceManagerStorage sourceManagerStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(SourceDatabaseStorage sourceDatabaseStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(SourceManagerStorage sourceManagerStorage, UserPrefsStorage userPrefsStorage) {
         super();
-        this.sourceDatabaseStorage = sourceDatabaseStorage;
+        this.sourceManagerStorage = sourceManagerStorage;
         this.userPrefsStorage = userPrefsStorage;
     }
 
@@ -48,30 +48,31 @@ public class StorageManager implements Storage {
     // ================ AddressBook methods ==============================
 
     @Override
-    public Path getSourceDatabaseFilePath() {
-        return sourceDatabaseStorage.getSourceDatabaseFilePath();
+    public Path getSourceManagerFilePath() {
+        return sourceManagerStorage.getSourceManagerFilePath();
     }
 
     @Override
-    public Optional<ReadOnlySourceDatabase> readSourceDatabase() throws DataConversionException, IOException {
-        return readSourceDatabase(sourceDatabaseStorage.getSourceDatabaseFilePath());
+    public Optional<ReadOnlySourceManager> readSourceManager() throws DataConversionException, IOException {
+        return readSourceManager(sourceManagerStorage.getSourceManagerFilePath());
     }
 
     @Override
-    public Optional<ReadOnlySourceDatabase> readSourceDatabase(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlySourceManager> readSourceManager(Path filePath)
+            throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
-        return sourceDatabaseStorage.readSourceDatabase(filePath);
+        return sourceManagerStorage.readSourceManager(filePath);
     }
 
     @Override
-    public void saveSourceDatabase(ReadOnlySourceDatabase sourceDatabase) throws IOException {
-        saveSourceDatabase(sourceDatabase, sourceDatabaseStorage.getSourceDatabaseFilePath());
+    public void saveSourceManager(ReadOnlySourceManager sourceManager) throws IOException {
+        saveSourceManager(sourceManager, sourceManagerStorage.getSourceManagerFilePath());
     }
 
     @Override
-    public void saveSourceDatabase(ReadOnlySourceDatabase sourceDatabase, Path filePath) throws IOException {
+    public void saveSourceManager(ReadOnlySourceManager sourceManager, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
-        sourceDatabaseStorage.saveSourceDatabase(sourceDatabase, filePath);
+        sourceManagerStorage.saveSourceManager(sourceManager, filePath);
     }
 
 }

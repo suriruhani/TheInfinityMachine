@@ -3,38 +3,38 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysPerson;
+import static seedu.address.ui.testutil.GuiTestAssert.assertCardDisplaysSource;
 
 import org.junit.Test;
 
-import guitests.guihandles.PersonCardHandle;
-import seedu.address.model.person.Person;
-import seedu.address.testutil.PersonBuilder;
+import guitests.guihandles.SourceCardHandle;
+import seedu.address.model.source.Source;
+import seedu.address.testutil.SourceBuilder;
 
 public class SourceCardTest extends GuiUnitTest {
 
     @Test
     public void display() {
         // no tags
-        Person personWithNoTags = new PersonBuilder().withTags(new String[0]).build();
-        SourceCard sourceCard = new SourceCard(personWithNoTags, 1);
+        Source sourceWithNoTags = new SourceBuilder().withTags(new String[0]).build();
+        SourceCard sourceCard = new SourceCard(sourceWithNoTags, 1);
         uiPartRule.setUiPart(sourceCard);
-        assertCardDisplay(sourceCard, personWithNoTags, 1);
+        assertCardDisplay(sourceCard, sourceWithNoTags, 1);
 
         // with tags
-        Person personWithTags = new PersonBuilder().build();
-        sourceCard = new SourceCard(personWithTags, 2);
+        Source sourceWithTags = new SourceBuilder().build();
+        sourceCard = new SourceCard(sourceWithTags, 2);
         uiPartRule.setUiPart(sourceCard);
-        assertCardDisplay(sourceCard, personWithTags, 2);
+        assertCardDisplay(sourceCard, sourceWithTags, 2);
     }
 
     @Test
     public void equals() {
-        Person person = new PersonBuilder().build();
-        SourceCard sourceCard = new SourceCard(person, 0);
+        Source source = new SourceBuilder().build();
+        SourceCard sourceCard = new SourceCard(source, 0);
 
-        // same person, same index -> returns true
-        SourceCard copy = new SourceCard(person, 0);
+        // same source, same index -> returns true
+        SourceCard copy = new SourceCard(source, 0);
         assertTrue(sourceCard.equals(copy));
 
         // same object -> returns true
@@ -46,27 +46,27 @@ public class SourceCardTest extends GuiUnitTest {
         // different types -> returns false
         assertFalse(sourceCard.equals(0));
 
-        // different person, same index -> returns false
-        Person differentPerson = new PersonBuilder().withName("differentName").build();
-        assertFalse(sourceCard.equals(new SourceCard(differentPerson, 0)));
+        // different source, same index -> returns false
+        Source differentSource = new SourceBuilder().withTitle("differentName").build();
+        assertFalse(sourceCard.equals(new SourceCard(differentSource, 0)));
 
-        // same person, different index -> returns false
-        assertFalse(sourceCard.equals(new SourceCard(person, 1)));
+        // same source, different index -> returns false
+        assertFalse(sourceCard.equals(new SourceCard(source, 1)));
     }
 
     /**
-     * Asserts that {@code sourceCard} displays the details of {@code expectedPerson} correctly and matches
+     * Asserts that {@code sourceCard} displays the details of {@code expectedSource} correctly and matches
      * {@code expectedId}.
      */
-    private void assertCardDisplay(SourceCard sourceCard, Person expectedPerson, int expectedId) {
+    private void assertCardDisplay(SourceCard sourceCard, Source expectedSource, int expectedId) {
         guiRobot.pauseForHuman();
 
-        PersonCardHandle personCardHandle = new PersonCardHandle(sourceCard.getRoot());
+        SourceCardHandle sourceCardHandle = new SourceCardHandle(sourceCard.getRoot());
 
         // verify id is displayed correctly
-        assertEquals(Integer.toString(expectedId) + ". ", personCardHandle.getId());
+        assertEquals(Integer.toString(expectedId) + ". ", sourceCardHandle.getId());
 
-        // verify person details are displayed correctly
-        assertCardDisplaysPerson(expectedPerson, personCardHandle);
+        // verify source details are displayed correctly
+        assertCardDisplaysSource(expectedSource, sourceCardHandle);
     }
 }

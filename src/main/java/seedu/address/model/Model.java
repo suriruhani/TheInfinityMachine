@@ -74,7 +74,8 @@ public interface Model extends PanicMode {
     /**
      * Replaces the given source {@code target} with {@code editedSource}.
      * {@code target} must exist in the source manager.
-     * The source identity of {@code editedSource} must not be the same as another existing source in the source manager.
+     * The source identity of {@code editedSource} must not be the same
+     * as another existing source in the source manager.
      */
     void setSource(Source target, Source editedSource);
 

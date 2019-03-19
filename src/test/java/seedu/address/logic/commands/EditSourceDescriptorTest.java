@@ -5,9 +5,9 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
 
 import org.junit.Test;
 
@@ -34,7 +34,8 @@ public class EditSourceDescriptorTest {
         assertFalse(DESC_AMY.equals(DESC_BOB));
 
         // different title -> returns false
-        EditCommand.EditSourceDescriptor editedAmy = new EditSourceDescriptorBuilder(DESC_AMY).withTitle(VALID_TITLE_BOB).build();
+        EditCommand.EditSourceDescriptor editedAmy =
+                new EditSourceDescriptorBuilder(DESC_AMY).withTitle(VALID_TITLE_BOB).build();
         assertFalse(DESC_AMY.equals(editedAmy));
 
         // different type -> returns false

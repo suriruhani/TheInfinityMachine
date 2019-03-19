@@ -5,9 +5,9 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
@@ -21,9 +21,9 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.EditCommand.EditSourceDescriptor;
-import seedu.address.model.SourceManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.SourceManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.source.Source;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
@@ -129,7 +129,8 @@ public class EditCommandTest {
     @Test
     public void execute_invalidSourceIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
-        EditCommand.EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
+        EditCommand.EditSourceDescriptor descriptor =
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
@@ -177,7 +178,8 @@ public class EditCommandTest {
     @Test
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
-        EditCommand.EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
+        EditCommand.EditSourceDescriptor descriptor =
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> source manager state not added into model

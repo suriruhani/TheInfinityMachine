@@ -1,0 +1,7 @@
+{
+  "sources": [ {
+    "title": "Source with invalid title field: Ha!ns Mu@ster",
+    "type": "9482424",
+    "detail": "hans@example.com",
+  } ]
+}

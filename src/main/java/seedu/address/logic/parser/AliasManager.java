@@ -1,9 +1,9 @@
 package seedu.address.logic.parser;
 
+import java.util.HashMap;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CountCommand;
-
-import java.util.HashMap;
 
 /**
  * Manages user-defined command aliases.

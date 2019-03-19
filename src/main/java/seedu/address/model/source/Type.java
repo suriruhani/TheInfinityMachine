@@ -11,21 +11,20 @@ import static seedu.address.model.source.Source.validateSourceAttribute;
 public class Type {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Types should only contain alphanumeric characters and spaces.";
+            "Type should only contain alphanumeric characters and spaces, and it should not be blank";
 
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the type must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
-
     public final String type;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code Type}.
      *
-     * @param type A valid title.
+     * @param type A valid type.
      */
     public Type(String type) {
         requireNonNull(type);
@@ -34,7 +33,7 @@ public class Type {
     }
 
     public static boolean isValidType(String test) {
-        return Source.validateSourceAttribute(test, VALIDATION_REGEX);
+        return validateSourceAttribute(test, VALIDATION_REGEX);
     }
 
     @Override

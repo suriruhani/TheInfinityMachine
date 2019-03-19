@@ -1,3 +1,4 @@
+// To deprecate
 package seedu.address.model;
 
 import javafx.beans.Observable;

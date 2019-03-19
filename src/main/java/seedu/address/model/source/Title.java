@@ -13,7 +13,7 @@ public class Title {
     public static final String MESSAGE_CONSTRAINTS =
             "Titles should only contain alphanumeric characters and spaces, and it should not be blank";
     /*
-     * The first character of the address must not be a whitespace,
+     * The first character of the title must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.
      */
     public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
@@ -21,7 +21,7 @@ public class Title {
     public final String title;
 
     /**
-     * Constructs a {@code Name}.
+     * Constructs a {@code Title}.
      *
      * @param title A valid title.
      */
@@ -31,6 +31,9 @@ public class Title {
         this.title = title;
     }
 
+    public static boolean isValidTitle(String test) {
+        return validateSourceAttribute(test, VALIDATION_REGEX);
+    }
 
     @Override
     public String toString() {

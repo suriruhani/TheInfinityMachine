@@ -28,7 +28,7 @@ public class GuiTestAssert {
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedSource}.
      */
-    public static void assertCardDisplaysPerson(Source expectedSource, SourceCardHandle actualCard) {
+    public static void assertCardDisplaysSource(Source expectedSource, SourceCardHandle actualCard) {
         assertEquals(expectedSource.getTitle().title, actualCard.getTitle());
         assertEquals(expectedSource.getType().type, actualCard.getType());
         assertEquals(expectedSource.getDetail().detail, actualCard.getDetail());
@@ -43,7 +43,7 @@ public class GuiTestAssert {
     public static void assertListMatching(SourceListPanelHandle sourceListPanelHandle, Source... sources) {
         for (int i = 0; i < sources.length; i++) {
             sourceListPanelHandle.navigateToCard(i);
-            assertCardDisplaysPerson(sources[i], sourceListPanelHandle.getSourceCardHandle(i));
+            assertCardDisplaysSource(sources[i], sourceListPanelHandle.getSourceCardHandle(i));
         }
     }
 

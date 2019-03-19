@@ -3,19 +3,19 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DETAIL_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TYPE_DESC;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.testutil.TypicalSources.ALICE;
 import static seedu.address.testutil.TypicalSources.BENSON;
@@ -48,7 +48,8 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
 
         /* ------------------------ Perform add operations on the shown unfiltered list ----------------------------- */
 
-        /* Case: add a source without tags to a non-empty source manager, command with leading spaces and trailing spaces
+        /* Case: add a source without tags to a non-empty source manager,
+         * command with leading spaces and trailing spaces
          * -> added
          */
         /*

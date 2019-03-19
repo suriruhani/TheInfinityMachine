@@ -17,10 +17,10 @@ import guitests.guihandles.SourceListPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.source.Title;
-import seedu.address.model.source.Type;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.Title;
+import seedu.address.model.source.Type;
 
 public class SourceListPanelTest extends GuiUnitTest {
     private static final ObservableList<Source> TYPICAL_SOURCES =

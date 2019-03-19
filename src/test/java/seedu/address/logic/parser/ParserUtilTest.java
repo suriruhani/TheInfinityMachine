@@ -17,8 +17,8 @@ import org.junit.rules.ExpectedException;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Detail;
-import seedu.address.model.source.Type;
 import seedu.address.model.source.Title;
+import seedu.address.model.source.Type;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 

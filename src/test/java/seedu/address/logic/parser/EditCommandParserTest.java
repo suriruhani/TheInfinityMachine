@@ -1,7 +1,24 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_DETAIL_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_TYPE_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -148,7 +165,8 @@ public class EditCommandParserTest {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_SOURCE;
         String userInput = targetIndex.getOneBased() + INVALID_TYPE_DESC + TYPE_DESC_BOB;
-        EditCommand.EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withType(VALID_TYPE_BOB).build();
+        EditCommand.EditSourceDescriptor descriptor =
+                new EditSourceDescriptorBuilder().withType(VALID_TYPE_BOB).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 

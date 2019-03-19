@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
 import static seedu.address.testutil.TypicalSources.ALICE;
 
 import java.io.IOException;
@@ -48,7 +48,8 @@ public class LogicManagerTest {
 
     @Before
     public void setUp() throws Exception {
-        JsonSourceManagerStorage sourceManagerStorage = new JsonSourceManagerStorage(temporaryFolder.newFile().toPath());
+        JsonSourceManagerStorage sourceManagerStorage =
+                new JsonSourceManagerStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
         StorageManager storage = new StorageManager(sourceManagerStorage, userPrefsStorage);
         logic = new LogicManager(model, storage);

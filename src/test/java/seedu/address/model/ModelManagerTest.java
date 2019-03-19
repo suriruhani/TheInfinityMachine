@@ -172,10 +172,10 @@ public class ModelManagerTest {
         // Temporarily comment out test for migration from address book to source manager.
         // Todo: Rewrite test in a way that makes sense for source manager.
 
-//        // different filteredList -> returns false
-//        String[] keywords = ALICE.getTitle().fullName.split("\\s+");
-//        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-//        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        // different filteredList -> returns false
+        // String[] keywords = ALICE.getTitle().fullName.split("\\s+");
+        // modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        // assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 
         // resets modelManager to initial state for upcoming tests
         modelManager.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);

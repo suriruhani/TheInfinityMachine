@@ -16,9 +16,8 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.PanicMode;
-import seedu.address.model.person.Person;
-import seedu.address.model.source.exceptions.SourceNotFoundException;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.exceptions.SourceNotFoundException;
 
 /**
  * Represents the in-memory model of the source manager data.

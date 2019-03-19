@@ -108,26 +108,27 @@ Edits the 5th source and clears all its existing tags.
 
 === Searching a source: `search`
 
-Searches for entries amongst the list of sources based on the tag entered by the user. +
-Format: `search t/TAG [t/TAG]...`
+Searches for entries amongst the list of sources by title based on the user input. +
+Finds all entries with a matching title as entered by the user. It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
+Format: `search title`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* There can have any number of tags but minimally 1.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
+* Only full words will be matched e.g. `Han` will not match `Hans`, `FooTitle` will not match `FooTitle1`
 ****
 
 Examples:
 
-* `search t/Algorithms` +
-Returns the source with the tag `algorithms`
-* `search t/Artificial Intelligence t/Science Journal t/AI` +
-Returns any source having tags `Artificial Intelligence`, `Science Journal`, or `AI`
+* `search Algorithms` +
+Returns the source with the title `algorithms`
+* `search ArtificialIntelligence MachineLearning` +
+Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
 === Listing all sources : `list`
 
-Displays a list of all sources currently in the database. Also allows listing of all tags and types of records. +
-Format: `list` `list tags` `list types`
+Displays a list of all sources currently in the database, with no filtering. +
+Format: `list`
 
 === Generate bibliography entry : `biblio`
 

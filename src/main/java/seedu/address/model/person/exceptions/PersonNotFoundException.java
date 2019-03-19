@@ -1,3 +1,4 @@
+// To deprecate
 package seedu.address.model.person.exceptions;
 
 /**

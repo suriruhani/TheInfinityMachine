@@ -10,13 +10,18 @@ import static seedu.address.model.source.Source.validateSourceAttribute;
  */
 public class Detail {
 
-    public static final String MESSAGE_CONSTRAINTS = "Details should be alphanumeric";
-    public static final String VALIDATION_REGEX = "\\p{Alnum}+";
+    public static final String MESSAGE_CONSTRAINTS = "Details can take any values, and it should not be blank";
+
+    /*
+     * The first character of the detail must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String VALIDATION_REGEX = "[^\\s].*";
 
     public final String detail;
 
     /**
-     * Constructs a {@code Tag}.
+     * Constructs a {@code Detail}.
      *
      * @param detail A valid detail.
      */
@@ -24,6 +29,10 @@ public class Detail {
         requireNonNull(detail);
         checkArgument(validateSourceAttribute(detail, VALIDATION_REGEX), MESSAGE_CONSTRAINTS);
         this.detail = detail;
+    }
+
+    public static boolean isValidDetail(String test) {
+        return validateSourceAttribute(test, VALIDATION_REGEX);
     }
 
     @Override

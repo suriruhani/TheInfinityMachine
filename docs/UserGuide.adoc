@@ -165,6 +165,17 @@ Format: `definecommand c/COMMAND a/ALIAS`
 Examples:
 * `definecommand c/biblio a/b`
 
+=== Counting total number of sources: `count`
+
+Counts all source entries and returns the total number of sources. +
+Format: `count`
+
+Examples:
+
+* `count` +
+Result: `Total number of source(s): 6` +
+Counts the total number of sources in the database
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 

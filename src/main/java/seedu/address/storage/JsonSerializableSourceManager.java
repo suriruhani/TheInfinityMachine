@@ -46,15 +46,15 @@ class JsonSerializableSourceManager {
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public SourceManager toModelType() throws IllegalValueException {
-        SourceManager sourceDB = new SourceManager();
+        SourceManager sourceManager = new SourceManager();
         for (JsonAdaptedSource jsonAdaptedSource : sources) {
             Source source = jsonAdaptedSource.toModelType();
-            if (sourceDB.hasSource(source)) {
+            if (sourceManager.hasSource(source)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
             }
-            sourceDB.addSource(source);
+            sourceManager.addSource(source);
         }
-        return sourceDB;
+        return sourceManager;
     }
 
 }

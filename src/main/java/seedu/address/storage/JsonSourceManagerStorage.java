@@ -45,14 +45,14 @@ public class JsonSourceManagerStorage implements SourceManagerStorage {
     public Optional<ReadOnlySourceManager> readSourceManager(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
-        Optional<JsonSerializableSourceManager> jsonSourceDB = JsonUtil.readJsonFile(
+        Optional<JsonSerializableSourceManager> jsonSourceManager = JsonUtil.readJsonFile(
                 filePath, JsonSerializableSourceManager.class);
-        if (!jsonSourceDB.isPresent()) {
+        if (!jsonSourceManager.isPresent()) {
             return Optional.empty();
         }
 
         try {
-            return Optional.of(jsonSourceDB.get().toModelType());
+            return Optional.of(jsonSourceManager.get().toModelType());
         } catch (IllegalValueException ive) {
             logger.info("Illegal values found in " + filePath + ": " + ive.getMessage());
             throw new DataConversionException(ive);

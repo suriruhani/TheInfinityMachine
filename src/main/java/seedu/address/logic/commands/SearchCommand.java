@@ -11,9 +11,9 @@ import seedu.address.model.source.TitleContainsKeywordsPredicate;
  * Finds and lists all sources in Source Database which have titles containing any of the argument keywords.
  * Keyword matching is case insensitive.
  */
-public class FindCommand extends Command {
+public class SearchCommand extends Command {
 
-    public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all sources whose title contains any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
@@ -22,7 +22,7 @@ public class FindCommand extends Command {
 
     private final TitleContainsKeywordsPredicate predicate;
 
-    public FindCommand(TitleContainsKeywordsPredicate predicate) {
+    public SearchCommand(TitleContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
@@ -37,7 +37,7 @@ public class FindCommand extends Command {
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
-                || (other instanceof FindCommand // instanceof handles nulls
-                && predicate.equals(((FindCommand) other).predicate)); // state check
+                || (other instanceof SearchCommand // instanceof handles nulls
+                && predicate.equals(((SearchCommand) other).predicate)); // state check
     }
 }

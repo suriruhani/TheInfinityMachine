@@ -1,37 +1,86 @@
 package seedu.address.logic.parser;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CountCommand;
+
+/**
+ * An enum representing the different Class types that an alias can be mapped to.
+ */
+enum AliasAssociateType {
+    COMMAND,
+    PARSER
+}
 
 /**
  * Manages user-defined command aliases.
  * Non-persistent (valid for one session only).
  */
-public class AliasManager {
-    private HashMap<String, Class<? extends Command>> aliasMap = new HashMap<>();
+class AliasManager {
+    private static final String EXCEPTION_INVALID_ALIAS = "`alias` does not exist";
+    private static final String EXCEPTION_WRONG_TYPE = "`associate` must be either a Command or Parser class, " +
+            "or their subclasses";
+    static final Class[] permittedClasses = {Command.class, Parser.class};
+
+    private HashMap<String, Class<? extends Command>> aliasCommandMap = new HashMap<>();
+    private HashMap<String, Class<? extends Parser<? extends Command>>> aliasParserMap = new HashMap<>();
 
     /**
-     * A static utility method to initialize an instance of AliasManager with default aliases.
-     * Currently, it only registers "c" for CountCommand.
-     * @param am An instance of an AliasManager.
+     * Checks if a Class object is permissible under AliasManager.
+     * AliasManager presently supports only the classes in `permittedClasses`.
      */
-    static void initializeWithDefaults(AliasManager am) {
-        am.registerAlias("c", CountCommand.class);
+    private boolean isPermissibleClass(Class cls) {
+        for (int i = 0; i < permittedClasses.length; i++) {
+            // Check if `cls` is, or is a subclass of, any Class in permittedClasses
+            Class permittedClass = permittedClasses[i];
+            if (cls == permittedClass) {
+                return true;
+            } else if (permittedClass.isAssignableFrom(cls)) { // Check for subclass relationship
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
-     * Associates an alias with a command. If alias already exists, do nothing.
-     * @param alias An alias to register.
-     * @param command A Command instance.
+     * Associates an alias with either a Command or a Parser<Command>.
+     * Does nothing if alias already exists.
+     * @param associate Either a Command class or a Parser<Command> class to be associated with `alias`.
      */
-    void registerAlias(String alias, Class<? extends Command> command) {
-        if (aliasMap.containsKey(alias)) {
+    void registerAlias(String alias, Class associate) throws IllegalArgumentException {
+        Objects.requireNonNull(alias);
+        Objects.requireNonNull(associate);
+
+        // Guard against `alias` being already registered
+        if (isAlias(alias)) {
+            return;
+        }
+        // Guard against `associate` being an unsupported Class type
+        if (!isPermissibleClass(associate)) {
+            throw new IllegalArgumentException(EXCEPTION_WRONG_TYPE);
+        }
+
+        // Handle `associate` being either a Command or Parser class
+        if (associate == Command.class) {
+            aliasCommandMap.put(alias, associate);
+        } else if (associate == Parser.class) {}
+            aliasParserMap.put(alias, associate);
+    }
+
+    /**
+     * Removes an alias. Does nothing if alias does not exist.
+     */
+    void unregisterAlias(String alias) {
+        if (!isAlias(alias)) {
             return;
         }
 
-        aliasMap.put(alias, command);
+        // Even though `alias` will only exist in one of the HashMaps,
+        // we call .remove() on both, so we don't have to check which one it exists in.
+        aliasCommandMap.remove(alias);
+        aliasParserMap.remove(alias);
     }
 
     /**
@@ -40,18 +89,46 @@ public class AliasManager {
      * @return true if so, false otherwise.
      */
     boolean isAlias(String alias) {
-        return aliasMap.containsKey(alias);
+        Objects.requireNonNull(alias);
+        return aliasCommandMap.containsKey(alias) || aliasParserMap.containsKey(alias);
     }
 
     /**
-     * Returns an instance of the mapped Command to a registered alias. Requires alias to be valid.
-     * @param alias The alias.
-     * @return An instance of the mapped Command.
+     * Returns the AliasAssociateType associated with a registered alias. Alias must be valid.
+     * @throws IllegalArgumentException if alias is invalid.
      */
-    Command getCommandForAlias(String alias) throws Exception {
-        Class<? extends Command> commandClass = aliasMap.get(alias);
-        Command instantiatedCommand = commandClass.getConstructor().newInstance();
+    AliasAssociateType getAliasAssociateType(String alias) throws IllegalArgumentException {
+        Objects.requireNonNull(alias);
+        if (!isAlias(alias)) {
+            throw new IllegalArgumentException(EXCEPTION_INVALID_ALIAS);
+        }
 
-        return instantiatedCommand;
+        if (aliasCommandMap.containsKey(alias)) {
+            return AliasAssociateType.COMMAND;
+        } else if (aliasParserMap.containsKey(alias)) {
+            return AliasAssociateType.PARSER;
+        } else {
+            return null; // This should never happen because we guarantee isAlias(alias) == true
+        }
+    }
+
+    /**
+     * Returns the Class that `alias` is associated with (i.e. registered to).
+     * @throws IllegalArgumentException if alias is invalid.
+     * @return The associated Class. This is guaranteed to be one of those listed in `permittedClasses`.
+     */
+    Class getAliasAssociate(String alias) throws IllegalArgumentException {
+        Objects.requireNonNull(alias);
+        if (!isAlias(alias)) {
+            throw new IllegalArgumentException(EXCEPTION_INVALID_ALIAS);
+        }
+
+        if (aliasCommandMap.containsKey(alias)) {
+            return aliasCommandMap.get(alias);
+        } else if (aliasParserMap.containsKey(alias)) {
+            return aliasParserMap.get(alias);
+        } else {
+            return null; // This should never happen because we guarantee isAlias(alias) == true
+        }
     }
 }

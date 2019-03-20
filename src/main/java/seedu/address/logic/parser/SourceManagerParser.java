@@ -37,10 +37,6 @@ public class SourceManagerParser {
 
     private AliasManager aliasManager = new AliasManager();
 
-    public SourceManagerParser() {
-        AliasManager.initializeWithDefaults(aliasManager);
-    }
-
     /**
      * Parses user input into command for execution.
      *
@@ -109,11 +105,25 @@ public class SourceManagerParser {
         default:
             // Check if input is an alias
             if (aliasManager.isAlias(commandWord)) {
+                AliasAssociateType associateType = aliasManager.getAliasAssociateType(commandWord);
                 try {
-                    Command command = aliasManager.getCommandForAlias(commandWord);
-                    return command;
+                    switch (associateType) {
+                        case COMMAND:
+                            return (Command) aliasManager.getAliasAssociate(commandWord).getConstructor().newInstance();
+                        case PARSER:
+                            Parser<Command> parser = (Parser) aliasManager
+                                    .getAliasAssociate(commandWord)
+                                    .getConstructor()
+                                    .newInstance();
+                            return parser.parse(arguments);
+                    }
                 } catch (Exception e) {
-                    throw new ParseException(e.getMessage());
+                    // This should never happen.
+                    // AliasManager does not modify existing commands,
+                    // and .getConstructor().newInstance() is simply another way of instantiating an object.
+                    // Functionally, this is equivalent to any of the above instantiation statements,
+                    // e.g. return new ClearCommand().
+                    // TODO: Optionally, log to logger when this happens, even though it shouldn't.
                 }
             }
 

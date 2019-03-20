@@ -35,6 +35,12 @@ public class SourceManagerParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    private AliasManager aliasManager = new AliasManager();
+
+    public SourceManagerParser() {
+        AliasManager.initializeWithDefaults(aliasManager);
+    }
+
     /**
      * Parses user input into command for execution.
      *
@@ -101,6 +107,16 @@ public class SourceManagerParser {
             return new GreetCommand();
 
         default:
+            // Check if input is an alias
+            if (aliasManager.isAlias(commandWord)) {
+                try {
+                    Command command = aliasManager.getCommandForAlias(commandWord);
+                    return command;
+                } catch (Exception e) {
+                    throw new ParseException(e.getMessage());
+                }
+            }
+
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }

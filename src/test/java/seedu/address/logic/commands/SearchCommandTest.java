@@ -22,7 +22,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.source.TitleContainsKeywordsPredicate;
 
 /**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
  */
 public class SearchCommandTest {
     private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
@@ -36,24 +36,24 @@ public class SearchCommandTest {
         TitleContainsKeywordsPredicate secondPredicate =
                 new TitleContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
-        SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
+        SearchCommand searchFirstCommand = new SearchCommand(firstPredicate);
+        SearchCommand searchSecondCommand = new SearchCommand(secondPredicate);
 
         // same object -> returns true
-        assertTrue(findFirstCommand.equals(findFirstCommand));
+        assertTrue(searchFirstCommand.equals(searchFirstCommand));
 
         // same values -> returns true
-        SearchCommand findFirstCommandCopy = new SearchCommand(firstPredicate);
-        assertTrue(findFirstCommand.equals(findFirstCommandCopy));
+        SearchCommand searchFirstCommandCopy = new SearchCommand(firstPredicate);
+        assertTrue(searchFirstCommand.equals(searchFirstCommandCopy));
 
         // different types -> returns false
-        assertFalse(findFirstCommand.equals(1));
+        assertFalse(searchFirstCommand.equals(1));
 
         // null -> returns false
-        assertFalse(findFirstCommand.equals(null));
+        assertFalse(searchFirstCommand.equals(null));
 
         // different source -> returns false
-        assertFalse(findFirstCommand.equals(findSecondCommand));
+        assertFalse(searchFirstCommand.equals(searchSecondCommand));
     }
 
     @Test

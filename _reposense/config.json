@@ -1,0 +1,30 @@
+{
+  "authors":
+  [
+    {
+      "githubId": "DarrenDragonLee",
+      "displayName": "LEE...REN",
+      "authorNames": ["DarrenDragonLee"]
+    },
+    {
+      "githubId": "case141",
+      "displayName": "LOW...SEY",
+      "authorNames": ["case141"]
+    },
+    {
+      "githubId": "suriruhani",
+      "displayName": "RUH...URI",
+      "authorNames": ["suriruhani"]
+    },
+    {
+      "githubId": "fterh",
+      "displayName": "TER...WEI",
+      "authorNames": ["fterh", "Fabian", "Fabian Terh"]
+    },
+    {
+      "githubId": "DoItTomorrow",
+      "displayName": "YAN...ANG",
+      "authorNames": ["DoItTomorrow"]
+    }
+  ]
+}

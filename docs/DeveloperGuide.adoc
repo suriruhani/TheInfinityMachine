@@ -233,6 +233,38 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::alias[]
+=== Command Alias feature
+The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`.
+
+Users may do one of the following:
+1) Add a new alias
+2) Remove an existing alias
+3) List all aliases
+4) Delete all aliases
+
+This feature is backed by an in-memory database implemented as a Java `HashMap<String, Command>`.
+A HashMap is chosen for several reasons:
+* Adding and removing an alias is simple
+* Checking whether an alias exists is fast (`O(1)` performance, as opposed to `O(N)` in an unsorted list)
+* HashMaps naturally facilitate the process of looking up an associated value with a given key
+* HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
+
+*Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
+as there needs to be a way of associating a `String`-type alias with a `Command` object.
+For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
+That is, however, inelegant and contrived, as opposed to a `HashMap` solution.
+Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
+
+*Operation*: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
+"original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
+original commands) with an additional `default` block, such that if the command word is not an original command, we check if
+it is a registered alias of a command.
+
+If so, we run the command by looking up the `Command` object in our `HashMap`.
+
+Otherwise, it is a situation of invalid user input.
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -312,6 +344,104 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
+
+// tag::search[]
+=== Search feature
+==== Current Implementation
+
+The search feature is facilitated by `Infinity Machine`.
+It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title(s).
+Additionally, it uses:
+
+* `TitleContainsKeywordsPredicate.java` -- Here, the logic of running through all the titles and matching it with the user inputs
+(trimmed by space, case insensitive) is implemented.
+
+Given below is an example usage scenario and how the search mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+//image::SearchCommandStep1.png[width="800"]
+
+Step 2. The user executes `search footitle1` command and only one entry, the first one, is displayed.
+
+//image::SearchCommandStep2.png[width="800"]
+
+Step 3. The user executes `search footitle6 footitle5` and only two entries are listed, with all their details displayed.
+
+//image::SearchCommandStep3.png[width="800"]
+
+[NOTE]
+`search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
+
+==== Design Considerations
+
+===== Aspect: How undo & redo executes
+
+* **Alternative 1 (current choice):** Runs through all entries and matches the title.
+** Pros: Easy to implement.
+** Cons: May have performance issues in terms of time usage.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Using streams and StringUtil functions.
+** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Not the most efficient implementation.
+// end::search[]
+
+// tag::list[]
+=== List feature
+==== Current Implementation
+
+The list command is facilitated by `Infinity Machine`.
+It extends `Infinity Machine` with a list functionality, enumerating all entries in the source database and their details,
+in the order of their addition.
+Additionally, it uses:
+
+* `PREDICATE_SHOW_ALL_SOURCES` --
+
+Given below is an example usage scenario and how the list mechanism behaves.
+
+Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+//image::ListCommandStep1.png[width="800"]
+
+Step 2. The user executes an `add` command to add another source entry to the database.
+
+//image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
+
+Step 3. The user executes `list` command. All the entries in the database are listed again, showing all the details and
+in the order of their addition.
+
+//image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
+
+[NOTE]
+`list` does not take any arguments. If given, it will ignore it.
+
+Step 4. The user now executes `delete` to delete an entry.
+
+//image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
+
+Step 5. The user executes `list` command again. All the updated entries in the database, leaving out the last deleted one,  are listed again, showing all the details and
+in the order of their addition.
+
+//image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: How undo & redo executes
+
+* **Alternative 1 (current choice):** Reads and lists the entire source database.
+** Pros: Easy to implement.
+** Cons: May have performance issues in terms of time usage.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Reads and lists all the entries using a predicate.
+** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Maybe not the best implementation.
+// end::list[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -811,13 +941,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* has a need to manage a significant number of research data
+* needs efficient search and retrieval of research data
+* wants a safe place to save and store information
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage research data faster than a typical mouse/GUI driven app
 
 [appendix]
 == User Stories

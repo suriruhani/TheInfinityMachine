@@ -4,48 +4,41 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
+import seedu.address.model.ReadOnlySourceManager;
+import seedu.address.model.SourceManager;
+import seedu.address.model.source.Detail;
+import seedu.address.model.source.Source;
+import seedu.address.model.source.Title;
+import seedu.address.model.source.Type;
 import seedu.address.model.tag.Tag;
 
 /**
- * Contains utility methods for populating {@code AddressBook} with sample data.
+ * Contains utility methods for populating {@code SourceManager} with sample data.
  */
 public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"),
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"))
+    public static Source[] getSampleSources() {
+        return new Source[] {
+            new Source(new Title("FooTitle1"), new Type("FooType1"), new Detail("FooDetail1"),
+                getTagSet("footag1")),
+            new Source(new Title("FooTitle2"), new Type("FooType2"), new Detail("FooDetail2"),
+                getTagSet("footag2", "footag1")),
+            new Source(new Title("FooTitle3"), new Type("FooType3"), new Detail("FooDetail3"),
+                getTagSet("footag3")),
+            new Source(new Title("FooTitle4"), new Type("FooType4"), new Detail("FooDetail4"),
+                getTagSet("footag4")),
+            new Source(new Title("FooTitle5"), new Type("FooType5"), new Detail("FooDetail5"),
+                getTagSet("footag5")),
+            new Source(new Title("FooTitle6"), new Type("FooType6"), new Detail("FooDetail6"),
+                getTagSet("footag2"))
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
-        AddressBook sampleAb = new AddressBook();
-        for (Person samplePerson : getSamplePersons()) {
-            sampleAb.addPerson(samplePerson);
+    public static ReadOnlySourceManager getSampleSourceManager() {
+        SourceManager sampleSm = new SourceManager();
+        for (Source sampleSource : getSampleSources()) {
+            sampleSm.addSource(sampleSource);
         }
-        return sampleAb;
+        return sampleSm;
     }
 
     /**

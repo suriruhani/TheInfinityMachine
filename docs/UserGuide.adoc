@@ -108,26 +108,34 @@ Edits the 5th source and clears all its existing tags.
 
 === Searching a source: `search`
 
-Searches for entries amongst the list of sources based on the tag entered by the user. +
-Format: `search t/TAG [t/TAG]...`
+Searches for entries amongst the list of sources by title. +
+Finds all entries with an (exact, case insensitive) matching title as entered by the user. +
+It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
+Matching is exact (eg. `Algorithm` will not match with `Algorithms`) +
+Format: `search title`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
-* There can have any number of tags but minimally 1.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
+* Only full words will be matched e.g. `Han` will not match `Hans`, `FooTitle` will not match `FooTitle1`
 ****
 
 Examples:
 
-* `search t/Algorithms` +
-Returns the source with the tag `algorithms`
-* `search t/Artificial Intelligence t/Science Journal t/AI` +
-Returns any source having tags `Artificial Intelligence`, `Science Journal`, or `AI`
+* `search Algorithms` +
+Returns the source with the title `algorithms`
+* `search ArtificialIntelligence MachineLearning` +
+Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
 === Listing all sources : `list`
 
-Displays a list of all sources currently in the database. Also allows listing of all tags and types of records. +
-Format: `list` `list tags` `list types`
+Displays a list of all sources currently in the database, with no filtering. +
+Format: `list`
+
+****
+* Lists all sources present in the database in the order of their addition
+* Tags, Details, Type are also displayed along with the sources
+****
 
 === Generate bibliography entry : `biblio`
 
@@ -156,6 +164,17 @@ Format: `definecommand c/COMMAND a/ALIAS`
 
 Examples:
 * `definecommand c/biblio a/b`
+
+=== Counting total number of sources: `count`
+
+Counts all source entries and returns the total number of sources. +
+Format: `count`
+
+Examples:
+
+* `count` +
+Result: `Total number of source(s): 6` +
+Counts the total number of sources in the database
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

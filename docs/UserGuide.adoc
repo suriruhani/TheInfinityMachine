@@ -157,13 +157,41 @@ Format: `history`
 Lists the results of all searches made using the `search` command recently. +
 Format: `searchhistory`
 
-=== Define custom commands : `definecommand`
-
-Allows the user to give aliases to frequently used verbose commands. +
-Format: `definecommand c/COMMAND a/ALIAS`
+=== Command aliases
+==== Creating an alias: `alias`
+Allows the user to create aliases create aliases for commands. +
+Format: `alias COMMAND ALIAS`
 
 Examples:
-* `definecommand c/biblio a/b`
+
+* `alias count c` (`c` is now a valid pseudo-command that works exactly like `count`)
+* `alias invalid i` (`i` is now an invalid pseudo-command that works exactly like `invalid`)
+
+The user is responsible for ensuring that he is creating aliases for valid commands.
+Aliases provide no guarantees of the validity of their associated commands.
+
+If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:
+
+* `alias count c`
+* `alias invalid c`
+
+`c` is now an alias for command `invalid`.
+
+==== Removing an alias: `alias-rm`
+Allows the user to remove previously-defined aliases. +
+Format: `alias-rm ALIAS`
+
+Examples:
+
+* `alias count c` (`c` is now an alias for `count`)
+* `alias-rm c` (`c` is no longer an alias for `count`)
+
+If the user attempts to remove a non-existent alias, nothing happens.
+`alias-rm` only guarantees that after it is performed, the alias argument does not exist.
+
+==== Listing all aliases: `alias-ls`
+Lists all defined aliases and their associated commands. +
+Format: `alias-ls`
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

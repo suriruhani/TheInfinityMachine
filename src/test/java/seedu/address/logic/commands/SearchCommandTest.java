@@ -24,7 +24,7 @@ import seedu.address.model.source.TitleContainsKeywordsPredicate;
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
  */
-public class FindCommandTest {
+public class SearchCommandTest {
     private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
     private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
     private CommandHistory commandHistory = new CommandHistory();
@@ -36,14 +36,14 @@ public class FindCommandTest {
         TitleContainsKeywordsPredicate secondPredicate =
                 new TitleContainsKeywordsPredicate(Collections.singletonList("second"));
 
-        FindCommand findFirstCommand = new FindCommand(firstPredicate);
-        FindCommand findSecondCommand = new FindCommand(secondPredicate);
+        SearchCommand findFirstCommand = new SearchCommand(firstPredicate);
+        SearchCommand findSecondCommand = new SearchCommand(secondPredicate);
 
         // same object -> returns true
         assertTrue(findFirstCommand.equals(findFirstCommand));
 
         // same values -> returns true
-        FindCommand findFirstCommandCopy = new FindCommand(firstPredicate);
+        SearchCommand findFirstCommandCopy = new SearchCommand(firstPredicate);
         assertTrue(findFirstCommand.equals(findFirstCommandCopy));
 
         // different types -> returns false
@@ -60,7 +60,7 @@ public class FindCommandTest {
     public void execute_zeroKeywords_noSourceFound() {
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 0);
         TitleContainsKeywordsPredicate predicate = preparePredicate(" ");
-        FindCommand command = new FindCommand(predicate);
+        SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Collections.emptyList(), model.getFilteredSourceList());
@@ -70,7 +70,7 @@ public class FindCommandTest {
     public void execute_multipleKeywords_multipleSourcesFound() {
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 3);
         TitleContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
-        FindCommand command = new FindCommand(predicate);
+        SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(CARL, ELLE, FIONA), model.getFilteredSourceList());

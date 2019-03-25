@@ -1,0 +1,11 @@
+{
+  "sources": [ {
+    "title": "Valid Source",
+    "type": "9482424",
+    "detail": "hans@example.com"
+  }, {
+    "title": "Source With Valid Type Field",
+    "type": "948asdf2424",
+    "detail": "hans@example.com"
+  } ]
+}

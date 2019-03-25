@@ -9,9 +9,9 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.source.Detail;
 import seedu.address.model.source.Title;
 import seedu.address.model.source.Type;
-import seedu.address.model.source.Detail;
 import seedu.address.model.tag.Tag;
 
 /**

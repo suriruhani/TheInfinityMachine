@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,14 +25,14 @@ import seedu.address.model.source.Type;
 import seedu.address.model.tag.Tag;
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the details of an existing source in the address book.
  */
 public class EditCommand extends Command {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the displayed person list. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the source identified "
+            + "by the index number used in the displayed source list. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_TITLE + "TITLE] "
@@ -93,7 +93,7 @@ public class EditCommand extends Command {
 
         Title updatedTitle = editSourceDescriptor.getTitle().orElse(sourceToEdit.getTitle());
         Type updatedType = editSourceDescriptor.getType().orElse(sourceToEdit.getType());
-        Detail updatedDetails = editSourceDescriptor.getDetail().orElse(sourceToEdit.getDetail());
+        Detail updatedDetails = editSourceDescriptor.getDetails().orElse(sourceToEdit.getDetail());
         Set<Tag> updatedTags = editSourceDescriptor.getTags().orElse(sourceToEdit.getTags());
 
         return new Source(updatedTitle, updatedType, updatedDetails, updatedTags);

@@ -13,7 +13,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.person.Person;
+import seedu.address.model.source.Source;
 
 /**
  * The Browser Panel of the App.
@@ -22,7 +22,7 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final URL DEFAULT_PAGE =
             requireNonNull(MainApp.class.getResource(FXML_FILE_FOLDER + "default.html"));
-    public static final String SEARCH_PAGE_URL = "https://se-education.org/dummy-search-page/?name=";
+    public static final String SEARCH_PAGE_URL = "https://se-education.org/dummy-search-page/?title=";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -31,26 +31,26 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel(ObservableValue<Person> selectedPerson) {
+    public BrowserPanel(ObservableValue<Source> selectedSource) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
         getRoot().setOnKeyPressed(Event::consume);
 
-        // Load person page when selected person changes.
-        selectedPerson.addListener((observable, oldValue, newValue) -> {
+        // Load source page when selected source changes.
+        selectedSource.addListener((observable, oldValue, newValue) -> {
             if (newValue == null) {
                 loadDefaultPage();
                 return;
             }
-            loadPersonPage(newValue);
+            loadSourcePage(newValue);
         });
 
         loadDefaultPage();
     }
 
-    private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+    private void loadSourcePage(Source source) {
+        loadPage(SEARCH_PAGE_URL + source.getTitle().title);
     }
 
     public void loadPage(String url) {

@@ -25,7 +25,7 @@ public class BiblioCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
 
-    public BiblioCommand(Index targetIndex){
+    public BiblioCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 

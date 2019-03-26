@@ -162,6 +162,7 @@ public abstract class SourceManagerSystemTest {
      */
     protected void deleteAllSources() {
         executeCommand(ClearCommand.COMMAND_WORD);
+        executeCommand(ClearCommand.COMMAND_WORD);
         assertEquals(0, getModel().getSourceManager().getSourceList().size());
     }
 

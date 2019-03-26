@@ -2,133 +2,78 @@ package seedu.address.logic.parser;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Optional;
 
 import seedu.address.logic.commands.Command;
-
-/**
- * An enum representing the different Class types that an alias can be mapped to.
- */
-enum AliasAssociateType {
-    COMMAND,
-    PARSER
-}
 
 /**
  * Manages user-defined command aliases.
  * Non-persistent (valid for one session only).
  */
 class AliasManager {
-    private static final String EXCEPTION_INVALID_ALIAS = "`alias` does not exist";
-    private static final String EXCEPTION_WRONG_TYPE = "`associate` must be either a Command or Parser class, " +
-            "or their subclasses";
-    static final Class[] permittedClasses = {Command.class, Parser.class};
+    static final String COMMAND_WORD_ADD = "alias";
+    static final String COMMAND_WORD_REMOVE = "alias-rm";
+    static final String COMMAND_WORD_LIST = "alias-ls";
+    private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
+    private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
 
-    private HashMap<String, Class<? extends Command>> aliasCommandMap = new HashMap<>();
-    private HashMap<String, Class<? extends Parser<? extends Command>>> aliasParserMap = new HashMap<>();
+    CommandValidator commandValidator;
+    private HashMap<String, String> aliases = new HashMap<>();
 
-    /**
-     * Checks if a Class object is permissible under AliasManager.
-     * AliasManager presently supports only the classes in `permittedClasses`.
-     */
-    private boolean isPermissibleClass(Class cls) {
-        for (int i = 0; i < permittedClasses.length; i++) {
-            // Check if `cls` is, or is a subclass of, any Class in permittedClasses
-            Class permittedClass = permittedClasses[i];
-            if (cls == permittedClass) {
-                return true;
-            } else if (permittedClass.isAssignableFrom(cls)) { // Check for subclass relationship
-                return true;
-            }
-        }
-
-        return false;
+    AliasManager(CommandValidator commandValidator) {
+        Objects.requireNonNull(commandValidator);
+        this.commandValidator = commandValidator;
     }
 
     /**
-     * Associates an alias with either a Command or a Parser<Command>.
-     * Does nothing if alias already exists.
-     * @param associate Either a Command class or a Parser<Command> class to be associated with `alias`.
+     * Checks if alias is registered.
      */
-    void registerAlias(String alias, Class associate) throws IllegalArgumentException {
+    boolean isAlias(String alias) {
         Objects.requireNonNull(alias);
-        Objects.requireNonNull(associate);
+        return aliases.containsKey(alias);
+    }
 
-        // Guard against `alias` being already registered
-        if (isAlias(alias)) {
-            return;
-        }
-        // Guard against `associate` being an unsupported Class type
-        if (!isPermissibleClass(associate)) {
-            throw new IllegalArgumentException(EXCEPTION_WRONG_TYPE);
+    /**
+     * Associates an alias with a command.
+     * If alias already exists, it will be overwritten.
+     * @throws IllegalArgumentException if command is another registered alias.
+     * @throws IllegalArgumentException if alias is an existing command.
+     */
+    void registerAlias(String command, String alias) throws IllegalArgumentException {
+        Objects.requireNonNull(alias);
+        Objects.requireNonNull(command);
+
+        // Guard against command being another registered alias
+        if (isAlias(command)) {
+            throw new IllegalArgumentException(ERROR_COMMAND_IS_ALIAS);
         }
 
-        // Handle `associate` being either a Command or Parser class
-        if (associate == Command.class) {
-            aliasCommandMap.put(alias, associate);
-        } else if (associate == Parser.class) {}
-            aliasParserMap.put(alias, associate);
+        // Guard against alias being an existing command
+        if (commandValidator.isValidCommand(alias)) {
+            throw new IllegalArgumentException(ERROR_ALIAS_IS_COMMAND);
+        }
+
+        aliases.put(alias, command);
     }
 
     /**
      * Removes an alias. Does nothing if alias does not exist.
      */
     void unregisterAlias(String alias) {
-        if (!isAlias(alias)) {
-            return;
-        }
-
-        // Even though `alias` will only exist in one of the HashMaps,
-        // we call .remove() on both, so we don't have to check which one it exists in.
-        aliasCommandMap.remove(alias);
-        aliasParserMap.remove(alias);
+        aliases.remove(alias);
     }
 
     /**
-     * Checks if `alias` is a registered alias.
-     * @param alias The alias.
-     * @return true if so, false otherwise.
+     * Looks up and returns the command that alias is associated with.
+     * @returns A String optional if alias is registered, and an empty optional otherwise.
      */
-    boolean isAlias(String alias) {
-        Objects.requireNonNull(alias);
-        return aliasCommandMap.containsKey(alias) || aliasParserMap.containsKey(alias);
-    }
-
-    /**
-     * Returns the AliasAssociateType associated with a registered alias. Alias must be valid.
-     * @throws IllegalArgumentException if alias is invalid.
-     */
-    AliasAssociateType getAliasAssociateType(String alias) throws IllegalArgumentException {
+    Optional<String> getCommand(String alias) {
         Objects.requireNonNull(alias);
         if (!isAlias(alias)) {
-            throw new IllegalArgumentException(EXCEPTION_INVALID_ALIAS);
+            return Optional.empty();
         }
 
-        if (aliasCommandMap.containsKey(alias)) {
-            return AliasAssociateType.COMMAND;
-        } else if (aliasParserMap.containsKey(alias)) {
-            return AliasAssociateType.PARSER;
-        } else {
-            return null; // This should never happen because we guarantee isAlias(alias) == true
-        }
-    }
-
-    /**
-     * Returns the Class that `alias` is associated with (i.e. registered to).
-     * @throws IllegalArgumentException if alias is invalid.
-     * @return The associated Class. This is guaranteed to be one of those listed in `permittedClasses`.
-     */
-    Class getAliasAssociate(String alias) throws IllegalArgumentException {
-        Objects.requireNonNull(alias);
-        if (!isAlias(alias)) {
-            throw new IllegalArgumentException(EXCEPTION_INVALID_ALIAS);
-        }
-
-        if (aliasCommandMap.containsKey(alias)) {
-            return aliasCommandMap.get(alias);
-        } else if (aliasParserMap.containsKey(alias)) {
-            return aliasParserMap.get(alias);
-        } else {
-            return null; // This should never happen because we guarantee isAlias(alias) == true
-        }
+        String command = aliases.get(alias);
+        return Optional.of(command);
     }
 }

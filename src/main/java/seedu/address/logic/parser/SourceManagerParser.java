@@ -4,16 +4,20 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 
 /**
  * Parses user input.
  */
-public class SourceManagerParser {
+public class SourceManagerParser implements CommandValidator {
 
     /**
      * Used for initial separation of command word and args.
@@ -23,9 +27,9 @@ public class SourceManagerParser {
     // Set of all valid commands
     private HashSet<String> validCommands = new HashSet<>();
 
-    private AliasManager aliasManager = new AliasManager();
+    private AliasManager aliasManager = new AliasManager(this);
 
-    SourceManagerParser() {
+    public SourceManagerParser() {
         validCommands.add(AddCommand.COMMAND_WORD);
         validCommands.add(EditCommand.COMMAND_WORD);
         validCommands.add(SelectCommand.COMMAND_WORD);
@@ -66,6 +70,8 @@ public class SourceManagerParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        String[] splitArguments;
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -116,32 +122,58 @@ public class SourceManagerParser {
         case GreetCommand.COMMAND_WORD:
             return new GreetCommand();
 
-        default:
-            // Check if input is an alias
-            if (aliasManager.isAlias(commandWord)) {
-                AliasAssociateType associateType = aliasManager.getAliasAssociateType(commandWord);
-                try {
-                    switch (associateType) {
-                        case COMMAND:
-                            return (Command) aliasManager.getAliasAssociate(commandWord).getConstructor().newInstance();
-                        case PARSER:
-                            Parser<Command> parser = (Parser) aliasManager
-                                    .getAliasAssociate(commandWord)
-                                    .getConstructor()
-                                    .newInstance();
-                            return parser.parse(arguments);
-                    }
-                } catch (Exception e) {
-                    // This should never happen.
-                    // AliasManager does not modify existing commands,
-                    // and .getConstructor().newInstance() is simply another way of instantiating an object.
-                    // Functionally, this is equivalent to any of the above instantiation statements,
-                    // e.g. return new ClearCommand().
-                    // TODO: Optionally, log to logger when this happens, even though it shouldn't.
-                }
+        // Meta-commands (pertaining to AliasManager)
+
+        case AliasManager.COMMAND_WORD_ADD:
+            splitArguments = arguments.trim().split(" ");
+            if (splitArguments.length != 2) {
+                throw new ParseException("You have provided an invalid number of arguments");
             }
 
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            try {
+                aliasManager.registerAlias(splitArguments[0], splitArguments[1]);
+                return new DummyCommand("Alias created");
+            } catch (IllegalArgumentException e) {
+                return new DummyCommand(e.getMessage());
+            }
+
+        case AliasManager.COMMAND_WORD_REMOVE:
+            splitArguments = arguments.trim().split(" ");
+            if (splitArguments.length != 1) {
+                throw new ParseException("You have provided an invalid number of arguments");
+            }
+
+            aliasManager.unregisterAlias(splitArguments[0]);
+            return new DummyCommand("Alias removed");
+
+
+        default:
+            // Throw ParseException if input is not an alias
+            if (!aliasManager.isAlias(commandWord)) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
+
+            // This should never throw NoSuchElementException because we ensured the validity of the alias
+            String actualCommand = aliasManager.getCommand(commandWord).get();
+
+            String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
+            return parseCommand(actualUserInput);
+        }
+    }
+
+    /**
+     * A concrete implementation of Command that doesn't do anything except return a CommandResult.
+     */
+    private class DummyCommand extends Command {
+        CommandResult commandResult;
+
+        DummyCommand(String feedback) {
+            commandResult = new CommandResult(feedback);
+        }
+
+        @Override
+        public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+            return commandResult;
         }
     }
 

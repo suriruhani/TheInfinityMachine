@@ -69,12 +69,14 @@ public class LogicManagerTest {
         assertHistoryCorrect(deleteCommand);
     }
 
+    /*
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_LIST_ALL_SUCCESS, model);
         assertHistoryCorrect(listCommand);
     }
+    */
 
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {

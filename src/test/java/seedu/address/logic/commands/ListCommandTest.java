@@ -28,6 +28,7 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
     }
 
+    /*
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
         assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
@@ -40,4 +41,5 @@ public class ListCommandTest {
         assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
                 expectedModel);
     }
+    */
 }

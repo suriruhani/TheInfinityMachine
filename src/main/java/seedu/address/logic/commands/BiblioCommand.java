@@ -25,12 +25,12 @@ public class BiblioCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
+    
+    private final Index targetIndex;
 
     public BiblioCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
-
-    private final Index targetIndex;
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
@@ -46,7 +46,7 @@ public class BiblioCommand extends Command {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;
         String targetDetail = targetSource.getDetail().detail;
-
-        return new CommandResult(String.format("%s;\n%s;\n%s\n", targetTitle, targetType, targetDetail));
+        String biblioEntry = String.format("\n%s;\n%s;\n%s\n", targetTitle, targetType, targetDetail);
+        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
     }
 }

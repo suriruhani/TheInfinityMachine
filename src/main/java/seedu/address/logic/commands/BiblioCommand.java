@@ -25,7 +25,7 @@ public class BiblioCommand extends Command {
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
-    
+
     private final Index targetIndex;
 
     public BiblioCommand(Index targetIndex) {

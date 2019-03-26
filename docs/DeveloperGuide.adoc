@@ -413,7 +413,7 @@ Step 2. The user executes an `add` command to add another source entry to the da
 
 //image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
-Step 3. The user executes `list` command. All the entries in the database are listed again, showing all the details and
+Step 3. The user executes `list` command (with no arguments). All the entries in the database are listed again, showing all the details and
 in the order of their addition.
 
 //image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
@@ -429,6 +429,11 @@ Step 5. The user executes `list` command again. All the updated entries in the d
 in the order of their addition.
 
 //image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
+
+Step 6. The user now executes `list 2` command. The first 2 entries akin to the previous output are displayed.
+
+Step 7. The user now executes `list 3 5` command. An invalid command format exception is thrown, prompting the user
+to enter exactly 1 or no arguments.
 
 ==== Design Considerations
 

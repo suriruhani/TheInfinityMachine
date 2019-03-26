@@ -129,11 +129,14 @@ Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
 === Listing all sources : `list`
 
-Displays a list of all sources currently in the database, with no filtering. +
-Format: `list`
+Displays a list of all sources currently in the database, without filtering. +
+Optional argument N used to list only the top N sources to the user. +
+Format: `list [N]`
 
 ****
-* Lists all sources present in the database in the order of their addition
+* Lists all sources present in the database in the order of their addition, if no argument passed
+* Lists top N sources if a single integer N is passed
+* Throws error if more tan one arguments are passed
 * Tags, Details, Type are also displayed along with the sources
 ****
 

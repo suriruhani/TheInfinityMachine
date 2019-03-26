@@ -46,7 +46,7 @@ public class JsonSerializableSourceManagerTest {
         JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(DUPLICATE_SOURCE_FILE,
                 JsonSerializableSourceManager.class).get();
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(JsonSerializableSourceManager.MESSAGE_DUPLICATE_SOURCE;
+        thrown.expectMessage(JsonSerializableSourceManager.MESSAGE_DUPLICATE_SOURCE);
         dataFromFile.toModelType();
     }
 

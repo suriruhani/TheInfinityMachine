@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditSourceDescriptor;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
@@ -17,21 +16,21 @@ import seedu.address.model.tag.Tag;
  */
 public class EditSourceDescriptorBuilder {
 
-    private EditCommand.EditSourceDescriptor descriptor;
+    private EditSourceDescriptor descriptor;
 
     public EditSourceDescriptorBuilder() {
         descriptor = new EditSourceDescriptor();
     }
 
     public EditSourceDescriptorBuilder(EditSourceDescriptor descriptor) {
-        this.descriptor = new EditCommand.EditSourceDescriptor(descriptor);
+        this.descriptor = new EditSourceDescriptor(descriptor);
     }
 
     /**
      * Returns an {@code EditSourceDescriptor} with fields containing {@code source}'s details
      */
     public EditSourceDescriptorBuilder(Source source) {
-        descriptor = new EditCommand.EditSourceDescriptor();
+        descriptor = new EditSourceDescriptor();
         descriptor.setTitle(source.getTitle());
         descriptor.setType(source.getType());
         descriptor.setDetails(source.getDetail());

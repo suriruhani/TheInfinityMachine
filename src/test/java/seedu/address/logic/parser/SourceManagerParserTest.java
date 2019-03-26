@@ -34,6 +34,7 @@ import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
 
+
 public class SourceManagerParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -81,7 +82,7 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseCommand_search() throws Exception {
+    public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         SearchCommand command = (SearchCommand) parser.parseCommand(
                 SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));

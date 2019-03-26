@@ -19,7 +19,7 @@ import seedu.address.model.source.Source;
 @JsonRootName(value = "sourcemanager")
 class JsonSerializableSourceManager {
 
-    public static final String MESSAGE_DUPLICATE_PERSON = "Source list contains duplicate entires.";
+    public static final String MESSAGE_DUPLICATE_SOURCE = "Source list contains duplicate entires.";
 
     private final List<JsonAdaptedSource> sources = new ArrayList<>();
 
@@ -50,7 +50,7 @@ class JsonSerializableSourceManager {
         for (JsonAdaptedSource jsonAdaptedSource : sources) {
             Source source = jsonAdaptedSource.toModelType();
             if (sourceManager.hasSource(source)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_PERSON);
+                throw new IllegalValueException(MESSAGE_DUPLICATE_SOURCE);
             }
             sourceManager.addSource(source);
         }

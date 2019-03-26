@@ -32,11 +32,11 @@ public class ListCommand extends Command {
 
     private Index targetIndex = null;
 
-    public ListCommand(Index... optTargetIndex) {
-        if (optTargetIndex.length > 0) {
-            this.targetIndex = optTargetIndex[0];
-        }
+    public ListCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
     }
+
+    public ListCommand() {}
 
 //    @Override
 //    public CommandResult execute(Model model, CommandHistory history) {

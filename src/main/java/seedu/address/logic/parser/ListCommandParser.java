@@ -18,8 +18,12 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ListCommand(index);
+            if (args.length() == 0) {
+                return new ListCommand();
+            } else {
+                Index index = ParserUtil.parseIndex(args);
+                return new ListCommand(index);
+            }
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), pe);

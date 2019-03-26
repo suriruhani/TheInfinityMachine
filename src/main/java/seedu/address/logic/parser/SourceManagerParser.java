@@ -3,26 +3,11 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CountCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.GreetCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.PanicCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SearchCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
-import seedu.address.logic.commands.UnpanicCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -35,7 +20,36 @@ public class SourceManagerParser {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
+    // Set of all valid commands
+    private HashSet<String> validCommands = new HashSet<>();
+
     private AliasManager aliasManager = new AliasManager();
+
+    SourceManagerParser() {
+        validCommands.add(AddCommand.COMMAND_WORD);
+        validCommands.add(EditCommand.COMMAND_WORD);
+        validCommands.add(SelectCommand.COMMAND_WORD);
+        validCommands.add(DeleteCommand.COMMAND_WORD);
+        validCommands.add(ClearCommand.COMMAND_WORD);
+        validCommands.add(SearchCommand.COMMAND_WORD);
+        validCommands.add(ListCommand.COMMAND_WORD);
+        validCommands.add(HistoryCommand.COMMAND_WORD);
+        validCommands.add(ExitCommand.COMMAND_WORD);
+        validCommands.add(HelpCommand.COMMAND_WORD);
+        validCommands.add(UndoCommand.COMMAND_WORD);
+        validCommands.add(RedoCommand.COMMAND_WORD);
+        validCommands.add(PanicCommand.COMMAND_WORD);
+        validCommands.add(UnpanicCommand.COMMAND_WORD);
+        validCommands.add(CountCommand.COMMAND_WORD);
+        validCommands.add(GreetCommand.COMMAND_WORD);
+    }
+
+    /**
+     * Checks whether command is a valid command.
+     */
+    public boolean isValidCommand(String command) {
+        return validCommands.contains(command);
+    }
 
     /**
      * Parses user input into command for execution.

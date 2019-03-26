@@ -15,13 +15,16 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     public void edit() {
     //        Model model = getModel();
 
-    //        /* ----------------- Performing edit operation while an unfiltered list is being shown ---------------------- */
+    //        /* ----------------- Performing edit operation
+        //        while an unfiltered list is being shown ---------------------- */
     //
-    //        /* Case: edit all fields, command with leading spaces, trailing spaces and multiple spaces between each field
+    //        /* Case: edit all fields, command with leading spaces,
+        //        trailing spaces and multiple spaces between each field
     //         * -> edited
     //         */
     //        Index index = INDEX_FIRST_SOURCE;
-    //        String command = " " + EditCommand.COMMAND_WORD + "  " + index.getOneBased() + "  " + TITLE_DESC_BOB + "  "
+    //        String command = " " + EditCommand.COMMAND_WORD + "  "
+        //        + index.getOneBased() + "  " + TITLE_DESC_BOB + "  "
     //                + " " + TYPE_DESC_BOB + "  " + DETAIL_DESC_BOB + " " + TAG_DESC_BAR + " ";
     //        Source editedSource = new SourceBuilder(BENSON).withTags(VALID_TAG_BAR).build();
     //        assertCommandSuccess(command, index, editedSource);
@@ -42,7 +45,8 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
     //        assertCommandSuccess(command, index, BENSON);
     //
-    //        /* Case: edit a source with new values same as another source's values but with different title -> edited */
+    //        /* Case: edit a source with new values same
+        //        as another source's values but with different title -> edited */
     //        assertTrue(getModel().getSourceManager().getSourceList().contains(BENSON));
     //        index = INDEX_SECOND_SOURCE;
     //        assertNotEquals(getModel().getFilteredSourceList().get(index.getZeroBased()), BENSON);
@@ -67,7 +71,8 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //        editedSource = new SourceBuilder(sourceToEdit).withTags().build();
     //        assertCommandSuccess(command, index, editedSource);
     //
-    //        /* ------------------ Performing edit operation while a filtered list is being shown ------------------------ */
+    //        /* ------------------ Performing edit operation
+        //        while a filtered list is being shown ------------------------ */
     //
     //        /* Case: filtered source list, edit index within bounds of source manager and source list -> edited */
     //        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
@@ -86,9 +91,11 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_BOB,
     //                Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     //
-    //        /* --------------------- Performing edit operation while a source card is selected -------------------------- */
+    //        /* --------------------- Performing edit operation
+        //        while a source card is selected -------------------------- */
     //
-    //        /* Case: selects first card in the source list, edit a source -> edited, card selection remains unchanged but
+    //        /* Case: selects first card in the source list,
+        //        edit a source -> edited, card selection remains unchanged but
     //         * browser url changes
     //         */
     //        showAllSources();
@@ -100,7 +107,8 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //        // browser's url is updated to reflect the new source's name
     //        assertCommandSuccess(command, index, ALICE, index);
     //
-    //        /* --------------------------------- Performing invalid edit operation -------------------------------------- */
+    //        /* --------------------------------- Performing
+        //        invalid edit operation -------------------------------------- */
     //
     //        /* Case: invalid index (0) -> rejected */
     //        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + TITLE_DESC_BOB,
@@ -124,19 +132,23 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //                EditCommand.MESSAGE_NOT_EDITED);
     //
     //        /* Case: invalid title -> rejected */
-    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TITLE_DESC,
+    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
+        //        INDEX_FIRST_SOURCE.getOneBased() + INVALID_TITLE_DESC,
     //                Title.MESSAGE_CONSTRAINTS);
     //
     //        /* Case: invalid type -> rejected */
-    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TYPE_DESC,
+    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
+        //        INDEX_FIRST_SOURCE.getOneBased() + INVALID_TYPE_DESC,
     //                Type.MESSAGE_CONSTRAINTS);
     //
     //        /* Case: invalid detail -> rejected */
-    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased() + INVALID_DETAIL_DESC,
+    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
+        //        INDEX_FIRST_SOURCE.getOneBased() + INVALID_DETAIL_DESC,
     //                Detail.MESSAGE_CONSTRAINTS);
     //
     //        /* Case: invalid tag -> rejected */
-    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TAG_DESC,
+    //        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
+        //        INDEX_FIRST_SOURCE.getOneBased() + INVALID_TAG_DESC,
     //                Tag.MESSAGE_CONSTRAINTS);
     //
     //        /* Case: edit a source with new values same as another source's values -> rejected */
@@ -148,17 +160,20 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     //                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
     //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
     //
-    //        /* Case: edit a source with new values same as another source's values but with different tags -> rejected */
+    //        /* Case: edit a source with new values same as another source's
+        //        values but with different tags -> rejected */
     //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
     //                + DETAIL_DESC_BOB + TAG_DESC_BAR;
     //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
     //
-    //        /* Case: edit a source with new values same as another source's values but with different detail -> rejected */
+    //        /* Case: edit a source with new values same as another source's
+        //        values but with different detail -> rejected */
     //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
     //                + DETAIL_DESC_AMY + TAG_DESC_FOO + TAG_DESC_BAR;
     //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
     //
-    //        /* Case: edit a source with new values same as another source's values but with different type -> rejected */
+    //        /* Case: edit a source with new values same as another source's
+        //        values but with different type -> rejected */
     //        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_AMY
     //                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
     //        assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);

@@ -168,14 +168,21 @@ Examples:
 * `alias invalid i` (`i` is now an invalid pseudo-command that works exactly like `invalid`)
 
 The user is responsible for ensuring that he is creating aliases for valid commands.
-Aliases provide no guarantees of the validity of their associated commands.
+The successful creation of an alias does not provide any guarantee of the validity of the associated command.
 
 If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:
 
 * `alias count c`
 * `alias invalid c`
 
-`c` is now an alias for command `invalid`.
+`c` is now an alias for the invalid command `invalid`.
+
+The command may not be another alias. The alias may not be a command.
+
+* `alias count ct` (`ct` is now an alias for `count`)
+* `alias ct c` (this is invalid because `ct` is another alias)
+
+* `alias count list` (this is invalid because `list` is a command)
 
 ==== Removing an alias: `alias-rm`
 Allows the user to remove previously-defined aliases. +

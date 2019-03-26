@@ -3,12 +3,15 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
@@ -23,22 +26,49 @@ import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpanicCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Model;
 
 /**
  * Parses user input.
  */
-public class SourceManagerParser {
+public class SourceManagerParser implements CommandValidator {
 
     /**
      * Used for initial separation of command word and args.
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private AliasManager aliasManager = new AliasManager();
+    // Set of all valid commands
+    private HashSet<String> validCommands = new HashSet<>();
+
+    private AliasManager aliasManager = new AliasManager(this);
 
     public SourceManagerParser() {
-        AliasManager.initializeWithDefaults(aliasManager);
+        validCommands.add(AddCommand.COMMAND_WORD);
+        validCommands.add(EditCommand.COMMAND_WORD);
+        validCommands.add(SelectCommand.COMMAND_WORD);
+        validCommands.add(DeleteCommand.COMMAND_WORD);
+        validCommands.add(ClearCommand.COMMAND_WORD);
+        validCommands.add(SearchCommand.COMMAND_WORD);
+        validCommands.add(ListCommand.COMMAND_WORD);
+        validCommands.add(HistoryCommand.COMMAND_WORD);
+        validCommands.add(ExitCommand.COMMAND_WORD);
+        validCommands.add(HelpCommand.COMMAND_WORD);
+        validCommands.add(UndoCommand.COMMAND_WORD);
+        validCommands.add(RedoCommand.COMMAND_WORD);
+        validCommands.add(PanicCommand.COMMAND_WORD);
+        validCommands.add(UnpanicCommand.COMMAND_WORD);
+        validCommands.add(CountCommand.COMMAND_WORD);
+        validCommands.add(GreetCommand.COMMAND_WORD);
+    }
+
+    /**
+     * Checks whether command is a valid command.
+     */
+    public boolean isValidCommand(String command) {
+        return validCommands.contains(command);
     }
 
     /**
@@ -56,6 +86,8 @@ public class SourceManagerParser {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
+        String[] splitArguments;
+
         switch (commandWord) {
 
         case AddCommand.COMMAND_WORD:
@@ -106,18 +138,58 @@ public class SourceManagerParser {
         case GreetCommand.COMMAND_WORD:
             return new GreetCommand();
 
-        default:
-            // Check if input is an alias
-            if (aliasManager.isAlias(commandWord)) {
-                try {
-                    Command command = aliasManager.getCommandForAlias(commandWord);
-                    return command;
-                } catch (Exception e) {
-                    throw new ParseException(e.getMessage());
-                }
+        // Meta-commands (pertaining to AliasManager)
+
+        case AliasManager.COMMAND_WORD_ADD:
+            splitArguments = arguments.trim().split(" ");
+            if (splitArguments.length != 2) {
+                throw new ParseException("You have provided an invalid number of arguments");
             }
 
-            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            try {
+                aliasManager.registerAlias(splitArguments[0], splitArguments[1]);
+                return new DummyCommand("Alias created");
+            } catch (IllegalArgumentException e) {
+                return new DummyCommand(e.getMessage());
+            }
+
+        case AliasManager.COMMAND_WORD_REMOVE:
+            splitArguments = arguments.trim().split(" ");
+            if (splitArguments.length != 1) {
+                throw new ParseException("You have provided an invalid number of arguments");
+            }
+
+            aliasManager.unregisterAlias(splitArguments[0]);
+            return new DummyCommand("Alias removed");
+
+
+        default:
+            // Throw ParseException if input is not an alias
+            if (!aliasManager.isAlias(commandWord)) {
+                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
+            }
+
+            // This should never throw NoSuchElementException because we ensured the validity of the alias
+            String actualCommand = aliasManager.getCommand(commandWord).get();
+
+            String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
+            return parseCommand(actualUserInput);
+        }
+    }
+
+    /**
+     * A concrete implementation of Command that doesn't do anything except return a CommandResult.
+     */
+    private class DummyCommand extends Command {
+        private CommandResult commandResult;
+
+        DummyCommand(String feedback) {
+            commandResult = new CommandResult(feedback);
+        }
+
+        @Override
+        public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+            return commandResult;
         }
     }
 

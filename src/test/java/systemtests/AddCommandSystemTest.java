@@ -77,19 +77,23 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
         //        /* Case: add a source, missing tags -> added */
         //        assertCommandSuccess(HOON);
         //
-        //        /* -------------------------- Perform add operation on the shown filtered list ------------------------------ */
+        //        /* -------------------------- Perform
+        //        add operation on the shown filtered list ------------------------------ */
         //
         //        /* Case: filters the source list before adding -> added */
         //        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
         //        assertCommandSuccess(IDA);
         //
-        //        /* ------------------------ Perform add operation while a source card is selected --------------------------- */
+        //        /* ------------------------ Perform
+        //        add operation while a source card is selected --------------------------- */
         //
-        //        /* Case: selects first card in the source list, add a source -> added, card selection remains unchanged */
+        //        /* Case: selects first card in the source list,
+        //        add a source -> added, card selection remains unchanged */
         //        selectSource(Index.fromOneBased(1));
         //        assertCommandSuccess(CARL);
 
-        /* ----------------------------------- Perform invalid add operations --------------------------------------- */
+        /* ----------------------------------- Perform
+         invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate source -> rejected */
         //        command = SourceUtil.getAddCommand(HOON);

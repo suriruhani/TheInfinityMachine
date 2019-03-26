@@ -1,16 +1,14 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.source.Source;
 
-import java.util.List;
+import seedu.address.logic.commands.exceptions.CommandException;
+
+import seedu.address.model.Model;
+
+import seedu.address.logic.CommandHistory;
 
 /**
  * Lists all sources in the Source Database to the user, or the top N sources where N may
@@ -38,16 +36,19 @@ public class ListCommand extends Command {
 
     public ListCommand() {}
 
-//    @Override
-//    public CommandResult execute(Model model, CommandHistory history) {
-//        requireNonNull(model);
-//        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-//        return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
-//    }
+    /*
+    @Override
+    public CommandResult execute(Model model, CommandHistory history) {
+        requireNonNull(model);
+        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+        return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+    }
+    */
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        /*
 //        List<Source> lastShownList = model.getFilteredSourceList();
 //
 //        if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -57,6 +58,7 @@ public class ListCommand extends Command {
 //        Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
 //        model.deleteSource(sourceToDelete);
 //        model.commitSourceManager();
+        */
 
         if (targetIndex != null) {
             return new CommandResult(String.format(MESSAGE_LIST_N_SUCCESS, targetIndex.getOneBased()));

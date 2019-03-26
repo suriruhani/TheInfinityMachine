@@ -394,11 +394,13 @@ Step 3. The user executes `search footitle6 footitle5` and only two entries are 
 ==== Current Implementation
 
 The list command is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with a list functionality, enumerating all entries in the source database and their details,
-in the order of their addition.
+It extends `Infinity Machine` with a list functionality, enumerating all or a specific number of
+entries in the source database and their details, in the order of their addition.
 Additionally, it uses:
 
-* `PREDICATE_SHOW_ALL_SOURCES` --
+* `PREDICATE_SHOW_ALL_SOURCES` -- when the user does not pass an argument to the list command,
+and hence all sources are displayed
+* `targetIndex` -- the number N upto which the most recent sources are to be displayed to the user
 
 Given below is an example usage scenario and how the list mechanism behaves.
 

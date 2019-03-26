@@ -65,5 +65,4 @@ public class CustomOrderCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, initialIndex + 1, newPosition + 1));
     }
-
 }

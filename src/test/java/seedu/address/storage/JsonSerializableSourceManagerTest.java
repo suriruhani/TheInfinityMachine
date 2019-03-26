@@ -18,8 +18,8 @@ public class JsonSerializableSourceManagerTest {
 
     private static final Path TEST_DATA_FOLDER = Paths.get("src", "test", "data", "JsonSerializableSourceManagerTest");
     private static final Path TYPICAL_SOURCES_FILE = TEST_DATA_FOLDER.resolve("typicalSourcesSourceManager.json");
-    private static final Path INVALID_PERSON_FILE = TEST_DATA_FOLDER.resolve("invalidSourcesourceManager.json");
-    private static final Path DUPLICATE_PERSON_FILE = TEST_DATA_FOLDER.resolve("duplicateSourcesourceManager.json");
+    private static final Path INVALID_SOURCE_FILE = TEST_DATA_FOLDER.resolve("invalidSourceSourceManager.json");
+    private static final Path DUPLICATE_SOURCE_FILE = TEST_DATA_FOLDER.resolve("duplicateSourceSourceManager.json");
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -34,8 +34,8 @@ public class JsonSerializableSourceManagerTest {
     }
 
     @Test
-    public void toModelType_invalidPersonFile_throwsIllegalValueException() throws Exception {
-        JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(INVALID_PERSON_FILE,
+    public void toModelType_invalidSourceFile_throwsIllegalValueException() throws Exception {
+        JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(INVALID_SOURCE_FILE,
                 JsonSerializableSourceManager.class).get();
         thrown.expect(IllegalValueException.class);
         dataFromFile.toModelType();
@@ -43,10 +43,10 @@ public class JsonSerializableSourceManagerTest {
 
     @Test
     public void toModelType_duplicateSources_throwsIllegalValueException() throws Exception {
-        JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(DUPLICATE_PERSON_FILE,
+        JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(DUPLICATE_SOURCE_FILE,
                 JsonSerializableSourceManager.class).get();
         thrown.expect(IllegalValueException.class);
-        thrown.expectMessage(JsonSerializableSourceManager.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(JsonSerializableSourceManager.MESSAGE_DUPLICATE_SOURCE;
         dataFromFile.toModelType();
     }
 

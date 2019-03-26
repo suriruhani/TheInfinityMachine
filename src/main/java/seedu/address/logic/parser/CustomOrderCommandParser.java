@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.CustomOrderCommand;
@@ -7,8 +9,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.logging.Logger;
 
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
+/**
+ * Parser for the CustomOrder command which takes in a user input.
+ */
 public class CustomOrderCommandParser {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
@@ -24,7 +27,7 @@ public class CustomOrderCommandParser {
         String[] splitArgs = args.trim().split("\\s+");
 
         // if the string array size is not 2, means the user entered too few or too many arguments
-        if(splitArgs.length != 2) {
+        if (splitArgs.length != 2) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, CustomOrderCommand.MESSAGE_USAGE));
         }

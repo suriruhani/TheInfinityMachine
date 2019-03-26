@@ -3,6 +3,9 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
+import java.util.List;
+import java.util.logging.Logger;
+
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
@@ -11,15 +14,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
-import java.util.List;
-import java.util.logging.Logger;
-
 /**
  * Lists all persons in the address book to the user.
  */
 public class CustomOrderCommand extends Command {
-    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
-
     public static final String COMMAND_WORD = "order";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -31,6 +29,7 @@ public class CustomOrderCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Source at position %d moved to position %d.";
 
+    private final Logger logger = LogsCenter.getLogger(LogicManager.class);
     private int initialIndex;
     private int newPosition;
 
@@ -54,7 +53,7 @@ public class CustomOrderCommand extends Command {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
-        if(newPosition > initialIndex){
+        if (newPosition > initialIndex) {
             newPosition--;
         }
 

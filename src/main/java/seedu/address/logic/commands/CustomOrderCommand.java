@@ -46,9 +46,9 @@ public class CustomOrderCommand extends Command {
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         List<Source> completeSourceList = model.getFilteredSourceList();
 
-        if (initialIndex >= completeSourceList.size() 
+        if (initialIndex >= completeSourceList.size()
                 || newPosition >= completeSourceList.size()
-                || initialIndex < 0 
+                || initialIndex < 0
                 || newPosition < 0) {
             logger.info("--- CustomOrderCommand: Index given is out of bounds.");
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
@@ -63,6 +63,7 @@ public class CustomOrderCommand extends Command {
         model.addSourceAtIndex(sourceToMove, newPosition);
         model.commitSourceManager();
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, initialIndex, newPosition));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, initialIndex + 1, newPosition + 1));
     }
+
 }

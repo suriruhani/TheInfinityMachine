@@ -11,7 +11,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 public class CustomOrderCommandParser {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
-    
+
     /**
      * Parses the given {@code String} of arguments in the context of the CustomOrderCommand
      * and returns an CustomOrderCommand object for execution.
@@ -19,10 +19,10 @@ public class CustomOrderCommandParser {
      */
     public CustomOrderCommand parse(String args) throws ParseException {
         logger.info("--- CustomOrderCommandParser: raw user input parameters:" + args);
-        
+
         // splits the args into an array of strings
         String[] splitArgs = args.trim().split("\\s+");
-        
+
         // if the string array size is not 2, means the user entered too few or too many arguments
         if(splitArgs.length != 2) {
             throw new ParseException(

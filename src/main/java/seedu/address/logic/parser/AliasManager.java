@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
 
-import seedu.address.logic.commands.Command;
-
 /**
  * Manages user-defined command aliases.
  * Non-persistent (valid for one session only).
@@ -17,7 +15,7 @@ class AliasManager {
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
 
-    CommandValidator commandValidator;
+    private CommandValidator commandValidator;
     private HashMap<String, String> aliases = new HashMap<>();
 
     AliasManager(CommandValidator commandValidator) {

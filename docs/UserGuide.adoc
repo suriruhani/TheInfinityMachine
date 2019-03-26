@@ -200,6 +200,17 @@ If the user attempts to remove a non-existent alias, nothing happens.
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
 
+=== Counting total number of sources: `count`
+
+Counts all source entries and returns the total number of sources. +
+Format: `count`
+
+Examples:
+
+* `count` +
+Result: `Total number of source(s): 6` +
+Counts the total number of sources in the database
+
 // tag::undoredo[]
 === Undoing previous command : `undo`
 

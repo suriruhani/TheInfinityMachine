@@ -22,7 +22,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalSources.*;
+import static seedu.address.testutil.TypicalSources.AMY;
+import static seedu.address.testutil.TypicalSources.BOB;
 
 import org.junit.Test;
 

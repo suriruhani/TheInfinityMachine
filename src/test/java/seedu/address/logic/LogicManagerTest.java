@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.testutil.TypicalSources.ALICE;
 import static seedu.address.testutil.TypicalSources.AMY;
 
 import java.io.IOException;

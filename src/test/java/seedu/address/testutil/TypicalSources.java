@@ -2,12 +2,12 @@ package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 
 import java.util.ArrayList;
 import java.util.Arrays;

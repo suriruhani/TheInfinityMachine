@@ -19,7 +19,7 @@ public class CountCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
-        int count = model.getCount();
+        int count = model.getFilteredSourceList().size();
         return new CommandResult(String.format(MESSAGE_SUCCESS, count));
     }
 

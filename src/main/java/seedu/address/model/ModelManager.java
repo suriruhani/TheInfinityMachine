@@ -163,11 +163,6 @@ public class ModelManager implements Model, PanicMode {
         versionedSourceManager.setSource(target, editedSource);
     }
 
-    @Override
-    public int getCount() {
-        return filteredSources.size();
-    }
-
     //=========== Filtered Source List Accessors =============================================================
 
     /**

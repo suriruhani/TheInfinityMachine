@@ -139,13 +139,13 @@ Format: `list`
 
 === Generate bibliography entry : `biblio`
 
-Allows user to generate bibliography using the links user entered as their sources. +
-Format: `biblio`
+Generates an bibliographical entry from the source at the specified. +
+Format: `biblio INDEX`
 
-Examples:
-
-* `biblio https://en.wikipedia.org/wiki/Algorithm` +
-Generates bibliography for Algorithms source.
+****
+* Generates a bibliographical entry from the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be a positive integer* 1, 2, 3, ...
 
 === Listing entered commands : `history`
 

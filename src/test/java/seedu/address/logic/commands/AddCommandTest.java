@@ -202,10 +202,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public int getCount() {
-            return 0;
-        }
     }
 
     /**

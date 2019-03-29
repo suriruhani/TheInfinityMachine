@@ -205,14 +205,14 @@ Format: `alias-ls`
 
 === Counting total number of sources: `count`
 
-Counts all source entries and returns the total number of sources. +
+Counts and returns the total number of source entries retrieved. +
 Format: `count`
 
 Examples:
 
 * `count` +
 Result: `Total number of source(s): 6` +
-Counts the total number of sources in the database
+Counts the total number of sources retrieved from the database.
 
 // tag::undoredo[]
 === Undoing previous command : `undo`

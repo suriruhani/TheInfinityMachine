@@ -14,6 +14,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CountCommand;
+import seedu.address.logic.commands.CustomOrderCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -111,6 +112,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommandParser().parse(arguments);
+
+        case CustomOrderCommand.COMMAND_WORD:
+            return new CustomOrderCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();

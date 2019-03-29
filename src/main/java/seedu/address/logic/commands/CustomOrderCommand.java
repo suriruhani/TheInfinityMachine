@@ -15,7 +15,7 @@ import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
 /**
- * Lists all persons in the address book to the user.
+ * Moves a source to a designated position
  */
 public class CustomOrderCommand extends Command {
     public static final String COMMAND_WORD = "order";

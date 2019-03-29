@@ -20,11 +20,11 @@ import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -33,6 +33,7 @@ import seedu.address.model.source.TitleContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
+
 
 public class SourceManagerParserTest {
     @Rule
@@ -83,9 +84,9 @@ public class SourceManagerParserTest {
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TitleContainsKeywordsPredicate(keywords)), command);
+        SearchCommand command = (SearchCommand) parser.parseCommand(
+                SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        assertEquals(new SearchCommand(new TitleContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

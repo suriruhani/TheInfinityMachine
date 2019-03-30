@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -146,7 +147,9 @@ public class SourceManagerParser implements CommandValidator {
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
 
-        // Meta-commands (pertaining to AliasManager)
+        // Meta-commands (pertaining to AliasManager):
+        // For these, we include implementation details because these are meta-commands
+        // that relate directly to AliasManager (and by association, SourceManagerParser).
 
         case AliasManager.COMMAND_WORD_ADD:
             splitArguments = arguments.trim().split(" ");
@@ -169,6 +172,19 @@ public class SourceManagerParser implements CommandValidator {
 
             aliasManager.unregisterAlias(splitArguments[0]);
             return new DummyCommand("Alias removed");
+
+        case AliasManager.COMMAND_WORD_LIST:
+            HashMap<String, String> aliasList = aliasManager.getAliasList();
+
+            if (aliasList.isEmpty()) {
+                return new DummyCommand("There are no aliases to list");
+            }
+
+            StringBuilder sb = new StringBuilder();
+            aliasList.forEach((alias, command) -> sb.append(String.format("%s: %s\n", alias, command)));
+
+            return new DummyCommand(sb.toString());
+
 
         default:
             // Throw ParseException if input is not an alias

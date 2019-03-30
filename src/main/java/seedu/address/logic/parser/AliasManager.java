@@ -82,4 +82,12 @@ class AliasManager {
         String command = aliases.get(alias);
         return Optional.of(command);
     }
+
+    /**
+     * Returns a HashMap listing all registered aliases to their commands.
+     * The returned HashMap is a copy of the original and is safe to work with (i.e. safe to mutate).
+     */
+    HashMap<String, String> getAliasList() {
+        return (HashMap) aliases.clone();
+    }
 }

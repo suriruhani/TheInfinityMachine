@@ -18,10 +18,17 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
      * @throws ParseException if the user input does not conform the expected format
      */
     public DummyCommand parse(String userInput) throws ParseException {
+        final String ERROR_INVALID_ARGUMENTS = "You have provided an invalid number of arguments";
+
+        // We need this because "".trim().split(" ").length == 1,
+        // so the following if statement does not catch this condition
+        if (userInput.equals("")) {
+            throw new ParseException(ERROR_INVALID_ARGUMENTS);
+        }
+
         String[] splitArguments = userInput.trim().split(" ");
-        splitArguments = userInput.trim().split(" ");
         if (splitArguments.length != 1) {
-            throw new ParseException("You have provided an invalid number of arguments");
+            throw new ParseException(ERROR_INVALID_ARGUMENTS);
         }
 
         aliasManager.unregisterAlias(splitArguments[0]);

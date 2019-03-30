@@ -32,6 +32,7 @@ public class AliasManagerTest {
     }
 
     @Test
+    // Create an alias for an existing (valid) command
     public void create_existingCommand_unusedAlias() {
         Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
         Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
@@ -44,6 +45,7 @@ public class AliasManagerTest {
     }
 
     @Test
+    // Create an alias for a non-existing (invalid) command
     public void create_nonExistingCommand_unusedAlias() {
         Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
         Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
@@ -56,6 +58,7 @@ public class AliasManagerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    // Attempt to create an alias for an existing (valid) command using another command as alias
     public void create_existingCommand_aliasIsExistingCommand() {
         Assert.assertFalse(aliasManager.isAlias(EXISTING_COMMAND_2));
         Assert.assertFalse(aliasManager.getCommand(EXISTING_COMMAND_2).isPresent());
@@ -64,10 +67,34 @@ public class AliasManagerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void create_existingCommand_aliasIsExistingAlias() {
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_2));
-        Assert.assertFalse(aliasManager.getCommand(ALIAS_2).isPresent());
+    // Attempt to create an alias for the alias (add) meta-command
+    public void create_MetaCommandAdd_unusedAlias() {
+        aliasManager.registerAlias(AliasManager.COMMAND_WORD_ADD, ALIAS_1);
+    }
 
+    @Test(expected = IllegalArgumentException.class)
+    // Attempt to create an alias for the alias-rm meta-command
+    public void create_MetaCommandRemove_unusedAlias() {
+        aliasManager.registerAlias(AliasManager.COMMAND_WORD_REMOVE, ALIAS_1);
+    }
+
+    @Test
+    // Attempt to create an alias for an existing (valid) command using an existing alias
+    public void create_existingCommand_aliasIsExistingAlias() {
+        Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
+
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
+        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
+        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
+
+        aliasManager.registerAlias(EXISTING_COMMAND_2, ALIAS_1);
+        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
+        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_2);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    // Attempt to create an alias for another alias
+    public void create_CommandIsAlias_unusedAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
         aliasManager.registerAlias(ALIAS_1, ALIAS_2);
     }

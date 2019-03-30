@@ -64,8 +64,6 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(UnpanicCommand.COMMAND_WORD);
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
-        validCommands.add(AliasManager.COMMAND_WORD_ADD);
-        validCommands.add(AliasManager.COMMAND_WORD_REMOVE);
     }
 
     /**

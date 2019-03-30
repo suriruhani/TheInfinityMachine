@@ -5,6 +5,8 @@ import org.junit.Test;
 import org.junit.Assert;
 import org.junit.jupiter.api.TestTemplate;
 
+import java.util.HashMap;
+
 public class AliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
         @Override
@@ -121,5 +123,31 @@ public class AliasManagerTest {
         Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
         Assert.assertFalse(aliasManager.isAlias(ALIAS_2));
         Assert.assertFalse(aliasManager.getCommand(ALIAS_2).isPresent());
+    }
+
+    @Test
+    // Attempt to get alias list from an empty alias manager
+    // Should not throw an exception; should not mutate alias manager
+    public void list_emptyAliasManager() {
+        HashMap<String, String> aliasList = aliasManager.getAliasList();
+        Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
+        Assert.assertNull(aliasList.get(ALIAS_1));
+
+        aliasList.put(ALIAS_1, EXISTING_COMMAND_1);
+        Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
+    }
+
+    @Test
+    // Attempt to get alias list from a non-empty alias manager
+    // Should not throw an exception; should not mutate alias manager
+    public void list_nonEmptyAliasManager() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
+
+        HashMap<String, String> aliasList = aliasManager.getAliasList();
+        Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
+        Assert.assertEquals(aliasList.get(ALIAS_1), EXISTING_COMMAND_1);
+
+        aliasList.remove(ALIAS_1);
+        Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
     }
 }

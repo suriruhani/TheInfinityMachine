@@ -3,17 +3,14 @@ package seedu.address.logic.parser;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BiblioCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.CustomOrderCommand;
 import seedu.address.logic.commands.DeleteCommand;
@@ -29,9 +26,7 @@ import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpanicCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
 
 /**
  * Parses user input.
@@ -53,12 +48,17 @@ public class SourceManagerParser implements CommandValidator {
         initializeValidCommands();
     }
 
-    // For dependency injection
+    /**
+     * Alternative constructor for dependency injection.
+     */
     public SourceManagerParser(AliasManager aliasManager) {
         this.aliasManager = aliasManager;
         initializeValidCommands();
     }
 
+    /**
+     * Initializes the set of valid commands.
+     */
     private void initializeValidCommands() {
         validCommands.add(AddCommand.COMMAND_WORD);
         validCommands.add(EditCommand.COMMAND_WORD);

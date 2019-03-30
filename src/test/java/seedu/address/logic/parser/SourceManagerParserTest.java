@@ -162,13 +162,13 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseMetaCommand_addAlias_invalidArguments_1() throws Exception {
+    public void parseMetaCommand_addAlias_invalidArguments1() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count");
     }
 
     @Test
-    public void parseMetaCommand_addAlias_invalidArguments_2() throws Exception {
+    public void parseMetaCommand_addAlias_invalidArguments2() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count c c");
     }
@@ -182,14 +182,14 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments_1() throws Exception {
+    public void parseMetaCommand_removeAlias_invalidArguments1() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count c");
         parser.parseCommand("alias-rm");
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments_2() throws Exception {
+    public void parseMetaCommand_removeAlias_invalidArguments2() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count c c");
         parser.parseCommand("alias-rm");

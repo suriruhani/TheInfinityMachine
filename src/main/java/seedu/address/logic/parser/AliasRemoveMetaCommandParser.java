@@ -3,13 +3,17 @@ package seedu.address.logic.parser;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser implements Parser<Command>  {
+/**
+ * Parses input arguments for the AliasManager "alias-rm" metacommand.
+ */
+public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
+    static final String ERROR_INVALID_ARGUMENTS = "You have provided an invalid number of arguments";
 
     /**
      * Instantiates self with an instance of aliasManager.
      */
     public AliasRemoveMetaCommandParser(AliasManager aliasManager) {
-        this.aliasManager = aliasManager;
+        setAliasManager(aliasManager);
     }
 
     /**
@@ -18,7 +22,6 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
      * @throws ParseException if the user input does not conform the expected format
      */
     public DummyCommand parse(String userInput) throws ParseException {
-        final String ERROR_INVALID_ARGUMENTS = "You have provided an invalid number of arguments";
 
         // We need this because "".trim().split(" ").length == 1,
         // so the following if statement does not catch this condition
@@ -31,7 +34,7 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
             throw new ParseException(ERROR_INVALID_ARGUMENTS);
         }
 
-        aliasManager.unregisterAlias(splitArguments[0]);
+        getAliasManager().unregisterAlias(splitArguments[0]);
         return new DummyCommand("Alias removed");
     }
 

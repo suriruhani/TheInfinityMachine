@@ -3,13 +3,16 @@ package seedu.address.logic.parser;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parses input arguments for the AliasManager "alias" metacommand.
+ */
 public class AliasAddMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
 
     /**
      * Instantiates self with an instance of aliasManager.
      */
     public AliasAddMetaCommandParser(AliasManager aliasManager) {
-        this.aliasManager = aliasManager;
+        setAliasManager(aliasManager);
     }
 
     /**
@@ -24,7 +27,7 @@ public class AliasAddMetaCommandParser extends AliasMetaCommandParser implements
         }
 
         try {
-            aliasManager.registerAlias(splitArguments[0], splitArguments[1]);
+            getAliasManager().registerAlias(splitArguments[0], splitArguments[1]);
             return new DummyCommand("Alias created");
         } catch (IllegalArgumentException e) {
             return new DummyCommand(e.getMessage());

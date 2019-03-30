@@ -1,11 +1,10 @@
 package seedu.address.logic.parser;
 
+import java.util.HashMap;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Assert;
-import org.junit.jupiter.api.TestTemplate;
-
-import java.util.HashMap;
 
 public class AliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
@@ -19,11 +18,11 @@ public class AliasManagerTest {
         }
     }
 
-    private final String ALIAS_1 = "a";
-    private final String ALIAS_2 = "b";
-    private final String EXISTING_COMMAND_1 = "foo";
-    private final String EXISTING_COMMAND_2 = "bar";
-    private final String NOVEL_COMMAND_1 = "novel";
+    private static final String ALIAS_1 = "a";
+    private static final String ALIAS_2 = "b";
+    private static final String EXISTING_COMMAND_1 = "foo";
+    private static final String EXISTING_COMMAND_2 = "bar";
+    private static final String NOVEL_COMMAND_1 = "novel";
 
     private CommandValidator commandValidator = new CommandValidatorStub();
     private AliasManager aliasManager = new AliasManager(commandValidator);
@@ -70,13 +69,13 @@ public class AliasManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias (add) meta-command
-    public void create_MetaCommandAdd_unusedAlias() {
+    public void create_metaCommandAdd_unusedAlias() {
         aliasManager.registerAlias(AliasManager.COMMAND_WORD_ADD, ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias-rm meta-command
-    public void create_MetaCommandRemove_unusedAlias() {
+    public void create_metaCommandRemove_unusedAlias() {
         aliasManager.registerAlias(AliasManager.COMMAND_WORD_REMOVE, ALIAS_1);
     }
 
@@ -96,7 +95,7 @@ public class AliasManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for another alias
-    public void create_CommandIsAlias_unusedAlias() {
+    public void create_commandIsAlias_unusedAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
         aliasManager.registerAlias(ALIAS_1, ALIAS_2);
     }

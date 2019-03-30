@@ -211,20 +211,4 @@ public class SourceManagerParser implements CommandValidator {
         }
     }
 
-    /**
-     * A concrete implementation of Command that doesn't do anything except return a CommandResult.
-     */
-    private class DummyCommand extends Command {
-        private CommandResult commandResult;
-
-        DummyCommand(String feedback) {
-            commandResult = new CommandResult(feedback);
-        }
-
-        @Override
-        public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-            return commandResult;
-        }
-    }
-
 }

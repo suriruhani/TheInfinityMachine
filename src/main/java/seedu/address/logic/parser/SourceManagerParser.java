@@ -46,9 +46,20 @@ public class SourceManagerParser implements CommandValidator {
     // Set of all valid commands
     private HashSet<String> validCommands = new HashSet<>();
 
-    private AliasManager aliasManager = new AliasManager(this);
+    private AliasManager aliasManager;
 
     public SourceManagerParser() {
+        aliasManager = new AliasManager(this);
+        initializeValidCommands();
+    }
+
+    // For dependency injection
+    public SourceManagerParser(AliasManager aliasManager) {
+        this.aliasManager = aliasManager;
+        initializeValidCommands();
+    }
+
+    private void initializeValidCommands() {
         validCommands.add(AddCommand.COMMAND_WORD);
         validCommands.add(EditCommand.COMMAND_WORD);
         validCommands.add(SelectCommand.COMMAND_WORD);

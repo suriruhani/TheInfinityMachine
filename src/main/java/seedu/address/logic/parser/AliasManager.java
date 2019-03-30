@@ -12,6 +12,7 @@ class AliasManager {
     static final String COMMAND_WORD_ADD = "alias";
     static final String COMMAND_WORD_REMOVE = "alias-rm";
     static final String COMMAND_WORD_LIST = "alias-ls";
+    private static final String ERROR_COMMAND_IS_METACOMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
 
@@ -40,6 +41,13 @@ class AliasManager {
     void registerAlias(String command, String alias) throws IllegalArgumentException {
         Objects.requireNonNull(alias);
         Objects.requireNonNull(command);
+
+        // Guard against commend being an AliasManager meta-command (e.g. alias, alias-rm, etc.)
+        if (command.equals(COMMAND_WORD_ADD)
+                || command.equals(COMMAND_WORD_REMOVE)
+                || command.equals(COMMAND_WORD_LIST)) {
+            throw new IllegalArgumentException(ERROR_COMMAND_IS_METACOMMAND);
+        }
 
         // Guard against command being another registered alias
         if (isAlias(command)) {

@@ -100,7 +100,6 @@ public class SourceManagerParser implements CommandValidator {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        String[] splitArguments;
 
         switch (commandWord) {
 
@@ -163,38 +162,13 @@ public class SourceManagerParser implements CommandValidator {
         // that relate directly to AliasManager (and by association, SourceManagerParser).
 
         case AliasManager.COMMAND_WORD_ADD:
-            splitArguments = arguments.trim().split(" ");
-            if (splitArguments.length != 2) {
-                throw new ParseException("You have provided an invalid number of arguments");
-            }
-
-            try {
-                aliasManager.registerAlias(splitArguments[0], splitArguments[1]);
-                return new DummyCommand("Alias created");
-            } catch (IllegalArgumentException e) {
-                return new DummyCommand(e.getMessage());
-            }
+            return new AliasAddMetaCommandParser(aliasManager).parse(arguments);
 
         case AliasManager.COMMAND_WORD_REMOVE:
-            splitArguments = arguments.trim().split(" ");
-            if (splitArguments.length != 1) {
-                throw new ParseException("You have provided an invalid number of arguments");
-            }
-
-            aliasManager.unregisterAlias(splitArguments[0]);
-            return new DummyCommand("Alias removed");
+            return new AliasRemoveMetaCommandParser(aliasManager).parse(arguments);
 
         case AliasManager.COMMAND_WORD_LIST:
-            HashMap<String, String> aliasList = aliasManager.getAliasList();
-
-            if (aliasList.isEmpty()) {
-                return new DummyCommand("There are no aliases to list");
-            }
-
-            StringBuilder sb = new StringBuilder();
-            aliasList.forEach((alias, command) -> sb.append(String.format("%s: %s\n", alias, command)));
-
-            return new DummyCommand(sb.toString());
+            return new AliasListMetaCommandParser(aliasManager).parse(arguments);
 
 
         default:

@@ -9,8 +9,9 @@ import java.nio.file.Path;
  */
 public interface ReadOnlyDeletedSources {
 
-    GuiSettings getGuiSettings();
+    GuiSettings getDeletedSourceGuiSettings();
 
     Path getDeletedSourceFilePath();
 
 }
+

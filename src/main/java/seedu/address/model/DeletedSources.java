@@ -13,7 +13,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class DeletedSources implements ReadOnlyDeletedSources {
 
-    private GuiSettings guiSettings = new GuiSettings();
+    private GuiSettings deletedSourceGuiSettings = new GuiSettings();
     private Path deletedSourceFilePath = Paths.get("data" , "deletedsources.json");
 
     /**
@@ -30,21 +30,20 @@ public class DeletedSources implements ReadOnlyDeletedSources {
     }
 
     /**
-     * Resets the existing data of this {@code UserPrefs} with {@code newUserPrefs}.
+     * Resets the existing data of this {@code DeletedSources} with {@code newDeletedSources}.
      */
     public void resetData(ReadOnlyDeletedSources newRecentlyDeleted) {
         requireNonNull(newRecentlyDeleted);
-        setGuiSettings(newRecentlyDeleted.getGuiSettings());
         setDeletedSourceFilePath(newRecentlyDeleted.getDeletedSourceFilePath());
     }
 
-    public GuiSettings getGuiSettings() {
-        return guiSettings;
+    public GuiSettings getDeletedSourceGuiSettings() {
+        return deletedSourceGuiSettings;
     }
 
-    public void setGuiSettings(GuiSettings guiSettings) {
+    public void setDeletedSourceGuiSettings(GuiSettings guiSettings) {
         requireNonNull(guiSettings);
-        this.guiSettings = guiSettings;
+        this.deletedSourceGuiSettings = guiSettings;
     }
 
     public Path getDeletedSourceFilePath() {
@@ -67,21 +66,22 @@ public class DeletedSources implements ReadOnlyDeletedSources {
 
         DeletedSources o = (DeletedSources) other;
 
-        return guiSettings.equals(o.guiSettings)
+        return deletedSourceGuiSettings.equals(o.deletedSourceGuiSettings)
                 && deletedSourceFilePath.equals(o.deletedSourceFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(guiSettings, deletedSourceFilePath);
+        return Objects.hash(deletedSourceGuiSettings, deletedSourceFilePath);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Gui Settings : " + guiSettings);
+        sb.append("Gui Settings : " + deletedSourceGuiSettings);
         sb.append("\nLocal data file location : " + deletedSourceFilePath);
         return sb.toString();
     }
 
 }
+

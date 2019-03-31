@@ -1034,7 +1034,7 @@ Use case ends.
 
 *Extensions*
 
-* 1b. The command entered is invalid. Either it is spelled wrongly or does not have the correct arguments and parameters.
+* 1b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
 +
 [none]
 ** 1b1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1067,7 +1067,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3b. The command entered is invalid. Either it is spelled wrongly or does not have the correct arguments and parameters.
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
 +
 [none]
 ** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1100,7 +1100,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3b. The command entered is invalid. Either it is spelled wrongly or does not have the correct arguments and parameters.
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
 +
 [none]
 ** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1119,7 +1119,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. Either it is spelled wrongly or does not have any keywords.
+* 1a. The command entered is invalid. Either it is misspelled or does not have any keywords.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1148,7 +1148,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1193,7 +1193,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-* 3c. The command entered is invalid. Either it is spelled wrongly or does not have the correct arguments and parameters.
+* 3c. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
 +
 [none]
 ** 3c1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1233,7 +1233,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 3b. The command entered is invalid. Either it is spelled wrongly or does not have the correct arguments and parameters.
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
 +
 [none]
 ** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1252,7 +1252,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1276,7 +1276,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1302,7 +1302,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. Either the command was spelt wrongly or the parameters entered were incorrect.
+* 1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1345,7 +1345,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. Either the command was spelt wrongly or the parameters entered were incorrect.
+* 1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1379,7 +1379,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1403,7 +1403,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1422,7 +1422,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1453,7 +1453,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1486,7 +1486,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command is spelt wrongly.
+* 1a. The command entered is invalid. The command is misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1521,7 +1521,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command is spelt wrongly.
+* 1a. The command entered is invalid. The command is misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1563,7 +1563,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
@@ -1589,7 +1589,7 @@ Use case ends.
 
 *Extensions*
 
-* 1a. The command entered is invalid. The command was spelt wrongly.
+* 1a. The command entered is invalid. The command was misspelled.
 +
 [none]
 ** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.

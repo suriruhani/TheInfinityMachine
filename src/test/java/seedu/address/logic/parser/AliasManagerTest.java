@@ -29,7 +29,7 @@ public class AliasManagerTest {
 
     @Before
     public void setup() {
-        aliasManager = new AliasManager(commandValidator); // Creates fresh instance
+        aliasManager = new AliasManager(commandValidator, false); // Creates fresh instance
     }
 
     @Test

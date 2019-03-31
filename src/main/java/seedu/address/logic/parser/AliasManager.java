@@ -3,10 +3,14 @@ package seedu.address.logic.parser;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.storage.AliasStorage;
+import seedu.address.storage.ConcreteAliasStorage;
 
 /**
  * Manages user-defined command aliases.
- * Non-persistent (valid for one session only).
  */
 class AliasManager {
     static final String COMMAND_WORD_ADD = "alias";
@@ -16,12 +20,73 @@ class AliasManager {
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
 
+    private static final Logger logger = LogsCenter.getLogger(AliasManager.class);
+
+    private boolean persistentMode = true; // Disable for unit testing
+
     private CommandValidator commandValidator;
     private HashMap<String, String> aliases = new HashMap<>();
+    private AliasStorage aliasStorage = new ConcreteAliasStorage();
 
     AliasManager(CommandValidator commandValidator) {
+        this(commandValidator, true);
+    }
+
+    AliasManager(CommandValidator commandValidator, boolean persistentMode) {
         Objects.requireNonNull(commandValidator);
         this.commandValidator = commandValidator;
+        if (persistentMode) {
+            loadStoredAliases();
+        } else {
+            this.persistentMode = false;
+        }
+    }
+
+    /**
+     * Getter for aliasStorage.
+     * This is not safe to mutate.
+     */
+    AliasStorage getAliasStorage() {
+        return aliasStorage;
+    }
+
+    /**
+     * Loads and restores previously-stored aliases from disk into memory.
+     * If an exception is thrown, log, terminate the method, and keep `aliases` empty.
+     */
+    private void loadStoredAliases() {
+        HashMap<String, String> loadedAliases;
+        try {
+            logger.info("Attempting to load aliases from storage");
+            loadedAliases = aliasStorage.readAliases();
+        } catch (Exception e) {
+            logger.warning(e.toString());
+            return;
+        }
+
+        aliases = new HashMap(loadedAliases);
+        logger.info("Restored aliases from storage");
+    }
+
+    /**
+     * Saves the current state of `aliases` into disk for persistent storage.
+     * Any exceptions thrown are logged.
+     * Does nothing if persistent mode is disabled (for unit testing).
+     */
+    private void saveAliases() {
+        if (!persistentMode) {
+            return;
+        }
+
+        try {
+            logger.info("Attempting to save aliases to storage");
+            aliasStorage.saveAliases((HashMap) aliases.clone());
+        } catch (Exception e) {
+            logger.warning(
+                    String.format("Skipping saving aliases to storage; encountered exception: %s",
+                            e.toString()));
+            return;
+        }
     }
 
     /**
@@ -60,6 +125,7 @@ class AliasManager {
         }
 
         aliases.put(alias, command);
+        saveAliases();
     }
 
     /**
@@ -67,6 +133,7 @@ class AliasManager {
      */
     void unregisterAlias(String alias) {
         aliases.remove(alias);
+        saveAliases();
     }
 
     /**

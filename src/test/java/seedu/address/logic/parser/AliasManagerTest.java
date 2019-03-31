@@ -29,7 +29,27 @@ public class AliasManagerTest {
 
     @Before
     public void setup() {
-        aliasManager = new AliasManager(commandValidator, false); // Creates fresh instance
+        // Creates fresh instance without persistence
+        // Alias persistence messes up unit test cases
+        aliasManager = new AliasManager(commandValidator, false);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    // Create an alias using an invalid alias syntax
+    public void create_existingCommand_invalidAlias1() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ";");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    // Create an alias using an invalid alias syntax
+    public void create_existingCommand_invalidAlias2() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, "a:");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    // Create an alias using an invalid alias syntax
+    public void create_existingCommand_invalidAlias3() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, "a:b");
     }
 
     @Test

@@ -16,9 +16,11 @@ class AliasManager {
     static final String COMMAND_WORD_ADD = "alias";
     static final String COMMAND_WORD_REMOVE = "alias-rm";
     static final String COMMAND_WORD_LIST = "alias-ls";
+    private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
     private static final String ERROR_COMMAND_IS_METACOMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
+    private static final String REGEX_VALIDATOR = "([a-z]|[A-Z])+";
 
     private static final Logger logger = LogsCenter.getLogger(AliasManager.class);
 
@@ -100,12 +102,19 @@ class AliasManager {
     /**
      * Associates an alias with a command.
      * If alias already exists, it will be overwritten.
+     * @throws IllegalArgumentException if command has an invalid syntax (must be alphabetical only).
+     * @throws IllegalArgumentException if command is a meta-command.
      * @throws IllegalArgumentException if command is another registered alias.
      * @throws IllegalArgumentException if alias is an existing command.
      */
     void registerAlias(String command, String alias) throws IllegalArgumentException {
         Objects.requireNonNull(alias);
         Objects.requireNonNull(command);
+
+        // Guard against invalid alias syntax
+        if (!alias.matches(REGEX_VALIDATOR)) {
+            throw new IllegalArgumentException(ERROR_INVALID_SYNTAX);
+        }
 
         // Guard against commend being an AliasManager meta-command (e.g. alias, alias-rm, etc.)
         if (command.equals(COMMAND_WORD_ADD)

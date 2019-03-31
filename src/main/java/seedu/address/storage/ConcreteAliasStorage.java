@@ -1,13 +1,13 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.commons.util.FileUtil;
-
 import java.io.IOException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Objects;
-import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.util.FileUtil;
 
 /**
  * A concrete implementation of AliasStorage to access aliases stored persistently.
@@ -15,11 +15,22 @@ import java.util.Optional;
 public class ConcreteAliasStorage implements AliasStorage {
     private static final String ALIAS_COMMAND_SEPERATOR = ":"; // i.e. alias:command
     private static final String PAIR_SEPARATOR = ";"; // i.e. alias1:command1;alias2:command2
+    private static final Path ALIASES_STORAGE_PATH = Paths.get("data" , "aliases.data");
 
     private Path filePath;
 
+    public ConcreteAliasStorage() {
+        this.filePath = ALIASES_STORAGE_PATH;
+    }
+
     public ConcreteAliasStorage(Path filePath) {
+        this();
         this.filePath = filePath;
+    }
+
+    @Override
+    public void clearAliasesInStorage() throws IOException {
+        FileUtil.writeToFile(filePath, "");
     }
 
     @Override

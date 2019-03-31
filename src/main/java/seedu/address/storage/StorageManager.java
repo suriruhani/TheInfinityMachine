@@ -45,7 +45,7 @@ public class StorageManager implements Storage {
     }
 
 
-    // ================ AddressBook methods ==============================
+    // ================ SourceManager methods ==============================
 
     @Override
     public Path getSourceManagerFilePath() {

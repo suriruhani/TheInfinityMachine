@@ -235,7 +235,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::alias[]
 === Command Alias feature
-The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`.
+The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.
 
 Users may do one of the following:
 1) Add a new alias
@@ -245,25 +245,33 @@ Users may do one of the following:
 
 This feature is backed by an in-memory database implemented as a Java `HashMap<String, Command>`.
 A HashMap is chosen for several reasons:
-* Adding and removing an alias is simple
-* Checking whether an alias exists is fast (`O(1)` performance, as opposed to `O(N)` in an unsorted list)
+* Adding and removing an alias is straightforward (using in-built Java API) and efficient (`O(1)` time complexity)
+* Checking whether an alias exists is fast (`O(1)` performance)
 * HashMaps naturally facilitate the process of looking up an associated value with a given key
-* HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
+* Java HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
 
 *Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
 as there needs to be a way of associating a `String`-type alias with a `Command` object.
 For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
-That is, however, inelegant and contrived, as opposed to a `HashMap` solution.
-Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
+That is, however, inelegant and inefficient, as opposed to a `HashMap` solution.
+Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in an unsorted list, or `O(log(N))` in a sorted list.
 
-*Operation*: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
-"original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
-original commands) with an additional `default` block, such that if the command word is not an original command, we check if
-it is a registered alias of a command.
+*Operation*:
 
-If so, we run the command by looking up the `Command` object in our `HashMap`.
+SourceManagerParser detects when a meta-command is entered.
+A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), i.e. `alias`, `alias-rm`, `alias-ls`, etc.
+AliasManager exposes the meta-commands it uses, which SourceManagerParser relies on for detection.
 
-Otherwise, it is a situation of invalid user input.
+When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
+For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser).
+The AliasMetaCommandParser concrete subclasses parses user inputs, potentially throwing exceptions, and finally returns a DummyCommand response object.
+
+In normal operation, when the user uses an alias, SourceManagerParser parses user input to extract the "command word".
+It checks whether the "command word" is an alias using AliasManager's `isAlias()` method.
+If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method
+(which returns an `Optional<String>` - this forces the caller to unwrap the optional and avoids null pointer exceptions).
+
+Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
 
 // tag::undoredo[]
 === Undo/Redo feature

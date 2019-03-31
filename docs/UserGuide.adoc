@@ -163,6 +163,7 @@ Format: `biblio INDEX`
 * Generates a bibliographical entry from the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Listing entered commands : `history`
 

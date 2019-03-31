@@ -52,7 +52,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/TITLE`, `TITLE` is a parameter which can be used as `add n/Wikipedia Algorithms`.
 * Items in square brackets are optional e.g `n/TITLE [t/TAG]` can be used as `n/Wikipedia Algorithms t/Wikipedia` or as `n/Wikipedia Algorithms`.
 * Items with `…`​ after them can be used multiple times including zero times e.g `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Computer Science`, `t/Computer Science t/Algorithms` etc.
-* Parameters can be in any order e.g. if the command specifies `n/TITLE p/TYPE`, `p/TYPE n/TITLE` is also acceptable.
+* Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -95,7 +95,7 @@ Deletes the 1st source in the results of the `find` command.
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
-Format: `edit INDEX [i/TITLE] [y/PHONE] [d/EMAIL] [t/TAG]...`
+Format: `edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
 ****
 * Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...

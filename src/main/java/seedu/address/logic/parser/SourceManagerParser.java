@@ -24,6 +24,7 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -64,6 +65,7 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(UnpanicCommand.COMMAND_WORD);
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
+        validCommands.add(RestoreCommand.COMMAND_WORD);
     }
 
     /**
@@ -145,6 +147,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
+
+            case RestoreCommand.COMMAND_WORD:
+                return new RestoreCommandParser().parse(arguments);
 
         // Meta-commands (pertaining to AliasManager)
 

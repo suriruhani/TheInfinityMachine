@@ -27,6 +27,7 @@ public class ModelManager implements Model, PanicMode {
 
     private VersionedSourceManager versionedSourceManager;
     private final UserPrefs userPrefs;
+    private final DeletedSources deletedSources;
     private final FilteredList<Source> filteredSources;
     private final SimpleObjectProperty<Source> selectedSource = new SimpleObjectProperty<>();
     private boolean panicMode = false;
@@ -35,7 +36,7 @@ public class ModelManager implements Model, PanicMode {
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
      */
-    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs, ReadOnlyDeletedSources deletedSources) {
         super();
         requireAllNonNull(sourceManager, userPrefs);
 
@@ -43,12 +44,13 @@ public class ModelManager implements Model, PanicMode {
 
         versionedSourceManager = new VersionedSourceManager(sourceManager);
         this.userPrefs = new UserPrefs(userPrefs);
+        this.deletedSources = new DeletedSources(deletedSources);
         filteredSources = new FilteredList<>(versionedSourceManager.getSourceList());
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
     }
 
     public ModelManager() {
-        this(new SourceManager(), new UserPrefs());
+        this(new SourceManager(), new UserPrefs(), new DeletedSources());
     }
 
     /**
@@ -101,14 +103,26 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void setDeletedSources(ReadOnlyDeletedSources deletedSources){
+        requireNonNull(deletedSources);
+        this.deletedSources.resetData(deletedSources);
+    }
+
+    @Override
     public ReadOnlyUserPrefs getUserPrefs() {
         return userPrefs;
     }
 
     @Override
+    public ReadOnlyDeletedSources getDeletedSources() { return deletedSources; }
+
+    @Override
     public GuiSettings getGuiSettings() {
         return userPrefs.getGuiSettings();
     }
+
+    @Override
+    public GuiSettings getDeletedSourceGuiSettings() { return deletedSources.getDeletedSourceGuiSettings(); }
 
     @Override
     public void setGuiSettings(GuiSettings guiSettings) {
@@ -117,15 +131,34 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void setDeletedSourceGuiSettings(GuiSettings guiSettings) {
+        requireNonNull(guiSettings);
+        deletedSources.setDeletedSourceGuiSettings(guiSettings);
+    }
+
+    @Override
     public Path getSourceManagerFilePath() {
         return userPrefs.getSourceManagerFilePath();
     }
+
+    @Override
+    public Path getDeletedSourceFilePath() {
+        return deletedSources.getDeletedSourceFilePath();
+    }
+
 
     @Override
     public void setSourceManagerFilePath(Path sourceManagerFilePath) {
         requireNonNull(sourceManagerFilePath);
         userPrefs.setSourceManagerFilePath(sourceManagerFilePath);
     }
+
+    @Override
+    public void setDeleteSourceFilePath(Path deletedSourcesFilePath) {
+        requireAllNonNull(deletedSourcesFilePath);
+        deletedSources.setDeletedSourceFilePath(deletedSourcesFilePath);
+    }
+
 
     //=========== AddressBook ================================================================================
 

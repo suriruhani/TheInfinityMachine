@@ -1,18 +1,20 @@
 package seedu.address.storage;
 
-import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.ReadOnlyUserPrefs;
-import seedu.address.model.UserPrefs;
-
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.HashMap;
-import java.util.Optional;
+
+import seedu.address.commons.exceptions.DataConversionException;
 
 /**
  * Represents a storage for user-defined command aliases.
  */
 public interface AliasStorage {
+
+    /**
+     * Clears aliases in storage.
+     */
+    public void clearAliasesInStorage() throws IOException;
 
     /**
      * Returns the file path of the Aliases data file.

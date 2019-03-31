@@ -12,28 +12,34 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103-AY1819S2-W13-3/main
 
 By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-An application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
+"To understand matters rightly we should understand their details; and as that knowledge is almost infinite, our knowledge is always superficial and imperfect." - Francois de La Rochefoucauld
+
+The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.
+
+Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
+
+No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again.
 
 == Quick Start
 
 .  Ensure you have Java version `9` or later installed in your Computer.
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `infinitymachine.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Infinity Machine.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all sources currently in the Infinity Machine
+* **`add`**`i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithms t/Computer Science` : adds a source named `Wikipedia Algorithms` to the Infinity Machine.
+* **`delete`**`3` : deletes the 3rd source shown in the current list
+* *`exit`* : exits the the Infinity Machine
 
 .  Refer to <<Features>> for details of each command.
 
@@ -43,10 +49,10 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/TITLE`, `TITLE` is a parameter which can be used as `add n/Wikipedia Algorithms`.
+* Items in square brackets are optional e.g `n/TITLE [t/TAG]` can be used as `n/Wikipedia Algorithms t/Wikipedia` or as `n/Wikipedia Algorithms`.
+* Items with `…`​ after them can be used multiple times including zero times e.g `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Computer Science`, `t/Computer Science t/Algorithms` etc.
+* Parameters can be in any order e.g. if the command specifies `n/TITLE p/TYPE`, `p/TYPE n/TITLE` is also acceptable.
 ====
 
 === Viewing help : `help`
@@ -56,15 +62,15 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a new source to the list of sources +
-Format: `add n/NAME p/TYPE s/SOURCE [t/TAG]...`
+Format: `add n/TITLE y/TYPE d/DETAILS [t/TAG]...`
 
 [TIP]
 A source can have any number of tags (including 0)
 
 Examples:
 
-* `add n/Algorithms Wikipedia y/Website s/https://en.wikipedia.org/wiki/Algorithm t/Algorithm t/Wikipedia`
-* `add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI`
+* `add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
+* `add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
 === Deleting a source : `delete`
 
@@ -89,7 +95,7 @@ Deletes the 1st source in the results of the `find` command.
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [i/TITLE] [y/PHONE] [d/EMAIL] [t/TAG]...`
 
 ****
 * Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...
@@ -163,6 +169,7 @@ Format: `biblio INDEX`
 * Generates a bibliographical entry from the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+****
 
 === Listing entered commands : `history`
 
@@ -310,28 +317,31 @@ Examples:
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
+
 There is no need to save manually.
 
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Research materials can be very sensitive and private especially for high profile researchers. The Infinity Machine hopes to be able to help researchers by encrypting their data for only authorised viewers to access.
+
+Will allow users to generate simple encryption keys which will help keep their research materials secure.
 // end::dataencryption[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Machine folder.
 
 == Command Summary
 
-* *Add* `add n/NAME y/TYPE s/SOURCE [t/TAG]...` +
-e.g. `add n/Artificial Intelligence IEEE y/Journal Article s/IEEE t/Science Journal t/AI`
+* *Add* `add i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
+e.g. `add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX n/NAME y/TYPE s/SOURCE [t/TAG]...` +
-e.g. `edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
+* *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
+e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [KEYWORD] [KEYWORD]...` +
 e.g. `search algorithm journal`
 * *List* : `list`

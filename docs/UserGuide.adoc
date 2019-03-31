@@ -20,11 +20,11 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 "To understand matters rightly we should understand their details; and as that knowledge is almost infinite, our knowledge is always superficial and imperfect." - Francois de La Rochefoucauld
 
-The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.   
+The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.
 
 Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
 
-No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again. 
+No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again.
 
 == Quick Start
 

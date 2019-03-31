@@ -148,8 +148,8 @@ public class SourceManagerParser implements CommandValidator {
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
 
-            case RestoreCommand.COMMAND_WORD:
-                return new RestoreCommandParser().parse(arguments);
+        case RestoreCommand.COMMAND_WORD:
+            return new RestoreCommandParser().parse(arguments);
 
         // Meta-commands (pertaining to AliasManager)
 

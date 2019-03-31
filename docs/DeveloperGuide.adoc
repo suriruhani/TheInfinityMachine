@@ -1018,7 +1018,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `The Infinity Machine` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Infinity Machine` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
 === Use case: Add a source

@@ -10,6 +10,7 @@ import seedu.address.model.source.Source;
 import java.util.List;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddCommand.MESSAGE_DUPLICATE_SOURCE;
 
 /**
  * Restores a source identified using it's displayed index from the recently deleted list of sources.
@@ -35,12 +36,16 @@ public class RestoreCommand extends Command{
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
         List<Source> recentlyDeletedList = model.getFilteredSourceList(); // need to change this to RD list
+        Source toRestore = recentlyDeletedList.get(targetIndex.getZeroBased());
 
         if (targetIndex.getZeroBased() >= recentlyDeletedList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
-        Source toRestore = recentlyDeletedList.get(targetIndex.getZeroBased());
+        if (model.hasSource(toRestore)) {
+            throw new CommandException(MESSAGE_DUPLICATE_SOURCE);
+        }
+
         model.addSource(toRestore);
         model.commitSourceManager();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, toRestore));

@@ -15,7 +15,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path sourceManagerFilePath = Paths.get("data" , "sourcemanager.json");
-    private Path deletedSourceFilePath = Paths.get("data" , "deletedsource.json");
+    private Path deletedSourceFilePath = Paths.get("data" , "deletedsources.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.

@@ -35,19 +35,19 @@ public class RestoreCommand extends Command{
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Source> recentlyDeletedList = model.getFilteredSourceList(); // need to change this to RD list
+        List<Source> recentlyDeletedList = model.getFilteredDeletedSourceList(); // need to change this to RD list
         Source toRestore = recentlyDeletedList.get(targetIndex.getZeroBased());
 
         if (targetIndex.getZeroBased() >= recentlyDeletedList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
-        if (model.hasSource(toRestore)) {
+        if (model.hasDeletedSource(toRestore)) {
             throw new CommandException(MESSAGE_DUPLICATE_SOURCE);
         }
 
-        model.addSource(toRestore);
-        model.commitSourceManager();
+        model.addDeletedSource(toRestore);
+        model.commitDeletedSources();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, toRestore));
     }
 

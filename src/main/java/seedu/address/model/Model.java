@@ -22,19 +22,9 @@ public interface Model extends PanicMode {
     void setUserPrefs(ReadOnlyUserPrefs userPrefs);
 
     /**
-     * Replaces deleted sources data with the data in {@code deletedSources}.
-     */
-    void setDeletedSources(ReadOnlyDeletedSources deletedSources);
-
-    /**
      * Returns the user prefs.
      */
     ReadOnlyUserPrefs getUserPrefs();
-
-    /**
-     * Returns the user prefs.
-     */
-    ReadOnlyDeletedSources getDeletedSources();
 
     /**
      * Returns the user prefs' GUI settings.
@@ -42,19 +32,9 @@ public interface Model extends PanicMode {
     GuiSettings getGuiSettings();
 
     /**
-     * Returns the delete sources' GUI settings.
-     */
-    GuiSettings getDeletedSourceGuiSettings();
-
-    /**
      * Sets the user prefs' GUI settings.
      */
     void setGuiSettings(GuiSettings guiSettings);
-
-    /**
-     * Returns the delete sources' GUI settings.
-     */
-    void setDeletedSourceGuiSettings(GuiSettings guiSettings);
 
     /**
      * Returns the user prefs' source manager file path.
@@ -62,19 +42,9 @@ public interface Model extends PanicMode {
     Path getSourceManagerFilePath();
 
     /**
-     * Returns the user prefs' source manager file path.
-     */
-    Path getDeletedSourceFilePath();
-
-    /**
      * Sets the user prefs' source manager file path.
      */
     void setSourceManagerFilePath(Path sourceManagerFilePath);
-
-    /**
-     * Sets the deleted sources' deleted source file path.
-     */
-    void setDeleteSourceFilePath(Path deleteSourcesFilePath);
 
     /**
      * Replaces source manager data with the data in {@code sourceManager}.

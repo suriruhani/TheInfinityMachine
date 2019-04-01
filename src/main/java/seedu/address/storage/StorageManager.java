@@ -7,6 +7,8 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.DeletedSources;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
@@ -18,13 +20,15 @@ public class StorageManager implements Storage {
 
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private SourceManagerStorage sourceManagerStorage;
+    private DeletedSourcesStorage deletedSourcesStorage;
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(SourceManagerStorage sourceManagerStorage, UserPrefsStorage userPrefsStorage) {
+    public StorageManager(SourceManagerStorage sourceManagerStorage, UserPrefsStorage userPrefsStorage, DeletedSourcesStorage deletedSourcesStorage) {
         super();
         this.sourceManagerStorage = sourceManagerStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.deletedSourcesStorage = deletedSourcesStorage;
     }
 
     // ================ UserPrefs methods ==============================
@@ -75,4 +79,33 @@ public class StorageManager implements Storage {
         sourceManagerStorage.saveSourceManager(sourceManager, filePath);
     }
 
+    // ================ DeletedSources methods ==============================
+
+    @Override
+    public Path getDeletedSourceFilePath() {
+        return deletedSourcesStorage.getDeletedSourceFilePath();
+    }
+
+    @Override
+    public Optional<ReadOnlyDeletedSources> readDeletedSources() throws DataConversionException, IOException {
+        return readDeletedSources(deletedSourcesStorage.getDeletedSourceFilePath());
+    }
+
+    @Override
+    public Optional<ReadOnlyDeletedSources> readDeletedSources(Path filePath)
+            throws DataConversionException, IOException {
+        logger.fine("Attempting to read data from file: " + filePath);
+        return deletedSourcesStorage.readDeletedSources(filePath);
+    }
+
+    @Override
+    public void saveDeletedSources(ReadOnlyDeletedSources deletedSources) throws IOException {
+        saveDeletedSources(deletedSources, deletedSourcesStorage.getDeletedSourceFilePath());
+    }
+
+    @Override
+    public void saveDeletedSources(ReadOnlyDeletedSources deletedSources, Path filePath) throws IOException {
+        logger.fine("Attempting to write to data file: " + filePath);
+        deletedSourcesStorage.saveDeletedSources(deletedSources, filePath);
+    }
 }

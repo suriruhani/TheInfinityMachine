@@ -75,6 +75,4 @@ public class StorageManager implements Storage {
         sourceManagerStorage.saveSourceManager(sourceManager, filePath);
     }
 
-    
-
 }

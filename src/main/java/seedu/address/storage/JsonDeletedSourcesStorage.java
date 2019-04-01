@@ -5,9 +5,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.DeletedSources;
 import seedu.address.model.ReadOnlyDeletedSources;
-import seedu.address.model.ReadOnlySourceManager;
 
 import java.io.IOException;
 import java.nio.file.Path;

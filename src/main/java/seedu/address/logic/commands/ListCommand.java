@@ -2,15 +2,19 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
+//import static seedu.address.model.Model.PREDICATE_SHOW_N_SOURCES;
 
-import seedu.address.commons.core.Messages;
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Lists all sources in the Source Database to the user, or the top N sources where N may
@@ -33,21 +37,39 @@ public class ListCommand extends Command {
     private Index targetIndex = null;
 
     public ListCommand(Index targetIndex) {
+
         this.targetIndex = targetIndex;
     }
 
     public ListCommand() {}
 
-//    @Override
-//    public CommandResult execute(Model model, CommandHistory history) {
-//        requireNonNull(model);
-//        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-//        return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
-//    }
+    Predicate<Source> makePredicateForTopN(int n) {
+        return new Predicate<Source>() {
+            private int count = 0;
+            public boolean test(Source source) {
+                if (count < n) {
+                    count++;
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        };
+    }
+
+    /*
+    @Override
+    public CommandResult execute(Model model, CommandHistory history) {
+        requireNonNull(model);
+        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+        return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+    }
+    */
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
+    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException, CommandException {
         requireNonNull(model);
+        /*
 //        List<Source> lastShownList = model.getFilteredSourceList();
 //
 //        if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -57,8 +79,14 @@ public class ListCommand extends Command {
 //        Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
 //        model.deleteSource(sourceToDelete);
 //        model.commitSourceManager();
+        */
+
+        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+        int size = model.getFilteredSourceList().size();
 
         if (targetIndex != null) {
+            targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
+            model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
             return new CommandResult(String.format(MESSAGE_LIST_N_SUCCESS, targetIndex.getOneBased()));
         } else {
             return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);

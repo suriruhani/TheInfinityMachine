@@ -128,6 +128,11 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addSourceAtIndex(Source source, int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setSourceManager(ReadOnlySourceManager newData) {
             throw new AssertionError("This method should not be called.");
         }
@@ -202,10 +207,6 @@ public class AddCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public int getCount() {
-            return 0;
-        }
     }
 
     /**

@@ -1,5 +1,7 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 
@@ -15,11 +17,10 @@ public class CountCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Total number of Source(s): %1$s";
 
-    public CountCommand() {}
-
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
-        int count = model.getCount();
+        requireNonNull(model);
+        int count = model.getFilteredSourceList().size();
         return new CommandResult(String.format(MESSAGE_SUCCESS, count));
     }
 

@@ -430,7 +430,7 @@ public class ModelManager implements Model, PanicMode {
                 && userPrefs.equals(other.userPrefs)
                 && filteredSources.equals(other.filteredSources)
                 && filteredDeletedSources.equals(other.filteredDeletedSources)
-                && Objects.equals(selectedSource.get(), other.selectedSource.get());
+                && Objects.equals(selectedSource.get(), other.selectedSource.get())
                 && Objects.equals(selectedDeletedSource.get(), other.selectedDeletedSource.get());
     }
 

@@ -136,6 +136,16 @@ public class ModelManager implements Model, PanicMode {
         userPrefs.setSourceManagerFilePath(sourceManagerFilePath);
     }
 
+    @Override
+    public Path getDeletedSourceFilePath() {
+        return userPrefs.getDeletedSourceFilePath();
+    }
+
+    @Override
+    public void setDeletedSourceFilePath(Path deletedSourcesFilePath) {
+        requireNonNull(deletedSourcesFilePath);
+        userPrefs.setDeletedSourceFilePath(deletedSourcesFilePath);
+    }
 
     //=========== AddressBook ================================================================================
 
@@ -210,7 +220,7 @@ public class ModelManager implements Model, PanicMode {
 
     @Override
     public void addDeletedSourceAtIndex(Source source, int index) {
-        versionedDeletedSources.addDeletedSource(source, index);
+        versionedDeletedSources.addDeletedSourceAtIndex(source, index);
         updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_SOURCES);
     }
 
@@ -261,8 +271,18 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public boolean canUndoDeletedSources() {
+        return versionedDeletedSources.canUndo();
+    }
+
+    @Override
     public boolean canRedoSourceManager() {
         return versionedSourceManager.canRedo();
+    }
+
+    @Override
+    public boolean canRedoDeletedSources() {
+        return versionedDeletedSources.canRedo();
     }
 
     @Override
@@ -271,13 +291,28 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void undoDeletedSources() {
+        versionedDeletedSources.undo();
+    }
+
+    @Override
     public void redoSourceManager() {
         versionedSourceManager.redo();
     }
 
     @Override
+    public void redoDeletedSources() {
+        versionedDeletedSources.redo();
+    }
+
+    @Override
     public void commitSourceManager() {
         versionedSourceManager.commit();
+    }
+
+    @Override
+    public void commitDeletedSources() {
+        versionedDeletedSources.commit();
     }
 
     //=========== Selected person ===========================================================================
@@ -298,6 +333,24 @@ public class ModelManager implements Model, PanicMode {
             throw new SourceNotFoundException();
         }
         selectedSource.setValue(source);
+    }
+
+    @Override
+    public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
+        return selectedDeletedSource;
+    }
+
+    @Override
+    public Source getSelectedDeletedSource() {
+        return selectedDeletedSource.getValue();
+    }
+
+    @Override
+    public void setSelectedDeletedSource(Source source) {
+        if (source != null && !filteredDeletedSources.contains(source)) {
+            throw new SourceNotFoundException();
+        }
+        selectedDeletedSource.setValue(source);
     }
 
     /**
@@ -325,6 +378,35 @@ public class ModelManager implements Model, PanicMode {
                 // Select the source that came before it in the list,
                 // or clear the selection if there is no such source.
                 selectedSource.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+            }
+        }
+    }
+
+    /**
+     * Ensures {@code selectedDeletedSource} is a valid source in {@code filteredDeletedSources}.
+     */
+    private void ensureSelectedDeletedSourceIsValid(ListChangeListener.Change<? extends Source> change) {
+        while (change.next()) {
+            if (selectedDeletedSource.getValue() == null) {
+                // null is always a valid selected deleted source, so we do not need to check that it is valid anymore.
+                return;
+            }
+
+            boolean wasSelectedSourceReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedDeletedSource.getValue());
+            if (wasSelectedSourceReplaced) {
+                // Update selectedDeletedSource to its new value.
+                int index = change.getRemoved().indexOf(selectedDeletedSource.getValue());
+                selectedDeletedSource.setValue(change.getAddedSubList().get(index));
+                continue;
+            }
+
+            boolean wasSelectedSourceRemoved = change.getRemoved().stream()
+                    .anyMatch(removedSource -> selectedDeletedSource.getValue().isSameSource(removedSource));
+            if (wasSelectedSourceRemoved) {
+                // Select the source that came before it in the list,
+                // or clear the selection if there is no such source.
+                selectedDeletedSource.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
             }
         }
     }

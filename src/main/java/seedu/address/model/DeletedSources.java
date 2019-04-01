@@ -77,7 +77,7 @@ public class DeletedSources implements ReadOnlyDeletedSources {
      * Adds a source to the deleted sources list.
      * The source must not already exist in the deleted sources list.
      */
-    public void addSourceAtIndex(Source s, int index) {
+    public void addDeletedSourceAtIndex(Source s, int index) {
         deletedSources.addAtIndex(s, index);
         indicateModified();
     }

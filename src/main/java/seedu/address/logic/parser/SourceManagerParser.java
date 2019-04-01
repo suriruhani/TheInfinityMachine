@@ -7,13 +7,12 @@ import java.util.HashSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BiblioCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.CountCommand;
+import seedu.address.logic.commands.CustomOrderCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
@@ -27,9 +26,7 @@ import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpanicCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.Model;
 
 /**
  * Parses user input.
@@ -44,9 +41,25 @@ public class SourceManagerParser implements CommandValidator {
     // Set of all valid commands
     private HashSet<String> validCommands = new HashSet<>();
 
-    private AliasManager aliasManager = new AliasManager(this);
+    private AliasManager aliasManager;
 
     public SourceManagerParser() {
+        aliasManager = new AliasManager(this);
+        initializeValidCommands();
+    }
+
+    /**
+     * Alternative constructor for dependency injection.
+     */
+    public SourceManagerParser(AliasManager aliasManager) {
+        this.aliasManager = aliasManager;
+        initializeValidCommands();
+    }
+
+    /**
+     * Initializes the set of valid commands.
+     */
+    private void initializeValidCommands() {
         validCommands.add(AddCommand.COMMAND_WORD);
         validCommands.add(EditCommand.COMMAND_WORD);
         validCommands.add(SelectCommand.COMMAND_WORD);
@@ -87,7 +100,6 @@ public class SourceManagerParser implements CommandValidator {
 
         final String commandWord = matcher.group("commandWord");
         final String arguments = matcher.group("arguments");
-        String[] splitArguments;
 
         switch (commandWord) {
 
@@ -111,6 +123,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case ListCommand.COMMAND_WORD:
             return new ListCommand();
+
+        case CustomOrderCommand.COMMAND_WORD:
+            return new CustomOrderCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
             return new HistoryCommand();
@@ -142,29 +157,19 @@ public class SourceManagerParser implements CommandValidator {
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
 
-        // Meta-commands (pertaining to AliasManager)
+        // Meta-commands (pertaining to AliasManager):
+        // For these, we include implementation details because these are meta-commands
+        // that relate directly to AliasManager (and by association, SourceManagerParser).
 
         case AliasManager.COMMAND_WORD_ADD:
-            splitArguments = arguments.trim().split(" ");
-            if (splitArguments.length != 2) {
-                throw new ParseException("You have provided an invalid number of arguments");
-            }
-
-            try {
-                aliasManager.registerAlias(splitArguments[0], splitArguments[1]);
-                return new DummyCommand("Alias created");
-            } catch (IllegalArgumentException e) {
-                return new DummyCommand(e.getMessage());
-            }
+            return new AliasAddMetaCommandParser(aliasManager).parse(arguments);
 
         case AliasManager.COMMAND_WORD_REMOVE:
-            splitArguments = arguments.trim().split(" ");
-            if (splitArguments.length != 1) {
-                throw new ParseException("You have provided an invalid number of arguments");
-            }
+            return new AliasRemoveMetaCommandParser(aliasManager).parse(arguments);
 
-            aliasManager.unregisterAlias(splitArguments[0]);
-            return new DummyCommand("Alias removed");
+        case AliasManager.COMMAND_WORD_LIST:
+            return new AliasListMetaCommandParser(aliasManager).parse(arguments);
+
 
         default:
             // Throw ParseException if input is not an alias
@@ -177,22 +182,6 @@ public class SourceManagerParser implements CommandValidator {
 
             String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
             return parseCommand(actualUserInput);
-        }
-    }
-
-    /**
-     * A concrete implementation of Command that doesn't do anything except return a CommandResult.
-     */
-    private class DummyCommand extends Command {
-        private CommandResult commandResult;
-
-        DummyCommand(String feedback) {
-            commandResult = new CommandResult(feedback);
-        }
-
-        @Override
-        public CommandResult execute(Model model, CommandHistory history) throws CommandException {
-            return commandResult;
         }
     }
 

@@ -235,7 +235,7 @@ This section describes some noteworthy details on how certain features are imple
 
 // tag::alias[]
 === Command Alias feature
-The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`.
+The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.
 
 Users may do one of the following:
 1) Add a new alias
@@ -245,25 +245,33 @@ Users may do one of the following:
 
 This feature is backed by an in-memory database implemented as a Java `HashMap<String, Command>`.
 A HashMap is chosen for several reasons:
-* Adding and removing an alias is simple
-* Checking whether an alias exists is fast (`O(1)` performance, as opposed to `O(N)` in an unsorted list)
+* Adding and removing an alias is straightforward (using in-built Java API) and efficient (`O(1)` time complexity)
+* Checking whether an alias exists is fast (`O(1)` performance)
 * HashMaps naturally facilitate the process of looking up an associated value with a given key
-* HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
+* Java HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
 
 *Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
 as there needs to be a way of associating a `String`-type alias with a `Command` object.
 For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
-That is, however, inelegant and contrived, as opposed to a `HashMap` solution.
-Furthermore, checking for membership in an `ArrayList` is an O(N) operation.
+That is, however, inelegant and inefficient, as opposed to a `HashMap` solution.
+Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in an unsorted list, or `O(log(N))` in a sorted list.
 
-*Operation*: User input is parsed in such a way that the "command" word is extracted and checked to ascertain if it is an
-"original command", or a "command alias". This is implemented simply by augmenting the existing logic (which checks for
-original commands) with an additional `default` block, such that if the command word is not an original command, we check if
-it is a registered alias of a command.
+*Operation*:
 
-If so, we run the command by looking up the `Command` object in our `HashMap`.
+SourceManagerParser detects when a meta-command is entered.
+A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), i.e. `alias`, `alias-rm`, `alias-ls`, etc.
+AliasManager exposes the meta-commands it uses, which SourceManagerParser relies on for detection.
 
-Otherwise, it is a situation of invalid user input.
+When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
+For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser).
+The AliasMetaCommandParser concrete subclasses parses user inputs, potentially throwing exceptions, and finally returns a DummyCommand response object.
+
+In normal operation, when the user uses an alias, SourceManagerParser parses user input to extract the "command word".
+It checks whether the "command word" is an alias using AliasManager's `isAlias()` method.
+If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method
+(which returns an `Optional<String>` - this forces the caller to unwrap the optional and avoids null pointer exceptions).
+
+Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -388,6 +396,33 @@ Step 3. The user executes `search footitle6 footitle5` and only two entries are 
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: Not the most efficient implementation.
 // end::search[]
+
+=== Count feature
+==== Current Implementation
+
+The count command is facilitated by `Infinity Machine`.
+It extends `Infinity Machine with a count functionality calculating the total number of sources retrieved from the database.`
+Additionally, it uses:
+
+* `FilteredSourceList` --
+
+Given below is an example usage scenario and how the count mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+Step 2. The user executes `count` command. All entries retrieved using the command entered will be counted.
+
+[NOTE]
+`list` does not take any arguments. If given, it will ignore it.
+
+Step 3. The user executes a 'search' command to search for all entries matching a certain keyword.
+
+Step 4. The user executes `count` command again. The count of the total number of entries retrieved through the `search`
+command will be returned.
+
+Alternative: It can be implemented in the Model and ModelManager instead of directly in the execute command however, this is an inefficient implementation and thus
+is not used.
 
 // tag::list[]
 === List feature
@@ -955,17 +990,35 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |be able to add a new source |store my research materials
 
-|`* * *` |user |add a new person |
+|`* * *` |user |be able to remove sources I do not want |have a clean and updated database
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |edit an existing source |change a source without deleting it
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |be able to tag my sources |easily determine what this source is about
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |be able to search for sources by type, name and tags |easily navigate through my sources
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |see all the sources that I have stored |have an overview of what I have at the moment
+
+|`* * *` |new user |have access to all the commands available |have a guide in case I forget how to use the application
+
+|`* *` |user |be able to hide sensitive data |maintain the privacy of my research materials
+
+|`* *` |user |my incorrect searches to show me the closest search terms |still find what I want even if I do not know what it is
+
+|`* *` |user |be able to customise the application commands to my own linking |have easy to use aliases for my commands
+
+|`* *` |user |be able to view past commands |easily trace back what I added, removed or modified
+
+|`* *` |user who is prone to making mistakes |be able to undo previous commands |retrieve lost sources if I accidentally deleted them
+
+|`* *` |user |be able to order the sources in the application however I like |put important sources on top or group them together
+
+|`*` |very picky user |be able to customise the word colour in the application |make the application personalized to me
+
+|`*` |user |see some ASCII art representations in the application |have nicer things to look at other than just text
 |=======================================================================
 
 _{More to be added}_
@@ -973,35 +1026,583 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Infinity Machine` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add a source
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to add a specified source to the database
+2.  The Infinity Machine adds the source to the database
+3.  User requests to list all sources in the database
+4.  The Infinity Machine displays all sources in the database including the newly added one
++
+Use case ends.
+
+*Extensions*
+
+* 1b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
++
+[none]
+** 1b1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[discrete]
+=== Use case: Delete a source
+
+*MSS*
+
+1.  User requests to list all sources
+2.  The Infinity Machine shows a list of the sources currently in the database
+3.  User requests to delete a specific source in the list
+4.  The Infinity Machine deletes that source as per the user's request
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. There are no sources in the list. The database is empty.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 3a. The given index is invalid. Either it is a negative number or exceeds the current list total.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. The Infinity Machine shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
++
+[none]
+** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit a source
+
+*MSS*
+
+1.  User requests to list all sources
+2.  The Infinity Machine shows a list of the sources currently in the database
+3.  User requests to edit a specific source in the list with some parameters
+4.  The Infinity Machine modifies that source as per the user's request
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no sources in the list. The database is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid. Either it is a negative number or exceeds the current list total.
++
+[none]
+** 3a1. The Infinity Machine shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
++
+[none]
+** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search for a source
+
+*MSS*
+
+1.  User requests to search for a source with specific keywords
+2.  The Infinity Machine shows a list of the sources currently in the database that match the user's keywords
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. Either it is misspelled or does not have any keywords.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 2a. There are no sources in the list. The database is empty.
++
+Use case ends with nothing being displayed.
+
+[none]
+* 2b. There are no sources in the list that match the user's keywords.
++
+Use case ends with nothing being displayed.
+
+[discrete]
+=== Use case: List the sources in the database
+
+*MSS*
+
+1.  User requests to list all sources
+2.  The Infinity Machine shows a list of the sources currently in the database
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 2a. There are no sources in the list. The database is empty.
++
+Use case ends with nothing being displayed.
+
+[discrete]
+=== Use case: Reorder sources in the database
+
+*MSS*
+
+1.  User requests to list all sources
+2.  The Infinity Machine shows a list of the sources currently in the database
+3.  User requests to move a specific source in the list to another position either further up or below
+4.  The Infinity Machine moves that source to the targeted location as per the user's request
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no sources in the list. The database is empty.
++
+Use case ends.
+
+* 3a. The given source index is invalid. Either it is a negative number or exceeds the current list total.
++
+[none]
+** 3a1. The Infinity Machine shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given location index is invalid. Either it is a negative number or exceeds the current list total.
++
+[none]
+** 3b1. The Infinity Machine shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
++
+[none]
+** 3c1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 2.
+
+* 3d. The source index and the location index are the same.
++
+[none]
+** 3d1. The Infinity Machine performs the move but nothing changes.
++
+Use case ends with no change to the database.
+
+[discrete]
+=== Use case: Generate bibliography entry of a source
+
+*MSS*
+
+1.  User requests to list all sources
+2.  The Infinity Machine shows a list of the sources currently in the database
+3.  User requests to generate a bibliography entry of a specific source in the list
+4.  The Infinity Machine generates a bibliography entry of that source as per the user's request in a predefined citation standard
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There are no sources in the list. The database is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid. Either it is a negative number or exceeds the current list total.
++
+[none]
+** 3a1. The Infinity Machine shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The command entered is invalid. Either it is misspelled or does not have the correct arguments and parameters.
++
+[none]
+** 3b1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: List the history of entered commands
+
+*MSS*
+
+1.  User requests to list all previously entered commands
+2.  The Infinity Machine shows a list of the commands entered previously
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 2a. There are no previous commands.
++
+Use case ends with nothing being displayed.
+
+[discrete]
+=== Use case: List the search history of database
+
+*MSS*
+
+1.  User requests to list all previously searched entities
+2.  The Infinity Machine shows the search history of the application
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 2a. There are no previous search commands.
++
+Use case ends with nothing being displayed.
+
+[discrete]
+=== Use case: Creating an alias of a command
+
+*MSS*
+
+1.  User requests to create an alias of a command
+2.  The Infinity Machine creates and assigns the user defined alias to the command
+3.  User executes that command with the alias
+4.  The Infinity Machine executes the user requested command as though the original command was entered
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+* 1b. The alias the user is assigning already exists.
++
+[none]
+** 1b1. The Infinity Machine will override the original aliased command with the new command entered.
++
+Use case ends.
+
+* 1b. The command the user is attempting to alias is already an alias.
++
+[none]
+** 1b1. The Infinity Machine shows an error message.
++
+Use case resumes at step 0.
+
+[none]
+* 3a. The alias creation was not successful.
++
+[none]
+** 3a1. The Infinity Machine shows an error message since the command is invalid.
++
+Use case ends.
+
+[discrete]
+=== Use case: Removing an alias of a command
+
+*MSS*
+
+1.  User requests to remove an alias of a command
+2.  The Infinity Machine removes the alias to the command
+3.  User executes that command with the now removed alias
+4.  The Infinity Machine will not execute the command since it is no longer an alias and instead displays an error
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. Either the command was misspelled or the parameters entered were incorrect.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+* 1b. The alias the user is attempting to remove does not exist.
++
+[none]
+** 1b1. The Infinity Machine will not perform any action.
++
+Use case resumes at step 2 with no change.
+
+[none]
+* 3a. The alias was not successful removed.
++
+[none]
+** 3a1. The Infinity Machine will execute the command when the alias is used.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all the aliases currently active
+
+*MSS*
+
+1.  User requests to list all active aliases
+2.  The Infinity Machine shows a list of the active aliases for the various commands
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 2a. There are no aliases in the application.
++
+Use case ends with nothing being displayed.
+
+[discrete]
+=== Use case: Count the total number of sources in the database
+
+*MSS*
+
+1.  User requests to count how many sources there are in the database
+2.  The Infinity Machine shows the number of sources in the database
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[discrete]
+=== Use case: Undo a previous command
+
+*MSS*
+
+1.  User requests to undo a previous command
+2.  The Infinity Machine undoes the previous command and sets the database to its state before the command
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 1b. There are no previous commands.
++
+Use case ends with no changes to the database.
+
+* 1c. All previous commands are not "undoable" (they do not modify the sources or are valid redo commands)
++
+[none]
+** 1c1. The Infinity Machine will not undo anything and the sources will be unchanged.
++
+Use case ends with no changes to the database.
+
+[discrete]
+=== Use case: Redo a previous command
+
+*MSS*
+
+1.  User requests to redo a previous command
+2.  The Infinity Machine redoes the previous command and sets the database to its state after the command
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+[none]
+* 1b. There are no previous commands.
++
+Use case ends with no changes to the database.
+
+* 1c. All previous commands are not "redoable" (they do not modify the sources or are valid undo commands)
++
+[none]
+** 1c1. The Infinity Machine will not undo anything and the sources will be unchanged.
++
+Use case ends with no changes to the database.
+
+[discrete]
+=== Use case: Enable panic mode
+
+*MSS*
+
+1.  User requests to enable panic mode
+2.  The Infinity Machine goes into panic mode and hides all sources
+3.  User requests to list all sources
+4.  The Infinity Machine will display nothing since it is in panic mode
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command is misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+* 1b. The system is already in panic mode.
++
+[none]
+** 1b1. The Infinity Machine does not perform any action since it is already in panic mode.
++
+Use case continues at step 3.
+
+* 3a. The earlier enable panic command is invalid.
++
+[none]
+** 3a1. The Infinity Machine displays all sources since it did not enter panic mode.
++
+Use case ends.
+
+[discrete]
+=== Use case: Disable panic mode
+
+*MSS*
+
+1.  User requests to disable panic mode
+2.  The Infinity Machine goes into normal mode and reveals all sources
+3.  User requests to list all sources
+4.  The Infinity Machine will display all sources since it is no longer in panic mode
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command is misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+* 1b. The system is already in normal mode.
++
+[none]
+** 1b1. The Infinity Machine does not perform any action since it is already in panic mode.
++
+Use case continues at step 3.
+
+* 3a. The earlier enable panic command is invalid.
++
+[none]
+** 3a1. The Infinity Machine displays nothing since it is still in panic mode.
++
+Use case ends.
+
+* 3b. There are no sources in the list. The database is empty.
++
+[none]
+** 3b1. The Infinity Machine displays nothing since there are no sources.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear all sources in the database
+
+*MSS*
+
+1.  User requests to clear all sources in the database
+2.  The Infinity Machine clears all the sources in the database making it empty
+3.  User requests to list all sources
+4.  The Infinity Machine will display nothing since all the sources have been removed
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
+
+* 3a. The earlier clear command is invalid.
++
+[none]
+** 3a1. The Infinity Machine displays all sources it has since it did not lose any sources.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit application
+
+*MSS*
+
+1.  User requests exit application
+2.  The infinity machine saves and shuts down
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The command entered is invalid. The command was misspelled.
++
+[none]
+** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
++
+Use case resumes at step 0.
 
 [appendix]
 == Non Functional Requirements

@@ -1,7 +1,6 @@
 package seedu.address.storage;
 
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.DeletedSources;
 import seedu.address.model.ReadOnlyDeletedSources;
 
 import java.io.IOException;

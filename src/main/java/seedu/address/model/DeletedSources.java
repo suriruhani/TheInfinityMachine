@@ -3,7 +3,6 @@ package seedu.address.model;
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.InvalidationListenerManager;
-import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.UniqueSourceList;
 
@@ -75,9 +74,19 @@ public class DeletedSources implements ReadOnlyDeletedSources {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Adds a source to the deleted sources list.
+     * The source must not already exist in the deleted sources list.
+     */
+    public void addSourceAtIndex(Source s, int index) {
+        deletedSources.addAtIndex(s, index);
+        indicateModified();
+    }
+
+    /**
+     * Replaces the given source {@code target} in the list with {@code editedSource}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The source identity of {@code editedSource} must not be the same as another existing source
+     * in the deleted sources list.
      */
     public void setDeletedSource(Source target, Source editSource) {
         requireNonNull(editSource);

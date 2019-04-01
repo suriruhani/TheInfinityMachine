@@ -24,7 +24,8 @@ public class StorageManager implements Storage {
     private UserPrefsStorage userPrefsStorage;
 
 
-    public StorageManager(SourceManagerStorage sourceManagerStorage, UserPrefsStorage userPrefsStorage, DeletedSourcesStorage deletedSourcesStorage) {
+    public StorageManager(SourceManagerStorage sourceManagerStorage, UserPrefsStorage userPrefsStorage,
+                          DeletedSourcesStorage deletedSourcesStorage) {
         super();
         this.sourceManagerStorage = sourceManagerStorage;
         this.userPrefsStorage = userPrefsStorage;

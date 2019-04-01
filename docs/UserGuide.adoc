@@ -181,7 +181,7 @@ Format: `history`
 Lists the results of all searches made using the `search` command recently. +
 Format: `searchhistory`
 
-=== Command aliases
+=== Command aliases : `alias`
 ==== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +
 Format: `alias COMMAND ALIAS`
@@ -206,6 +206,12 @@ The command may not be another alias. The alias may not be a command.
 * `alias count ct` (`ct` is now an alias for `count`)
 * `alias ct c` (this is invalid because `ct` is another alias)
 
+The alias must be syntatically valid. A valid syntax may only contain alphabets.
+
+* `alias list l` (valid)
+* `alias count ct` (valid)
+* `alias clear $` (invalid)
+
 * `alias count list` (this is invalid because `list` is a command)
 
 ==== Removing an alias: `alias-rm`
@@ -223,6 +229,11 @@ If the user attempts to remove a non-existent alias, nothing happens.
 ==== Listing all aliases: `alias-ls`
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
+
+==== Alias persistence
+Aliases are persistent across usage sessions. 
+When an alias is created or removed, this is recorded to disk.
+No action is required on the user's part.
 
 === Counting total number of sources: `count`
 

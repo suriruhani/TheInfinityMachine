@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import seedu.address.model.DeletedSources;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.SourceManager;
 import seedu.address.model.source.Detail;
@@ -39,6 +41,23 @@ public class SampleDataUtil {
             sampleSm.addSource(sampleSource);
         }
         return sampleSm;
+    }
+
+    public static Source[] getSampleDeletedSources() {
+        return new Source[] {
+                new Source(new Title("Algorithms 0"), new Type("Math"), new Detail("AlgoDetails"),
+                        getTagSet("Computer Science")),
+                new Source(new Title("Algorithms 1"), new Type("Math"), new Detail("AlgoDetails"),
+                        getTagSet("Computer Science"))
+        };
+    }
+
+    public static ReadOnlyDeletedSources getSampleDeletedSourcesList() {
+        DeletedSources deletedSources = new DeletedSources();
+        for (Source sampleDeletedSource : getSampleDeletedSources()) {
+            deletedSources.addDeletedSource(sampleDeletedSource);
+        }
+        return deletedSources;
     }
 
     /**

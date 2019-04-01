@@ -19,18 +19,28 @@ public interface DeletedSourcesStorage {
     Path getDeletedSourceFilePath();
 
     /**
-     * Returns DeletedSources data from storage.
+     * Returns DeletedSources data as a ReadOnlyDeletedSources.
      *   Returns {@code Optional.empty()} if storage file is not found.
      * @throws DataConversionException if the data in storage is not in the expected format.
      * @throws IOException if there was any problem when reading from the storage.
      */
-    Optional<DeletedSources> readDeletedSources() throws DataConversionException, IOException;
+    Optional<ReadOnlyDeletedSources> readDeletedSources() throws DataConversionException, IOException;
 
     /**
-     * Saves the given {@link seedu.address.model.ReadOnlyDeletedSources} to the storage.
+     * @see #getDeletedSourceFilePath()
+     */
+    Optional<ReadOnlyDeletedSources> readDeletedSources(Path filePath) throws DataConversionException, IOException;
+
+    /**
+     * Saves the given ReadOnlyDeletedSources to the storage.
      * @param deletedSources cannot be null.
      * @throws IOException if there was any problem writing to the file.
      */
     void saveDeletedSources(ReadOnlyDeletedSources deletedSources) throws IOException;
+
+    /**
+     * @see #saveDeletedSources(ReadOnlyDeletedSources)
+     */
+    void saveDeletedSources(ReadOnlyDeletedSources deletedSources, Path filePath) throws IOException;
 
 }

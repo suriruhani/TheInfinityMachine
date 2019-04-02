@@ -5,7 +5,7 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
 /**
  * Finds and lists all sources in Source Database which have titles containing any of the argument keywords.
@@ -20,9 +20,9 @@ public class SearchCommand extends Command {
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " Algorithm";
 
-    private final TitleContainsKeywordsPredicate predicate;
+    private final SourceContainsKeywordsPredicate predicate;
 
-    public SearchCommand(TitleContainsKeywordsPredicate predicate) {
+    public SearchCommand(SourceContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

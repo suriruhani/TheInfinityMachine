@@ -19,7 +19,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
@@ -31,10 +31,10 @@ public class SearchCommandTest {
 
     @Test
     public void equals() {
-        TitleContainsKeywordsPredicate firstPredicate =
-                new TitleContainsKeywordsPredicate(Collections.singletonList("first"));
-        TitleContainsKeywordsPredicate secondPredicate =
-                new TitleContainsKeywordsPredicate(Collections.singletonList("second"));
+        SourceContainsKeywordsPredicate firstPredicate =
+                new SourceContainsKeywordsPredicate(Collections.singletonList("first"));
+        SourceContainsKeywordsPredicate secondPredicate =
+                new SourceContainsKeywordsPredicate(Collections.singletonList("second"));
 
         SearchCommand searchFirstCommand = new SearchCommand(firstPredicate);
         SearchCommand searchSecondCommand = new SearchCommand(secondPredicate);
@@ -59,7 +59,7 @@ public class SearchCommandTest {
     @Test
     public void execute_zeroKeywords_noSourceFound() {
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 0);
-        TitleContainsKeywordsPredicate predicate = preparePredicate(" ");
+        SourceContainsKeywordsPredicate predicate = preparePredicate(" ");
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
@@ -69,7 +69,7 @@ public class SearchCommandTest {
     @Test
     public void execute_multipleKeywords_multipleSourcesFound() {
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 3);
-        TitleContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
+        SourceContainsKeywordsPredicate predicate = preparePredicate("Kurz Elle Kunz");
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
@@ -79,7 +79,7 @@ public class SearchCommandTest {
     /**
      * Parses {@code userInput} into a {@code TitleContainsKeywordsPredicate}.
      */
-    private TitleContainsKeywordsPredicate preparePredicate(String userInput) {
-        return new TitleContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
+    private SourceContainsKeywordsPredicate preparePredicate(String userInput) {
+        return new SourceContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
     }
 }

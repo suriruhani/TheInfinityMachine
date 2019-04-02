@@ -30,7 +30,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Source;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
@@ -92,7 +92,7 @@ public class SourceManagerParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         SearchCommand command = (SearchCommand) parser.parseCommand(
                 SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new SearchCommand(new TitleContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test

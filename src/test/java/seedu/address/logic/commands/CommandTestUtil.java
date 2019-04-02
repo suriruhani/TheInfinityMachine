@@ -17,7 +17,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 
 /**
@@ -130,7 +130,7 @@ public class CommandTestUtil {
 
         Source source = model.getFilteredSourceList().get(targetIndex.getZeroBased());
         final String[] splitTitle = source.getTitle().title.split("\\s+");
-        model.updateFilteredSourceList(new TitleContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
+        model.updateFilteredSourceList(new SourceContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
 
         assertEquals(1, model.getFilteredSourceList().size());
     }

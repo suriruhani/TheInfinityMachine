@@ -21,7 +21,8 @@ public class BiblioCommandParser implements Parser<BiblioCommand> {
             String[] tokenizedArguments = args.split(" ");
             String format = tokenizedArguments[1];
 
-            if (tokenizedArguments.length != 3 || format.length() == 0){
+            if (tokenizedArguments.length != 3
+                || format.length() == 0){
                 throw new ParseException
                         (String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioCommand.MESSAGE_USAGE));
             }
@@ -33,5 +34,4 @@ public class BiblioCommandParser implements Parser<BiblioCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioCommand.MESSAGE_USAGE), pe);
         }
     }
-
 }

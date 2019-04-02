@@ -9,16 +9,16 @@
 
 == Overview
 
-The Infinity Machine is a desktop application that lets users store research materials for future use. It provides a quick and easy way for tech-savvy users, like university students or researchers, to manage and organise their research materials. 
+The Infinity Machine is a desktop application that lets users store research materials for future use. It provides a quick and easy way for tech-savvy users, like university students or researchers, to manage and organise their research materials.
 
 The user interacts with the application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
 * *Major enhancement*: Added the Custom Order command to the application
-** What it does: This function allows greater flexibility and personalisation for the application by giving users the ability to modify the order in which their sources are displayed.  
-** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management component of the application. More important and critical sources can be given priority and placed on top while older or outdated sources can be relegated to the bottom of the list.  
-** Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment.  
+** What it does: This function allows greater flexibility and personalisation for the application by giving users the ability to modify the order in which their sources are displayed.
+** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management component of the application. More important and critical sources can be given priority and placed on top while older or outdated sources can be relegated to the bottom of the list.
+** Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment.
 
 * *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=darrendragonlee[Project Dashboard]]
 

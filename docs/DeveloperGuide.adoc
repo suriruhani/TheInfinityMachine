@@ -560,7 +560,7 @@ The function is currently implemented using the functionality of the source mode
 
 The primary uses of this feature are to facilitate source management and ordering sources by some user defined metric like personal importance.
 
-Given the function works purely on the parameters the user enters, a parser file was necessary to filter out invalid inputs like alphabets or special characters. 
+Given the function works purely on the parameters the user enters, a parser file was necessary to filter out invalid inputs like alphabets or special characters.
 
 Further consideration was necessary because of nature of the inputs. The inputs are array indexes which are very prone to being out or bounds that can result in system failures. Therefore, in addition to traditional exception handling, the function also implements its own checks for invalid user indexes.
 

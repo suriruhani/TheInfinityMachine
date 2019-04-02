@@ -20,14 +20,18 @@ public class BiblioCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Generates a bibliography in appropriate style\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "Parameters: \n"
+            + "FORMAT (must be a non-empty string)\n"
+            + "INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " APA" + " 1";
 
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
 
+    private final String format;
     private final Index targetIndex;
 
-    public BiblioCommand(Index targetIndex) {
+    public BiblioCommand(String format, Index targetIndex) {
+        this.format =  format;
         this.targetIndex = targetIndex;
     }
 
@@ -41,11 +45,32 @@ public class BiblioCommand extends Command {
         }
 
         Source targetSource = lastShownList.get(targetIndex.getZeroBased());
+        String biblioEntry = "Foo";
+        switch (format) {
+            case "APA":
+                biblioEntry = generateAPA(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            case "MLA":
+                biblioEntry = generateMLA(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            default:
+                throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        }
+    }
 
+    private String generateAPA(Source targetSource) {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;
         String targetDetail = targetSource.getDetail().detail;
-        String biblioEntry = String.format("\n%s;\n%s;\n%s\n", targetTitle, targetType, targetDetail);
-        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+        String biblioEntry = String.format("\n%s;\n%s;\n%s;\n", targetTitle, targetType, targetDetail);
+        return biblioEntry;
+    }
+
+    private String generateMLA(Source targetSource) {
+        String targetTitle = targetSource.getTitle().title;
+        String targetType = targetSource.getType().type;
+        String targetDetail = targetSource.getDetail().detail;
+        String biblioEntry = String.format("\n%s;\n%s;\n%s;\n", targetTitle, targetType, targetDetail);
+        return biblioEntry;
     }
 }

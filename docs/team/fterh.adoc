@@ -54,7 +54,58 @@ https://github.com/nus-cs2103-AY1819S2/forum/issues/43[5])
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#command-aliases-code-alias-code
+=== Command aliases : `alias`
+==== Creating an alias: `alias`
+Allows the user to create aliases create aliases for commands. +
+Format: `alias COMMAND ALIAS`
+
+Examples:
+
+* `alias count c` (`c` is now a valid pseudo-command that works exactly like `count`)
+* `alias invalid i` (`i` is now an invalid pseudo-command that works exactly like `invalid`)
+
+The user is responsible for ensuring that he is creating aliases for valid commands.
+The successful creation of an alias does not provide any guarantee of the validity of the associated command.
+
+If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:
+
+* `alias count c`
+* `alias invalid c`
+
+`c` is now an alias for the invalid command `invalid`.
+
+The command may not be another alias. The alias may not be a command.
+
+* `alias count ct` (`ct` is now an alias for `count`)
+* `alias ct c` (this is invalid because `ct` is another alias)
+* `alias count list` (this is invalid because `list` is a command)
+
+The alias must be syntatically valid. A valid syntax may only contain alphabets.
+
+* `alias list l` (valid)
+* `alias count ct` (valid)
+* `alias clear $` (invalid)
+
+==== Removing an alias: `alias-rm`
+Allows the user to remove previously-defined aliases. +
+Format: `alias-rm ALIAS`
+
+Examples:
+
+* `alias count c` (`c` is now an alias for `count`)
+* `alias-rm c` (`c` is no longer an alias for `count`)
+
+If the user attempts to remove a non-existent alias, nothing happens.
+`alias-rm` only guarantees that after it is performed, the alias argument does not exist.
+
+==== Listing all aliases: `alias-ls`
+Lists all defined aliases and their associated commands. +
+Format: `alias-ls`
+
+==== Alias persistence
+Aliases are persistent across usage sessions.
+When an alias is created or removed, this is recorded to disk.
+No action is required on the user's part.
 
 https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#enabling-panic-mode-code-panic-code
 
@@ -64,7 +115,112 @@ https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#en
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/DeveloperGuide.adoc#command-alias-feature
+=== Command Alias feature
+The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.
+
+Users may do one of the following:
+1) Add a new alias
+2) Remove an existing alias
+3) List all aliases
+
+==== Overview:
+
+This feature is backed by an in-memory database implemented as a Java `HashMap<String, String>`.
+A HashMap is chosen for several reasons:
+
+* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (`O(1)` time)
+* Checking whether an alias exists is fast (`O(1)` time)
+* HashMaps naturally facilitate the process of looking up an associated value with a given key
+
+*Alternative*: An alternative implementation could use a Java `ArrayList`.
+However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
+For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate 2 strings.
+However, that is inelegant and inefficient, as opposed to a `HashMap` solution.
+Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in an unsorted list, or `O(log(N))` in a sorted list.
+
+Therefore, due to the key-value association inherent in the idea of an alias manager, a `HashMap` is the most approriate data structure.
+
+image::AliasManagerClassDiagram.png[width="800"]
+
+==== Operation:
+
+SourceManagerParser detects when a meta-command is entered.
+A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), e.g. `alias`, `alias-rm`, `alias-ls`, etc.
+
+AliasManager exposes the meta-commands it "uses", which SourceManagerParser relies on for detection.
+However, it is acknowledged that this is not strictly necessary.
+It is safe for SourceManagerParser to redefine these meta-commands.
+The default meta-commands that AliasManager exposes should be thought of as recommended, but not mandatory, meta-commands.
+AliasManager is fundamentally command-agnostic; it does not care what meta-commands are actually used.
+
+When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
+For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
+The AliasMetaCommandParser concrete subclasses parses the arguments and returns a DummyCommand response object.
+
+[NOTE]
+
+This delegation design pattern is chosen for 2 reasons:
+Firstly, it hides complexity in SourceManagerParser by abstracting the logic of interacting with AliasManager away.
+This makes SourceManagerParser more readable, declarative, and maintainable.
+This also allows us to practice the Single Responsibility Principle and Single Layer of Abstraction Principle, among others.
+Secondly, it improves testability by facilitating unit testing of smaller blocks of logic, rather than a single giant block.
+
+In normal operation, when the user uses an alias, SourceManagerParser parses the user input to extract the "command word".
+It checks whether the "command word" is an alias using AliasManager's `isAlias()` method.
+If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method
+(which returns an `Optional<String>` - this forces the caller to unwrap the optional and avoids null pointer exceptions).
+
+Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
+
+**Alternative:** An alternative implementation could be to modify the `HashMap<String, String>` in AliasManager into `HashMap<String, Class<? extends Command>>`. The value is thus a Command class.
+When a valid alias is used, AliasManager would instantiate the associated class and return the instance.
+However, this implementation is disfavored, for the following reasons.
+
+Firstly, SourceManagerParser works with both Command classes and Parser classes.
+Some commands, for instance `add`, have accompanying arguments to be parsed.
+For these "parsable commands", SourceManagerParser instantiates a CommandParser and calls its `.parse()` method.
+For other "non-parsable commands", for instance `clear`, SourceManagerParser instantiates and returns the command directly.
+
+Therefore, if we were to adopt this implementation, we would require 2 separate HashMaps mapping aliases to `Class<? extends Command>` and `Class<? extends Parser<? extends Command>>`.
+This introduces a lot of complexity into AliasManager, and results in some duplication of logic across SourceManagerParser and AliasManager.
+Specifically, the logic that distinguishes between commands/aliases that map to `Command` and those that map to `Parser` will be duplicated in both SourceManagerParser and AliasManager.
+This violates the DRY principle.
+
+Furthermore, doing so increases coupling across the project, as there are now associations between AliasManager and the various Commands/Parsers. We want to minimize coupling whenever possible.
+
+Therefore, by simply mapping aliases to commands, and having a single layer of recursion in SourceManagerParser whereby it calls itself with the actual command, we avoid all the above problems.
+We improve cohesion, reduce coupling, drastically reduce complexity, and improve testability.
+
+==== Persistence:
+The usefulness of aliases would be significantly diminished if they do not persist between sessions.
+Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.
+
+To accomplish this, we create an `AliasStorage` interface, and an implementing class `ConcreteAliasStorage`.
+We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.
+
+ConcreteAliasStorage is responsible for reading/writing from/to disk,
+and therefore converting the in-memory database (HashMap object) of aliases into/from an encoded representation.
+When AliasManager's aliases database is mutated (i.e. create or remove alias), it calls ConcreteAliasStorage's `saveAliases()` method.
+
+[NOTE]
+
+**Alternative:** A more elegant implementation would be to apply the observer pattern,
+with the observer observing the aliases HashMap database, and calling `saveAliases()` when it is mutated.
+However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
+with minimal (or no) tangible benefits.
+Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
+Secondly, there are only 2 methods which would mutate the aliases HashMap database.
+
+Within ConcreteAliasStorage, its `saveAliases()` method encodes aliases and commands into a string,
+in the following format: `alias1:command1;alias2:command2;alias3:command3`.
+Conversely, `readAliases()` parses this string and reconstructs the aliases HashMap database.
+
+[NOTE]
+
+**Alternative:** We opted to use our own very simple encoding scheme instead of JSON.
+JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
+However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
+Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.
 
 
 == PROJECTS

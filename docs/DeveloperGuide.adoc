@@ -323,7 +323,7 @@ When AliasManager's aliases database is mutated (i.e. create or remove alias), i
 
 [NOTE]
 
-** Alternative: ** A more elegant implementation would be to apply the observer pattern,
+**Alternative:** A more elegant implementation would be to apply the observer pattern,
 with the observer observing the aliases HashMap database, and calling `saveAliases()` when it is mutated.
 However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
 with minimal (or no) tangible benefits. 
@@ -336,12 +336,10 @@ Conversely, `readAliases()` parses this string and reconstructs the aliases Hash
 
 [NOTE]
 
-** Alternative: ** We opted to use our own very simple encoding scheme instead of JSON. 
+**Alternative:** We opted to use our own very simple encoding scheme instead of JSON. 
 JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
 However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
 Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.
-
-Why not JSON?
 
 // tag::undoredo[]
 === Undo/Redo feature

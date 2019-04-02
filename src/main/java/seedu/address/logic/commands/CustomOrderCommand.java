@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.core.Messages;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -27,6 +26,9 @@ public class CustomOrderCommand extends Command {
             + "MOVE_POSITION (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 2 6";
 
+    public static final String MESSAGE_SOURCE_INDEX_INVALID = "The source index to move is invalid.";
+    public static final String MESSAGE_MOVE_POSITION_INVALID = "The position to move to is invalid.";
+    public static final String MESSAGE_INDEX_IDENTICAL = "The source index and move position are the same.";
     public static final String MESSAGE_SUCCESS = "Source at position %d moved to position %d.";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -45,16 +47,19 @@ public class CustomOrderCommand extends Command {
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         List<Source> completeSourceList = model.getFilteredSourceList();
 
-        if (initialIndex >= completeSourceList.size()
-                || newPosition >= completeSourceList.size()
-                || initialIndex < 0
-                || newPosition < 0) {
-            logger.info("--- CustomOrderCommand: Index given is out of bounds.");
-            throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+        if (initialIndex >= completeSourceList.size() || initialIndex < 0) {
+            logger.info("--- CustomOrderCommand: Initial index given is out of bounds.");
+            throw new CommandException(MESSAGE_SOURCE_INDEX_INVALID);
         }
 
-        if (newPosition > initialIndex) {
-            newPosition--;
+        if (newPosition >= completeSourceList.size() || newPosition < 0) {
+            logger.info("--- CustomOrderCommand: Move position index given is out of bounds.");
+            throw new CommandException(MESSAGE_MOVE_POSITION_INVALID);
+        }
+
+        if (initialIndex == newPosition) {
+            logger.info("--- CustomOrderCommand: Initial index and move position are the same.");
+            throw new CommandException(MESSAGE_INDEX_IDENTICAL);
         }
 
         Source sourceToMove = completeSourceList.get(initialIndex);

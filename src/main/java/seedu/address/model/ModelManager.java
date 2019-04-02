@@ -26,29 +26,40 @@ public class ModelManager implements Model, PanicMode {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private VersionedSourceManager versionedSourceManager;
+    private VersionedDeletedSources versionedDeletedSources;
     private final UserPrefs userPrefs;
     private final FilteredList<Source> filteredSources;
+    private final FilteredList<Source> filteredDeletedSources;
     private final SimpleObjectProperty<Source> selectedSource = new SimpleObjectProperty<>();
+    private final SimpleObjectProperty<Source> selectedDeletedSource = new SimpleObjectProperty<>();
     private boolean panicMode = false;
     private VersionedSourceManager sourceManagerBackup = null;
 
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
      */
-    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs) {
+    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs,
+                        ReadOnlyDeletedSources deletedSources) {
         super();
-        requireAllNonNull(sourceManager, userPrefs);
+        requireAllNonNull(sourceManager, userPrefs, deletedSources);
 
-        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs);
+        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs
+                + " and deleted sources " + deletedSources);
 
         versionedSourceManager = new VersionedSourceManager(sourceManager);
+        versionedDeletedSources = new VersionedDeletedSources((deletedSources));
+
         this.userPrefs = new UserPrefs(userPrefs);
+
         filteredSources = new FilteredList<>(versionedSourceManager.getSourceList());
+        filteredDeletedSources = new FilteredList<>(versionedDeletedSources.getDeletedSourceList());
+
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
+        filteredDeletedSources.addListener(this::ensureSelectedDeletedSourceIsValid);
     }
 
     public ModelManager() {
-        this(new SourceManager(), new UserPrefs());
+        this(new SourceManager(), new UserPrefs(), new DeletedSources());
     }
 
     /**
@@ -127,6 +138,17 @@ public class ModelManager implements Model, PanicMode {
         userPrefs.setSourceManagerFilePath(sourceManagerFilePath);
     }
 
+    @Override
+    public Path getDeletedSourceFilePath() {
+        return userPrefs.getDeletedSourceFilePath();
+    }
+
+    @Override
+    public void setDeletedSourceFilePath(Path deletedSourcesFilePath) {
+        requireNonNull(deletedSourcesFilePath);
+        userPrefs.setDeletedSourceFilePath(deletedSourcesFilePath);
+    }
+
     //=========== AddressBook ================================================================================
 
     @Override
@@ -169,6 +191,48 @@ public class ModelManager implements Model, PanicMode {
         versionedSourceManager.setSource(target, editedSource);
     }
 
+    //=========== DeletedSources ================================================================================
+
+    @Override
+    public void setDeletedSources(ReadOnlyDeletedSources deletedSources) {
+        versionedDeletedSources.resetData(deletedSources);
+    }
+
+    @Override
+    public ReadOnlyDeletedSources getDeletedSources() {
+        return versionedDeletedSources;
+    }
+
+    @Override
+    public boolean hasDeletedSource(Source deletedSources) {
+        requireNonNull(deletedSources);
+        return versionedDeletedSources.hasDeletedSource(deletedSources);
+    }
+
+    @Override
+    public void removeDeletedSource(Source target) {
+        versionedDeletedSources.removeDeletedSource(target);
+    }
+
+    @Override
+    public void addDeletedSource(Source source) {
+        versionedDeletedSources.addDeletedSource(source);
+        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_DELETED_SOURCES);
+    }
+
+    @Override
+    public void addDeletedSourceAtIndex(Source source, int index) {
+        versionedDeletedSources.addDeletedSourceAtIndex(source, index);
+        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_DELETED_SOURCES);
+    }
+
+    @Override
+    public void setDeletedSource(Source target, Source editedSource) {
+        requireAllNonNull(target, editedSource);
+
+        versionedDeletedSources.setDeletedSource(target, editedSource);
+    }
+
     //=========== Filtered Source List Accessors =============================================================
 
     /**
@@ -186,6 +250,21 @@ public class ModelManager implements Model, PanicMode {
         filteredSources.setPredicate(predicate);
     }
 
+    /**
+     * Returns an unmodifiable view of the list of {@code Source} backed by the internal list of
+     * {@code versionedSourceManager}
+     */
+    @Override
+    public ObservableList<Source> getFilteredDeletedSourceList() {
+        return filteredDeletedSources;
+    }
+
+    @Override
+    public void updateFilteredDeletedSourceList(Predicate<Source> predicate) {
+        requireNonNull(predicate);
+        filteredDeletedSources.setPredicate(predicate);
+    }
+
     //=========== Undo/Redo =================================================================================
 
     @Override
@@ -194,8 +273,18 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public boolean canUndoDeletedSources() {
+        return versionedDeletedSources.canUndo();
+    }
+
+    @Override
     public boolean canRedoSourceManager() {
         return versionedSourceManager.canRedo();
+    }
+
+    @Override
+    public boolean canRedoDeletedSources() {
+        return versionedDeletedSources.canRedo();
     }
 
     @Override
@@ -204,13 +293,28 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void undoDeletedSources() {
+        versionedDeletedSources.undo();
+    }
+
+    @Override
     public void redoSourceManager() {
         versionedSourceManager.redo();
     }
 
     @Override
+    public void redoDeletedSources() {
+        versionedDeletedSources.redo();
+    }
+
+    @Override
     public void commitSourceManager() {
         versionedSourceManager.commit();
+    }
+
+    @Override
+    public void commitDeletedSources() {
+        versionedDeletedSources.commit();
     }
 
     //=========== Selected person ===========================================================================
@@ -231,6 +335,24 @@ public class ModelManager implements Model, PanicMode {
             throw new SourceNotFoundException();
         }
         selectedSource.setValue(source);
+    }
+
+    @Override
+    public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
+        return selectedDeletedSource;
+    }
+
+    @Override
+    public Source getSelectedDeletedSource() {
+        return selectedDeletedSource.getValue();
+    }
+
+    @Override
+    public void setSelectedDeletedSource(Source source) {
+        if (source != null && !filteredDeletedSources.contains(source)) {
+            throw new SourceNotFoundException();
+        }
+        selectedDeletedSource.setValue(source);
     }
 
     /**
@@ -262,6 +384,36 @@ public class ModelManager implements Model, PanicMode {
         }
     }
 
+    /**
+     * Ensures {@code selectedDeletedSource} is a valid source in {@code filteredDeletedSources}.
+     */
+    private void ensureSelectedDeletedSourceIsValid(ListChangeListener.Change<? extends Source> change) {
+        while (change.next()) {
+            if (selectedDeletedSource.getValue() == null) {
+                // null is always a valid selected deleted source, so we do not need to check that it is valid anymore.
+                return;
+            }
+
+            boolean wasSelectedSourceReplaced = change.wasReplaced() && change.getAddedSize() == change.getRemovedSize()
+                    && change.getRemoved().contains(selectedDeletedSource.getValue());
+            if (wasSelectedSourceReplaced) {
+                // Update selectedDeletedSource to its new value.
+                int index = change.getRemoved().indexOf(selectedDeletedSource.getValue());
+                selectedDeletedSource.setValue(change.getAddedSubList().get(index));
+                continue;
+            }
+
+            boolean wasSelectedSourceRemoved = change.getRemoved().stream()
+                    .anyMatch(removedSource -> selectedDeletedSource.getValue().isSameSource(removedSource));
+            if (wasSelectedSourceRemoved) {
+                // Select the source that came before it in the list,
+                // or clear the selection if there is no such source.
+                selectedDeletedSource.setValue(change.getFrom() > 0
+                        ? change.getList().get(change.getFrom() - 1) : null);
+            }
+        }
+    }
+
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -277,9 +429,12 @@ public class ModelManager implements Model, PanicMode {
         // state check
         ModelManager other = (ModelManager) obj;
         return versionedSourceManager.equals(other.versionedSourceManager)
+                && versionedDeletedSources.equals(other.versionedDeletedSources)
                 && userPrefs.equals(other.userPrefs)
                 && filteredSources.equals(other.filteredSources)
-                && Objects.equals(selectedSource.get(), other.selectedSource.get());
+                && filteredDeletedSources.equals(other.filteredDeletedSources)
+                && Objects.equals(selectedSource.get(), other.selectedSource.get())
+                && Objects.equals(selectedDeletedSource.get(), other.selectedDeletedSource.get());
     }
 
 }

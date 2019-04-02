@@ -15,6 +15,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
 
     private GuiSettings guiSettings = new GuiSettings();
     private Path sourceManagerFilePath = Paths.get("data" , "sourcemanager.json");
+    private Path deletedSourceFilePath = Paths.get("data" , "deletedsource.json");
 
     /**
      * Creates a {@code UserPrefs} with default values.
@@ -36,6 +37,7 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         requireNonNull(newUserPrefs);
         setGuiSettings(newUserPrefs.getGuiSettings());
         setSourceManagerFilePath(newUserPrefs.getSourceManagerFilePath());
+        setDeletedSourceFilePath(newUserPrefs.getDeletedSourceFilePath());
     }
 
     public GuiSettings getGuiSettings() {
@@ -56,6 +58,15 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         this.sourceManagerFilePath = sourceManagerFilePath;
     }
 
+    public Path getDeletedSourceFilePath() {
+        return deletedSourceFilePath;
+    }
+
+    public void setDeletedSourceFilePath(Path deletedSourceFilePath) {
+        requireNonNull(deletedSourceFilePath);
+        this.deletedSourceFilePath = deletedSourceFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -68,7 +79,8 @@ public class UserPrefs implements ReadOnlyUserPrefs {
         UserPrefs o = (UserPrefs) other;
 
         return guiSettings.equals(o.guiSettings)
-                && sourceManagerFilePath.equals(o.sourceManagerFilePath);
+                && sourceManagerFilePath.equals(o.sourceManagerFilePath)
+                && deletedSourceFilePath.equals(o.deletedSourceFilePath);
     }
 
     @Override
@@ -80,7 +92,8 @@ public class UserPrefs implements ReadOnlyUserPrefs {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings);
-        sb.append("\nLocal data file location : " + sourceManagerFilePath);
+        sb.append("\nSource Manager Local data file location : " + sourceManagerFilePath);
+        sb.append("\nDeleted Source Local data file location : " + deletedSourceFilePath);
         return sb.toString();
     }
 

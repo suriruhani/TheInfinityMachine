@@ -133,13 +133,17 @@ Returns the source with the title `algorithms`
 * `search ArtificialIntelligence MachineLearning` +
 Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
-=== Listing all sources : `list`
+=== Listing all sources : `list [n]`
 
-Displays a list of all sources currently in the database, with no filtering. +
-Format: `list`
+Displays a list of all sources currently in the database, without filtering. +
+Optional argument N used to list only the top N sources to the user. +
+Format: `list [N]`
 
 ****
-* Lists all sources present in the database in the order of their addition
+* Lists all sources present in the database in the order of their addition, if no argument passed
+* Lists top N sources if a single integer N is passed
+* Throws error if more than one arguments are passed
+* The paramter passed, N, must be a positive integer else error is thrown
 * Tags, Details, Type are also displayed along with the sources
 ****
 
@@ -152,13 +156,18 @@ Format: `delete ORIGINAL_INDEX NEW_INDEX`
 * Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
-* All sources after the location moved to will be shifted downwards.
+* The specified source will replace the original source at that index.
+** If the souce was shifted forward, sources before the `NEW_INDEX` will be shifted back and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
+** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ****
 
 Examples:
 
 * `order 1 4` +
 Moves the source located at index 1 to index 4.
+
+* `order 1 6` +
+If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
 === Generate bibliography entry : `biblio`
 
@@ -181,7 +190,7 @@ Format: `history`
 Lists the results of all searches made using the `search` command recently. +
 Format: `searchhistory`
 
-=== Command aliases
+=== Command aliases : `alias`
 ==== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +
 Format: `alias COMMAND ALIAS`
@@ -205,8 +214,13 @@ The command may not be another alias. The alias may not be a command.
 
 * `alias count ct` (`ct` is now an alias for `count`)
 * `alias ct c` (this is invalid because `ct` is another alias)
-
 * `alias count list` (this is invalid because `list` is a command)
+
+The alias must be syntatically valid. A valid syntax may only contain alphabets.
+
+* `alias list l` (valid)
+* `alias count ct` (valid)
+* `alias clear $` (invalid)
 
 ==== Removing an alias: `alias-rm`
 Allows the user to remove previously-defined aliases. +
@@ -223,6 +237,11 @@ If the user attempts to remove a non-existent alias, nothing happens.
 ==== Listing all aliases: `alias-ls`
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
+
+==== Alias persistence
+Aliases are persistent across usage sessions.
+When an alias is created or removed, this is recorded to disk.
+No action is required on the user's part.
 
 === Counting total number of sources: `count`
 

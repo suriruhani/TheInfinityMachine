@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalSources.CARL;
 import static seedu.address.testutil.TypicalSources.ELLE;
 import static seedu.address.testutil.TypicalSources.FIONA;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.util.Arrays;
@@ -25,8 +26,9 @@ import seedu.address.model.source.TitleContainsKeywordsPredicate;
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
  */
 public class SearchCommandTest {
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+            getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

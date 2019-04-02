@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstSource;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Before;
@@ -15,8 +16,10 @@ import seedu.address.model.UserPrefs;
 
 public class UndoCommandTest {
 
-    private final Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
-    private final Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+            getTypicalDeletedSources());
+    private final Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+            getTypicalDeletedSources());
     private final CommandHistory commandHistory = new CommandHistory();
 
     @Before

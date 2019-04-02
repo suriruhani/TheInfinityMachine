@@ -1,5 +1,10 @@
 package seedu.address.model.source;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,11 +13,9 @@ import java.util.function.Predicate;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.ArgumentMultimap;
 
-import static seedu.address.logic.parser.CliSyntax.*;
-
 /**
- * Tests that a {@code Source}'s {@code Title}, {@code Type}, {@code Source} and {@code Detail}
- * matches the keywords given. Performs a logical AND by checking if all those keywords
+ * Tests that a {@code Source}'s {@code Title}, {@code Type} {@code Detail}, and {@code Tag}
+ * match the keywords given. Performs a logical AND by checking if all those keywords
  * are present in the output source.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {
@@ -38,7 +41,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
 
         if (!titleKeywords.equals("")) {
             result = result && matchTitleKeywords(titleKeywords, source);
-        } 
+        }
         
         if (!typeKeywords.equals("")) {
             result = result && matchTypeKeywords(typeKeywords, source);
@@ -59,6 +62,12 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         return result;
     }
 
+    /**
+     * Returns true for sources that have tags that match the tags entered by the user as an argument
+     * @param tagKeywords entered by user
+     * @param source to be tested
+     * @return true if present, else false
+     */
     private boolean matchTagKeywords(List<String> tagKeywords, Source source) {
         boolean result = true;
         for (String tag : tagKeywords) {
@@ -68,18 +77,36 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         return result;
     }
 
+    /**
+     * Returns true for sources that have details that match the details entered by the user as an argument
+     * @param detailsKeywords entered by the user
+     * @param source to be tested
+     * @return true if matches, else false
+     */
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getDetail().detail, keyword));
     }
 
+    /**
+     * Returns true for sources that have types that match the types entered by the user as an argument
+     * @param typeKeywords entered by the user
+     * @param source to be tested
+     * @return true if matches, else false
+     */
     private boolean matchTypeKeywords(String typeKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getType().type, keyword));
     }
 
+    /**
+     * Returns true for sources that have title that match the title entered by the user as an argument
+     * @param titleKeywords entered by the user
+     * @param source to be tested
+     * @return true if matches, else false
+     */
     private boolean matchTitleKeywords(String titleKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(titleKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()

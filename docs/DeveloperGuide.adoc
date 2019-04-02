@@ -241,37 +241,105 @@ Users may do one of the following:
 1) Add a new alias
 2) Remove an existing alias
 3) List all aliases
-4) Delete all aliases
 
-This feature is backed by an in-memory database implemented as a Java `HashMap<String, Command>`.
+==== Overview:
+
+This feature is backed by an in-memory database implemented as a Java `HashMap<String, String>`.
 A HashMap is chosen for several reasons:
-* Adding and removing an alias is straightforward (using in-built Java API) and efficient (`O(1)` time complexity)
-* Checking whether an alias exists is fast (`O(1)` performance)
-* HashMaps naturally facilitate the process of looking up an associated value with a given key
-* Java HashMaps has built-in operations to facilitate the listing of all aliases, or the deletion of all aliases
 
-*Alternative*: An alternative implementation could use a Java `ArrayList`. However, that adds additional code complexity,
-as there needs to be a way of associating a `String`-type alias with a `Command` object.
-For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate an alias with a Command.
-That is, however, inelegant and inefficient, as opposed to a `HashMap` solution.
+* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (`O(1)` time)
+* Checking whether an alias exists is fast (`O(1)` time)
+* HashMaps naturally facilitate the process of looking up an associated value with a given key
+
+*Alternative*: An alternative implementation could use a Java `ArrayList`.
+However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
+For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate 2 strings.
+However, that is inelegant and inefficient, as opposed to a `HashMap` solution.
 Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in an unsorted list, or `O(log(N))` in a sorted list.
 
-*Operation*:
+Therefore, due to the key-value association inherent in the idea of an alias manager, a `HashMap` is the most approriate data structure.
+
+image::AliasManagerClassDiagram.png[width="800"]
+
+==== Operation:
 
 SourceManagerParser detects when a meta-command is entered.
-A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), i.e. `alias`, `alias-rm`, `alias-ls`, etc.
-AliasManager exposes the meta-commands it uses, which SourceManagerParser relies on for detection.
+A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), e.g. `alias`, `alias-rm`, `alias-ls`, etc.
+
+AliasManager exposes the meta-commands it "uses", which SourceManagerParser relies on for detection.
+However, it is acknowledged that this is not strictly necessary.
+It is safe for SourceManagerParser to redefine these meta-commands.
+The default meta-commands that AliasManager exposes should be thought of as recommended, but not mandatory, meta-commands.
+AliasManager is fundamentally command-agnostic; it does not care what meta-commands are actually used.
 
 When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
-For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser).
-The AliasMetaCommandParser concrete subclasses parses user inputs, potentially throwing exceptions, and finally returns a DummyCommand response object.
+For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
+The AliasMetaCommandParser concrete subclasses parses the arguments and returns a DummyCommand response object.
 
-In normal operation, when the user uses an alias, SourceManagerParser parses user input to extract the "command word".
+[NOTE]
+
+This delegation design pattern is chosen for 2 reasons:
+Firstly, it hides complexity in SourceManagerParser by abstracting the logic of interacting with AliasManager away.
+This makes SourceManagerParser more readable, declarative, and maintainable.
+This also allows us to practice the Single Responsibility Principle and Single Layer of Abstraction Principle, among others.
+Secondly, it improves testability by facilitating unit testing of smaller blocks of logic, rather than a single giant block.
+
+In normal operation, when the user uses an alias, SourceManagerParser parses the user input to extract the "command word".
 It checks whether the "command word" is an alias using AliasManager's `isAlias()` method.
 If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method
 (which returns an `Optional<String>` - this forces the caller to unwrap the optional and avoids null pointer exceptions).
 
 Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
+
+**Alternative:** An alternative implementation could be to modify the `HashMap<String, String>` in AliasManager into `HashMap<String, Class<? extends Command>>`. The value is thus a Command class.
+When a valid alias is used, AliasManager would instantiate the associated class and return the instance.
+However, this implementation is disfavored, for the following reasons.
+
+Firstly, SourceManagerParser works with both Command classes and Parser classes.
+Some commands, for instance `add`, have accompanying arguments to be parsed.
+For these "parsable commands", SourceManagerParser instantiates a CommandParser and calls its `.parse()` method.
+For other "non-parsable commands", for instance `clear`, SourceManagerParser instantiates and returns the command directly.
+
+Therefore, if we were to adopt this implementation, we would require 2 separate HashMaps mapping aliases to `Class<? extends Command>` and `Class<? extends Parser<? extends Command>>`.
+This introduces a lot of complexity into AliasManager, and results in some duplication of logic across SourceManagerParser and AliasManager.
+Specifically, the logic that distinguishes between commands/aliases that map to `Command` and those that map to `Parser` will be duplicated in both SourceManagerParser and AliasManager.
+This violates the DRY principle.
+
+Furthermore, doing so increases coupling across the project, as there are now associations between AliasManager and the various Commands/Parsers. We want to minimize coupling whenever possible.
+
+Therefore, by simply mapping aliases to commands, and having a single layer of recursion in SourceManagerParser whereby it calls itself with the actual command, we avoid all the above problems.
+We improve cohesion, reduce coupling, drastically reduce complexity, and improve testability.
+
+==== Persistence:
+The usefulness of aliases would be significantly diminished if they do not persist between sessions.
+Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.
+
+To accomplish this, we create an `AliasStorage` interface, and an implementing class `ConcreteAliasStorage`.
+We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.
+
+ConcreteAliasStorage is responsible for reading/writing from/to disk,
+and therefore converting the in-memory database (HashMap object) of aliases into/from an encoded representation.
+When AliasManager's aliases database is mutated (i.e. create or remove alias), it calls ConcreteAliasStorage's `saveAliases()` method.
+
+[NOTE]
+
+**Alternative:** A more elegant implementation would be to apply the observer pattern,
+with the observer observing the aliases HashMap database, and calling `saveAliases()` when it is mutated.
+However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
+with minimal (or no) tangible benefits.
+Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
+Secondly, there are only 2 methods which would mutate the aliases HashMap database.
+
+Within ConcreteAliasStorage, its `saveAliases()` method encodes aliases and commands into a string,
+in the following format: `alias1:command1;alias2:command2;alias3:command3`.
+Conversely, `readAliases()` parses this string and reconstructs the aliases HashMap database.
+
+[NOTE]
+
+**Alternative:** We opted to use our own very simple encoding scheme instead of JSON.
+JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
+However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
+Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -429,51 +497,59 @@ is not used.
 ==== Current Implementation
 
 The list command is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with a list functionality, enumerating all entries in the source database and their details,
-in the order of their addition.
+It extends `Infinity Machine` with a list functionality, enumerating all or a specific number of
+entries in the source database and their details, in the order of their addition.
+It has mainly two usages: +
+1) Without a parameter, as just `list` : enumerates all the entries of the source database with their details +
+2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database +
+
 Additionally, it uses:
 
-* `PREDICATE_SHOW_ALL_SOURCES` --
+* `PREDICATE_SHOW_ALL_SOURCES` -- when the user does not pass an argument to the list command, all sources must be displayed displayed.
+This predicate results `true` for every source tested.
+* `makePredicateForTopN` -- when the user passes an argument, only first N sources must be listed.
+This method returns a new object of type `Predicate<Source>` that keeps track of the `count` of sources,
+displaying `true` for the first N and `false` for the rest.
+* `targetIndex` -- the number N up to which the most recent sources are to be displayed to the user. Maintained internally.
+Set to the current size of the database if the value input is more that this current size.
 
 Given below is an example usage scenario and how the list mechanism behaves.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-//image::ListCommandStep1.png[width="800"]
-
 Step 2. The user executes an `add` command to add another source entry to the database.
 
-//image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
-
-Step 3. The user executes `list` command. All the entries in the database are listed again, showing all the details and
+Step 3. The user executes `list` command (with no arguments). All the entries in the database are listed again, showing all the details and
 in the order of their addition.
 
-//image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
-
-[NOTE]
-`list` does not take any arguments. If given, it will ignore it.
-
 Step 4. The user now executes `delete` to delete an entry.
-
-//image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
 
 Step 5. The user executes `list` command again. All the updated entries in the database, leaving out the last deleted one,  are listed again, showing all the details and
 in the order of their addition.
 
-//image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
+Step 6. The user now executes `list 2` command. The first 2 entries akin to the previous output are displayed.
+
+Step 7. The user now executes `list 3 5` command. An invalid command format exception is thrown, prompting the user
+to enter exactly 1 or no arguments.
+
+Step 8. The user now executes `list 3` command. The first 3 entries of the entire source database are listed with all their details.
 
 ==== Design Considerations
 
-===== Aspect: How undo & redo executes
+===== Aspect: How list & list n executes
 
-* **Alternative 1 (current choice):** Reads and lists the entire source database.
+* **List (current choice):** Filters using predicate that returns `true` for every source.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of time usage.
 
-===== Aspect: Data structure to support the undo/redo commands
+* **List N (current choice):** Filters using predicate that returns `true` for first N sources.
+** Pros: Easy to implement. Intuitive to understand
+** Cons: Can be made faster and cleaner using List operations or streams.
 
-* **Alternative 1 (current choice):** Reads and lists all the entries using a predicate.
+===== Aspect: Data structure to support the list/list n commands
+
+* **Alternative 1 (current choice):** Forms predicates based on the input parameter, maintain targetIndex.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: Maybe not the best implementation.
 // end::list[]

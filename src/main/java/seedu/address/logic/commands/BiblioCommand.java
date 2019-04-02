@@ -23,7 +23,7 @@ public class BiblioCommand extends Command {
             + "Parameters: \n"
             + "FORMAT (must be a non-empty string)\n"
             + "INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " APA" + " 1";
+            + "Example: " + COMMAND_WORD + "APA 1";
 
     public static final String MESSAGE_SUCCESS = "Bibliography generated";
 

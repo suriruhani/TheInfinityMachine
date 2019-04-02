@@ -1,0 +1,71 @@
+= Ruhani Suri - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: The Infinity Machine
+
+---
+
+== Overview
+
+Introducing the Infinity Machine, an application for efficient storing and
+retrieving of textual information on research material by allowing users to
+apply to it custom made tags and type for easy search and retrieval. Intended
+for tech-savvy university students who are able to use CLI and wish to organize
+ and tag research information or any other data that they may wish to store.
+
+== Summary of contributions
+
+* *Major enhancement*:
+* added *the ability to search* through sources:
+** What it does: allows the user to search through all the entries in the database through various fields at a time.
+** Justification: This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+** Highlights: This enhancement does not affect existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging.
+** Credits:
+
+* added *the ability to list n sources*:
+** What it does: allows the user to pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
+** Justification: This feature improves the product significantly because a user can now only list as many item he wants and need not clutter the screen by displaying all.
+** Highlights: Argument n is internally capped to the size of the database. This enhancement does not affect existing commands and commands to be added in the future.
+** Credits:
+
+* *Code contributed*: _{https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=suriruhani&sort=displayName&since=2019-02-10&until=2019-04-02&timeframe=day&reverse=false&repoSort=true}_
+
+* *Other contributions*:
+
+** Project management:
+***
+** Enhancements to existing features:
+*** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide
+** Community:
+** Tools:
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=list]
+
+include::../UserGuide.adoc[tag=search]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=list]
+
+include::../DeveloperGuide.adoc[tag=search]
+
+
+== PROJECT: PowerPointLabs
+
+---
+
+_{Optionally, you may include other projects in your portfolio.}_

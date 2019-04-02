@@ -1,0 +1,65 @@
+= Darren Lee Wei Sheng - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: The Infinity Machine
+
+---
+
+== Overview
+
+The Infinity Machine is a desktop application that lets users store research materials for future use. It provides a quick and easy way for tech-savvy users, like university students or researchers, to manage and organise their research materials. 
+
+The user interacts with the application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added the Custom Order command to the application
+** What it does: This function allows greater flexibility and personalisation for the application by giving users the ability to modify the order in which their sources are displayed.  
+** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management component of the application. More important and critical sources can be given priority and placed on top while older or outdated sources can be relegated to the bottom of the list.  
+** Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment.  
+
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=darrendragonlee[Project Dashboard]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed and maintained the team's AboutUs page, ensuring images, names and links are up to date (Pull Requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/43[#43], https://github.com/CS2103-AY1819S2-W13-3/main/pull/58[#58], https://github.com/CS2103-AY1819S2-W13-3/main/pull/61[#61])
+
+** Model development:
+*** Designed and implemented a brand new model for research sources based on the original AddressBook implementation (Pull Requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/54[#54], https://github.com/CS2103-AY1819S2-W13-3/main/pull/69[#69])
+**** Ultimately unused in the final version of the application but was important in guiding the reintegration of the final source model
+
+** Integration of existing functions:
+*** Updated the existing add and edit commands to be able to incorporate research sources (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/88[#88])
+**** Refactored a significant amount of code to ensure functionality across the entire model.
+
+** Documentation:
+*** Made comprehensive overall updates to the User Guide which made it more accurate and inclusive (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/133[#133])
+*** Added a section on User Stories to the Developer Guide to better direct the development of the application (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/125[#125])
+*** Added a large section encompassing all the use cases for every function in the application to the Developer Guide to assist in testing the functions for the correct outputs (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/134[#134])
+
+** Community:
+*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=order]
+
+include::../UserGuide.adoc[tag=add]
+
+include::../UserGuide.adoc[tag=edit]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=devorder]

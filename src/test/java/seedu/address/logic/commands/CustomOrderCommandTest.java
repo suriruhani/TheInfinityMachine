@@ -31,10 +31,10 @@ public class CustomOrderCommandTest {
         String expectedMessage = String.format(CustomOrderCommand.MESSAGE_SUCCESS, sourceIndex, movePosition);
 
         assertCommandSuccess(
-                new CustomOrderCommand(sourceIndex, movePosition), 
-                testModel, 
-                commandHistory, 
-                expectedMessage, 
+                new CustomOrderCommand(sourceIndex, movePosition),
+                testModel,
+                commandHistory,
+                expectedMessage,
                 expectedModel);
     }
 

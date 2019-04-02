@@ -92,6 +92,25 @@ Deletes the 2nd source in the database.
 `delete 1` +
 Deletes the 1st source in the results of the `find` command.
 
+=== Restoring a source : `restore`
+
+Restores the specified source. +
+Format: `restore INDEX`
+
+****
+* Restores the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed deleted source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `restore 2` +
+Restores the 2nd deleted source in the database.
+* `list-delete` +
+`restore 1` +
+Restores the 1st deleted source in the database.
+
 === Editing a source : `edit`
 
 Edits an existing source in the database. +

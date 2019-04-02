@@ -233,6 +233,42 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::restore[]
+=== Restore Command feature
+The restore feature allows users to use the restore command to retrieve their research data they accidentally deleted.
+
+The restore feature is facilitated by `Infinity Machine`.
+It extends `Infinity Machine` with an restore feature, allowing user to restore source from a persistent deleted sources list.
+Additionally, it uses:
+
+* `DeletedSources.java` -- Here, the logic of running through all the deleted sources in the list.
+(trimmed by space, case insensitive) is implemented.
+
+Given below is an example usage scenario and how the restore mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+Step 2. The user executes `delete 1` command and only one entry, the first one, is deleted.
+
+Step 3. The user executes `restore 1` and only one entry will be deleted, which is the source recently deleted.
+
+[NOTE]
+`restore` alone, without any arguments, will result in error. See `restore` command for enumerating all database entries.
+
+==== Design Considerations
+
+===== Aspect: How restore executes
+
+* **Alternative 1 :** Using a simple read and write class in the storage.
+** Pros: Easy to implement.
+** Cons: May have performance issues in terms of time usage.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 2 (current choice):** Using Json Managers and DeletedSources in the Model
+// end::restore[]
+
 // tag::alias[]
 === Command Alias feature
 The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.

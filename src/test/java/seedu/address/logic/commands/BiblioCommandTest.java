@@ -34,7 +34,7 @@ public class BiblioCommandTest {
                     .getFeedbackToUser();
             ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
             assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
-        } catch(CommandException ce){
+        } catch(CommandException ce) {
             assert false: "CommandException thrown";
         }
     }

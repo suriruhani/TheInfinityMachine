@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
@@ -13,7 +14,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.source.Source;
 
 public class CustomOrderCommandTest {
-    private Model testModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model testModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -21,7 +22,8 @@ public class CustomOrderCommandTest {
         int sourceIndex = 3;
         int movePosition = 5;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
+                testModel.getDeletedSources());
 
         Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
@@ -43,7 +45,8 @@ public class CustomOrderCommandTest {
         int sourceIndex = 1;
         int movePosition = testModel.getFilteredSourceList().size();
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
+                testModel.getDeletedSources());
 
         Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
@@ -65,7 +68,8 @@ public class CustomOrderCommandTest {
         int sourceIndex = 5;
         int movePosition = 3;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
+                testModel.getDeletedSources());
 
         Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
@@ -87,7 +91,8 @@ public class CustomOrderCommandTest {
         int sourceIndex = testModel.getFilteredSourceList().size();
         int movePosition = 1;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
+                testModel.getDeletedSources());
 
         Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);

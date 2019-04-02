@@ -151,10 +151,11 @@ public class ModelManagerTest {
         SourceManager sourceManager = new SourceManagerBuilder().withSource(ALICE).withSource(BENSON).build();
         SourceManager differentSourceManager = new SourceManager();
         UserPrefs userPrefs = new UserPrefs();
+        DeletedSources differentDeletedSources = new DeletedSources();
 
         // same values -> returns true
-        modelManager = new ModelManager(sourceManager, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(sourceManager, userPrefs);
+        modelManager = new ModelManager(sourceManager, userPrefs, differentDeletedSources);
+        ModelManager modelManagerCopy = new ModelManager(sourceManager, userPrefs, differentDeletedSources);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -167,7 +168,7 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentSourceManager, userPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(differentSourceManager, userPrefs, differentDeletedSources)));
 
         // Temporarily comment out test for migration from address book to source manager.
         // Todo: Rewrite test in a way that makes sense for source manager.
@@ -183,6 +184,6 @@ public class ModelManagerTest {
         // different userPrefs -> returns false
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setSourceManagerFilePath(Paths.get("differentFilePath"));
-        assertFalse(modelManager.equals(new ModelManager(sourceManager, differentUserPrefs)));
+        assertFalse(modelManager.equals(new ModelManager(sourceManager, differentUserPrefs, differentDeletedSources)));
     }
 }

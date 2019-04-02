@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Before;
@@ -24,14 +25,14 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     }
 
     @Test
     public void execute_newSource_success() {
         Source validSource = new SourceBuilder().build();
 
-        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
         expectedModel.addSource(validSource);
         expectedModel.commitSourceManager();
 

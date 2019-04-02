@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * An Immutable Deleted Sources that is serializable to JSON format.
  */
-@JsonRootName(value = "deletedsources")
+@JsonRootName(value = "deletedsource")
 public class JsonSerializableDeletedSources {
 
     public static final String MESSAGE_DUPLICATE_SOURCE = "Deleted Source list contains duplicate entries.";

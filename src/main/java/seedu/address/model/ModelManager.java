@@ -42,7 +42,8 @@ public class ModelManager implements Model, PanicMode {
         super();
         requireAllNonNull(sourceManager, userPrefs, deletedSources);
 
-        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs);
+        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs
+                + " and deleted sources " + deletedSources);
 
         versionedSourceManager = new VersionedSourceManager(sourceManager);
         versionedDeletedSources = new VersionedDeletedSources((deletedSources));

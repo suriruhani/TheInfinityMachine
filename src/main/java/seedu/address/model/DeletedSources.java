@@ -125,7 +125,7 @@ public class DeletedSources implements ReadOnlyDeletedSources {
 
     @Override
     public String toString() {
-        return deletedSources.asUnmodifiableObservableList().size() + " deleted-sources";
+        return deletedSources.asUnmodifiableObservableList().size() + " sources";
         // TODO: refine later
     }
 

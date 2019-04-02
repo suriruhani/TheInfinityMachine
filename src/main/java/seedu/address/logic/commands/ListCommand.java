@@ -2,19 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
-//import static seedu.address.model.Model.PREDICATE_SHOW_N_SOURCES;
 
-import javafx.collections.ObservableList;
+import java.util.function.Predicate;
+
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
 
-import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * Lists all sources in the Source Database to the user, or the top N sources where N may
@@ -27,7 +22,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": List all the sources in the database to the user, or optionally, the top N sources if"
             + " an argument is supplied.\n"
-            + "Parameters: [INDEX] (must be a positive integer)\n"
+            + "Parameters: [INDEX] (Optional, must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 20";
 
     public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all sources!";
@@ -36,15 +31,19 @@ public class ListCommand extends Command {
 
     private Index targetIndex = null;
 
+    //Constructor overloading to account for an optional parameter
     public ListCommand(Index targetIndex) {
-
         this.targetIndex = targetIndex;
     }
 
     public ListCommand() {}
 
-    Predicate<Source> makePredicateForTopN(int n) {
-        return new Predicate<Source>() {
+    /**
+     * A method which constructs a predicate to output top n sources
+     * Parameters: positive integer n
+     */
+    private Predicate<Source> makePredicateForTopN(int n) {
+        return new Predicate<>() {
             private int count = 0;
             public boolean test(Source source) {
                 if (count < n) {
@@ -57,38 +56,18 @@ public class ListCommand extends Command {
         };
     }
 
-    /*
     @Override
-    public CommandResult execute(Model model, CommandHistory history) {
+    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {
         requireNonNull(model);
-        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-        return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
-    }
-    */
-
-    @Override
-    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException, CommandException {
-        requireNonNull(model);
-        /*
-//        List<Source> lastShownList = model.getFilteredSourceList();
-//
-//        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-//            throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
-//        }
-//
-//        Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
-//        model.deleteSource(sourceToDelete);
-//        model.commitSourceManager();
-        */
-
+        //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         int size = model.getFilteredSourceList().size();
-
-        if (targetIndex != null) {
+        if (targetIndex != null) { //when LIST is used with an argument (show N)
+            //to ensure N is capped at list size
             targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
             model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
             return new CommandResult(String.format(MESSAGE_LIST_N_SUCCESS, targetIndex.getOneBased()));
-        } else {
+        } else { //when LIST is used without an argument (show all)
             return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
         }
     }

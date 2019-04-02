@@ -17,7 +17,7 @@ public class CustomOrderCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_basicOperation_forwardSwap_success() {
+    public void execute_basicOperationForwardSwap_success() {
         int sourceIndex = 3;
         int movePosition = 5;
 
@@ -39,7 +39,7 @@ public class CustomOrderCommandTest {
     }
 
     @Test
-    public void execute_basicOperation_forwardSwapEdgeCase_success() {
+    public void execute_basicOperationForwardSwapEdgeCase_success() {
         int sourceIndex = 1;
         int movePosition = testModel.getFilteredSourceList().size();
 
@@ -61,7 +61,7 @@ public class CustomOrderCommandTest {
     }
 
     @Test
-    public void execute_basicOperation_backwardSwap_success() {
+    public void execute_basicOperationBackwardSwap_success() {
         int sourceIndex = 5;
         int movePosition = 3;
 
@@ -83,7 +83,7 @@ public class CustomOrderCommandTest {
     }
 
     @Test
-    public void execute_basicOperation_backwardSwapEdgeCase_success() {
+    public void execute_basicOperationBackwardSwapEdgeCase_success() {
         int sourceIndex = testModel.getFilteredSourceList().size();
         int movePosition = 1;
 

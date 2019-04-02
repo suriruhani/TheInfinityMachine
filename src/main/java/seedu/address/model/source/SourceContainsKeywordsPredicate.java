@@ -1,9 +1,9 @@
 package seedu.address.model.source;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.parser.ArgumentMultimap;
 
 /**
  * Tests that a {@code Source}'s {@code Title}, {@code Type}, {@code Source} and {@code Detail}
@@ -11,16 +11,17 @@ import seedu.address.commons.util.StringUtil;
  * are present in the output source.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {
-    private final List<String> keywords;
+    private final ArgumentMultimap keywords;
 
-    public SourceContainsKeywordsPredicate(List<String> keywords) {
+    public SourceContainsKeywordsPredicate(ArgumentMultimap keywords) {
         this.keywords = keywords;
     }
 
     @Override
     public boolean test(Source source) {
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getTitle().title, keyword));
+        return true;
+        // return keywords.stream()
+        // .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getTitle().title, keyword));
     }
 
     @Override

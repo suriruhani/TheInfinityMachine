@@ -27,7 +27,8 @@ public class StorageManagerTest {
     public void setUp() {
         JsonSourceManagerStorage sourceManagerStorage = new JsonSourceManagerStorage(getTempFilePath("ab"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(sourceManagerStorage, userPrefsStorage);
+        JsonDeletedSourcesStorage deletedSourcesStorage = new JsonDeletedSourcesStorage(getTempFilePath("ds"));
+        storageManager = new StorageManager(sourceManagerStorage, userPrefsStorage, deletedSourcesStorage);
     }
 
     private Path getTempFilePath(String fileName) {

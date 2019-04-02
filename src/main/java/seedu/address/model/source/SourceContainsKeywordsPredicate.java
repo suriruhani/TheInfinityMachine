@@ -1,14 +1,12 @@
 package seedu.address.model.source;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.ArgumentMultimap;
-import seedu.address.logic.parser.ParserUtil;
-import seedu.address.model.tag.Tag;
 
 import static seedu.address.logic.parser.CliSyntax.*;
 
@@ -61,8 +59,13 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     private boolean matchTagKeywords(List<String> tagKeywords, Source source) {
-
-        return true;
+        List<String> listTitleKeywords = new ArrayList<>();
+        for (String tag : tagKeywords) {
+            listTitleKeywords.addAll(Arrays.asList(tag.trim().split("\\s+")));
+        }
+        return listTitleKeywords.stream()
+                .anyMatch(keyword -> source.getTags().stream()
+                        .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword)));
     }
 
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {

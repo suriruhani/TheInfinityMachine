@@ -122,7 +122,7 @@ public class SourceManagerParser implements CommandValidator {
             return new SearchCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+            return new ListCommandParser().parse(arguments);
 
         case CustomOrderCommand.COMMAND_WORD:
             return new CustomOrderCommandParser().parse(arguments);

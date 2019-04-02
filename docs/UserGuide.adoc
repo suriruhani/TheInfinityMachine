@@ -59,6 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+// tag::add[]
 === Adding a person: `add`
 
 Adds a new source to the list of sources +
@@ -71,6 +72,7 @@ Examples:
 
 * `add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
 * `add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI`
+// end::add[]
 
 === Deleting a source : `delete`
 
@@ -92,6 +94,7 @@ Deletes the 2nd source in the database.
 `delete 1` +
 Deletes the 1st source in the results of the `find` command.
 
+// tag::edit[]
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
@@ -111,6 +114,7 @@ Examples:
 Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
+// end::edit[]
 
 //tag::search[]
 === Searching a source: `search`
@@ -153,7 +157,10 @@ Format: `list [N]`
 * The paramter passed, N, must be a positive integer else error is thrown
 * Tags, Details, Type are also displayed along with the sources
 ****
+
 // end::list[]
+
+// tag::order[]
 === Reordering sources to your liking : `order`
 
 Moves the specified source from one position to another as defined by the user. +
@@ -175,6 +182,7 @@ Moves the source located at index 1 to index 4.
 
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
+// end::order[]
 
 === Generate bibliography entry : `biblio`
 

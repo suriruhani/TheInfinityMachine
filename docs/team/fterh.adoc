@@ -1,0 +1,78 @@
+= Fabian Terh Jun Wei - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Infinity Machine
+
+---
+
+== Overview
+
+Infinity Machine is a source manager to be used by tech-savvy university students who are comfortable with the command line interface (CLI).
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to add, remove, and manage command aliases*
+** What it does: allows the user to define custom aliases for commands, which persist across sessions
+** Justification: This feature improves the product significantly because a user can:
+(1) create custom memorable alises for any of the existing commands;
+(2) work more efficiently by creating shortcuts for lengthy and commonly-used commands
+** Highlights: This enhancement affects the way user input is parsed and executed,
+both for existing commands and commands to be added in the future.
+It required an extensive analysis of various design approaches.
+The implementation was challenging because:
+*** There are different classes of commands that are parsed and handled in different ways.
+This enhancement must be agnostic to these various classes of commands,
+and must potentially work with any new future classes.
+*** This enhancement must both be backward-compatible with existing commands and also transparent to implementors of future commands.
+In other words, this enhancement will work seamlessly with any future command implementations, even if the implementors have no knowledge of this enhancement.
+
+
+* *Minor enhancement*: added a panic/unpanic mode command that allows the user to quickly hide the current list of sources from display.
+
+* *Code contributed*: [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/parser/AliasManager.java[Functional code 1]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/storage/ConcreteAliasStorage.java[Functional code 2]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/AliasManagerTest.java[Test code 1]]
+
+* *Other contributions*:
+
+** Project management:
+*** Co-managed releases `v1.1` - `v1.3` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated codebase to morph from AddressBook to Infinity Machine (Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/89[#89], https://github.com/CS2103-AY1819S2-W13-3/main/pull/93[#93], https://github.com/CS2103-AY1819S2-W13-3/main/pull/98[#98])
+*** Included reposense (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/117[#117])
+*** Updated existing tests to include integration tests with major enhancement (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/132[#132])
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W13-3/main/pull/54[#54], https://github.com/CS2103-AY1819S2-W13-3/main/pull/69[#69]
+*** Contributed to forum discussions (examples:  https://github.com/nus-cs2103-AY1819S2/forum/issues/52[1], https://github.com/nus-cs2103-AY1819S2/forum/issues/64[2], https://github.com/nus-cs2103-AY1819S2/forum/issues/69[3], https://github.com/nus-cs2103-AY1819S2/forum/issues/51[4],
+https://github.com/nus-cs2103-AY1819S2/forum/issues/43[5])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#command-aliases-code-alias-code
+
+https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/UserGuide.adoc#enabling-panic-mode-code-panic-code
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/docs/DeveloperGuide.adoc#command-alias-feature
+
+
+== PROJECTS
+
+---
+
+https://github.com/fterh/sneakpeek
+
+https://github.com/fterh/kopi-guru
+
+:)

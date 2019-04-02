@@ -28,9 +28,9 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     public boolean test(Source source) {
         boolean result = true;
 
-        String titleKeywords = keywords.getValue(PREFIX_TITLE).get();
-        String typeKeywords = keywords.getValue(PREFIX_TYPE).get();
-        String detailsKeywords = keywords.getValue(PREFIX_DETAILS).get();
+        String titleKeywords = keywords.getValue(PREFIX_TITLE).orElse("");
+        String typeKeywords = keywords.getValue(PREFIX_TYPE).orElse("");
+        String detailsKeywords = keywords.getValue(PREFIX_DETAILS).orElse("");
         List<String> tagKeywords = keywords.getAllValues(PREFIX_TAG);
 
         if (titleKeywords.equals("") && tagKeywords.isEmpty() && typeKeywords.equals("")
@@ -66,7 +66,9 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {
-        return true;
+        List<String> listTitleKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
+        return listTitleKeywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getDetail().detail, keyword));
     }
 
     private boolean matchTypeKeywords(String typeKeywords, Source source) {

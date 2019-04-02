@@ -133,7 +133,7 @@ Returns the source with the title `algorithms`
 * `search ArtificialIntelligence MachineLearning` +
 Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
 
-=== Listing all sources : `list`
+=== Listing all sources : `list [n]`
 
 Displays a list of all sources currently in the database, without filtering. +
 Optional argument N used to list only the top N sources to the user. +
@@ -142,7 +142,8 @@ Format: `list [N]`
 ****
 * Lists all sources present in the database in the order of their addition, if no argument passed
 * Lists top N sources if a single integer N is passed
-* Throws error if more tan one arguments are passed
+* Throws error if more than one arguments are passed
+* The paramter passed, N, must be a positive integer else error is thrown
 * Tags, Details, Type are also displayed along with the sources
 ****
 

@@ -1,5 +1,6 @@
 package seedu.address.model.source;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -61,7 +62,6 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
 
     private boolean matchTagKeywords(List<String> tagKeywords, Source source) {
 
-
         return true;
     }
 
@@ -74,7 +74,9 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     private boolean matchTitleKeywords(String titleKeywords, Source source) {
-        return true;
+        List<String> listTitleKeywords = Arrays.asList(titleKeywords.trim().split("\\s+"));
+        return listTitleKeywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getTitle().title, keyword));
     }
 
     @Override

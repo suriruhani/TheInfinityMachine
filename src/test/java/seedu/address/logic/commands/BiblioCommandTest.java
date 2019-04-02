@@ -38,20 +38,20 @@ public class BiblioCommandTest {
             assert false: "CommandException thrown";
         }
     }
-    
+
     @Test
     public void execute_invalidStyle_validIndex_failure() {
         BiblioCommand biblioCommand = new BiblioCommand("Foo", INDEX_FIRST_SOURCE);
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_COMMAND_FORMAT);
     }
-    
+
     @Test
     public void execute_validStyle_invalidIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
         BiblioCommand biblioCommand = new BiblioCommand("APA", outOfBoundIndex);
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
-    
+
     @Test
     public void execute_invalidStyle_invalidIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);

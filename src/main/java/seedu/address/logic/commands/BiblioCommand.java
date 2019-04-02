@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
 /**
- * Generates a bibliography from a source at the specified index.
+ * Generates a bibliography from a source at the specified index of style.
  */
 
 public class BiblioCommand extends Command {
@@ -47,18 +47,21 @@ public class BiblioCommand extends Command {
         Source targetSource = lastShownList.get(targetIndex.getZeroBased());
         String biblioEntry;
         switch (format) {
-            case "APA":
-                biblioEntry = generateAPA(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-            case "MLA":
-                biblioEntry = generateMLA(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-            default:
-                throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+        case "APA":
+            biblioEntry = generateApa(targetSource);
+            return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+        case "MLA":
+            biblioEntry = generateMla(targetSource);
+            return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+        default:
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
         }
     }
 
-    private String generateAPA(Source targetSource) {
+/**
+ * Generates a bibliography of APA style.
+ */
+    private String generateApa(Source targetSource) {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;
         String targetDetail = targetSource.getDetail().detail;
@@ -66,7 +69,10 @@ public class BiblioCommand extends Command {
         return biblioEntry;
     }
 
-    private String generateMLA(Source targetSource) {
+/**
+ * Generates a bibliography of MLA style.
+ */
+    private String generateMla(Source targetSource) {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;
         String targetDetail = targetSource.getDetail().detail;

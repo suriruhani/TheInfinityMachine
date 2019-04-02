@@ -21,7 +21,7 @@ import seedu.address.model.UserPrefs;
  */
 public class BiblioCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -30,9 +30,9 @@ public class BiblioCommandTest {
 
         try {
             String expectedMessage = new BiblioCommand("APA", INDEX_FIRST_SOURCE)
-                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs()), new CommandHistory())
+                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources()), new CommandHistory())
                     .getFeedbackToUser();
-            ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+            ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), getTypicalDeletedSources());
             assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
         } catch(CommandException ce) {
             assert false: "CommandException thrown";

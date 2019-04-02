@@ -205,14 +205,13 @@ The command may not be another alias. The alias may not be a command.
 
 * `alias count ct` (`ct` is now an alias for `count`)
 * `alias ct c` (this is invalid because `ct` is another alias)
+* `alias count list` (this is invalid because `list` is a command)
 
 The alias must be syntatically valid. A valid syntax may only contain alphabets.
 
 * `alias list l` (valid)
 * `alias count ct` (valid)
 * `alias clear $` (invalid)
-
-* `alias count list` (this is invalid because `list` is a command)
 
 ==== Removing an alias: `alias-rm`
 Allows the user to remove previously-defined aliases. +

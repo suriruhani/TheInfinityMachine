@@ -259,7 +259,7 @@ Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in
 
 Therefore, due to the key-value association inherent in the idea of an alias manager, a `HashMap` is the most approriate data structure.
 
-image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
+image::AliasManagerClassDiagram.png[width="800"]
 
 ==== Operation:
 

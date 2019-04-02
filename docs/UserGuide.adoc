@@ -230,7 +230,7 @@ Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
 
 ==== Alias persistence
-Aliases are persistent across usage sessions. 
+Aliases are persistent across usage sessions.
 When an alias is created or removed, this is recorded to disk.
 No action is required on the user's part.
 

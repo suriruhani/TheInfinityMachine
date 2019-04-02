@@ -278,7 +278,7 @@ The AliasMetaCommandParser concrete subclasses parses the arguments and returns 
 
 [NOTE]
 
-This delegation design pattern is chosen for 2 reasons: 
+This delegation design pattern is chosen for 2 reasons:
 Firstly, it hides complexity in SourceManagerParser by abstracting the logic of interacting with AliasManager away.
 This makes SourceManagerParser more readable, declarative, and maintainable.
 This also allows us to practice the Single Responsibility Principle and Single Layer of Abstraction Principle, among others.
@@ -314,7 +314,7 @@ We improve cohesion, reduce coupling, drastically reduce complexity, and improve
 The usefulness of aliases would be significantly diminished if they do not persist between sessions.
 Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.
 
-To accomplish this, we create an `AliasStorage` interface, and an implementing class `ConcreteAliasStorage`. 
+To accomplish this, we create an `AliasStorage` interface, and an implementing class `ConcreteAliasStorage`.
 We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.
 
 ConcreteAliasStorage is responsible for reading/writing from/to disk,
@@ -326,17 +326,17 @@ When AliasManager's aliases database is mutated (i.e. create or remove alias), i
 **Alternative:** A more elegant implementation would be to apply the observer pattern,
 with the observer observing the aliases HashMap database, and calling `saveAliases()` when it is mutated.
 However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
-with minimal (or no) tangible benefits. 
+with minimal (or no) tangible benefits.
 Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
 Secondly, there are only 2 methods which would mutate the aliases HashMap database.
 
 Within ConcreteAliasStorage, its `saveAliases()` method encodes aliases and commands into a string,
-in the following format: `alias1:command1;alias2:command2;alias3:command3`. 
+in the following format: `alias1:command1;alias2:command2;alias3:command3`.
 Conversely, `readAliases()` parses this string and reconstructs the aliases HashMap database.
 
 [NOTE]
 
-**Alternative:** We opted to use our own very simple encoding scheme instead of JSON. 
+**Alternative:** We opted to use our own very simple encoding scheme instead of JSON.
 JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
 However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
 Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.

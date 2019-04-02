@@ -34,23 +34,23 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         String detailsKeywords = keywords.getValue(PREFIX_DETAILS).orElse("");
         List<String> tagKeywords = keywords.getAllValues(PREFIX_TAG);
 
-        if (titleKeywords.equals("") && tagKeywords.isEmpty() && typeKeywords.equals("")
-                && detailsKeywords.equals("")) {
+        if (titleKeywords.equals("") && tagKeywords.isEmpty()
+                && typeKeywords.equals("") && detailsKeywords.equals("")) {
             return false;
         }
 
         if (!titleKeywords.equals("")) {
             result = result && matchTitleKeywords(titleKeywords, source);
         }
-        
+
         if (!typeKeywords.equals("")) {
             result = result && matchTypeKeywords(typeKeywords, source);
         }
-        
+
         if (!detailsKeywords.equals("")) {
             result = result && matchDetailKeywords(detailsKeywords, source);
         }
-        
+
         if (!tagKeywords.isEmpty()) {
             List<String> listTitleKeywords = new ArrayList<>();
             for (String tag : tagKeywords) {
@@ -63,7 +63,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Returns true for sources that have tags that match the tags entered by the user as an argument
+     * Evaluates true for sources that have tags that match the tags entered by the user as an argument
      * @param tagKeywords entered by user
      * @param source to be tested
      * @return true if present, else false
@@ -78,7 +78,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Returns true for sources that have details that match the details entered by the user as an argument
+     * Evaluates true for sources that have details that match the details entered by the user as an argument
      * @param detailsKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false
@@ -90,7 +90,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Returns true for sources that have types that match the types entered by the user as an argument
+     * Evaluates true for sources that have types that match the types entered by the user as an argument
      * @param typeKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false
@@ -102,7 +102,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Returns true for sources that have title that match the title entered by the user as an argument
+     * Evaluates true for sources that have title that match the title entered by the user as an argument
      * @param titleKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false

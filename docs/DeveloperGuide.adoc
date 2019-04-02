@@ -426,35 +426,29 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ==== Current Implementation
 
 The search feature is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title(s).
+It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title, type, detail and/or tags.
 Additionally, it uses:
 
-* `TitleContainsKeywordsPredicate.java` -- Here, the logic of running through all the titles and matching it with the user inputs
-(trimmed by space, case insensitive) is implemented.
+* `SourceContainsKeywordsPredicate.java` -- Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
+(trimmed by space, case insensitive) is implemented. It is split by the CLI prefixes and implements conjunction logic.
 
 Given below is an example usage scenario and how the search mechanism behaves at each step.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-//image::SearchCommandStep1.png[width="800"]
+Step 2. The user executes `search i/footitle1` command and only those sources that have their title as `footitle1` are displayed.
 
-Step 2. The user executes `search footitle1` command and only one entry, the first one, is displayed.
-
-//image::SearchCommandStep2.png[width="800"]
-
-Step 3. The user executes `search footitle6 footitle5` and only two entries are listed, with all their details displayed.
-
-//image::SearchCommandStep3.png[width="800"]
+Step 3. The user executes `search i/footitle6 y/website` and only those entries are listed that have both their title as `footitle1` and type as `website`.
 
 [NOTE]
 `search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
 
 ==== Design Considerations
 
-===== Aspect: How undo & redo executes
+===== Aspect: How search executes
 
-* **Alternative 1 (current choice):** Runs through all entries and matches the title.
+* **Alternative 1 (current choice):** Runs through all entries and matches the arguments, field by field.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of time usage.
 

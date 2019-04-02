@@ -4,7 +4,7 @@ import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.InvalidationListenerManager;
 import seedu.address.model.source.Source;
-import seedu.address.model.source.UniqueSourceList;
+import seedu.address.model.source.UniqueDeletedSourceList;
 
 import java.util.List;
 
@@ -17,11 +17,11 @@ import static java.util.Objects.requireNonNull;
 public class DeletedSources implements ReadOnlyDeletedSources {
 
 
-    private final UniqueSourceList deletedSources;
+    private final UniqueDeletedSourceList deletedSources;
     private final InvalidationListenerManager invalidationListenerManager = new InvalidationListenerManager();
 
     {
-        deletedSources = new UniqueSourceList();
+        deletedSources = new UniqueDeletedSourceList();
     }
 
     public DeletedSources() {}

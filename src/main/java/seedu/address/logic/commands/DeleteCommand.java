@@ -41,7 +41,10 @@ public class DeleteCommand extends Command {
         }
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        model.addDeletedSource(sourceToDelete);
         model.deleteSource(sourceToDelete);
+        model.commitDeletedSources();
         model.commitSourceManager();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
     }

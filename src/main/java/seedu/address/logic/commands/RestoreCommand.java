@@ -24,7 +24,7 @@ public class RestoreCommand extends Command{
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_SOURCE_SUCCESS = "Restored Source: %1$s";
+    public static final String MESSAGE_RESTORE_SOURCE_SUCCESS = "Restored Source: %1$s";
 
     private final Index targetIndex;
 
@@ -35,20 +35,20 @@ public class RestoreCommand extends Command{
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Source> recentlyDeletedList = model.getFilteredDeletedSourceList(); // need to change this to RD list
-        Source toRestore = recentlyDeletedList.get(targetIndex.getZeroBased());
+        List<Source> lastShownList = model.getFilteredSourceList();
+        List<Source> lastShownDeletedList = model.getFilteredDeletedSourceList();
 
-        if (targetIndex.getZeroBased() >= recentlyDeletedList.size()) {
+        if (targetIndex.getZeroBased() >= lastShownDeletedList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
-        if (model.hasDeletedSource(toRestore)) {
-            throw new CommandException(MESSAGE_DUPLICATE_SOURCE);
-        }
+        Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
 
-        model.addDeletedSource(toRestore);
+        model.addSource(toRestore);
+        model.removeDeletedSource(toRestore);
+        model.commitSourceManager();
         model.commitDeletedSources();
-        return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, toRestore));
+        return new CommandResult(String.format(MESSAGE_RESTORE_SOURCE_SUCCESS, toRestore));
     }
 
     @Override

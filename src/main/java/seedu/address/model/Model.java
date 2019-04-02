@@ -15,6 +15,7 @@ import seedu.address.model.source.Source;
 public interface Model extends PanicMode {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Source> PREDICATE_SHOW_ALL_SOURCES = unused -> true;
+    Predicate<Source> PREDICATE_SHOW_ALL_DELETED_SOURCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.

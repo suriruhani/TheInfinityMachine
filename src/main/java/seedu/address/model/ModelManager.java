@@ -215,13 +215,13 @@ public class ModelManager implements Model, PanicMode {
     @Override
     public void addDeletedSource(Source source) {
         versionedDeletedSources.addDeletedSource(source);
-        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_SOURCES);
+        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_DELETED_SOURCES);
     }
 
     @Override
     public void addDeletedSourceAtIndex(Source source, int index) {
         versionedDeletedSources.addDeletedSourceAtIndex(source, index);
-        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_SOURCES);
+        updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_DELETED_SOURCES);
     }
 
     @Override

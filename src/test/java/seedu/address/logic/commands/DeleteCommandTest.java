@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
@@ -26,7 +27,7 @@ import seedu.address.model.source.Source;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -36,7 +37,8 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
@@ -60,7 +62,7 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
 
-        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), getTypicalDeletedSources());
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
         showNoSource(expectedModel);
@@ -85,7 +87,7 @@ public class DeleteCommandTest {
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
-        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
@@ -124,7 +126,7 @@ public class DeleteCommandTest {
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameSourceDeleted() throws Exception {
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
-        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
+        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
 
         showSourceAtIndex(model, INDEX_SECOND_SOURCE);
         Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());

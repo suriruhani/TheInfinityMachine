@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.ModelManager;
+import seedu.address.storage.JsonDeletedSourcesStorage;
 import seedu.address.storage.JsonSourceManagerStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.StorageManager;
@@ -37,7 +38,10 @@ public class MainWindowCloseTest extends GuiUnitTest {
         JsonSourceManagerStorage jsonSourceManagerStorage =
                 new JsonSourceManagerStorage(temporaryFolder.newFile().toPath());
         JsonUserPrefsStorage jsonUserPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.newFile().toPath());
-        StorageManager storageManager = new StorageManager(jsonSourceManagerStorage, jsonUserPrefsStorage);
+        JsonDeletedSourcesStorage jsonDeletedSourcesStorage =
+                new JsonDeletedSourcesStorage(temporaryFolder.newFile().toPath());
+        StorageManager storageManager = new StorageManager(jsonSourceManagerStorage, jsonUserPrefsStorage,
+                jsonDeletedSourcesStorage);
         FxToolkit.setupStage(stage -> {
             this.stage = stage;
             mainWindow = new MainWindow(stage, new LogicManager(new ModelManager(), storageManager));

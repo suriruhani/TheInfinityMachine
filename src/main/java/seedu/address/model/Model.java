@@ -55,7 +55,7 @@ public interface Model extends PanicMode {
     /**
      * Sets the user prefs' source manager file path.
      */
-    void setDeletedSourceFilePath(Path sourceManagerFilePath);
+    void setDeletedSourceFilePath(Path deletedSourceFilePath);
 
     /**
      * Replaces source manager data with the data in {@code sourceManager}.

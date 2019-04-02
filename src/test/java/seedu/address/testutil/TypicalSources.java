@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.DeletedSources;
 import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
 
@@ -45,6 +46,9 @@ public class TypicalSources {
     public static final Source GEORGE = new SourceBuilder().withTitle("George Best")
             .withType("george type")
             .withDetail("george_detail").build();
+    public static final Source ALGORITHMS = new SourceBuilder().withTitle("Algorithms 101")
+            .withType("Coding")
+            .withDetail("How to write algorithms for code.").build();
 
     // Manually added
     public static final Source HOON = new SourceBuilder().withTitle("Hoon Meier")
@@ -75,7 +79,22 @@ public class TypicalSources {
         return sm;
     }
 
+    /**
+     * Returns a {@code DeletedSources} with all the typical deleted sources.
+     */
+    public static DeletedSources getTypicalDeletedSources() {
+        DeletedSources ds = new DeletedSources();
+        for (Source source : getTypicalDeletedSourcesList()) {
+            ds.addDeletedSource(source);
+        }
+        return ds;
+    }
+
     public static List<Source> getTypicalSources() {
         return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+    }
+
+    public static List<Source> getTypicalDeletedSourcesList() {
+        return new ArrayList<>(Arrays.asList(ALGORITHMS));
     }
 }

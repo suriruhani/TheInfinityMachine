@@ -58,9 +58,9 @@ public class BiblioCommand extends Command {
         }
     }
 
-/**
- * Generates a bibliography of APA style.
- */
+    /**
+     * Generates a bibliography of APA style.
+     */
     private String generateApa(Source targetSource) {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;
@@ -69,9 +69,9 @@ public class BiblioCommand extends Command {
         return biblioEntry;
     }
 
-/**
- * Generates a bibliography of MLA style.
- */
+    /**
+     * Generates a bibliography of MLA style.
+     */
     private String generateMla(Source targetSource) {
         String targetTitle = targetSource.getTitle().title;
         String targetType = targetSource.getType().type;

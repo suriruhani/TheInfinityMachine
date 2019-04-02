@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
@@ -13,7 +14,7 @@ import seedu.address.model.UserPrefs;
 /**
  * API of the Source Storage component
  */
-public interface Storage extends SourceManagerStorage, UserPrefsStorage {
+public interface Storage extends SourceManagerStorage, UserPrefsStorage, DeletedSourcesStorage {
 
     @Override
     Optional<UserPrefs> readUserPrefs() throws DataConversionException, IOException;
@@ -30,4 +31,12 @@ public interface Storage extends SourceManagerStorage, UserPrefsStorage {
     @Override
     void saveSourceManager(ReadOnlySourceManager sourceManager) throws IOException;
 
+    @Override
+    Path getDeletedSourceFilePath();
+
+    @Override
+    Optional<ReadOnlyDeletedSources> readDeletedSources() throws DataConversionException, IOException;
+
+    @Override
+    void saveDeletedSources(ReadOnlyDeletedSources deletedSources) throws IOException;
 }

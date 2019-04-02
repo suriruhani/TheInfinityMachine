@@ -14,6 +14,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.source.Source;
 import seedu.address.storage.Storage;
@@ -30,6 +31,7 @@ public class LogicManager implements Logic {
     private final CommandHistory history;
     private final SourceManagerParser sourceManagerParser;
     private boolean sourceManagerModified;
+    private boolean deletedSourcesModified;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
@@ -39,12 +41,15 @@ public class LogicManager implements Logic {
 
         // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);
+        model.getDeletedSources().addListener(observable -> deletedSourcesModified = true);
+
     }
 
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         sourceManagerModified = false;
+        deletedSourcesModified = false;
 
         CommandResult commandResult;
         try {
@@ -63,6 +68,15 @@ public class LogicManager implements Logic {
             }
         }
 
+        if (deletedSourcesModified) {
+            logger.info("Delete Sources modified, saving to file.");
+            try {
+                storage.saveDeletedSources(model.getDeletedSources());
+            } catch (IOException ioe) {
+                throw new CommandException(FILE_OPS_ERROR_MESSAGE + ioe, ioe);
+            }
+        }
+
         return commandResult;
     }
 
@@ -72,8 +86,18 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ReadOnlyDeletedSources getDeletedSources() {
+        return model.getDeletedSources();
+    }
+
+    @Override
     public ObservableList<Source> getFilteredSourceList() {
         return model.getFilteredSourceList();
+    }
+
+    @Override
+    public ObservableList<Source> getFilteredDeletedSourceList() {
+        return model.getFilteredDeletedSourceList();
     }
 
     @Override
@@ -84,6 +108,11 @@ public class LogicManager implements Logic {
     @Override
     public Path getSourceManagerFilePath() {
         return model.getSourceManagerFilePath();
+    }
+
+    @Override
+    public Path getDeletedSourceFilePath() {
+        return model.getDeletedSourceFilePath();
     }
 
     @Override
@@ -102,7 +131,17 @@ public class LogicManager implements Logic {
     }
 
     @Override
+    public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
+        return model.selectedDeletedSourceProperty();
+    }
+
+    @Override
     public void setSelectedSource(Source source) {
         model.setSelectedSource(source);
+    }
+
+    @Override
+    public void setSelectedDeletedSource(Source source) {
+        model.setSelectedDeletedSource(source);
     }
 }

@@ -1,25 +1,21 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
-
 import org.junit.Test;
 
-import seedu.address.logic.CommandHistory;
 import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.logic.parser.Prefix;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
 import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.
  */
 public class SearchCommandTest {
+    /*
     private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
             getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
+    */
 
     @Test
     public void equals() {

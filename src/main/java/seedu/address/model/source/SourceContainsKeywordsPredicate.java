@@ -49,23 +49,23 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         }
         
         if (!tagKeywords.isEmpty()) {
+            List<String> listTitleKeywords = new ArrayList<>();
+            for (String tag : tagKeywords) {
+                listTitleKeywords.add(tag.trim());
+            }
             result = result && matchTagKeywords(tagKeywords, source);
         }
 
         return result;
-
-        // return keywords.stream()
-        // .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getTitle().title, keyword));
     }
 
     private boolean matchTagKeywords(List<String> tagKeywords, Source source) {
-        List<String> listTitleKeywords = new ArrayList<>();
+        boolean result = true;
         for (String tag : tagKeywords) {
-            listTitleKeywords.addAll(Arrays.asList(tag.trim().split("\\s+")));
+            result = result && source.getTags().stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.trim(), keyword.tagName));
         }
-        return listTitleKeywords.stream()
-                .anyMatch(keyword -> source.getTags().stream()
-                        .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword)));
+        return result;
     }
 
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {

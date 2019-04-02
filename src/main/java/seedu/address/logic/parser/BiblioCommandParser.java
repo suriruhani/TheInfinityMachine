@@ -22,7 +22,7 @@ public class BiblioCommandParser implements Parser<BiblioCommand> {
             String format = tokenizedArguments[1];
 
             if (tokenizedArguments.length != 3
-                || format.length() == 0){
+                || format.length() == 0) {
                 throw new ParseException
                         (String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioCommand.MESSAGE_USAGE));
             }

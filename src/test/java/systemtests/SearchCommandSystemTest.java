@@ -1,5 +1,7 @@
 package systemtests;
 
+import static seedu.address.commons.core.Messages.MESSAGE_SOURCES_LISTED_OVERVIEW;
+
 import org.junit.Test;
 
 import seedu.address.model.Model;
@@ -145,7 +147,7 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
      * @see SourceManagerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
-        /*
+
         String expectedResultMessage = String.format(
                 MESSAGE_SOURCES_LISTED_OVERVIEW, expectedModel.getFilteredSourceList().size());
 
@@ -153,7 +155,7 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         //        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
-        */
+
     }
 
     /**
@@ -166,7 +168,7 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
      * @see SourceManagerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
-        /*
+
         Model expectedModel = getModel();
 
         executeCommand(command);
@@ -174,6 +176,6 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         assertSelectedCardUnchanged();
         assertCommandBoxShowsErrorStyle();
         assertStatusBarUnchanged();
-        */
+
     }
 }

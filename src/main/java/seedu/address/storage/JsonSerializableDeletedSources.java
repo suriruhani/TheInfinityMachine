@@ -1,16 +1,17 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
+
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.DeletedSources;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.source.Source;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * An Immutable Deleted Sources that is serializable to JSON format.
@@ -36,7 +37,8 @@ public class JsonSerializableDeletedSources {
      * @param source future changes to this will not affect the created {@code JsonSerializableSourceManager}.
      */
     public JsonSerializableDeletedSources(ReadOnlyDeletedSources source) {
-        deletedSources.addAll(source.getDeletedSourceList().stream().map(JsonAdaptedSource::new).collect(Collectors.toList()));
+        deletedSources.addAll(source.getDeletedSourceList().stream()
+                .map(JsonAdaptedSource::new).collect(Collectors.toList()));
     }
 
     /**

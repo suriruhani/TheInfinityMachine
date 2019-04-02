@@ -61,7 +61,8 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
         SourceManagerStorage sourceManagerStorage = new JsonSourceManagerStorage(userPrefs.getSourceManagerFilePath());
-        DeletedSourcesStorage deletedSourcesStorage = new JsonDeletedSourcesStorage(userPrefs.getDeletedSourceFilePath());
+        DeletedSourcesStorage deletedSourcesStorage =
+                new JsonDeletedSourcesStorage(userPrefs.getDeletedSourceFilePath());
         storage = new StorageManager(sourceManagerStorage, userPrefsStorage, deletedSourcesStorage);
 
         initLogging(config);

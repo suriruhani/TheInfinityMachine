@@ -1,14 +1,14 @@
 package seedu.address.model;
 
+import static java.util.Objects.requireNonNull;
+
+import java.util.List;
+
 import javafx.beans.InvalidationListener;
 import javafx.collections.ObservableList;
 import seedu.address.commons.util.InvalidationListenerManager;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.UniqueDeletedSourceList;
-
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
 
 /**
  * Wraps all data and operations related to DeletedSource objects
@@ -146,4 +146,3 @@ public class DeletedSources implements ReadOnlyDeletedSources {
         return deletedSources.hashCode();
     }
 }
-

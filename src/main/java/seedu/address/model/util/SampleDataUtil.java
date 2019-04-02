@@ -45,9 +45,9 @@ public class SampleDataUtil {
 
     public static Source[] getSampleDeletedSources() {
         return new Source[] {
-                new Source(new Title("Algorithms 0"), new Type("Math"), new Detail("AlgoDetails12"),
-                        getTagSet("ComputerScience12")),
-                new Source(new Title("Algorithms 1"), new Type("Math"), new Detail("AlgoDetails12"),
+            new Source(new Title("Algorithms 0"), new Type("Math"), new Detail("AlgoDetails12"),
+                    getTagSet("ComputerScience12")),
+            new Source(new Title("Algorithms 1"), new Type("Math"), new Detail("AlgoDetails12"),
                         getTagSet("ComputerScience12"))
         };
     }

@@ -1,16 +1,28 @@
 package seedu.address.model.source;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Iterator;
+import java.util.List;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import seedu.address.model.source.exceptions.DuplicateSourceException;
 import seedu.address.model.source.exceptions.SourceNotFoundException;
 
-import java.util.Iterator;
-import java.util.List;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
+/**
+ * A list of deleted sources that enforces uniqueness between its elements and does not allow nulls.
+ * A source is considered unique by comparing using {@code Source#isSameSource(Source)}. As such, adding and updating of
+ * sources uses Source#isSameSource(Source) for equality so as to ensure that the source being added or updated is
+ * unique in terms of identity in the UniqueDeletedSourceList.
+ * However, the removal of a source uses Source#equals(Object) so
+ * as to ensure that the source with exactly the same fields will be removed.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Source#isSameSource(Source)
+ */
 public class UniqueDeletedSourceList implements Iterable<Source> {
 
     private final ObservableList<Source> internalDeletedList = FXCollections.observableArrayList();

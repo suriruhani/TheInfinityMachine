@@ -38,7 +38,8 @@ public class ModelManager implements Model, PanicMode {
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
      */
-    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs, ReadOnlyDeletedSources deletedSources) {
+    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs,
+                        ReadOnlyDeletedSources deletedSources) {
         super();
         requireAllNonNull(sourceManager, userPrefs, deletedSources);
 
@@ -407,7 +408,8 @@ public class ModelManager implements Model, PanicMode {
             if (wasSelectedSourceRemoved) {
                 // Select the source that came before it in the list,
                 // or clear the selection if there is no such source.
-                selectedDeletedSource.setValue(change.getFrom() > 0 ? change.getList().get(change.getFrom() - 1) : null);
+                selectedDeletedSource.setValue(change.getFrom() > 0
+                        ? change.getList().get(change.getFrom() - 1) : null);
             }
         }
     }

@@ -1,9 +1,13 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Before;
 
+import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -24,7 +28,6 @@ public class ListCommandTest {
         expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs());
     }
 
-    /*
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
         assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
@@ -37,5 +40,4 @@ public class ListCommandTest {
         assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
                 expectedModel);
     }
-    */
 }

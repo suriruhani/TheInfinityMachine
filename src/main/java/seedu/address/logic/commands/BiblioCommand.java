@@ -45,7 +45,7 @@ public class BiblioCommand extends Command {
         }
 
         Source targetSource = lastShownList.get(targetIndex.getZeroBased());
-        String biblioEntry = "Foo";
+        String biblioEntry;
         switch (format) {
             case "APA":
                 biblioEntry = generateAPA(targetSource);

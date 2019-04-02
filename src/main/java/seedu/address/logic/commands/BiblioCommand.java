@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
 /**
- * Generates a bibliography from a source at the specified index of style.
+ * Generates a bibliography from a source at the specified index of appropriate style.
  */
 
 public class BiblioCommand extends Command {

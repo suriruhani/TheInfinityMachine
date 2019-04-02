@@ -13,6 +13,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
@@ -34,7 +35,7 @@ import seedu.address.testutil.SourceBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -45,7 +46,8 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
 
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.setSource(model.getFilteredSourceList().get(0), editedSource);
         expectedModel.commitSourceManager();
 
@@ -67,7 +69,8 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
 
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.setSource(lastSource, editedSource);
         expectedModel.commitSourceManager();
 
@@ -81,7 +84,8 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
 
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.commitSourceManager();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
@@ -98,7 +102,8 @@ public class EditCommandTest {
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
 
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.setSource(model.getFilteredSourceList().get(0), editedSource);
         expectedModel.commitSourceManager();
 
@@ -159,7 +164,8 @@ public class EditCommandTest {
         Source sourceToEdit = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
         EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder(editedSource).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_SOURCE, descriptor);
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
         expectedModel.setSource(sourceToEdit, editedSource);
         expectedModel.commitSourceManager();
 
@@ -202,7 +208,8 @@ public class EditCommandTest {
         Source editedSource = new SourceBuilder().build();
         EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder(editedSource).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_SOURCE, descriptor);
-        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs());
+        Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
+                model.getDeletedSources());
 
         showSourceAtIndex(model, INDEX_SECOND_SOURCE);
         Source sourceToEdit = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());

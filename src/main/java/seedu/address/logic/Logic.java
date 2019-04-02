@@ -8,6 +8,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.source.Source;
 
@@ -31,8 +32,18 @@ public interface Logic {
      */
     ReadOnlySourceManager getSourceManager();
 
+    /**
+     * Returns the DeletedSources.
+     *
+     * @see seedu.address.model.Model#getDeletedSources()
+     */
+    ReadOnlyDeletedSources getDeletedSources();
+
     /** Returns an unmodifiable view of the filtered list of sources */
     ObservableList<Source> getFilteredSourceList();
+
+    /** Returns an unmodifiable view of the filtered list of deleted sources */
+    ObservableList<Source> getFilteredDeletedSourceList();
 
     /**
      * Returns an unmodifiable view of the list of commands entered by the user.
@@ -44,6 +55,11 @@ public interface Logic {
      * Returns the user prefs' source manager file path.
      */
     Path getSourceManagerFilePath();
+
+    /**
+     * Returns the user prefs' deleted sources file path.
+     */
+    Path getDeletedSourceFilePath();
 
     /**
      * Returns the user prefs' GUI settings.
@@ -64,9 +80,24 @@ public interface Logic {
     ReadOnlyProperty<Source> selectedSourceProperty();
 
     /**
+     * Selected deleted source in the filtered deleted source list.
+     * null if no source is selected.
+     *
+     * @see seedu.address.model.Model#selectedDeletedSourceProperty()
+     */
+    ReadOnlyProperty<Source> selectedDeletedSourceProperty();
+
+    /**
      * Sets the selected source in the filtered source list.
      *
      * @see seedu.address.model.Model#setSelectedSource(Source)
      */
     void setSelectedSource(Source source);
+
+    /**
+     * Sets the selected deleted source in the filtered deletedsource list.
+     *
+     * @see seedu.address.model.Model#setSelectedDeletedSource(Source)
+     */
+    void setSelectedDeletedSource(Source source);
 }

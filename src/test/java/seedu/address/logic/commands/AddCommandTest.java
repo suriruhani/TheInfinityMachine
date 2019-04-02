@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.SourceManager;
@@ -123,7 +124,22 @@ public class AddCommandTest {
         }
 
         @Override
+        public Path getDeletedSourceFilePath() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setDeletedSourceFilePath(Path sourceManagerFilePath) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void addSource(Source source) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addDeletedSource(Source source) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -133,7 +149,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addDeletedSourceAtIndex(Source source, int index) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setSourceManager(ReadOnlySourceManager newData) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setDeletedSources(ReadOnlyDeletedSources deletedSources) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -143,7 +169,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ReadOnlyDeletedSources getDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public boolean hasSource(Source source) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasDeletedSource(Source source) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -153,7 +189,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public void removeDeletedSource(Source target) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void setSource(Source target, Source editedSource) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setDeletedSource(Source target, Source editedSource) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -163,7 +209,17 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Source> getFilteredDeletedSourceList() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public void updateFilteredSourceList(Predicate<Source> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredDeletedSourceList(Predicate<Source> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -193,6 +249,31 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean canUndoDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean canRedoDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void undoDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void redoDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void commitDeletedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyProperty<Source> selectedSourceProperty() {
             throw new AssertionError("This method should not be called.");
         }
@@ -204,6 +285,21 @@ public class AddCommandTest {
 
         @Override
         public void setSelectedSource(Source source) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public Source getSelectedDeletedSource() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setSelectedDeletedSource(Source source) {
             throw new AssertionError("This method should not be called.");
         }
 

@@ -15,13 +15,17 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.model.DeletedSources;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.SourceManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.storage.DeletedSourcesStorage;
+import seedu.address.storage.JsonDeletedSourcesStorage;
 import seedu.address.storage.JsonSourceManagerStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.SourceManagerStorage;
@@ -57,7 +61,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         UserPrefs userPrefs = initPrefs(userPrefsStorage);
         SourceManagerStorage sourceManagerStorage = new JsonSourceManagerStorage(userPrefs.getSourceManagerFilePath());
-        storage = new StorageManager(sourceManagerStorage, userPrefsStorage);
+        DeletedSourcesStorage deletedSourcesStorage =
+                new JsonDeletedSourcesStorage(userPrefs.getDeletedSourceFilePath());
+        storage = new StorageManager(sourceManagerStorage, userPrefsStorage, deletedSourcesStorage);
 
         initLogging(config);
 
@@ -75,22 +81,31 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, ReadOnlyUserPrefs userPrefs) {
         Optional<ReadOnlySourceManager> sourceManagerOptional;
+        Optional<ReadOnlyDeletedSources> deletedSourcesOptional;
         ReadOnlySourceManager initialData;
+        ReadOnlyDeletedSources initialDeletedSources;
         try {
             sourceManagerOptional = storage.readSourceManager();
+            deletedSourcesOptional = storage.readDeletedSources();
             if (!sourceManagerOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample SourceManager");
             }
+            if (!deletedSourcesOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample DeletedSourcesList");
+            }
             initialData = sourceManagerOptional.orElseGet(SampleDataUtil::getSampleSourceManager);
+            initialDeletedSources = deletedSourcesOptional.orElseGet(SampleDataUtil::getSampleDeletedSourcesList);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty SourceManager");
             initialData = new SourceManager();
+            initialDeletedSources = new DeletedSources();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty SourceManager");
             initialData = new SourceManager();
+            initialDeletedSources = new DeletedSources();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, userPrefs, initialDeletedSources);
     }
 
     private void initLogging(Config config) {

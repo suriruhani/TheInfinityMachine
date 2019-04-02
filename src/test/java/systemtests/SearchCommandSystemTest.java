@@ -13,7 +13,8 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
              */
     //        String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
     //        Model expectedModel = getModel();
-    //        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); // first titles of Benson and Daniel are "Meier"
+    //        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        // first titles of Benson and Daniel are "Meier"
     //        assertCommandSuccess(command, expectedModel);
     //        assertSelectedCardUnchanged();
 
@@ -72,7 +73,8 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
     //        assertCommandSuccess(command, expectedModel);
     //        assertSelectedCardUnchanged();
 
-            /* Case: search source in source manager, keyword is same as name but of different case -> 1 source found */
+            /* Case: search source in source manager,
+            keyword is same as name but of different case -> 1 source found */
     //        command = SearchCommand.COMMAND_WORD + " MeIeR";
     //        assertCommandSuccess(command, expectedModel);
     //        assertSelectedCardUnchanged();

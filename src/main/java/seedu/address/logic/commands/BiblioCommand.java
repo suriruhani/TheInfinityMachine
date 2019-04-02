@@ -31,7 +31,7 @@ public class BiblioCommand extends Command {
     private final Index targetIndex;
 
     public BiblioCommand(String format, Index targetIndex) {
-        this.format =  format;
+        this.format = format;
         this.targetIndex = targetIndex;
     }
 

@@ -70,7 +70,9 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     private boolean matchTypeKeywords(String typeKeywords, Source source) {
-        return true;
+        List<String> listTitleKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
+        return listTitleKeywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getType().type, keyword));
     }
 
     private boolean matchTitleKeywords(String titleKeywords, Source source) {

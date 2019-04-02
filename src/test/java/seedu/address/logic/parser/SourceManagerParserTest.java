@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -39,7 +40,12 @@ public class SourceManagerParserTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private final SourceManagerParser parser = new SourceManagerParser();
+    private SourceManagerParser parser;
+
+    @Before
+    public void setup() {
+        parser = new SourceManagerParser(); // Reset between tests
+    }
 
     @Test
     public void parseCommand_add() throws Exception {
@@ -145,5 +151,47 @@ public class SourceManagerParserTest {
         thrown.expect(ParseException.class);
         thrown.expectMessage(MESSAGE_UNKNOWN_COMMAND);
         parser.parseCommand("unknownCommand");
+    }
+
+    // Meta-commands (pertaining to AliasManager)
+
+    @Test
+    public void parseMetaCommand_addAlias_validArguments() throws Exception {
+        parser.parseCommand("alias count c");
+        assertTrue(parser.parseCommand("c") instanceof CountCommand);
+    }
+
+    @Test
+    public void parseMetaCommand_addAlias_invalidArguments1() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias count");
+    }
+
+    @Test
+    public void parseMetaCommand_addAlias_invalidArguments2() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias count c c");
+    }
+
+    @Test
+    public void parseMetaCommand_removeAlias_validArguments() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias count c");
+        parser.parseCommand("alias-rm c");
+        parser.parseCommand("c");
+    }
+
+    @Test
+    public void parseMetaCommand_removeAlias_invalidArguments1() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias count c");
+        parser.parseCommand("alias-rm");
+    }
+
+    @Test
+    public void parseMetaCommand_removeAlias_invalidArguments2() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias count c c");
+        parser.parseCommand("alias-rm");
     }
 }

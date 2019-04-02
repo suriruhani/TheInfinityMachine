@@ -3,8 +3,8 @@ package seedu.address.logic.commands;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
-import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
+import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
 
@@ -26,35 +26,38 @@ public class BiblioCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_validStyle_validIndex_success() {
+    public void execute_validStylevalidIndex_success() {
         BiblioCommand biblioCommand = new BiblioCommand("APA", INDEX_FIRST_SOURCE);
 
         try {
             String expectedMessage = new BiblioCommand("APA", INDEX_FIRST_SOURCE)
-                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources()), new CommandHistory())
+                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(), 
+                                              getTypicalDeletedSources()), new CommandHistory())
                     .getFeedbackToUser();
-            ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+            ModelManager expectedModel 
+                = new ModelManager(model.getSourceManager(), new UserPrefs(), 
+                                   getTypicalDeletedSources());
             assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
-        } catch(CommandException ce) {
-            assert false: "CommandException thrown";
+        } catch (CommandException ce) {
+            assert false : "CommandException thrown";
         }
     }
 
     @Test
-    public void execute_invalidStyle_validIndex_failure() {
+    public void execute_invalidStyleValidIndex_failure() {
         BiblioCommand biblioCommand = new BiblioCommand("Foo", INDEX_FIRST_SOURCE);
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_COMMAND_FORMAT);
     }
 
     @Test
-    public void execute_validStyle_invalidIndex_failure() {
+    public void execute_validStyleInvalidIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
         BiblioCommand biblioCommand = new BiblioCommand("APA", outOfBoundIndex);
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_invalidStyle_invalidIndex_failure() {
+    public void execute_invalidStyleInvalidIndex_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
         BiblioCommand biblioCommand = new BiblioCommand("Foo", outOfBoundIndex);
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);

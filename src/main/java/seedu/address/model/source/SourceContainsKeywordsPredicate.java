@@ -7,7 +7,7 @@ import seedu.address.commons.util.StringUtil;
 
 /**
  * Tests that a {@code Source}'s {@code Title}, {@code Type}, {@code Source} and {@code Detail}
- * matches the keywords given. Performs a logical and by checking if all those keywords
+ * matches the keywords given. Performs a logical AND by checking if all those keywords
  * are present in the output source.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {

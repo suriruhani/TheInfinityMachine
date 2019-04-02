@@ -156,13 +156,18 @@ Format: `delete ORIGINAL_INDEX NEW_INDEX`
 * Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
-* All sources after the location moved to will be shifted downwards.
+* The specified source will replace the original source at that index.
+** If the souce was shifted forward, sources before the `NEW_INDEX` will be shifted back and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
+** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ****
 
 Examples:
 
 * `order 1 4` +
 Moves the source located at index 1 to index 4.
+
+* `order 1 6` +
+If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
 === Generate bibliography entry : `biblio`
 

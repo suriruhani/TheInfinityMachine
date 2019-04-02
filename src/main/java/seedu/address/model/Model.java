@@ -15,6 +15,7 @@ import seedu.address.model.source.Source;
 public interface Model extends PanicMode {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Source> PREDICATE_SHOW_ALL_SOURCES = unused -> true;
+    Predicate<Source> PREDICATE_SHOW_ALL_DELETED_SOURCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -42,9 +43,19 @@ public interface Model extends PanicMode {
     Path getSourceManagerFilePath();
 
     /**
+     * Returns the user prefs' source manager file path.
+     */
+    Path getDeletedSourceFilePath();
+
+    /**
      * Sets the user prefs' source manager file path.
      */
     void setSourceManagerFilePath(Path sourceManagerFilePath);
+
+    /**
+     * Sets the user prefs' source manager file path.
+     */
+    void setDeletedSourceFilePath(Path deletedSourceFilePath);
 
     /**
      * Replaces source manager data with the data in {@code sourceManager}.
@@ -55,9 +66,22 @@ public interface Model extends PanicMode {
     ReadOnlySourceManager getSourceManager();
 
     /**
+     * Replaces source manager data with the data in {@code sourceManager}.
+     */
+    void setDeletedSources(ReadOnlyDeletedSources deletedSources);
+
+    /** Returns the SourceManager */
+    ReadOnlyDeletedSources getDeletedSources();
+
+    /**
      * Returns true if a source with the same identity as {@code source} exists in the source manager.
      */
     boolean hasSource(Source source);
+
+    /**
+     * Returns true if a source with the same identity as {@code source} exists in the source manager.
+     */
+    boolean hasDeletedSource(Source source);
 
     /**
      * Deletes the given source.
@@ -66,16 +90,34 @@ public interface Model extends PanicMode {
     void deleteSource(Source target);
 
     /**
+     * Deletes the given source.
+     * The source must exist in the source manager.
+     */
+    void removeDeletedSource(Source target);
+
+    /**
      * Adds the given source.
      * {@code source} must not already exist in the source manager.
      */
     void addSource(Source source);
 
     /**
+     * Adds the given source.
+     * {@code source} must not already exist in the source manager.
+     */
+    void addDeletedSource(Source source);
+
+    /**
      * Adds the given source to an index.
      * {@code source} must not already exist in the source manager.
      */
     void addSourceAtIndex(Source source, int index);
+
+    /**
+     * Adds the given source to an index.
+     * {@code source} must not already exist in the source manager.
+     */
+    void addDeletedSourceAtIndex(Source source, int index);
 
     /**
      * Replaces the given source {@code target} with {@code editedSource}.
@@ -85,8 +127,19 @@ public interface Model extends PanicMode {
      */
     void setSource(Source target, Source editedSource);
 
+    /**
+     * Replaces the given source {@code target} with {@code editedSource}.
+     * {@code target} must exist in the source manager.
+     * The source identity of {@code editedSource} must not be the same
+     * as another existing source in the source manager.
+     */
+    void setDeletedSource(Source target, Source editedSource);
+
     /** Returns an unmodifiable view of the filtered source list */
     ObservableList<Source> getFilteredSourceList();
+
+    /** Returns an unmodifiable view of the filtered source list */
+    ObservableList<Source> getFilteredDeletedSourceList();
 
     /**
      * Updates the filter of the filtered source list to filter by the given {@code predicate}.
@@ -95,9 +148,20 @@ public interface Model extends PanicMode {
     void updateFilteredSourceList(Predicate<Source> predicate);
 
     /**
+     * Updates the filter of the filtered source list to filter by the given {@code predicate}.
+     * @throws NullPointerException if {@code predicate} is null.
+     */
+    void updateFilteredDeletedSourceList(Predicate<Source> predicate);
+
+    /**
      * Returns true if the model has previous source manager states to restore.
      */
     boolean canUndoSourceManager();
+
+    /**
+     * Returns true if the model has previous source manager states to restore.
+     */
+    boolean canUndoDeletedSources();
 
     /**
      * Returns true if the model has undone source manager states to restore.
@@ -105,9 +169,19 @@ public interface Model extends PanicMode {
     boolean canRedoSourceManager();
 
     /**
+     * Returns true if the model has undone source manager states to restore.
+     */
+    boolean canRedoDeletedSources();
+
+    /**
      * Restores the model's source manager to its previous state.
      */
     void undoSourceManager();
+
+    /**
+     * Restores the model's source manager to its previous state.
+     */
+    void undoDeletedSources();
 
     /**
      * Restores the model's source manager to its previously undone state.
@@ -115,9 +189,19 @@ public interface Model extends PanicMode {
     void redoSourceManager();
 
     /**
+     * Restores the model's source manager to its previously undone state.
+     */
+    void redoDeletedSources();
+
+    /**
      * Saves the current source manager state for undo/redo.
      */
     void commitSourceManager();
+
+    /**
+     * Saves the current source manager state for undo/redo.
+     */
+    void commitDeletedSources();
 
     /**
      * Selected source in the filtered source list.
@@ -126,15 +210,32 @@ public interface Model extends PanicMode {
     ReadOnlyProperty<Source> selectedSourceProperty();
 
     /**
+     * Selected source in the filtered source list.
+     * null if no source is selected.
+     */
+    ReadOnlyProperty<Source> selectedDeletedSourceProperty();
+
+    /**
      * Returns the selected source in the filtered source list.
      * null if no source is selected.
      */
     Source getSelectedSource();
 
     /**
+     * Returns the selected source in the filtered source list.
+     * null if no source is selected.
+     */
+    Source getSelectedDeletedSource();
+
+    /**
      * Sets the selected source in the filtered source list.
      */
     void setSelectedSource(Source source);
+
+    /**
+     * Sets the selected source in the filtered source list.
+     */
+    void setSelectedDeletedSource(Source source);
 
     /**
      * Default implementation to prevent compilation errors when implementors of Model

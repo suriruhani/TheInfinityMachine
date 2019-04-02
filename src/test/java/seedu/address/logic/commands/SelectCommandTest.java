@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_SOURCE;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
@@ -23,8 +24,9 @@ import seedu.address.model.UserPrefs;
  * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
  */
 public class SelectCommandTest {
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
-    private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+            getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

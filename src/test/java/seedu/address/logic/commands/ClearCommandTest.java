@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import org.junit.Test;
@@ -26,8 +27,8 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs());
-        Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs());
+        Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+        Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
         expectedModel.setSourceManager(new SourceManager());
         expectedModel.commitSourceManager();
 

@@ -77,7 +77,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = 'addressbook.jar'
+    archiveName = 'infinitymachine.jar'
 
     destinationDir = file("${buildDir}/jar/")
 }

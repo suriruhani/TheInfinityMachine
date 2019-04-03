@@ -32,7 +32,8 @@ Infinity Machine is a desktop source manager application used for storing resear
 *** Wrote and fixed tests for existing features as well as Failing Tests and SystemTests when Refactoring (Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/issues/112)
 *** Helped to write releases for v1.1 - v1.3
 ** Documentation:
-*** Write features section of the User Guide:
+*** Write features section of the User Guide
+*** Write developer guide sections as well
 ** Community:
 *** PRs reviewed (with non-trivial review comments): many PRs reviewed
 *** Contributed to forum discussions (examples:  asked questions)

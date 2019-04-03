@@ -2,8 +2,15 @@
 :site-section: ContactUs
 :stylesDir: stylesheets
 
-* *Bug reports, Suggestions* : Post in our https://github.com/CS2103-AY1819S2-W13-3/main/issues[issue tracker] if you noticed bugs or have suggestions on how to improve.
+* *Bug reports, Suggestions* : Post in our https://github.com/CS2103-AY1819S2-W13-3/main/issues[issue tracker] if you noticed bugs
+or have suggestions on how we can improve our functionalities.
+All suggestions are welcomed!
 
 * *Contributing* : We welcome pull requests.
-* *Email us* : You can also reach us at @comp.nus.edu.sg
+* *Email us* : You can also reach the individual developers at:
+ - Cassey Low:
+ - Darren Lee:
+ - Fabian Terh:
+ - Ruhani Suri: suriruhani@u.nus.edu
+ - Yang Yang:
 

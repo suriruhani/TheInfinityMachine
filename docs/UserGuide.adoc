@@ -388,6 +388,8 @@ e.g. `add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on p
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Restore* : `restore INDEX` +
+e.g. `restore 3`
 * *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [KEYWORD] [KEYWORD]...` +

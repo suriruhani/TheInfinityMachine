@@ -13,34 +13,55 @@ Introducing the Infinity Machine, an application for efficient storing and
 retrieving of textual information on research material by allowing users to
 apply to it custom made tags and type for easy search and retrieval. Intended
 for tech-savvy university students who are able to use CLI and wish to organize
- and tag research information or any other data that they may wish to store.
+and tag research information or any other data that they may wish to store.
+Allows long term storage of such data and easy, efficient retrieval and other
+useful operations on them.
 
 == Summary of contributions
 
 * *Major enhancement*:
-* added *the ability to search* through sources:
-** What it does: allows the user to search through all the entries in the database through various fields at a time.
-** Justification: This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-** Highlights: This enhancement does not affect existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging.
-** Credits:
+* modified *the ability to search* through sources:
+** *Previously*: search command could only take one type of arguments, of title type, and populate all sources that have one of those titles
+** *Modification*: can search in conjunction using multiple fields including title, type, detail and tag(s).
+** *What it does*: allows the user to search through all the entries in the database through various fields at a time, and display source entries that satisfy all of the entered tags. Allows compound searches to be made.
+** *Justification*: This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+It helps user greatly narrow down their search should they be looking for a specific source entry with particular values.
+** *Highlights*: this enhancement does not affect existing commands and commands to be added in future. It required an in-depth analysis of design alternatives.
+The implementation too was challenging, as the current format of `search` command had to be changed and be prepared to accept and parse multiple fields entered.
+** *Credits*: most of the feature was developed independently, with some help from fellow team members.
 
-* added *the ability to list n sources*:
-** What it does: allows the user to pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
-** Justification: This feature improves the product significantly because a user can now only list as many item he wants and need not clutter the screen by displaying all.
-** Highlights: Argument n is internally capped to the size of the database. This enhancement does not affect existing commands and commands to be added in the future.
-** Credits:
+* modified *the ability to list sources*:
+** *Previously*: list command listed all the sources in the database, populating on the GUI and cluttering the view.
+** *Modification*: can now accept an optional parameter and list only those many sources from the top.
+** *What it does*: allows the user to pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
+** *Justification*: This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search, say should he want to view the N first added sources.
+** *Highlights*: this enhancement does not affect existing commands and commands to be added in future. It required an in-depth analysis of design alternatives.
+The implementation too was challenging, as the current format of `list` command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
+functionality based on whether an argument was passed by the user or not.
+** *Credits*: most of the feature was developed independently, with some help from fellow team members.
 
-* *Code contributed*: _{https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=suriruhani&sort=displayName&since=2019-02-10&until=2019-04-02&timeframe=day&reverse=false&repoSort=true}_
+* *Minor enhancement*:
+** *refactoring Storage API*: in migrating the codebase from AB4 to The Infinity Machine for our team, helped in refactoring the entire Storage packet
+to be compatible with the functionalities required by our application.
+
+* *Code contributed*: Reposense contribution: _{https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=suriruhani&sort=displayName&since=2019-02-10&until=2019-04-02&timeframe=day&reverse=false&repoSort=true}_
 
 * *Other contributions*:
 
 ** Project management:
-***
+*** Helped in maintaining issue tracker and milestone progress
 ** Enhancements to existing features:
-*** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide
+*** Fixed failing test cases and enhanced javadocs for implemented methods.
+** Documentation:
+*** Added to and updated the User Guide
+*** Added to and updated the Developer Guide
+*** Added to and updated the ContactUs.adoc
+*** Added to and updated the AboutUs.adoc
 ** Community:
-** Tools:
+*** Reviewed and approved PRs of other team mates
+*** Helped in tracking issues including assigning severity, status, type, and closing it.
+//** Tools:
 
 == Contributions to the User Guide
 

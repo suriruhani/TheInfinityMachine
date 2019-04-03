@@ -59,7 +59,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-// tag::add[]
+
 === Adding a person: `add`
 
 Adds a new source to the list of sources +
@@ -72,7 +72,7 @@ Examples:
 
 * `add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
 * `add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI`
-// end::add[]
+
 
 === Deleting a source : `delete`
 
@@ -94,7 +94,27 @@ Deletes the 2nd source in the database.
 `delete 1` +
 Deletes the 1st source in the results of the `find` command.
 
-// tag::edit[]
+
+=== Restoring a source : `restore`
+
+Restores the specified source. +
+Format: `restore INDEX`
+
+****
+* Restores the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed deleted source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `restore 2` +
+Restores the 2nd deleted source in the database.
+* `list-delete` +
+`restore 1` +
+Restores the 1st deleted source in the database.
+
+
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
@@ -114,30 +134,35 @@ Examples:
 Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
-// end::edit[]
+
 
 === Searching a source: `search`
 
-Searches for entries amongst the list of sources by title. +
-Finds all entries with an (exact, case insensitive) matching title as entered by the user. +
+Searches for entries amongst the list of sources. +
+Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Finds all entries with an (exact, case insensitive) matching field as entered by the user. +
+Searches with multiple arguments are taken as conjunction searches, i.e all those sources
+that satisfy all the keyword values are shown.
 It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
 Matching is exact (eg. `Algorithm` will not match with `Algorithms`) +
-Format: `search title`
+Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
 * Only full words will be matched e.g. `Han` will not match `Hans`, `FooTitle` will not match `FooTitle1`
+* Search implemented as a logical AND. eg. `search i/algorithm y/website` results in all those sources
+that have title `algorithm` AND type `website`
 ****
 
 Examples:
 
-* `search Algorithms` +
-Returns the source with the title `algorithms`
-* `search ArtificialIntelligence MachineLearning` +
-Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
+* `search i/Algorithms` +
+Returns the source(s) with the title `algorithms`
+* `search y/website t/ArtificialIntelligence t/MachineLearning` +
+Returns any source having tags `ArtificialIntelligence` and `MachineLearning` and of type `website`
 
-=== Listing all sources : `list [n]`
+=== Listing all sources : `list`
 
 Displays a list of all sources currently in the database, without filtering. +
 Optional argument N used to list only the top N sources to the user. +
@@ -151,7 +176,6 @@ Format: `list [N]`
 * Tags, Details, Type are also displayed along with the sources
 ****
 
-// tag::order[]
 === Reordering sources to your liking : `order`
 
 Moves the specified source from one position to another as defined by the user. +
@@ -173,7 +197,6 @@ Moves the source located at index 1 to index 4.
 
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
-// end::order[]
 
 === Generate bibliography entry : `biblio`
 
@@ -365,6 +388,8 @@ e.g. `add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on p
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Restore* : `restore INDEX` +
+e.g. `restore 3`
 * *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [KEYWORD] [KEYWORD]...` +

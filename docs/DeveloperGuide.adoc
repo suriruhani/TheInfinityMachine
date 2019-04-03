@@ -462,35 +462,29 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ==== Current Implementation
 
 The search feature is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title(s).
+It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title, type, detail and/or tags.
 Additionally, it uses:
 
-* `TitleContainsKeywordsPredicate.java` -- Here, the logic of running through all the titles and matching it with the user inputs
-(trimmed by space, case insensitive) is implemented.
+* `SourceContainsKeywordsPredicate.java` -- Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
+(trimmed by space, case insensitive) is implemented. It is split by the CLI prefixes and implements conjunction logic.
 
 Given below is an example usage scenario and how the search mechanism behaves at each step.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-//image::SearchCommandStep1.png[width="800"]
+Step 2. The user executes `search i/footitle1` command and only those sources that have their title as `footitle1` are displayed.
 
-Step 2. The user executes `search footitle1` command and only one entry, the first one, is displayed.
-
-//image::SearchCommandStep2.png[width="800"]
-
-Step 3. The user executes `search footitle6 footitle5` and only two entries are listed, with all their details displayed.
-
-//image::SearchCommandStep3.png[width="800"]
+Step 3. The user executes `search i/footitle6 y/website` and only those entries are listed that have both their title as `footitle1` and type as `website`.
 
 [NOTE]
 `search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
 
 ==== Design Considerations
 
-===== Aspect: How undo & redo executes
+===== Aspect: How search executes
 
-* **Alternative 1 (current choice):** Runs through all entries and matches the title.
+* **Alternative 1 (current choice):** Runs through all entries and matches the arguments, field by field.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of time usage.
 
@@ -589,6 +583,44 @@ Step 8. The user now executes `list 3` command. The first 3 entries of the entir
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
 ** Cons: Maybe not the best implementation.
 // end::list[]
+
+// tag::devorder[]
+=== Custom Order Command
+The function is currently implemented using the functionality of the source model. It allows users to designate a source they want to move and a location they want to move it to.
+
+The primary uses of this feature are to facilitate source management and ordering sources by some user defined metric like personal importance.
+
+Given the function works purely on the parameters the user enters, a parser file was necessary to filter out invalid inputs like alphabets or special characters.
+
+Further consideration was necessary because of nature of the inputs. The inputs are array indexes which are very prone to being out or bounds that can result in system failures. Therefore, in addition to traditional exception handling, the function also implements its own checks for invalid user indexes.
+
+These check include the following:
+
+* Checking for inputs which are 0 or smaller
+** The user entered input follows traditional listing which starts from 1.  However array indexes in Java start from 0.  Therefore, 1 is always subtracted from any input added.
+** This means that any user input less than 1 are automatically invalid since that index cannot possibly exist
+
+* Checking for inputs which are larger than the size of the list of sources
+** The classic out of bounds exception occurs when a function attempts to extract an index from a point larger than the list's current size.
+** The function therefore checks the user input to ensure that it is always within the size of the list.
+
+Once the inputs are deemed as valid, the actual moving can begin. The model uses a list implementation for its primary storage model. This means that when a source is moved to a location, every source around it will need to be shifted to the front or the back depending on where the original source originated at.
+
+Thankfully, the Java List implementation does come with the function to add an item to the lest at a particular index, pushing everything aside automatically. The function called `addSourceAtIndex` was added to the model which took in the source to add as well as an index which the source should be added at.
+
+The function takes the following steps to make the swap:
+
+* Step 1 -- The function stores a copy of the source to be moved locally
+** The source to be moved is found using the index entered by the user and the `List.get` function that takes in an index and returns the source to be moved
+
+* Step 2 -- The function then deletes the source to be moved from the list
+** The `deleteSource` function automatically moves sources up to fill up the void left by the deleted source
+** A deletion is necessary in this step because the model does not accept duplicate sources. Therefore, adding the source to be moved first before deleting it would result in the function failing.
+
+* Step 3 -- The `addSourceAtIndex` function is used to place the recently deleted source back into the list at the designated location.
+
+* Step 4 -- The function then commits the database to save the recent changes.
+// end::devorder[]
 
 === Biblio feature
 ==== Current Implementation

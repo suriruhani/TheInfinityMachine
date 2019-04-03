@@ -1,12 +1,14 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import java.util.Arrays;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new SearchCommand object
@@ -25,9 +27,15 @@ public class SearchCommandParser implements Parser<SearchCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
         }
 
-        String[] titleKeywords = trimmedArgs.split("\\s+");
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
 
-        return new SearchCommand(new TitleContainsKeywordsPredicate(Arrays.asList(titleKeywords)));
+        if (!argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
+        }
+
+        //String[] titleKeywords = trimmedArgs.split("\\s+");
+        return new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap));
     }
 
 }

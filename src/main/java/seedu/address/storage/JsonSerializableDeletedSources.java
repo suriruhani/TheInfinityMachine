@@ -27,7 +27,7 @@ public class JsonSerializableDeletedSources {
      * Constructs a {@code JsonSerializableDeletedSources} with the given sources.
      */
     @JsonCreator
-    public JsonSerializableDeletedSources(@JsonProperty("sources") List<JsonAdaptedSource> sources) {
+    public JsonSerializableDeletedSources(@JsonProperty("deletedSources") List<JsonAdaptedSource> sources) {
         this.deletedSources.addAll(sources);
     }
 

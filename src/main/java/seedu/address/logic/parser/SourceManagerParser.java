@@ -168,13 +168,16 @@ public class SourceManagerParser implements CommandValidator {
         // that relate directly to AliasManager (and by association, SourceManagerParser).
 
         case AliasManager.COMMAND_WORD_ADD:
-            return new AliasAddMetaCommandParser(aliasManager).parse(arguments);
+            return new AliasAddMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_ADD)
+                    .parse(arguments);
 
         case AliasManager.COMMAND_WORD_REMOVE:
-            return new AliasRemoveMetaCommandParser(aliasManager).parse(arguments);
+            return new AliasRemoveMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_REMOVE)
+                    .parse(arguments);
 
         case AliasManager.COMMAND_WORD_LIST:
-            return new AliasListMetaCommandParser(aliasManager).parse(arguments);
+            return new AliasListMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_LIST)
+                    .parse(arguments);
 
 
         default:

@@ -12,8 +12,8 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
     /**
      * Instantiates self with an instance of aliasManager.
      */
-    public AliasRemoveMetaCommandParser(AliasManager aliasManager) {
-        setAliasManager(aliasManager);
+    public AliasRemoveMetaCommandParser(AliasManager aliasManager, String command) {
+        super(aliasManager, command);
     }
 
     /**

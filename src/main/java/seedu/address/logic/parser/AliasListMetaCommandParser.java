@@ -13,8 +13,8 @@ public class AliasListMetaCommandParser extends AliasMetaCommandParser implement
     /**
      * Instantiates self with an instance of aliasManager.
      */
-    public AliasListMetaCommandParser(AliasManager aliasManager) {
-        setAliasManager(aliasManager);
+    public AliasListMetaCommandParser(AliasManager aliasManager, String command) {
+        super(aliasManager, command);
     }
 
     /**

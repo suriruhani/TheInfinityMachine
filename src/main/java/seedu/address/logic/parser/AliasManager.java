@@ -13,9 +13,6 @@ import seedu.address.storage.ConcreteAliasStorage;
  * Manages user-defined command aliases.
  */
 class AliasManager {
-    static final String COMMAND_WORD_ADD = "alias";
-    static final String COMMAND_WORD_REMOVE = "alias-rm";
-    static final String COMMAND_WORD_LIST = "alias-ls";
     private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
     private static final String ERROR_COMMAND_IS_METACOMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";

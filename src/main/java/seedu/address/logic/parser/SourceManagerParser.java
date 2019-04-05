@@ -33,6 +33,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses user input.
  */
 public class SourceManagerParser implements CommandValidator {
+    private static final String COMMAND_ALIAS_ADD = "alias";
+    private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
+    private static final String COMMAND_ALIAS_LIST = "alias-ls";
 
     /**
      * Used for initial separation of command word and args.
@@ -167,16 +170,16 @@ public class SourceManagerParser implements CommandValidator {
         // For these, we include implementation details because these are meta-commands
         // that relate directly to AliasManager (and by association, SourceManagerParser).
 
-        case AliasManager.COMMAND_WORD_ADD:
-            return new AliasAddMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_ADD)
+        case COMMAND_ALIAS_ADD:
+            return new AliasAddMetaCommandParser(aliasManager, COMMAND_ALIAS_ADD)
                     .parse(arguments);
 
-        case AliasManager.COMMAND_WORD_REMOVE:
-            return new AliasRemoveMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_REMOVE)
+        case COMMAND_ALIAS_REMOVE:
+            return new AliasRemoveMetaCommandParser(aliasManager, COMMAND_ALIAS_REMOVE)
                     .parse(arguments);
 
-        case AliasManager.COMMAND_WORD_LIST:
-            return new AliasListMetaCommandParser(aliasManager, AliasManager.COMMAND_WORD_LIST)
+        case COMMAND_ALIAS_LIST:
+            return new AliasListMetaCommandParser(aliasManager, COMMAND_ALIAS_LIST)
                     .parse(arguments);
 
 

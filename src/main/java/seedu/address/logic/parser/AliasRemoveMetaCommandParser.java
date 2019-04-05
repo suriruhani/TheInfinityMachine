@@ -7,7 +7,9 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments for the AliasManager "alias-rm" metacommand.
  */
 public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
-    static final String ERROR_INVALID_ARGUMENTS = "You have provided an invalid number of arguments";
+    private static final String MESSAGE_SUCCESS = "Alias removed successfully";
+    private static final String MESSAGE_INVALID_SYNTAX = "Arguments are invalid. "
+            + "Usage guide: %s ALIAS";
 
     /**
      * Instantiates self with an instance of aliasManager.
@@ -26,16 +28,16 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
         // We need this because "".trim().split(" ").length == 1,
         // so the following if statement does not catch this condition
         if (userInput.equals("")) {
-            throw new ParseException(ERROR_INVALID_ARGUMENTS);
+            throw new ParseException(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
         }
 
         String[] splitArguments = userInput.trim().split(" ");
         if (splitArguments.length != 1) {
-            throw new ParseException(ERROR_INVALID_ARGUMENTS);
+            throw new ParseException(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
         }
 
         getAliasManager().unregisterAlias(splitArguments[0]);
-        return new DummyCommand("Alias removed");
+        return new DummyCommand(MESSAGE_SUCCESS);
     }
 
 }

@@ -15,4 +15,7 @@ public abstract class AliasMetaCommandParser {
     AliasManager getAliasManager() {
         return aliasManager;
     }
+    String getCommand() {
+        return command;
+    }
 }

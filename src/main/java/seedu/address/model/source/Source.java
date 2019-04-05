@@ -21,14 +21,16 @@ public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Title title;
+    private final Author author;
     private final Type type;
     private final Detail detail;
 
     private final Set<Tag> tags = new HashSet<>();
 
-    public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
         this.title = title;
+        this.author = author;
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
@@ -60,6 +62,10 @@ public class Source {
         return title;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
     public Type getType() {
         return type;
     }
@@ -87,7 +93,9 @@ public class Source {
 
         return otherSource != null
                 && otherSource.getTitle().equals(getTitle())
-                && (otherSource.getType().equals(getType()) || otherSource.getDetail().equals(getDetail()));
+                && (otherSource.getType().equals(getType())
+                || otherSource.getAuthor().equals(getAuthor())
+                || otherSource.getDetail().equals(getDetail()));
     }
 
     /**
@@ -106,6 +114,7 @@ public class Source {
 
         Source otherSource = (Source) other;
         return otherSource.getTitle().equals(getTitle())
+                && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getType().equals(getType())
                 && otherSource.getDetail().equals(getDetail())
                 && otherSource.getTags().equals(getTags());
@@ -121,6 +130,8 @@ public class Source {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getTitle())
+                .append(" Author: ")
+                .append(getAuthor())
                 .append(" Type: ")
                 .append(getType())
                 .append(" Detail: ")

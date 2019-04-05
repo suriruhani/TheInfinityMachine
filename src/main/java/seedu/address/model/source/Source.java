@@ -11,6 +11,7 @@ import java.util.regex.PatternSyntaxException;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.ModelManager;
+import seedu.address.model.biblio.BiblioField;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,14 +27,16 @@ public class Source {
     private final Detail detail;
 
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<BiblioField> biblioFields = new HashSet<>();
 
-    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
-        requireAllNonNull(title, type, detail, tags);
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, Set<BiblioField> biblioFields) {
+        requireAllNonNull(title, type, detail, tags, biblioFields);
         this.title = title;
         this.author = author;
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+        this.biblioFields.addAll(biblioFields);
     }
 
     /**
@@ -83,6 +86,14 @@ public class Source {
     }
 
     /**
+     * Returns an immutable biblio fields set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<BiblioField> getBiblioFields() {
+        return Collections.unmodifiableSet(biblioFields);
+    }
+
+    /**
      * Returns true if both sources of the same title have at least one other identity field that is the same.
      * This defines a weaker notion of equality between two sources.
      */
@@ -117,7 +128,8 @@ public class Source {
                 && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getType().equals(getType())
                 && otherSource.getDetail().equals(getDetail())
-                && otherSource.getTags().equals(getTags());
+                && otherSource.getTags().equals(getTags())
+                && otherSource.getBiblioFields().equals(getBiblioFields());
     }
 
     @Override

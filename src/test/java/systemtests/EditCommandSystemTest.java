@@ -2,6 +2,7 @@ package systemtests;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -11,6 +12,7 @@ import seedu.address.model.source.Source;
 
 public class EditCommandSystemTest extends SourceManagerSystemTest {
 
+    @Ignore
     @Test
     public void edit() {
     //        Model model = getModel();

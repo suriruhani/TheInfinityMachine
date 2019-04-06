@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 
 import java.net.URL;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +15,7 @@ import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.source.Source;
+import seedu.address.model.tag.Tag;
 
 /**
  * The Browser Panel of the App.
@@ -22,7 +24,6 @@ public class SourcePanel extends UiPart<Region> {
 
     public static final URL DEFAULT_PAGE =
             requireNonNull(MainApp.class.getResource(FXML_FILE_FOLDER + "default.html"));
-    public static final String SEARCH_PAGE_URL = "https://se-education.org/dummy-search-page/?title=";
 
     private static final String FXML = "SourcePanel.fxml";
 
@@ -39,18 +40,20 @@ public class SourcePanel extends UiPart<Region> {
 
         // Load source page when selected source changes.
         selectedSource.addListener((observable, oldValue, newValue) -> {
+            logger.info("SourcePanel triggered on source selection.");
             if (newValue == null) {
                 loadDefaultPage();
                 return;
             }
-            loadSourcePage(newValue);
+            Source sourceDetail = selectedSource.getValue();
+            loadSourcePage(generateDetail(sourceDetail));
         });
 
         loadDefaultPage();
     }
 
-    private void loadSourcePage(Source source) {
-        loadPage(SEARCH_PAGE_URL + source.getTitle().title);
+    private void loadSourcePage(String detail) {
+        Platform.runLater(() -> source.getEngine().loadContent(detail));
     }
 
     public void loadPage(String url) {
@@ -64,4 +67,23 @@ public class SourcePanel extends UiPart<Region> {
         loadPage(DEFAULT_PAGE.toExternalForm());
     }
 
+    private String generateDetail(Source source){
+        String title = source.getTitle().toString();
+        String type = source.getType().toString();
+        String detail = source.getDetail().toString();
+        String tags = source.getTags().stream().map(Tag::toString).collect(
+                Collectors.joining(", "));
+
+        StringBuilder htmlBuilder = new StringBuilder();
+        htmlBuilder.append("<!DOCTYPE html><html><head></head>");
+//        htmlBuilder.append("<link href=\"" + STYLESHEET + "\"" + " rel=\"stylesheet\"/>");
+        htmlBuilder.append("<h1 class=\"source-title\">" + title + "</h1>");
+        htmlBuilder.append("<body class=\"source-title\"></br>");
+        htmlBuilder.append("Source Type: " + type + "</br>");
+        htmlBuilder.append("Source Tags: " + tags + "</br></br>");
+        htmlBuilder.append(detail + "</br>");
+        htmlBuilder.append("</body></html>");
+
+        return htmlBuilder.toString();
+    }
 }

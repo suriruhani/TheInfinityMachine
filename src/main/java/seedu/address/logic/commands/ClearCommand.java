@@ -22,6 +22,7 @@ public class ClearCommand extends Command {
         model.setSourceManager(new SourceManager());
         model.setDeletedSources(new DeletedSources());
         model.commitSourceManager();
+        model.commitDeletedSources();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

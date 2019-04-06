@@ -56,7 +56,7 @@ public class SourceManagerParser implements CommandValidator {
         disallowedCommands.add(COMMAND_ALIAS_CLEAR);
         disallowedCommands.add(COMMAND_ALIAS_LIST);
 
-        aliasManager = new AliasManager(this, disallowedCommands);
+        aliasManager = new ConcreteAliasManager(this, disallowedCommands);
         initializeValidCommands();
     }
 

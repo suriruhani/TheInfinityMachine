@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AliasManagerTest {
+public class ConcreteAliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
         @Override
         public boolean isValidCommand(String command) {
@@ -38,7 +38,7 @@ public class AliasManagerTest {
         disallowedCommands.add("alias-rm");
         disallowedCommands.add("alias-ls");
 
-        aliasManager = new AliasManager(commandValidator, disallowedCommands, false);
+        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, false);
     }
 
     @Test(expected = IllegalArgumentException.class)

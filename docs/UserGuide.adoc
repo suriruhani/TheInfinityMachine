@@ -97,7 +97,7 @@ Deletes the 2nd source in the database.
 Deletes the 1st source in the results of the `search` command.
 * `add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
-* `add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 

@@ -52,7 +52,7 @@ public class SourcePanel extends UiPart<Region> {
         loadDefaultPage();
     }
 
-    private void loadSourcePage(String detail) {
+    public void loadSourcePage(String detail) {
         Platform.runLater(() -> source.getEngine().loadContent(detail));
     }
 
@@ -70,7 +70,7 @@ public class SourcePanel extends UiPart<Region> {
     /**
      * Generates the html for Source details.
      */
-    private String generateDetail(Source source) {
+    public String generateDetail(Source source) {
         String title = source.getTitle().toString();
         String type = source.getType().toString();
         String detail = source.getDetail().toString();

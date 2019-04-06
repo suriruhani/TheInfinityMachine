@@ -8,8 +8,6 @@ import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -21,12 +19,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.SourceListPanelHandle;
+import guitests.guihandles.SourcePanelHandle;
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.TestApp;
 import seedu.address.commons.core.index.Index;
@@ -37,8 +35,8 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 import seedu.address.testutil.TypicalSources;
-import seedu.address.ui.SourcePanel;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.SourcePanel;
 
 /**
  * A system test class for SourceManager, which provides access to handles of GUI components and helper methods
@@ -67,7 +65,7 @@ public abstract class SourceManagerSystemTest {
         testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getSourcePanel());
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -106,8 +104,8 @@ public abstract class SourceManagerSystemTest {
         return mainWindowHandle.getMainMenu();
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
+    public SourcePanelHandle getSourcePanel() {
+        return mainWindowHandle.getSourcePanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -130,7 +128,7 @@ public abstract class SourceManagerSystemTest {
 
         mainWindowHandle.getCommandBox().run(command);
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        waitUntilBrowserLoaded(getSourcePanel());
     }
 
     /**
@@ -179,12 +177,12 @@ public abstract class SourceManagerSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code SourceListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code SourcePanelHandle}, {@code SourceListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
+        getSourcePanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
         getSourceListPanel().rememberSelectedSourceCard();
@@ -193,40 +191,32 @@ public abstract class SourceManagerSystemTest {
     /**
      * Asserts that the previously selected card is now deselected and the browser's url is now displaying the
      * default page.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see SourcePanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertEquals(SourcePanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals(SourcePanel.DEFAULT_PAGE, getSourcePanel().getLoadedUrl());
         assertFalse(getSourceListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the source in the source list panel at
+     * Asserts that the source's url is changed to display the details of the source in the source list panel at
      * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see SourcePanelHandle#isUrlChanged()
      * @see SourceListPanelHandle#isSelectedSourceCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         getSourceListPanel().navigateToCard(getSourceListPanel().getSelectedCardIndex());
-        String selectedCardTitle = getSourceListPanel().getHandleToSelectedCard().getTitle();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(SourcePanel.SEARCH_PAGE_URL + selectedCardTitle.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.", mue);
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
+        assertTrue(getSourcePanel().isLoaded());
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getSourceListPanel().getSelectedCardIndex());
     }
 
     /**
      * Asserts that the browser's url and the selected card in the source list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * @see SourcePanelHandle#isUrlChanged()
      * @see SourceListPanelHandle#isSelectedSourceCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
+        assertFalse(getSourcePanel().isUrlChanged());
         assertFalse(getSourceListPanel().isSelectedSourceCardChanged());
     }
 
@@ -272,7 +262,7 @@ public abstract class SourceManagerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getSourceListPanel(), getModel().getFilteredSourceList());
-        assertEquals(SourcePanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals(SourcePanel.DEFAULT_PAGE, getSourcePanel().getLoadedUrl());
         assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

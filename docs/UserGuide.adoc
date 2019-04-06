@@ -214,11 +214,6 @@ Format: `biblio INDEX`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
-=== Listing history of searches made : `searchhistory`
-
-Lists the results of all searches made using the `search` command recently. +
-Format: `searchhistory`
-
 === Command aliases : `alias`
 ==== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +

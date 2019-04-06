@@ -49,8 +49,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/TITLE`, `TITLE` is a parameter which can be used as `add n/Wikipedia Algorithms`.
-* Items in square brackets are optional e.g `n/TITLE [t/TAG]` can be used as `n/Wikipedia Algorithms t/Wikipedia` or as `n/Wikipedia Algorithms`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add i/TITLE`, `TITLE` is a parameter which can be used as `add i/Wikipedia Algorithms`.
+* Items in square brackets are optional e.g `i/TITLE [t/TAG]` can be used as `i/Wikipedia Algorithms t/Wikipedia` or as `i/Wikipedia Algorithms`.
 * Items with `…`​ after them can be used multiple times including zero times e.g `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Computer Science`, `t/Computer Science t/Algorithms` etc.
 * Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
@@ -59,11 +59,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
+Displays the User Guide for a quick reference.
 
 === Adding a person: `add`
 
 Adds a new source to the list of sources +
-Format: `add n/TITLE y/TYPE d/DETAILS [t/TAG]...`
+Format: `add i/TITLE y/TYPE d/DETAILS [t/TAG]...`
 
 [TIP]
 A source can have any number of tags (including 0)
@@ -130,7 +131,7 @@ Format: `edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
 Examples:
 
-* `edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
+* `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
 Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
@@ -143,9 +144,7 @@ Able to search by title, type, detail and tags as specified by the CLI prefixes.
 Finds all entries with an (exact, case insensitive) matching field as entered by the user. +
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
 that satisfy all the keyword values are shown.
-It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
-Matching is exact (eg. `Algorithm` will not match with `Algorithms`) +
-Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]`
+Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
@@ -165,8 +164,10 @@ Returns any source having tags `ArtificialIntelligence` and `MachineLearning` an
 === Listing all sources : `list`
 
 Displays a list of all sources currently in the database, without filtering. +
-Optional argument N used to list only the top N sources to the user. +
+Optional argument N used to list only the top N sources to the user, where N is a positive integer
+(any other value throws error). +
 Format: `list [N]`
+where argument N in [ ] is optional.
 
 ****
 * Lists all sources present in the database in the order of their addition, if no argument passed
@@ -348,15 +349,6 @@ Format: `clear`
 Exits the program. +
 Format: `exit`
 
-=== Autocorrect ('Did you mean') : <no command>
-
-Suggests commands to the users when they get the spelling wrong. +
-
-Examples:
-
-* `delete Algorith` +
-`Did you mean: Algorithms`
-
 === Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
@@ -387,14 +379,17 @@ e.g. `delete 3`
 e.g. `restore 3`
 * *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
-* *Search* : `search [KEYWORD] [KEYWORD]...` +
-e.g. `search algorithm journal`
-* *List* : `list`
+* *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
+e.g. `search i/algorithm y/journal`
+* *List* : `list [N]`
 * *Help* : `help`
 * *Biblio* : `biblio`
 * *History* : `history`
-* *Define Command* : `definecommand c/COMMAND a/ALIAS` +
-e.g. `definecommand c/edit a/e`
+* *Adding an alias* : `alias c/COMMAND a/ALIAS` +
+e.g. `alias c/edit a/e`
+* *Removing an alias* : `alias-rm ALIAS` +
+e.g. `alias-rm c`
+* *Listing all aliases* : `alias-ls`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Panic* : `panic`

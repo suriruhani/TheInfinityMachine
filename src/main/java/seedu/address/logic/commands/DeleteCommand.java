@@ -37,10 +37,15 @@ public class DeleteCommand extends Command {
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_DELETED_SOURCE_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        // permanently delete if the exact same source exists in deleted sources list
+        if (model.hasDeletedSource(sourceToDelete)) {
+            model.removeDeletedSource(sourceToDelete);
+        }
 
         model.addDeletedSource(sourceToDelete);
         model.deleteSource(sourceToDelete);

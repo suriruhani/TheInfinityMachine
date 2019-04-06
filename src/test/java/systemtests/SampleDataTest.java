@@ -1,5 +1,7 @@
 package systemtests;
 
+import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -42,8 +44,8 @@ public class SampleDataTest extends SourceManagerSystemTest {
     }
 
     @Test
-    public void addressBook_dataFileDoesNotExist_loadSampleData() {
+    public void sourceManager_dataFileDoesNotExist_loadSampleData() {
         Source[] expectedList = SampleDataUtil.getSampleSources();
-        //        assertListMatching(getSourceListPanel(), expectedList);
+        assertListMatching(getSourceListPanel(), expectedList);
     }
 }

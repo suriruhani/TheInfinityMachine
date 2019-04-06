@@ -134,9 +134,12 @@ public class CommandTestUtil {
      * Deletes the first source in {@code model}'s filtered list from {@code model}'s source manager.
      */
     public static void deleteFirstSource(Model model) {
+        model.switchToSources();
         Source firstSource = model.getFilteredSourceList().get(0);
+        model.addDeletedSource(firstSource);
         model.deleteSource(firstSource);
         model.commitSourceManager();
+        model.commitDeletedSources();
     }
 
 }

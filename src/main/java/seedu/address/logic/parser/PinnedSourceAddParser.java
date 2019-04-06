@@ -5,6 +5,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.logic.commands.PinnedSourceAdd;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parser for the PinnedSourceAdd command
+ */
 public class PinnedSourceAddParser {
     /**
      * Parses the given {@code String} of arguments in the context of the PinnedSourceAdd command

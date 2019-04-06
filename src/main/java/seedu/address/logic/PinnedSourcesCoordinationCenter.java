@@ -1,27 +1,30 @@
 package seedu.address.logic;
 
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.Model;
-import seedu.address.model.source.Source;
-import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.model.Model;
+import seedu.address.model.source.Source;
+import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
 
+/**
+ * Center for coordinating all pinned source related operations
+ */
 public class PinnedSourcesCoordinationCenter {
-    private static final Logger logger = LogsCenter.getLogger(LogicManager.class);
-
     public static final String MESSAGE_SOURCE_PINNED = "The source is a pinned source.";
+
+    private static final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     /**
      * Returns a list of all the pinned sources currently in the database.
      *
      * @param model The model which is currently being used.
      *
-     * @return List<Source> A list containing all the pinned sources. Returns an empty list if there are none.
+     * @return A list containing all the pinned sources. Returns an empty list if there are none.
      */
     public static List<Source> getPinnedSources (Model model) {
         List<Source> pinnedSourcesList = new ArrayList<Source>();
@@ -46,7 +49,7 @@ public class PinnedSourcesCoordinationCenter {
      * @param model The model which is currently being used.
      * @param index The index of the source to be analysed.
      *
-     * @return boolean Returns true if the source is pinned, return false if the source is not pinned.
+     * @return Returns true if the source is pinned, return false if the source is not pinned.
      */
     public static boolean isPinnedSource (Model model, int index) {
         int numPinnedSources = model.getNumberOfPinnedSources();

@@ -5,6 +5,9 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.logic.commands.PinnedSourceRemove;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+/**
+ * Parser for the PinnedSourceRemove command
+ */
 public class PinnedSourceRemoveParser {
     /**
      * Parses the given {@code String} of arguments in the context of the PinnedSourceRemove command

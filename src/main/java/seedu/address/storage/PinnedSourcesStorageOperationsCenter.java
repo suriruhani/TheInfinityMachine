@@ -1,7 +1,5 @@
 package seedu.address.storage;
 
-import seedu.address.commons.core.LogsCenter;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -10,6 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
+
+/**
+ * Center for all pinned source storage related operations
+ */
 public class PinnedSourcesStorageOperationsCenter {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private static final String DATABASE_PATH = "data/PinnedSources.txt";

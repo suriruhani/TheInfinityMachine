@@ -14,7 +14,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
-public class PinnedSourceRemove extends Command{
+/**
+ * Unpins a source
+ */
+public class PinnedSourceRemove extends Command {
     public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD

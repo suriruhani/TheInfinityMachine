@@ -210,8 +210,14 @@ public interface Model extends PanicMode {
      */
     void setSelectedSource(Source source);
 
+    /**
+     * Switch the list in the filtered source list to deleted sources.
+     */
     void switchToDeletedSources();
 
+    /**
+     * Switch the list in the filtered source list to sources.
+     */
     void switchToSources();
 
     /**

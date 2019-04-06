@@ -59,7 +59,7 @@ public class ListCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {
         requireNonNull(model);
-        model.switchToSources();  // sets source manager data to list
+        model.switchToSources(); // sets source manager data to list
         //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         int size = model.getFilteredSourceList().size();

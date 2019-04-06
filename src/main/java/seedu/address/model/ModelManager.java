@@ -58,20 +58,24 @@ public class ModelManager implements Model, PanicMode {
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
     }
 
-    @Override
-    public void switchToDeletedSources(){
-        displayedSourceList.set(versionedDeletedSources.getDeletedSourceList());
-
-    }
-
-    @Override
-    public void switchToSources(){
-        displayedSourceList.set(versionedSourceManager.getSourceList());
-
-    }
-
     public ModelManager() {
         this(new SourceManager(), new UserPrefs(), new DeletedSources());
+    }
+
+    /**
+     * Switches list in filteredSources list to deletedSourceList.
+     */
+    @Override
+    public void switchToDeletedSources() {
+        displayedSourceList.set(versionedDeletedSources.getDeletedSourceList());
+    }
+
+    /**
+     * Switches list in filteredSources list to sourceList.
+     */
+    @Override
+    public void switchToSources() {
+        displayedSourceList.set(versionedSourceManager.getSourceList());
     }
 
     /**

@@ -70,14 +70,14 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         syncStatus.setText(String.format(SYNC_STATUS_UPDATED, lastUpdated));
         switch(managerType) {
-            case SOURCE_MANAGER:
-                saveLocationStatus.setText(Paths.get(".").resolve(path).toString());
-                break;
-            case DELETED_SOURCES:
-                saveLocationStatus.setText(Paths.get(".").resolve(path).toString());
-                break;
-            default:
-                // do nothing
+        case SOURCE_MANAGER:
+            saveLocationStatus.setText(Paths.get(".").resolve(path).toString());
+            break;
+        case DELETED_SOURCES:
+            saveLocationStatus.setText(Paths.get(".").resolve(path).toString());
+            break;
+        default:
+            // do nothing
         }
     }
 

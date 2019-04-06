@@ -147,6 +147,14 @@ class AliasManager {
     }
 
     /**
+     * Clears all aliases.
+     */
+    void clearAliases() {
+        aliases.clear();
+        saveAliases();
+    }
+
+    /**
      * Looks up and returns the command that alias is associated with.
      * @returns A String optional if alias is registered, and an empty optional otherwise.
      */

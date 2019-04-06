@@ -36,6 +36,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 public class SourceManagerParser implements CommandValidator {
     private static final String COMMAND_ALIAS_ADD = "alias";
     private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
+    private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
     private static final String COMMAND_ALIAS_LIST = "alias-ls";
 
     /**
@@ -52,6 +53,7 @@ public class SourceManagerParser implements CommandValidator {
         Set<String> disallowedCommands = new HashSet<>();
         disallowedCommands.add(COMMAND_ALIAS_ADD);
         disallowedCommands.add(COMMAND_ALIAS_REMOVE);
+        disallowedCommands.add(COMMAND_ALIAS_CLEAR);
         disallowedCommands.add(COMMAND_ALIAS_LIST);
 
         aliasManager = new AliasManager(this, disallowedCommands);
@@ -182,6 +184,10 @@ public class SourceManagerParser implements CommandValidator {
 
         case COMMAND_ALIAS_REMOVE:
             return new AliasRemoveMetaCommandParser(aliasManager, COMMAND_ALIAS_REMOVE)
+                    .parse(arguments);
+
+        case COMMAND_ALIAS_CLEAR:
+            return new AliasClearMetaCommandParser(aliasManager, COMMAND_ALIAS_CLEAR)
                     .parse(arguments);
 
         case COMMAND_ALIAS_LIST:

@@ -79,7 +79,6 @@ public class SourcePanel extends UiPart<Region> {
 
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.append("<!DOCTYPE html><html><head></head>");
-        //        htmlBuilder.append("<link href=\"" + STYLESHEET + "\"" + " rel=\"stylesheet\"/>");
         htmlBuilder.append("<h1 class=\"source-title\">" + title + "</h1>");
         htmlBuilder.append("<body class=\"source-title\"></br>");
         htmlBuilder.append("Source Type: " + type + "</br>");

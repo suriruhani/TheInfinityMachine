@@ -11,7 +11,7 @@ import seedu.address.model.source.SourceContainsKeywordsPredicate;
  */
 public class SearchCommandTest {
     /*
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
             getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();

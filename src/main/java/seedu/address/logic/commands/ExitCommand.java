@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.model.Model;
 
 /**
@@ -14,6 +15,7 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
+        PinnedSourcesCoordinationCenter.saveCurrentPinnedSources(model);
         return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true);
     }
 

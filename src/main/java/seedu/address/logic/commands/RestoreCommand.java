@@ -34,6 +34,7 @@ public class RestoreCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        model.switchToDeletedSources(); // sets deleted sources data to list
         List<Source> lastShownDeletedList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownDeletedList.size()) {

@@ -26,7 +26,7 @@ public class AliasClearMetaCommandParser extends AliasMetaCommandParser implemen
     public DummyCommand parse(String userInput) throws ParseException {
 
         if (!userInput.equals("")) {
-            return new DummyCommand(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
+            throw new ParseException(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
         }
 
         int aliasCount = getAliasManager().getAliasList().size();

@@ -120,12 +120,13 @@ public class Source {
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append(getTitle())
-                .append(" Type: ")
-                .append(getType())
-                .append(" Detail: ")
-                .append(getDetail())
-                .append(" Tags: ");
+        builder.append("Title: ")
+                .append(getTitle() + "\n")
+                .append("Type: ")
+                .append(getType() + "\n")
+                .append("Detail: ")
+                .append(getDetail() + "\n")
+                .append("Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }

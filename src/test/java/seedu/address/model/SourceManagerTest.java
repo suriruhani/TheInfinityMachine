@@ -51,7 +51,7 @@ public class SourceManagerTest {
     @Test
     public void resetData_withDuplicateSources_throwsDuplicateSourceException() {
         // Two sources with the same fields
-        Source editedAlice = new SourceBuilder(ALICE).withDetail("foo").withTags("bar").build();
+        Source editedAlice = new SourceBuilder(ALICE).withDetail("alice_detail").withTags("bar").build();
         List<Source> newSources = Arrays.asList(ALICE, editedAlice);
         SourceManagerStub newData = new SourceManagerStub(newSources);
 
@@ -79,7 +79,7 @@ public class SourceManagerTest {
     @Test
     public void hasSource_sourceWithSameFieldsInSourceManager_returnsTrue() {
         sourceManager.addSource(ALICE);
-        Source editedAlice = new SourceBuilder(ALICE).withDetail("foo").withTags("bar").build();
+        Source editedAlice = new SourceBuilder(ALICE).withDetail("alice_detail").withTags("bar").build();
         assertTrue(sourceManager.hasSource(editedAlice));
     }
 

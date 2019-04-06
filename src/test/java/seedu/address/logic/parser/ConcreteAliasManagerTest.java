@@ -1,12 +1,14 @@
 package seedu.address.logic.parser;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class AliasManagerTest {
+public class ConcreteAliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
         @Override
         public boolean isValidCommand(String command) {
@@ -25,13 +27,18 @@ public class AliasManagerTest {
     private static final String NOVEL_COMMAND_1 = "novel";
 
     private CommandValidator commandValidator = new CommandValidatorStub();
-    private AliasManager aliasManager = new AliasManager(commandValidator);
+    private AliasManager aliasManager;
 
     @Before
     public void setup() {
         // Creates fresh instance without persistence
         // Alias persistence messes up unit test cases
-        aliasManager = new AliasManager(commandValidator, false);
+        Set<String> disallowedCommands = new HashSet<>();
+        disallowedCommands.add("alias");
+        disallowedCommands.add("alias-rm");
+        disallowedCommands.add("alias-ls");
+
+        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, false);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,13 +97,13 @@ public class AliasManagerTest {
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias (add) meta-command
     public void create_metaCommandAdd_unusedAlias() {
-        aliasManager.registerAlias(AliasManager.COMMAND_WORD_ADD, ALIAS_1);
+        aliasManager.registerAlias("alias", ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias-rm meta-command
     public void create_metaCommandRemove_unusedAlias() {
-        aliasManager.registerAlias(AliasManager.COMMAND_WORD_REMOVE, ALIAS_1);
+        aliasManager.registerAlias("alias-rm", ALIAS_1);
     }
 
     @Test
@@ -142,6 +149,21 @@ public class AliasManagerTest {
         Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
         Assert.assertFalse(aliasManager.isAlias(ALIAS_2));
         Assert.assertFalse(aliasManager.getCommand(ALIAS_2).isPresent());
+    }
+
+    @Test
+    public void clear_emptyAliasManager() {
+        aliasManager.clearAliases(); // Should not throw
+    }
+
+    @Test
+    public void clear_nonEmptyAliasManager() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
+        aliasManager.registerAlias(EXISTING_COMMAND_2, ALIAS_2);
+        Assert.assertEquals(aliasManager.getAliasList().size(), 2);
+
+        aliasManager.clearAliases();
+        Assert.assertEquals(aliasManager.getAliasList().size(), 0);
     }
 
     @Test

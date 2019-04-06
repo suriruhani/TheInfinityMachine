@@ -52,13 +52,8 @@ public class SourceManagerParser implements CommandValidator {
     private AliasManager aliasManager;
 
     public SourceManagerParser() {
-        Set<String> disallowedCommands = new HashSet<>();
-        disallowedCommands.add(COMMAND_ALIAS_ADD);
-        disallowedCommands.add(COMMAND_ALIAS_REMOVE);
-        disallowedCommands.add(COMMAND_ALIAS_CLEAR);
-        disallowedCommands.add(COMMAND_ALIAS_LIST);
-
-        aliasManager = new ConcreteAliasManager(this, disallowedCommands);
+        Set<String> metaCommands = initializeMetaCommands();
+        aliasManager = new ConcreteAliasManager(this, metaCommands);
         initializeValidCommands();
     }
 
@@ -68,6 +63,19 @@ public class SourceManagerParser implements CommandValidator {
     public SourceManagerParser(AliasManager aliasManager) {
         this.aliasManager = aliasManager;
         initializeValidCommands();
+    }
+
+    /**
+     * Initializes and returns a set of meta-commands.
+     */
+    private Set<String> initializeMetaCommands() {
+        Set<String> metaCommands = new HashSet<>();
+        metaCommands.add(COMMAND_ALIAS_ADD);
+        metaCommands.add(COMMAND_ALIAS_REMOVE);
+        metaCommands.add(COMMAND_ALIAS_CLEAR);
+        metaCommands.add(COMMAND_ALIAS_LIST);
+
+        return metaCommands;
     }
 
     /**

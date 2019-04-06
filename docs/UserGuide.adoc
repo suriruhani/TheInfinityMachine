@@ -393,7 +393,6 @@ e.g. `search algorithm journal`
 * *Help* : `help`
 * *Biblio* : `biblio`
 * *History* : `history`
-* *Search History* : `searchhistory`
 * *Define Command* : `definecommand c/COMMAND a/ALIAS` +
 e.g. `definecommand c/edit a/e`
 * *Undo* : `undo`

@@ -5,7 +5,7 @@
 :stylesDir: stylesheets
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore]. +
-Tutorial W-13 Group 3: The Infinite Machine
+Tutorial W-13 Group 3: The Infinity Machine - A safe place to store your research materials.
 
 == Project Team
 
@@ -67,8 +67,9 @@ Role: Developer
 
 Responsibilities:
 
-- Searching a source
-- Listing all sources
+- Searching a source with multiple fields
+- Listing all sources, top N sources
+- Refactor Storage API
 - Listing command usage under help
 
 

@@ -168,24 +168,39 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_validArguments() throws Exception {
+    public void parseMetaCommand_removeAlias_validArgumentsExistingAlias() throws Exception {
         thrown.expect(ParseException.class);
+
         parser.parseCommand("alias count c");
+        assertTrue(parser.parseCommand("c") instanceof CountCommand);
+
         parser.parseCommand("alias-rm c");
-        parser.parseCommand("c");
+        parser.parseCommand("c"); // Should throw ParseException
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments1() throws Exception {
+    public void parseMetaCommand_removeAlias_validArgumentsNonExistingAlias() throws Exception {
+        // Should not throw
+        parser.parseCommand("alias count c");
+        parser.parseCommand("alias-rm foo"); // "foo" is not an alias
+        assertTrue(parser.parseCommand("c") instanceof CountCommand);
+    }
+
+    @Test
+    public void parseMetaCommand_removeAlias_invalidArguments() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count c");
-        parser.parseCommand("alias-rm");
+        parser.parseCommand("alias-rm"); // Alias not specified
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments2() throws Exception {
+    public void parseMetaCommand_clearAlias_validArguments() throws Exception {
+        parser.parseCommand("alias-clear"); // Should not throw
+    }
+
+    @Test
+    public void parseMetaCommand_clearAlias_invalidArguments() throws Exception {
         thrown.expect(ParseException.class);
-        parser.parseCommand("alias count c c");
-        parser.parseCommand("alias-rm");
+        parser.parseCommand("alias-clear foo");
     }
 }

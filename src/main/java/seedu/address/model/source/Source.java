@@ -77,17 +77,19 @@ public class Source {
     }
 
     /**
-     * Returns true if both sources of the same title have at least one other identity field that is the same.
+     * Returns true if both sources of the have the same title and same detail.
+     * Two sources will only be the same if they have the same title and same details.
      * This defines a weaker notion of equality between two sources.
      */
     public boolean isSameSource(Source otherSource) {
-        if (otherSource == this) {
+        if (otherSource.getTitle().title.equals(this.getTitle())
+                && otherSource.getDetail().detail.equals(this.getDetail())) {
             return true;
         }
 
         return otherSource != null
                 && otherSource.getTitle().equals(getTitle())
-                && (otherSource.getType().equals(getType()) || otherSource.getDetail().equals(getDetail()));
+                && otherSource.getDetail().equals(getDetail());
     }
 
     /**

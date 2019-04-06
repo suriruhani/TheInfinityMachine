@@ -42,6 +42,13 @@ public class RestoreCommand extends Command {
 
         Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
 
+        // permanently deletes duplicate source if the exact same source exists in source manager
+        if (model.hasSource(toRestore)) {
+            model.removeDeletedSource(toRestore);
+            model.commitDeletedSources();
+            return new CommandResult(String.format(Messages.MESSAGE_DUPLICATE_SOURCE_TO_RESTORE, toRestore));
+        }
+
         model.addSource(toRestore);
         model.removeDeletedSource(toRestore);
         model.commitSourceManager();

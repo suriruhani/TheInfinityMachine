@@ -38,13 +38,13 @@ public class PinnedSourcesStorageOperationsCenter {
             return numPinnedSources;
         }
 
-        // If the returned list is empty, then there is nothing to load, return 0 
+        // If the returned list is empty, then there is nothing to load, return 0
         if (encodedPinnedSourceInteger.isEmpty() == true) {
             logger.severe("File is empty. Assume no pinned sources.");
             return numPinnedSources;
         }
 
-        // If the returned list has more than 1 element, then the file has been corrupted, return 0 
+        // If the returned list has more than 1 element, then the file has been corrupted, return 0
         if (encodedPinnedSourceInteger.size() != 1) {
             logger.severe("File format is invalid. Assume no pinned sources.");
             return numPinnedSources;

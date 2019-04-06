@@ -20,7 +20,7 @@ public class PinnedSourcesCoordinationCenter {
      * Returns a list of all the pinned sources currently in the database.
      *
      * @param model The model which is currently being used.
-     *              
+     *
      * @return List<Source> A list containing all the pinned sources. Returns an empty list if there are none.
      */
     public static List<Source> getPinnedSources (Model model) {
@@ -45,7 +45,7 @@ public class PinnedSourcesCoordinationCenter {
      *
      * @param model The model which is currently being used.
      * @param index The index of the source to be analysed.
-     * 
+     *
      * @return boolean Returns true if the source is pinned, return false if the source is not pinned.
      */
     public static boolean isPinnedSource (Model model, int index) {

@@ -84,7 +84,7 @@ public class ModelManager implements Model, PanicMode {
 
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
         filteredDeletedSources.addListener(this::ensureSelectedDeletedSourceIsValid);
-        
+
         this.numPinnedSources = numPinnedSources;
     }
 

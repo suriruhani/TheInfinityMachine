@@ -92,7 +92,7 @@ Examples:
 Deletes the 2nd source in the database.
 * `search algorithms` +
 `delete 1` +
-Deletes the 1st source in the results of the `find` command.
+Deletes the 1st source in the results of the `search` command.
 
 
 === Restoring a source : `restore`

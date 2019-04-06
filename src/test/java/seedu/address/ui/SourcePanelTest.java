@@ -13,27 +13,27 @@ import guitests.guihandles.BrowserPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
 import seedu.address.model.source.Source;
 
-public class BrowserPanelTest extends GuiUnitTest {
+public class SourcePanelTest extends GuiUnitTest {
     private SimpleObjectProperty<Source> selectedSource = new SimpleObjectProperty<>();
-    private BrowserPanel browserPanel;
+    private SourcePanel sourcePanel;
     private BrowserPanelHandle browserPanelHandle;
 
     @Before
     public void setUp() {
-        guiRobot.interact(() -> browserPanel = new BrowserPanel(selectedSource));
-        uiPartRule.setUiPart(browserPanel);
+        guiRobot.interact(() -> sourcePanel = new SourcePanel(selectedSource));
+        uiPartRule.setUiPart(sourcePanel);
 
-        browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
+        browserPanelHandle = new BrowserPanelHandle(sourcePanel.getRoot());
     }
 
     @Test
     public void display() throws Exception {
         // default web page
-        assertEquals(BrowserPanel.DEFAULT_PAGE, browserPanelHandle.getLoadedUrl());
+        assertEquals(SourcePanel.DEFAULT_PAGE, browserPanelHandle.getLoadedUrl());
 
         // associated web page of a source
         guiRobot.interact(() -> selectedSource.set(ALICE));
-        URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getTitle().title.replaceAll(" ", "%20"));
+        URL expectedPersonUrl = new URL(SourcePanel.SEARCH_PAGE_URL + ALICE.getTitle().title.replaceAll(" ", "%20"));
 
         waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());

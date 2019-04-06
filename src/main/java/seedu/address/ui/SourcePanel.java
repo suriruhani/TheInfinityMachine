@@ -18,20 +18,20 @@ import seedu.address.model.source.Source;
 /**
  * The Browser Panel of the App.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class SourcePanel extends UiPart<Region> {
 
     public static final URL DEFAULT_PAGE =
             requireNonNull(MainApp.class.getResource(FXML_FILE_FOLDER + "default.html"));
     public static final String SEARCH_PAGE_URL = "https://se-education.org/dummy-search-page/?title=";
 
-    private static final String FXML = "BrowserPanel.fxml";
+    private static final String FXML = "SourcePanel.fxml";
 
     private final Logger logger = LogsCenter.getLogger(getClass());
 
     @FXML
-    private WebView browser;
+    private WebView source;
 
-    public BrowserPanel(ObservableValue<Source> selectedSource) {
+    public SourcePanel(ObservableValue<Source> selectedSource) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
@@ -54,7 +54,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
+        Platform.runLater(() -> source.getEngine().load(url));
     }
 
     /**

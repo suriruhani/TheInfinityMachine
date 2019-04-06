@@ -37,7 +37,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 import seedu.address.testutil.TypicalSources;
-import seedu.address.ui.BrowserPanel;
+import seedu.address.ui.SourcePanel;
 import seedu.address.ui.CommandBox;
 
 /**
@@ -196,7 +196,7 @@ public abstract class SourceManagerSystemTest {
      * @see BrowserPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals(SourcePanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertFalse(getSourceListPanel().isAnyCardSelected());
     }
 
@@ -211,7 +211,7 @@ public abstract class SourceManagerSystemTest {
         String selectedCardTitle = getSourceListPanel().getHandleToSelectedCard().getTitle();
         URL expectedUrl;
         try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardTitle.replaceAll(" ", "%20"));
+            expectedUrl = new URL(SourcePanel.SEARCH_PAGE_URL + selectedCardTitle.replaceAll(" ", "%20"));
         } catch (MalformedURLException mue) {
             throw new AssertionError("URL expected to be valid.", mue);
         }
@@ -272,7 +272,7 @@ public abstract class SourceManagerSystemTest {
         assertEquals("", getCommandBox().getInput());
         assertEquals("", getResultDisplay().getText());
         assertListMatching(getSourceListPanel(), getModel().getFilteredSourceList());
-        assertEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
+        assertEquals(SourcePanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertEquals(Paths.get(".").resolve(testApp.getStorageSaveLocation()).toString(),
                 getStatusBarFooter().getSaveLocation());
         assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());

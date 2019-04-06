@@ -7,6 +7,7 @@ import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.model.DeletedSources;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.SourceManager;
@@ -21,6 +22,7 @@ public class ClearCommandTest {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
         expectedModel.commitSourceManager();
+        expectedModel.commitDeletedSources();
 
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
@@ -30,8 +32,9 @@ public class ClearCommandTest {
         Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
         Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
         expectedModel.setSourceManager(new SourceManager());
+        expectedModel.setDeletedSources(new DeletedSources());
         expectedModel.commitSourceManager();
-
+        expectedModel.commitDeletedSources();
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
     }
 

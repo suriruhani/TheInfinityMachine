@@ -9,12 +9,14 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments for the AliasManager "alias-ls" metacommand.
  */
 public class AliasListMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
+    private static final String MESSAGE_EMPTY = "There are no aliases to list";
+
 
     /**
      * Instantiates self with an instance of aliasManager.
      */
-    public AliasListMetaCommandParser(AliasManager aliasManager) {
-        setAliasManager(aliasManager);
+    public AliasListMetaCommandParser(AliasManager aliasManager, String command) {
+        super(aliasManager, command);
     }
 
     /**
@@ -26,7 +28,7 @@ public class AliasListMetaCommandParser extends AliasMetaCommandParser implement
         HashMap<String, String> aliasList = getAliasManager().getAliasList();
 
         if (aliasList.isEmpty()) {
-            return new DummyCommand("There are no aliases to list");
+            return new DummyCommand(MESSAGE_EMPTY);
         }
 
         StringBuilder sb = new StringBuilder();

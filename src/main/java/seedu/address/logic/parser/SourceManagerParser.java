@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,6 +34,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses user input.
  */
 public class SourceManagerParser implements CommandValidator {
+    private static final String COMMAND_ALIAS_ADD = "alias";
+    private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
+    private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
+    private static final String COMMAND_ALIAS_LIST = "alias-ls";
 
     /**
      * Used for initial separation of command word and args.
@@ -45,7 +50,13 @@ public class SourceManagerParser implements CommandValidator {
     private AliasManager aliasManager;
 
     public SourceManagerParser() {
-        aliasManager = new AliasManager(this);
+        Set<String> disallowedCommands = new HashSet<>();
+        disallowedCommands.add(COMMAND_ALIAS_ADD);
+        disallowedCommands.add(COMMAND_ALIAS_REMOVE);
+        disallowedCommands.add(COMMAND_ALIAS_CLEAR);
+        disallowedCommands.add(COMMAND_ALIAS_LIST);
+
+        aliasManager = new ConcreteAliasManager(this, disallowedCommands);
         initializeValidCommands();
     }
 
@@ -167,14 +178,21 @@ public class SourceManagerParser implements CommandValidator {
         // For these, we include implementation details because these are meta-commands
         // that relate directly to AliasManager (and by association, SourceManagerParser).
 
-        case AliasManager.COMMAND_WORD_ADD:
-            return new AliasAddMetaCommandParser(aliasManager).parse(arguments);
+        case COMMAND_ALIAS_ADD:
+            return new AliasAddMetaCommandParser(aliasManager, COMMAND_ALIAS_ADD)
+                    .parse(arguments);
 
-        case AliasManager.COMMAND_WORD_REMOVE:
-            return new AliasRemoveMetaCommandParser(aliasManager).parse(arguments);
+        case COMMAND_ALIAS_REMOVE:
+            return new AliasRemoveMetaCommandParser(aliasManager, COMMAND_ALIAS_REMOVE)
+                    .parse(arguments);
 
-        case AliasManager.COMMAND_WORD_LIST:
-            return new AliasListMetaCommandParser(aliasManager).parse(arguments);
+        case COMMAND_ALIAS_CLEAR:
+            return new AliasClearMetaCommandParser(aliasManager, COMMAND_ALIAS_CLEAR)
+                    .parse(arguments);
+
+        case COMMAND_ALIAS_LIST:
+            return new AliasListMetaCommandParser(aliasManager, COMMAND_ALIAS_LIST)
+                    .parse(arguments);
 
 
         default:

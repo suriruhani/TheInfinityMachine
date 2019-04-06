@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -14,7 +15,7 @@ import seedu.address.storage.ConcreteAliasStorage;
  */
 class AliasManager {
     private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
-    private static final String ERROR_COMMAND_IS_METACOMMAND = "This command cannot be aliased";
+    private static final String ERROR_DISALLOWED_COMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
     private static final String REGEX_VALIDATOR = "([a-z]|[A-Z])+";
@@ -24,16 +25,21 @@ class AliasManager {
     private boolean persistentMode = true; // Disable for unit testing
 
     private CommandValidator commandValidator;
+    private Set<String> disallowedCommands;
     private HashMap<String, String> aliases = new HashMap<>();
     private AliasStorage aliasStorage = new ConcreteAliasStorage();
 
-    AliasManager(CommandValidator commandValidator) {
-        this(commandValidator, true);
+    AliasManager(CommandValidator commandValidator, Set<String> disallowedCommands) {
+        this(commandValidator, disallowedCommands, true);
     }
 
-    AliasManager(CommandValidator commandValidator, boolean persistentMode) {
+    AliasManager(CommandValidator commandValidator,
+                 Set<String> disallowedCommands,
+                 boolean persistentMode) {
         Objects.requireNonNull(commandValidator);
+        Objects.requireNonNull(disallowedCommands);
         this.commandValidator = commandValidator;
+        this.disallowedCommands = disallowedCommands;
         if (persistentMode) {
             loadStoredAliases();
         } else {
@@ -113,11 +119,9 @@ class AliasManager {
             throw new IllegalArgumentException(ERROR_INVALID_SYNTAX);
         }
 
-        // Guard against commend being an AliasManager meta-command (e.g. alias, alias-rm, etc.)
-        if (command.equals(COMMAND_WORD_ADD)
-                || command.equals(COMMAND_WORD_REMOVE)
-                || command.equals(COMMAND_WORD_LIST)) {
-            throw new IllegalArgumentException(ERROR_COMMAND_IS_METACOMMAND);
+        // Guard against commend being a disallowed command
+        if (disallowedCommands.contains(command)) {
+            throw new IllegalArgumentException(ERROR_DISALLOWED_COMMAND);
         }
 
         // Guard against command being another registered alias

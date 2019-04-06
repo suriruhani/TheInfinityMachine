@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,7 +49,12 @@ public class SourceManagerParser implements CommandValidator {
     private AliasManager aliasManager;
 
     public SourceManagerParser() {
-        aliasManager = new AliasManager(this);
+        Set<String> disallowedCommands = new HashSet<>();
+        disallowedCommands.add(COMMAND_ALIAS_ADD);
+        disallowedCommands.add(COMMAND_ALIAS_REMOVE);
+        disallowedCommands.add(COMMAND_ALIAS_LIST);
+
+        aliasManager = new AliasManager(this, disallowedCommands);
         initializeValidCommands();
     }
 

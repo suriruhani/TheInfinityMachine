@@ -1,6 +1,8 @@
 package seedu.address.logic.parser;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -25,13 +27,18 @@ public class AliasManagerTest {
     private static final String NOVEL_COMMAND_1 = "novel";
 
     private CommandValidator commandValidator = new CommandValidatorStub();
-    private AliasManager aliasManager = new AliasManager(commandValidator);
+    private AliasManager aliasManager;
 
     @Before
     public void setup() {
         // Creates fresh instance without persistence
         // Alias persistence messes up unit test cases
-        aliasManager = new AliasManager(commandValidator, false);
+        Set<String> disallowedCommands = new HashSet<>();
+        disallowedCommands.add("alias");
+        disallowedCommands.add("alias-rm");
+        disallowedCommands.add("alias-ls");
+
+        aliasManager = new AliasManager(commandValidator, disallowedCommands, false);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,13 +97,13 @@ public class AliasManagerTest {
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias (add) meta-command
     public void create_metaCommandAdd_unusedAlias() {
-        aliasManager.registerAlias(AliasManager.COMMAND_WORD_ADD, ALIAS_1);
+        aliasManager.registerAlias("alias", ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for the alias-rm meta-command
     public void create_metaCommandRemove_unusedAlias() {
-        aliasManager.registerAlias(AliasManager.COMMAND_WORD_REMOVE, ALIAS_1);
+        aliasManager.registerAlias("alias-rm", ALIAS_1);
     }
 
     @Test

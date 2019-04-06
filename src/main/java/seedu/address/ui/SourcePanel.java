@@ -67,7 +67,10 @@ public class SourcePanel extends UiPart<Region> {
         loadPage(DEFAULT_PAGE.toExternalForm());
     }
 
-    private String generateDetail(Source source){
+    /**
+     * Generates the html for Source details.
+     */
+    private String generateDetail(Source source) {
         String title = source.getTitle().toString();
         String type = source.getType().toString();
         String detail = source.getDetail().toString();
@@ -76,7 +79,7 @@ public class SourcePanel extends UiPart<Region> {
 
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.append("<!DOCTYPE html><html><head></head>");
-//        htmlBuilder.append("<link href=\"" + STYLESHEET + "\"" + " rel=\"stylesheet\"/>");
+        //        htmlBuilder.append("<link href=\"" + STYLESHEET + "\"" + " rel=\"stylesheet\"/>");
         htmlBuilder.append("<h1 class=\"source-title\">" + title + "</h1>");
         htmlBuilder.append("<body class=\"source-title\"></br>");
         htmlBuilder.append("Source Type: " + type + "</br>");

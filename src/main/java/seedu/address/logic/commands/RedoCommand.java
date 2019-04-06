@@ -1,7 +1,6 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_DELETED_SOURCES;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
 import seedu.address.logic.CommandHistory;
@@ -31,8 +30,8 @@ public class RedoCommand extends Command {
 
         model.redoSourceManager();
         model.redoDeletedSources();
+        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-        model.updateFilteredDeletedSourceList(PREDICATE_SHOW_ALL_DELETED_SOURCES);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

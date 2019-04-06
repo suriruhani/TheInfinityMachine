@@ -122,6 +122,18 @@ Restores the 2nd deleted source in the database.
 Restores the 1st deleted source in the database.
 
 
+=== Listing a deleted source : `list-deleted`
+
+Lists all deleted sources. +
+Format: `list-deleted`
+
+Examples:
+
+* `delete 1` +
+`list-deleted` +
+Lists all deleted sources in the database.
+
+
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
@@ -347,7 +359,7 @@ Format: `unpanic`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the source manager and all the deleted sources as well. +
 Format: `clear`
 
 === Exiting the program : `exit`

@@ -188,4 +188,15 @@ public class SourceManagerParserTest {
         parser.parseCommand("alias count c c");
         parser.parseCommand("alias-rm");
     }
+
+    @Test
+    public void parseMetaCommand_clearAlias_validArguments() throws Exception {
+        parser.parseCommand("alias-clear");
+    }
+
+    @Test
+    public void parseMetaCommand_clearAlias_invalidArguments() throws Exception {
+        thrown.expect(ParseException.class);
+        parser.parseCommand("alias-clear foo");
+    }
 }

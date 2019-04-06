@@ -152,6 +152,21 @@ public class AliasManagerTest {
     }
 
     @Test
+    public void clear_emptyAliasManager() {
+        aliasManager.clearAliases(); // Should not throw
+    }
+
+    @Test
+    public void clear_nonEmptyAliasManager() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
+        aliasManager.registerAlias(EXISTING_COMMAND_2, ALIAS_2);
+        Assert.assertEquals(aliasManager.getAliasList().size(), 2);
+
+        aliasManager.clearAliases();
+        Assert.assertEquals(aliasManager.getAliasList().size(), 0);
+    }
+
+    @Test
     // Attempt to get alias list from an empty alias manager
     // Should not throw an exception; should not mutate alias manager
     public void list_emptyAliasManager() {

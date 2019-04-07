@@ -350,15 +350,37 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::panic[]
 === Enabling panic mode : `panic`
 
-Allows user to temporarily hide data. +
+Allows the user to temporarily hide data. +
 Format: `panic`
 
-=== Enabling panic mode : `unpanic`
+Research data may be sensitive.
+Panic mode is a privacy-focused feature that swaps out the user's data store with an empty dummy data store.
 
-Restores user data. +
+When it is enabled, the application window replaces the original list of sources with an empty list.
+This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.
+The original data store exists only in memory, until panic mode is disabled.
+
+In panic mode, the dummy data store behaves exactly like a real one.
+Therefore, all commands (e.g. add, remove, etc.) mutate the dummy data store (and the dummy JSON file), **without affecting the actual data store.**
+
+[NOTE]
+====
+If the user exits the application in panic mode (using the `exit` command), the application automatically restores the user's original data from memory and saves it to disk before exiting, to prevent permanent data loss.
+
+However, if the application is closed directly **while in panic mode**, **permanent data loss** will occur.
+====
+
+// tag::unpanic[]
+=== Disabling panic mode : `unpanic`
+
+Restores the user's original data. +
 Format: `unpanic`
+
+This reverses the effect of panic mode by restoring the user's original data.
+The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.
 
 === Clearing all entries : `clear`
 

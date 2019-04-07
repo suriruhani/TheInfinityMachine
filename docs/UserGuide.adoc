@@ -159,15 +159,17 @@ Edits the 5th source and clears all its existing tags.
 
 Searches for entries amongst the list of sources. +
 Able to search by title, type, detail and tags as specified by the CLI prefixes.
-Finds all entries with an (exact, case insensitive) matching field as entered by the user. +
+Able to perform substring matching.
+Finds all entries with a (case insensitive) field value that contains the value as specified by the user. +
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
-that satisfy all the keyword values are shown.
+that satisfy all the keyword values are shown (logical `and` operation).
+
 Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search implements substring matching. e.g. `algo` will match algorithm, algorithms, algo trading, etc.
 * There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
-* Only full words will be matched e.g. `Han` will not match `Hans`, `FooTitle` will not match `FooTitle1`
 * Search implemented as a logical AND. eg. `search i/algorithm y/website` results in all those sources
 that have title `algorithm` AND type `website`
 ****
@@ -176,8 +178,9 @@ Examples:
 
 * `search i/Algorithms` +
 Returns the source(s) with the title `algorithms`
-* `search y/website t/ArtificialIntelligence t/MachineLearning` +
-Returns any source having tags `ArtificialIntelligence` and `MachineLearning` and of type `website`
+* `search y/web d/intelligence t/ML` +
+Returns any source having tags `ML` and having the word `intelligence` somewhere in their content
+(detail) and having a type of `website` or `web series`.
 
 === Listing all sources : `list`
 

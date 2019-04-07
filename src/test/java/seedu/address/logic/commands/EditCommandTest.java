@@ -36,7 +36,7 @@ import seedu.address.testutil.SourceBuilder;
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

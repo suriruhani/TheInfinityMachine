@@ -269,6 +269,35 @@ Step 3. The user executes `restore 1` and only one entry will be deleted, which 
 * **Alternative 2 (current choice):** Using Json Managers and DeletedSources in the Model
 // end::restore[]
 
+// tag::panic[]
+=== Panic Mode feature
+The panic mode feature allows the user to temporarily hide user data and replace it with dummy data.
+
+==== Overview
+The user's original data is replaced by dummy data for the duration that panic mode is enabled.
+Enabling panic mode can be thought of as "stashing" the user's data temporarily in memory.
+This is reflected both on-screen and on-disk.
+On the screen, the list of sources is replaced by an empty dummy list.
+On disk, the contents of the JSON file storing the user's sources is replaced by dummy content that tracks and reflects the dummy data.
+
+==== Implementation
+This is implemented by "swapping" the source manager with an empty dummy source manager.
+This "swap" is carried out by storing the original source manager in a private variable `sourceManagerBackup`, and then resetting the original source manager with a new empty source manager instance.
+We also set the boolean variable `panicMode = true`.
+
+When the user disables panic mode, we restore the original source manager, and reset `panicMode = false`.
+
+==== Elaboration
+We use a boolean variable `panicMode` to keep track of whether panic mode has been activated.
+This is to guard against the scenario of entering panic mode while already in panic mode, which results in permanent data loss.
+
+This is because when panic mode is activated, we store the original source manager in the private variable `sourceManagerBackup`, and reset the original source manager, as described above.
+
+Therefore, should panic mode be activated while already in panic mode, `sourceManagerBackup` will now store the dummy source manager, and the original source manager will be deallocated and eventually purged from memory by Java's garbage collector.
+
+Since the JSON file on disk automatically tracks the source manager through the observer pattern, it automatically updates to track and reflect the data in the dummy source manager.
+
+
 // tag::alias[]
 === Command Alias feature
 The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.

@@ -46,27 +46,45 @@ This provides the users with limited functionality as they are only able to sear
 Ideally, we would want to give the user a more powerful search function that allows them to search through the sources
 with more fields and parameters, for example used in conjunction.
 
+Another limitation of the AB4 implementation is that it tests for exact (case insensitive) matching between the keywords
+entered by the user and the field values of sources. This is very intuitive because this would expect the user to remember and
+recall the exact tag, title, type or detail they had entered when creating the source (or after editing). This is especially useless
+when the user stores his entire research data in the `detail`, say 3 paragraphs, now to reproduce the source he must enter those 3 paragraphs
+word to word in their entirety. This defeats the purpose of the user being able to search for a source so he can use it in his
+research.
+
 ====== *Modification*:
 
 Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 
 In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
 arguments of the type of source fields, and search for sources based on that.
-It searchs in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
+It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
 listing only those sources that satisfy all the input constraints of the matching fields.
+
+Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
+This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
+It's major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
+list the entire contents of the source in order to match and search it. Thus now, the user is only required to `search` using
+as many consecutive words they are able to recall to narrow the listings. Eg. searching for `d/Artificial Intelligence` will
+enumerate all source articles that have 'artificial intelligence' in their content.
 
 ====== *What it does*:
 It allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction.
+source entries that satisfy all of the entered tags in conjunction, with substring matching.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
-of the sources, and making working on the database more efficient.
+of the sources, and making working on the database more efficient. It also checks if the source fields contain the keywords entered
+by the user.
 
 ====== *Justification*:
 This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching so the user can enter as much as
+he remembers and see the results.
+
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination.
+logical combination, along with allowing the user to not memorize his source fields.
 
 ====== *Highlights*:
 

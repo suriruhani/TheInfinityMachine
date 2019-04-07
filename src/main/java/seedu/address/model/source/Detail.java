@@ -52,7 +52,7 @@ public class Detail {
      */
     @Override
     public String toString() {
-        return '[' + detail + ']';
+        return detail;
     }
 
 }

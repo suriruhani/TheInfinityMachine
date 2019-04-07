@@ -34,13 +34,21 @@ public class RestoreCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        List<Source> lastShownDeletedList = model.getFilteredDeletedSourceList();
+        model.switchToDeletedSources(); // sets deleted sources data to list
+        List<Source> lastShownDeletedList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownDeletedList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
         Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
+
+        // removes duplicate source from deleted source list if the exact same source exists in source manager
+        if (model.hasSource(toRestore)) {
+            model.removeDeletedSource(toRestore);
+            model.commitDeletedSources();
+            return new CommandResult(String.format(Messages.MESSAGE_DUPLICATE_SOURCE_TO_RESTORE, toRestore));
+        }
 
         model.addSource(toRestore);
         model.removeDeletedSource(toRestore);

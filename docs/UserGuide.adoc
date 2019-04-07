@@ -84,6 +84,7 @@ Format: `delete INDEX`
 * Deletes the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If source to delete is already in the deleted sources list, it will be permanently deleted.
 ****
 
 Examples:
@@ -94,6 +95,11 @@ Deletes the 2nd source in the database.
 * `search algorithms` +
 `delete 1` +
 Deletes the 1st source in the results of the `search` command.
+* `add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`delete 1` +
+`add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`delete 1` +
+Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 
 
 === Restoring a source : `restore`
@@ -114,6 +120,18 @@ Restores the 2nd deleted source in the database.
 * `list-delete` +
 `restore 1` +
 Restores the 1st deleted source in the database.
+
+
+=== Listing a deleted source : `list-deleted`
+
+Lists all deleted sources. +
+Format: `list-deleted`
+
+Examples:
+
+* `delete 1` +
+`list-deleted` +
+Lists all deleted sources in the database.
 
 
 === Editing a source : `edit`
@@ -341,7 +359,7 @@ Format: `unpanic`
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the source manager and all the deleted sources as well. +
 Format: `clear`
 
 === Exiting the program : `exit`

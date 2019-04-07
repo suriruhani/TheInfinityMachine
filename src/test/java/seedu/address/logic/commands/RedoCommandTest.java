@@ -29,21 +29,27 @@ public class RedoCommandTest {
         deleteFirstSource(model);
         model.undoSourceManager();
         model.undoSourceManager();
+        model.undoDeletedSources();
+        model.undoDeletedSources();
 
         deleteFirstSource(expectedModel);
         deleteFirstSource(expectedModel);
         expectedModel.undoSourceManager();
         expectedModel.undoSourceManager();
+        expectedModel.undoDeletedSources();
+        expectedModel.undoDeletedSources();
     }
 
     @Test
     public void execute() {
         // multiple redoable states in model
         expectedModel.redoSourceManager();
+        expectedModel.redoDeletedSources();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single redoable state in model
         expectedModel.redoSourceManager();
+        expectedModel.redoDeletedSources();
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no redoable state in model

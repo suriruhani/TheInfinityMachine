@@ -33,7 +33,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         String detailsKeywords = keywords.getValue(PREFIX_DETAILS).orElse("");
         List<String> tagKeywords = keywords.getAllValues(PREFIX_TAG);
 
-        if (titleKeywords.equals("") && tagKeywords.isEmpty()
+        if (titleKeywords.equals("") && (tagKeywords.isEmpty() || checkAllEmpty(tagKeywords))
                 && typeKeywords.equals("") && detailsKeywords.equals("")) {
             return false;
         }
@@ -50,12 +50,26 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
             result = result && matchDetailKeywords(detailsKeywords, source);
         }
 
-        if (!tagKeywords.isEmpty()) {
+        if (!tagKeywords.isEmpty() && !checkAllEmpty(tagKeywords)) {
             List<String> listTitleKeywords = new ArrayList<>();
             for (String tag : tagKeywords) {
                 listTitleKeywords.add(tag.trim());
             }
             result = result && matchTagKeywords(tagKeywords, source);
+        }
+
+        return result;
+    }
+
+    /**
+     * Evaluates true if all of the entries in a list of strings is empty
+     *
+     */
+    public boolean checkAllEmpty(List<String> keywords) {
+        boolean result = true;
+
+        for (String s : keywords) {
+            result = result && s.equals("");
         }
 
         return result;
@@ -72,7 +86,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         boolean result = true;
         for (String tag : tagKeywords) {
             result = result && source.getTags().stream()
-                    .anyMatch(keyword -> (keyword.tagName.toLowerCase()).contains(tag.trim().toLowerCase()));
+                    .anyMatch(keyword -> (keyword.tagName.trim().toLowerCase()).contains(tag.trim().toLowerCase()));
         }
         return result;
     }

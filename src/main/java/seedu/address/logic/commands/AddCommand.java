@@ -31,7 +31,7 @@ public class AddCommand extends Command {
             + PREFIX_TAG + "Algorithms "
             + PREFIX_TAG + "Introduction";
 
-    public static final String MESSAGE_SUCCESS = "New source added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New source added:\n-----------------------------------\n%1$s";
     public static final String MESSAGE_DUPLICATE_SOURCE = "This source already exists in the database.";
 
     private final Source toAdd;

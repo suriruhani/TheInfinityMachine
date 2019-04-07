@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
 /**
- * Deletes a source identified using it's displayed index from the address book.
+ * Deletes a source identified using it's displayed index from the source manager.
  */
 public class DeleteCommand extends Command {
 
@@ -23,8 +23,8 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_SOURCE_SUCCESS = "Deleted Source: %1$s";
-
+    public static final String MESSAGE_DELETE_SOURCE_SUCCESS = "Deleted Source:\n---------------------"
+            + "--------------\n%1$s";
     private final Index targetIndex;
 
     public DeleteCommand(Index targetIndex) {
@@ -34,13 +34,20 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        model.switchToSources(); // sets source manager data to list
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_DELETED_SOURCE_DISPLAYED_INDEX);
+            throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
         }
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        // permanently delete from source manager list if the exact same source exists in deleted source list
+        if (model.hasDeletedSource(sourceToDelete)) {
+            model.deleteSource(sourceToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
+        }
 
         model.addDeletedSource(sourceToDelete);
         model.deleteSource(sourceToDelete);

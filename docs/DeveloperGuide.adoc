@@ -233,6 +233,71 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::restore[]
+=== Restore Command feature
+The restore feature allows users to use the restore command to retrieve their research data they accidentally deleted.
+
+The restore feature is facilitated by `Infinity Machine`.
+It extends `Infinity Machine` with an restore feature, allowing user to restore source from a persistent deleted sources list.
+Additionally, it uses:
+
+* `DeletedSources.java` -- Here, the logic of running through all the deleted sources in the list.
+(trimmed by space, case insensitive) is implemented.
+
+Given below is an example usage scenario and how the restore mechanism behaves at each step.
+
+Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+Step 2. The user executes `delete 1` command and only one entry, the first one, is deleted.
+
+Step 3. The user executes `restore 1` and only one entry will be deleted, which is the source recently deleted.
+
+[NOTE]
+`restore` alone, without any arguments, will result in error. See `restore` command for enumerating all database entries.
+
+==== Design Considerations
+
+===== Aspect: How restore executes
+
+* **Alternative 1 :** Using a simple read and write class in the storage.
+** Pros: Easy to implement.
+** Cons: May have performance issues in terms of time usage.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 2 (current choice):** Using Json Managers and DeletedSources in the Model
+// end::restore[]
+
+// tag::panic[]
+=== Panic Mode feature
+The panic mode feature allows the user to temporarily hide user data and replace it with dummy data.
+
+==== Overview
+The user's original data is replaced by dummy data for the duration that panic mode is enabled.
+Enabling panic mode can be thought of as "stashing" the user's data temporarily in memory.
+This is reflected both on-screen and on-disk.
+On the screen, the list of sources is replaced by an empty dummy list.
+On disk, the contents of the JSON file storing the user's sources is replaced by dummy content that tracks and reflects the dummy data.
+
+==== Implementation
+This is implemented by "swapping" the source manager with an empty dummy source manager.
+This "swap" is carried out by storing the original source manager in a private variable `sourceManagerBackup`, and then resetting the original source manager with a new empty source manager instance.
+We also set the boolean variable `panicMode = true`.
+
+When the user disables panic mode, we restore the original source manager, and reset `panicMode = false`.
+
+==== Elaboration
+We use a boolean variable `panicMode` to keep track of whether panic mode has been activated.
+This is to guard against the scenario of entering panic mode while already in panic mode, which results in permanent data loss.
+
+This is because when panic mode is activated, we store the original source manager in the private variable `sourceManagerBackup`, and reset the original source manager, as described above.
+
+Therefore, should panic mode be activated while already in panic mode, `sourceManagerBackup` will now store the dummy source manager, and the original source manager will be deallocated and eventually purged from memory by Java's garbage collector.
+
+Since the JSON file on disk automatically tracks the source manager through the observer pattern, it automatically updates to track and reflect the data in the dummy source manager.
+
+
 // tag::alias[]
 === Command Alias feature
 The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.
@@ -424,45 +489,72 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::search[]
 === Search feature
 ==== Current Implementation
+Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 
 The search feature is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title(s).
+It extends `Infinity Machine` with an find feature, allowing user to search through source entries by the title, type, detail and/or tags, with substring matching.
+
+This search function now has an added functionality of being able to take in multiple
+arguments of the type of source fields [i.e. title, type, detail and tags], and search for sources based on that.
+It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
+listing only those sources that satisfy all the input constraints of the matching fields, with all there corresponding field values.
+
+Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
+This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
+It's major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
+list the entire contents of the source in order to match and search it. Thus now, the user is only required to `search` using
+as many consecutive words they are able to recall to narrow the listings.
+
+How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
+source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient.
+
 Additionally, it uses:
 
-* `TitleContainsKeywordsPredicate.java` -- Here, the logic of running through all the titles and matching it with the user inputs
-(trimmed by space, case insensitive) is implemented.
+* `SourceContainsKeywordsPredicate.java` -- Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
+(trimmed by space, case insensitive and take as substring) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning `true`
+for those sources that satisfy all the constraints, i.e. have all the fields matching as entered by the user, where matching is checked by if the string
+contains the keywords entered by the user (case insensitive).
+
+This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Not only that, the user can now just input whatever they are able to recall and the `search` returns all super strings instead of
+carrying out an exact matching.
+It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
+source entries containing what they are looking for.
+It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
+logical combination.
 
 Given below is an example usage scenario and how the search mechanism behaves at each step.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-//image::SearchCommandStep1.png[width="800"]
+Step 2. The user executes `search i/footitle1` command and only those sources that have their title as `footitle1` are displayed.
 
-Step 2. The user executes `search footitle1` command and only one entry, the first one, is displayed.
+Step 3. The user executes `search i/footitle6 y/website` and only those entries are listed that have both their title as `footitle1` and type as `website`.
 
-//image::SearchCommandStep2.png[width="800"]
-
-Step 3. The user executes `search footitle6 footitle5` and only two entries are listed, with all their details displayed.
-
-//image::SearchCommandStep3.png[width="800"]
+Step 4. The user executes `search t/CS` and all those sources that have any of their tags having 'CS' in it listed, including `CS2030`, `CS2040` and `CS2103`
 
 [NOTE]
 `search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
 
 ==== Design Considerations
 
-===== Aspect: How undo & redo executes
+===== Aspect: How search executes
 
-* **Alternative 1 (current choice):** Runs through all entries and matches the title.
-** Pros: Easy to implement.
+* **Alternative 1 (current choice):** Runs through all entries and matches the arguments, field by field, and uing `&&` operation
+to combine the results.
+** Pros: Easy to implement as exact String matching can be done in Java using streams and `StringUtil.containsWordIgnoreCase(str1, str2)`.
 ** Cons: May have performance issues in terms of time usage.
 
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Using streams and StringUtil functions.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Not the most efficient implementation.
+** Cons: May not be the most efficient implementation.
 // end::search[]
 
 === Count feature
@@ -503,6 +595,30 @@ It has mainly two usages: +
 1) Without a parameter, as just `list` : enumerates all the entries of the source database with their details +
 2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database +
 
+Motivation for such an enhancement is that one may feel that such act of populating *all* the sources on the GUI may be cluttering the view unnecessarily.
+Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
+which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view.
+This could be helpful in:
+
+1. Iteratively examining all the sources by restricting how many are shown at one time.
+2. Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources.
+
+Thus, the new modification to the command changes its format optionally, allowing user to be able to pass a parameter
+and list only those many sources from the top, that is from the least-recently added. This may be intuitively useful when say
+you want to perform certain operations in this new list of sources that are displayed by their time of addition.
+Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
+the user could just execute `list 10` to access
+those entries and then perform a `delete <INDEX>` accordingly.
+
+For example, the user may still execute `list` command to see the updated list of all the source and their fields.
+
+But now, one may also enter `list 21` to list the top 21 sources only, allowing user to streamline their retrieval for more
+efficient operations on the sources.
+
+What it does is, it allows the user to now pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
+The original working of the `list` command showing all entries is still intact, thus just appending extra functionality without
+changing the original logic.
+
 Additionally, it uses:
 
 * `PREDICATE_SHOW_ALL_SOURCES` -- when the user does not pass an argument to the list command, all sources must be displayed displayed.
@@ -512,6 +628,25 @@ This method returns a new object of type `Predicate<Source>` that keeps track of
 displaying `true` for the first N and `false` for the rest.
 * `targetIndex` -- the number N up to which the most recent sources are to be displayed to the user. Maintained internally.
 Set to the current size of the database if the value input is more that this current size.
+
+This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search, say should he want to view the N first added sources. This ensures more effective retrieval and
+operations on the sources, such as following it by index dependent operations such as `edit` and `delete` for instance.
+
+Some points to note:
+- This enhancement does not affect existing commands and commands to be added in future.
+- It required an in-depth analysis of design alternatives. Especially when it came to adding the ability
+for the command to be able to work both with 1 parameter and no parameters.
+Some design considerations were
+** Using variable arguments: in `parser` method of `ListCommandParser` class, but this would require changing the
+Interface `Parser<T>`. This technique did not work for making `ListCommand` objects for the same reason.
+** Using method overloading: This did not work for `parser` method because of the interface restrictions, however
+this was used in the constructor of `LogicCommand` class, creating two objects depending on whether a `targetIndex` was passed
+or not.
+** Using args.length(): Ultimately used in `parse` method for a simple check whether an
+argument is passed or not.
+- The implementation too was challenging, as the current format of `list` command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
+functionality based on whether an argument was passed by the user or not.
 
 Given below is an example usage scenario and how the list mechanism behaves.
 

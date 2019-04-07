@@ -8,11 +8,15 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class AliasAddMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
 
+    private static final String MESSAGE_SUCCESS = "Alias created successfully";
+    private static final String MESSAGE_INVALID_SYNTAX = "Arguments are invalid. "
+            + "Usage guide: %s COMMAND ALIAS";
+
     /**
      * Instantiates self with an instance of aliasManager.
      */
-    public AliasAddMetaCommandParser(AliasManager aliasManager) {
-        setAliasManager(aliasManager);
+    public AliasAddMetaCommandParser(AliasManager aliasManager, String command) {
+        super(aliasManager, command);
     }
 
     /**
@@ -23,12 +27,12 @@ public class AliasAddMetaCommandParser extends AliasMetaCommandParser implements
     public DummyCommand parse(String userInput) throws ParseException {
         String[] splitArguments = userInput.trim().split(" ");
         if (splitArguments.length != 2) {
-            throw new ParseException("You have provided an invalid number of arguments");
+            throw new ParseException(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
         }
 
         try {
             getAliasManager().registerAlias(splitArguments[0], splitArguments[1]);
-            return new DummyCommand("Alias created");
+            return new DummyCommand(MESSAGE_SUCCESS);
         } catch (IllegalArgumentException e) {
             return new DummyCommand(e.getMessage());
         }

@@ -49,8 +49,8 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/TITLE`, `TITLE` is a parameter which can be used as `add n/Wikipedia Algorithms`.
-* Items in square brackets are optional e.g `n/TITLE [t/TAG]` can be used as `n/Wikipedia Algorithms t/Wikipedia` or as `n/Wikipedia Algorithms`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add i/TITLE`, `TITLE` is a parameter which can be used as `add i/Wikipedia Algorithms`.
+* Items in square brackets are optional e.g `i/TITLE [t/TAG]` can be used as `i/Wikipedia Algorithms t/Wikipedia` or as `i/Wikipedia Algorithms`.
 * Items with `…`​ after them can be used multiple times including zero times e.g `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Computer Science`, `t/Computer Science t/Algorithms` etc.
 * Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
@@ -59,11 +59,12 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-// tag::add[]
+Displays the User Guide for a quick reference.
+
 === Adding a person: `add`
 
 Adds a new source to the list of sources +
-Format: `add n/TITLE y/TYPE d/DETAILS [t/TAG]...`
+Format: `add i/TITLE y/TYPE d/DETAILS [t/TAG]...`
 
 [TIP]
 A source can have any number of tags (including 0)
@@ -72,7 +73,7 @@ Examples:
 
 * `add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
 * `add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI`
-// end::add[]
+
 
 === Deleting a source : `delete`
 
@@ -83,6 +84,7 @@ Format: `delete INDEX`
 * Deletes the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* If source to delete is already in the deleted sources list, it will be permanently deleted.
 ****
 
 Examples:
@@ -92,9 +94,46 @@ Examples:
 Deletes the 2nd source in the database.
 * `search algorithms` +
 `delete 1` +
-Deletes the 1st source in the results of the `find` command.
+Deletes the 1st source in the results of the `search` command.
+* `add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`delete 1` +
+`add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`delete 1` +
+Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 
-// tag::edit[]
+
+=== Restoring a source : `restore`
+
+Restores the specified source. +
+Format: `restore INDEX`
+
+****
+* Restores the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed deleted source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `restore 2` +
+Restores the 2nd deleted source in the database.
+* `list-delete` +
+`restore 1` +
+Restores the 1st deleted source in the database.
+
+
+=== Listing a deleted source : `list-deleted`
+
+Lists all deleted sources. +
+Format: `list-deleted`
+
+Examples:
+
+* `delete 1` +
+`list-deleted` +
+Lists all deleted sources in the database.
+
+
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
@@ -110,38 +149,46 @@ Format: `edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
 Examples:
 
-* `edit 2 n/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
+* `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
 Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
-// end::edit[]
+
 
 === Searching a source: `search`
 
-Searches for entries amongst the list of sources by title. +
-Finds all entries with an (exact, case insensitive) matching title as entered by the user. +
-It is case insensitive (eg. `RSAalgorithm` is same as `rsaalgorithm`) +
-Matching is exact (eg. `Algorithm` will not match with `Algorithms`) +
-Format: `search title`
+Searches for entries amongst the list of sources. +
+Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Able to perform substring matching.
+Finds all entries with a (case insensitive) field value that contains the value as specified by the user. +
+Searches with multiple arguments are taken as conjunction searches, i.e all those sources
+that satisfy all the keyword values are shown (logical `and` operation).
+
+Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* The search implements substring matching. e.g. `algo` will match algorithm, algorithms, algo trading, etc.
 * There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
-* Only full words will be matched e.g. `Han` will not match `Hans`, `FooTitle` will not match `FooTitle1`
+* Search implemented as a logical AND. eg. `search i/algorithm y/website` results in all those sources
+that have title `algorithm` AND type `website`
 ****
 
 Examples:
 
-* `search Algorithms` +
-Returns the source with the title `algorithms`
-* `search ArtificialIntelligence MachineLearning` +
-Returns any source having tags `ArtificialIntelligence` or `MachineLearning`
+* `search i/Algorithms` +
+Returns the source(s) with the title `algorithms`
+* `search y/web d/intelligence t/ML` +
+Returns any source having tags `ML` and having the word `intelligence` somewhere in their content
+(detail) and having a type of `website` or `web series`.
 
-=== Listing all sources : `list [n]`
+=== Listing all sources : `list`
 
 Displays a list of all sources currently in the database, without filtering. +
-Optional argument N used to list only the top N sources to the user. +
+Optional argument N used to list only the top N sources to the user, where N is a positive integer
+(any other value throws error). +
 Format: `list [N]`
+where argument N in [ ] is optional.
 
 ****
 * Lists all sources present in the database in the order of their addition, if no argument passed
@@ -151,7 +198,6 @@ Format: `list [N]`
 * Tags, Details, Type are also displayed along with the sources
 ****
 
-// tag::order[]
 === Reordering sources to your liking : `order`
 
 Moves the specified source from one position to another as defined by the user. +
@@ -173,7 +219,6 @@ Moves the source located at index 1 to index 4.
 
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
-// end::order[]
 
 === Generate bibliography entry : `biblio`
 
@@ -190,11 +235,6 @@ Format: `biblio INDEX`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
-
-=== Listing history of searches made : `searchhistory`
-
-Lists the results of all searches made using the `search` command recently. +
-Format: `searchhistory`
 
 === Command aliases : `alias`
 ==== Creating an alias: `alias`
@@ -310,34 +350,47 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
+// tag::panic[]
 === Enabling panic mode : `panic`
 
-Allows user to temporarily hide data. +
+Allows the user to temporarily hide data. +
 Format: `panic`
 
-=== Enabling panic mode : `unpanic`
+Research data may be sensitive.
+Panic mode is a privacy-focused feature that swaps out the user's data store with an empty dummy data store.
 
-Restores user data. +
+When it is enabled, the application window replaces the original list of sources with an empty list.
+This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.
+The original data store exists only in memory, until panic mode is disabled.
+
+In panic mode, the dummy data store behaves exactly like a real one.
+Therefore, all commands (e.g. add, remove, etc.) mutate the dummy data store (and the dummy JSON file), **without affecting the actual data store.**
+
+[NOTE]
+====
+If the user exits the application in panic mode (using the `exit` command), the application automatically restores the user's original data from memory and saves it to disk before exiting, to prevent permanent data loss.
+
+However, if the application is closed directly **while in panic mode**, **permanent data loss** will occur.
+====
+
+// tag::unpanic[]
+=== Disabling panic mode : `unpanic`
+
+Restores the user's original data. +
 Format: `unpanic`
+
+This reverses the effect of panic mode by restoring the user's original data.
+The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from the source manager and all the deleted sources as well. +
 Format: `clear`
 
 === Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
-
-=== Autocorrect ('Did you mean') : <no command>
-
-Suggests commands to the users when they get the spelling wrong. +
-
-Examples:
-
-* `delete Algorith` +
-`Did you mean: Algorithms`
 
 === Saving the data
 
@@ -365,17 +418,21 @@ e.g. `add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on p
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
+* *Restore* : `restore INDEX` +
+e.g. `restore 3`
 * *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
-* *Search* : `search [KEYWORD] [KEYWORD]...` +
-e.g. `search algorithm journal`
-* *List* : `list`
+* *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
+e.g. `search i/algorithm y/journal`
+* *List* : `list [N]`
 * *Help* : `help`
 * *Biblio* : `biblio`
 * *History* : `history`
-* *Search History* : `searchhistory`
-* *Define Command* : `definecommand c/COMMAND a/ALIAS` +
-e.g. `definecommand c/edit a/e`
+* *Adding an alias* : `alias c/COMMAND a/ALIAS` +
+e.g. `alias c/edit a/e`
+* *Removing an alias* : `alias-rm ALIAS` +
+e.g. `alias-rm c`
+* *Listing all aliases* : `alias-ls`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Panic* : `panic`

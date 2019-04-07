@@ -6,10 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,12 +21,10 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Source;
-import seedu.address.model.source.TitleContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
@@ -89,10 +83,10 @@ public class SourceManagerParserTest {
 
     @Test
     public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        SearchCommand command = (SearchCommand) parser.parseCommand(
-                SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new SearchCommand(new TitleContainsKeywordsPredicate(keywords)), command);
+        //List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        //SearchCommand command = (SearchCommand) parser.parseCommand(
+                //SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
+        //assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(keywords)), command);
     }
 
     @Test
@@ -174,24 +168,39 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_validArguments() throws Exception {
+    public void parseMetaCommand_removeAlias_validArgumentsExistingAlias() throws Exception {
         thrown.expect(ParseException.class);
+
         parser.parseCommand("alias count c");
+        assertTrue(parser.parseCommand("c") instanceof CountCommand);
+
         parser.parseCommand("alias-rm c");
-        parser.parseCommand("c");
+        parser.parseCommand("c"); // Should throw ParseException
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments1() throws Exception {
+    public void parseMetaCommand_removeAlias_validArgumentsNonExistingAlias() throws Exception {
+        // Should not throw
+        parser.parseCommand("alias count c");
+        parser.parseCommand("alias-rm foo"); // "foo" is not an alias
+        assertTrue(parser.parseCommand("c") instanceof CountCommand);
+    }
+
+    @Test
+    public void parseMetaCommand_removeAlias_invalidArguments() throws Exception {
         thrown.expect(ParseException.class);
         parser.parseCommand("alias count c");
-        parser.parseCommand("alias-rm");
+        parser.parseCommand("alias-rm"); // Alias not specified
     }
 
     @Test
-    public void parseMetaCommand_removeAlias_invalidArguments2() throws Exception {
+    public void parseMetaCommand_clearAlias_validArguments() throws Exception {
+        parser.parseCommand("alias-clear"); // Should not throw
+    }
+
+    @Test
+    public void parseMetaCommand_clearAlias_invalidArguments() throws Exception {
         thrown.expect(ParseException.class);
-        parser.parseCommand("alias count c c");
-        parser.parseCommand("alias-rm");
+        parser.parseCommand("alias-clear foo");
     }
 }

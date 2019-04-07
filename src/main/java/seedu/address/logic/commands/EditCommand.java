@@ -43,7 +43,8 @@ public class EditCommand extends Command {
             + PREFIX_TITLE + "Algorithms IEEE "
             + PREFIX_DETAILS + "Basic algorithm controls and processes";
 
-    public static final String MESSAGE_EDIT_SOURCE_SUCCESS = "Edited Source: %1$s";
+    public static final String MESSAGE_EDIT_SOURCE_SUCCESS = "Edited Source:\n--------------------------"
+            + "---------\n%1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_SOURCE = "This source already exists in the database.";
 
@@ -65,6 +66,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        model.switchToSources(); // sets source manager data to list
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

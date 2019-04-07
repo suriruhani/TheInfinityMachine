@@ -83,8 +83,8 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
      * @return true if matches, else false
      */
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {
-        List<String> listTitleKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
-        return listTitleKeywords.stream()
+        List<String> listDetailKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
+        return listDetailKeywords.stream()
                 .anyMatch(keyword -> (source.getDetail().detail.toLowerCase().contains(keyword.toLowerCase())));
     }
 
@@ -95,8 +95,8 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
      * @return true if matches, else false
      */
     private boolean matchTypeKeywords(String typeKeywords, Source source) {
-        List<String> listTitleKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
-        return listTitleKeywords.stream()
+        List<String> listTypeKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
+        return listTypeKeywords.stream()
                 .anyMatch(keyword -> (source.getType().type.toLowerCase()).contains(keyword.toLowerCase()));
     }
 

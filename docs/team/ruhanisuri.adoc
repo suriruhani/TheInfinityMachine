@@ -69,7 +69,8 @@ It also allows user to search sources based on other fields and not just title, 
 logical combination.
 
 ====== *Highlights*:
-- This enhancement does not affect existing commands and commands to be added in future.
+
+- This enhancement does not affect existing commands and commands to be added in future. +
 - However, it changed the format of the original `search` command, which now not only takes parameters of different types, but also needs them to be prefixed by their
 CLI delimiters.
 - It required an in-depth analysis of design alternatives, as the format of the original command had to be changed
@@ -77,6 +78,9 @@ CLI delimiters.
 accept and parse multiple fields entered.
 - Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
 of each of the field entered and by logical `&&` ing their results.
+- It was relatively simple to change exact matching to substring matching by using `String.contains()` method.
+- It was trivial to implement case insensitivity by converting both source value and argument value `toLowerCase()` before carrying
+out the substring comparison.
 
 ====== *Credits*:
 Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.

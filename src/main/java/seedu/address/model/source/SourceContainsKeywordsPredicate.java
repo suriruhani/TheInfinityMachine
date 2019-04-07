@@ -14,7 +14,7 @@ import seedu.address.logic.parser.ArgumentMultimap;
 
 /**
  * Tests that a {@code Source}'s {@code Title}, {@code Type} {@code Detail}, and {@code Tag}
- * match the keywords given. Performs a logical AND by checking if all those keywords
+ * contain the keywords given. Performs a logical AND by checking if all those keywords
  * are present in the output source.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {
@@ -62,7 +62,8 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Evaluates true for sources that have atleast one tag that matches the tags entered by the user as an argument
+     * Evaluates true for sources that have at least one tag that contains the tags (ie. a substring)
+     * entered by the user as an argument
      * @param tagKeywords entered by user
      * @param source to be tested
      * @return true if present, else false
@@ -77,7 +78,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Evaluates true for sources that have details that match the details entered by the user as an argument
+     * Evaluates true for sources that have details that contains the details entered by the user as an argument
      * @param detailsKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false
@@ -89,7 +90,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Evaluates true for sources that have types that match the types entered by the user as an argument
+     * Evaluates true for sources that have types that contains the types entered by the user as an argument
      * @param typeKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false
@@ -101,7 +102,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Evaluates true for sources that have title that match the title entered by the user as an argument
+     * Evaluates true for sources that have title that contains the title entered by the user as an argument
      * @param titleKeywords entered by the user
      * @param source to be tested
      * @return true if matches, else false
@@ -118,5 +119,4 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
                 || (other instanceof SourceContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((SourceContainsKeywordsPredicate) other).keywords)); // state check
     }
-
 }

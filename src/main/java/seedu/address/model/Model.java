@@ -15,7 +15,6 @@ import seedu.address.model.source.Source;
 public interface Model extends PanicMode {
     /** {@code Predicate} that always evaluate to true */
     Predicate<Source> PREDICATE_SHOW_ALL_SOURCES = unused -> true;
-    Predicate<Source> PREDICATE_SHOW_ALL_DELETED_SOURCES = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -138,20 +137,11 @@ public interface Model extends PanicMode {
     /** Returns an unmodifiable view of the filtered source list */
     ObservableList<Source> getFilteredSourceList();
 
-    /** Returns an unmodifiable view of the filtered source list */
-    ObservableList<Source> getFilteredDeletedSourceList();
-
     /**
      * Updates the filter of the filtered source list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredSourceList(Predicate<Source> predicate);
-
-    /**
-     * Updates the filter of the filtered source list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredDeletedSourceList(Predicate<Source> predicate);
 
     /**
      * Returns true if the model has previous source manager states to restore.
@@ -210,22 +200,10 @@ public interface Model extends PanicMode {
     ReadOnlyProperty<Source> selectedSourceProperty();
 
     /**
-     * Selected source in the filtered source list.
-     * null if no source is selected.
-     */
-    ReadOnlyProperty<Source> selectedDeletedSourceProperty();
-
-    /**
      * Returns the selected source in the filtered source list.
      * null if no source is selected.
      */
     Source getSelectedSource();
-
-    /**
-     * Returns the selected source in the filtered source list.
-     * null if no source is selected.
-     */
-    Source getSelectedDeletedSource();
 
     /**
      * Sets the selected source in the filtered source list.
@@ -233,9 +211,14 @@ public interface Model extends PanicMode {
     void setSelectedSource(Source source);
 
     /**
-     * Sets the selected source in the filtered source list.
+     * Switch the list in the filtered source list to deleted sources.
      */
-    void setSelectedDeletedSource(Source source);
+    void switchToDeletedSources();
+
+    /**
+     * Switch the list in the filtered source list to sources.
+     */
+    void switchToSources();
 
     /**
      * Default implementation to prevent compilation errors when implementors of Model

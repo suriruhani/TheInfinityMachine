@@ -8,8 +8,29 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import seedu.address.logic.commands.*;
 import seedu.address.logic.commands.UnpinCommand;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BiblioCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CountCommand;
+import seedu.address.logic.commands.CustomOrderCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.GreetCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListDeletedCommand;
+import seedu.address.logic.commands.PanicCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RestoreCommand;
+import seedu.address.logic.commands.SearchCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnpanicCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -79,6 +100,7 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
         validCommands.add(RestoreCommand.COMMAND_WORD);
+        validCommands.add(ListDeletedCommand.COMMAND_WORD);
     }
 
     /**
@@ -168,6 +190,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case UnpinCommand.COMMAND_WORD:
             return new UnpinCommandParser().parse(arguments);
+
+        case ListDeletedCommand.COMMAND_WORD:
+            return new ListDeletedCommand();
 
         // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):

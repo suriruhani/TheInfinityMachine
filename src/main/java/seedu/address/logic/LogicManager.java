@@ -96,11 +96,6 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ObservableList<Source> getFilteredDeletedSourceList() {
-        return model.getFilteredDeletedSourceList();
-    }
-
-    @Override
     public ObservableList<String> getHistory() {
         return history.getHistory();
     }
@@ -131,17 +126,7 @@ public class LogicManager implements Logic {
     }
 
     @Override
-    public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
-        return model.selectedDeletedSourceProperty();
-    }
-
-    @Override
     public void setSelectedSource(Source source) {
         model.setSelectedSource(source);
-    }
-
-    @Override
-    public void setSelectedDeletedSource(Source source) {
-        model.setSelectedDeletedSource(source);
     }
 }

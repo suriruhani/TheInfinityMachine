@@ -356,7 +356,8 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Allows the user to temporarily hide data. +
 Format: `panic`
 
-Research data may be sensitive. Panic mode is a privacy-focused feature that swaps out the user's data store with an empty dummy data store. 
+Research data may be sensitive.
+Panic mode is a privacy-focused feature that swaps out the user's data store with an empty dummy data store.
 
 When it is enabled, the application window replaces the original list of sources with an empty list.
 This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.

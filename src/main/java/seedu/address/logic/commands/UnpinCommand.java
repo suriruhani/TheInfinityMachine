@@ -17,7 +17,7 @@ import seedu.address.model.source.Source;
 /**
  * Unpins a source
  */
-public class PinnedSourceRemove extends Command {
+public class UnpinCommand extends Command {
     public static final String COMMAND_WORD = "unpin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -33,7 +33,7 @@ public class PinnedSourceRemove extends Command {
     private final int targetIndex;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
-    public PinnedSourceRemove(int targetIndex) {
+    public UnpinCommand(int targetIndex) {
         this.targetIndex = targetIndex - 1;
     }
 

@@ -17,7 +17,7 @@ import seedu.address.model.source.Source;
 /**
  * Pins a source
  */
-public class PinnedSourceAdd extends Command {
+public class PinCommand extends Command {
     public static final String COMMAND_WORD = "pin";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -33,7 +33,7 @@ public class PinnedSourceAdd extends Command {
     private final int targetIndex;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
-    public PinnedSourceAdd(int targetIndex) {
+    public PinCommand(int targetIndex) {
         this.targetIndex = targetIndex - 1;
     }
 

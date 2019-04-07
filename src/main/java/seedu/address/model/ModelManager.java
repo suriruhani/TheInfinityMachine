@@ -58,7 +58,6 @@ public class ModelManager implements Model, PanicMode {
         filteredSources = new FilteredList<>(this.displayedSourceList);
 
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
-        filteredDeletedSources.addListener(this::ensureSelectedDeletedSourceIsValid);
 
         logger.info("Loading number of pinned sources.");
         this.numPinnedSources = PinnedSourcesStorageOperationsCenter.loadNumberOfPinnedSources();
@@ -80,11 +79,10 @@ public class ModelManager implements Model, PanicMode {
 
         this.userPrefs = new UserPrefs(userPrefs);
 
-        filteredSources = new FilteredList<>(versionedSourceManager.getSourceList());
-        filteredDeletedSources = new FilteredList<>(versionedDeletedSources.getDeletedSourceList());
+        displayedSourceList = new SimpleListProperty<>(versionedSourceManager.getSourceList());
+        filteredSources = new FilteredList<>(this.displayedSourceList);
 
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
-        filteredDeletedSources.addListener(this::ensureSelectedDeletedSourceIsValid);
 
         this.numPinnedSources = numPinnedSources;
     }

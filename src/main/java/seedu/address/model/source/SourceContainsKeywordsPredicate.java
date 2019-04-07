@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.ArgumentMultimap;
 
 /**
@@ -63,7 +62,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     }
 
     /**
-     * Evaluates true for sources that have tags that match the tags entered by the user as an argument
+     * Evaluates true for sources that have atleast one tag that matches the tags entered by the user as an argument
      * @param tagKeywords entered by user
      * @param source to be tested
      * @return true if present, else false
@@ -72,7 +71,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         boolean result = true;
         for (String tag : tagKeywords) {
             result = result && source.getTags().stream()
-                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tag.trim(), keyword.tagName));
+                    .anyMatch(keyword -> (keyword.tagName.toLowerCase()).contains(tag.trim().toLowerCase()));
         }
         return result;
     }
@@ -86,7 +85,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     private boolean matchDetailKeywords(String detailsKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getDetail().detail, keyword));
+                .anyMatch(keyword -> (source.getDetail().detail.toLowerCase().contains(keyword.toLowerCase())));
     }
 
     /**
@@ -98,7 +97,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     private boolean matchTypeKeywords(String typeKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getType().type, keyword));
+                .anyMatch(keyword -> (source.getType().type.toLowerCase()).contains(keyword.toLowerCase()));
     }
 
     /**
@@ -110,7 +109,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     private boolean matchTitleKeywords(String titleKeywords, Source source) {
         List<String> listTitleKeywords = Arrays.asList(titleKeywords.trim().split("\\s+"));
         return listTitleKeywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(source.getTitle().title, keyword));
+                .anyMatch(keyword -> (source.getTitle().title.toLowerCase()).contains(keyword.toLowerCase()));
     }
 
     @Override

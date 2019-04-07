@@ -120,7 +120,43 @@ public class SearchCommandTest {
     }
 
     @Test
-    public void execute_multipleKeywords_multipleSourcesFound() {
+    public void execute_oneTitleKeyword_multipleSourcesFound() {
+
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        SourceContainsKeywordsPredicate predicate = preparePredicate(PREFIX_TITLE,"Kurz");
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredSourceList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CARL), model.getFilteredSourceList());
+
+    }
+
+    @Test
+    public void execute_oneTypeKeyword_multipleSourcesFound() {
+
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        SourceContainsKeywordsPredicate predicate = preparePredicate(PREFIX_TYPE,"carl");
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredSourceList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CARL), model.getFilteredSourceList());
+
+    }
+
+    @Test
+    public void execute_oneDetailKeyword_multipleSourcesFound() {
+
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        SourceContainsKeywordsPredicate predicate = preparePredicate(PREFIX_DETAILS,"carl_detail");
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredSourceList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(CARL), model.getFilteredSourceList());
+
+    }
+
+    @Test
+    public void execute_oneTagKeyword_multipleSourcesFound() {
 
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 3);
         SourceContainsKeywordsPredicate predicate = preparePredicate(PREFIX_TITLE,"Kurz Elle Kunz");

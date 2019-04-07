@@ -2,6 +2,7 @@ package systemtests;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -11,6 +12,7 @@ import seedu.address.model.source.Source;
 
 public class EditCommandSystemTest extends SourceManagerSystemTest {
 
+    @Ignore
     @Test
     public void edit() {
     //        Model model = getModel();
@@ -200,6 +202,7 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     private void assertCommandSuccess(String command, Index toEdit, Source editedSource,
             Index expectedSelectedCardIndex) {
         Model expectedModel = getModel();
+        expectedModel.switchToSources();
         expectedModel.setSource(expectedModel.getFilteredSourceList().get(toEdit.getZeroBased()), editedSource);
         expectedModel.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
 
@@ -232,6 +235,7 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
         executeCommand(command);
+        expectedModel.switchToSources();
         expectedModel.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();

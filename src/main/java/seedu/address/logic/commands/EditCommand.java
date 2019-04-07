@@ -66,6 +66,7 @@ public class EditCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
+        model.switchToSources(); // sets source manager data to list
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (index.getZeroBased() >= lastShownList.size()) {

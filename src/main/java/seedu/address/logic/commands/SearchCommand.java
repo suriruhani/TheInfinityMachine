@@ -14,15 +14,15 @@ import seedu.address.model.source.SourceContainsKeywordsPredicate;
 /**
  * Finds and lists all sources in Source Database which have any of their title, type, detail, source, tag(s)
  * containing the argument keywords.
- * Keyword matching is case insensitive.
+ * Keyword matching is case insensitive, substrings are matched.
  */
 public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all sources whose title, type, details, "
-            + "source and tags contains any of the specified keywords (case-insensitive) and displays them as a "
-            + "list with index numbers. "
+            + "source and tags contains any of the specified keywords (case-insensitive, substring) and displays "
+            + "them as a list with index numbers. "
             + "Parameters: "
             + PREFIX_TITLE + "SOURCE_TITLE "
             + PREFIX_TYPE + "SOURCE_TYPE "
@@ -44,6 +44,7 @@ public class SearchCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
+        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(predicate);
         return new CommandResult(
                 String.format(Messages.MESSAGE_SOURCES_LISTED_OVERVIEW, model.getFilteredSourceList().size()));

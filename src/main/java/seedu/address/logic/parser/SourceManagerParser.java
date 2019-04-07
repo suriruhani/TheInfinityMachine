@@ -21,6 +21,7 @@ import seedu.address.logic.commands.GreetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListDeletedCommand;
 import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RestoreCommand;
@@ -50,13 +51,8 @@ public class SourceManagerParser implements CommandValidator {
     private AliasManager aliasManager;
 
     public SourceManagerParser() {
-        Set<String> disallowedCommands = new HashSet<>();
-        disallowedCommands.add(COMMAND_ALIAS_ADD);
-        disallowedCommands.add(COMMAND_ALIAS_REMOVE);
-        disallowedCommands.add(COMMAND_ALIAS_CLEAR);
-        disallowedCommands.add(COMMAND_ALIAS_LIST);
-
-        aliasManager = new ConcreteAliasManager(this, disallowedCommands);
+        Set<String> metaCommands = initializeMetaCommands();
+        aliasManager = new ConcreteAliasManager(this, metaCommands);
         initializeValidCommands();
     }
 
@@ -66,6 +62,19 @@ public class SourceManagerParser implements CommandValidator {
     public SourceManagerParser(AliasManager aliasManager) {
         this.aliasManager = aliasManager;
         initializeValidCommands();
+    }
+
+    /**
+     * Initializes and returns a set of meta-commands.
+     */
+    private Set<String> initializeMetaCommands() {
+        Set<String> metaCommands = new HashSet<>();
+        metaCommands.add(COMMAND_ALIAS_ADD);
+        metaCommands.add(COMMAND_ALIAS_REMOVE);
+        metaCommands.add(COMMAND_ALIAS_CLEAR);
+        metaCommands.add(COMMAND_ALIAS_LIST);
+
+        return metaCommands;
     }
 
     /**
@@ -89,6 +98,7 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
         validCommands.add(RestoreCommand.COMMAND_WORD);
+        validCommands.add(ListDeletedCommand.COMMAND_WORD);
     }
 
     /**
@@ -172,6 +182,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case RestoreCommand.COMMAND_WORD:
             return new RestoreCommandParser().parse(arguments);
+
+        case ListDeletedCommand.COMMAND_WORD:
+            return new ListDeletedCommand();
 
         // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):

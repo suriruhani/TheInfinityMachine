@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
 import static seedu.address.testutil.TypicalSources.AMY;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -20,6 +21,7 @@ import seedu.address.testutil.SourceUtil;
 
 public class AddCommandSystemTest extends SourceManagerSystemTest {
 
+    @Ignore
     @Test
     public void add() {
         Model model = getModel();

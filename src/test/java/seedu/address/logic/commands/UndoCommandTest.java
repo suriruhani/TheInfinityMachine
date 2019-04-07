@@ -36,10 +36,12 @@ public class UndoCommandTest {
     public void execute() {
         // multiple undoable states in model
         expectedModel.undoSourceManager();
+        expectedModel.undoDeletedSources();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // single undoable state in model
         expectedModel.undoSourceManager();
+        expectedModel.undoDeletedSources();
         assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // no undoable states in model

@@ -21,6 +21,7 @@ import seedu.address.logic.commands.GreetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListDeletedCommand;
 import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RestoreCommand;
@@ -97,6 +98,7 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
         validCommands.add(RestoreCommand.COMMAND_WORD);
+        validCommands.add(ListDeletedCommand.COMMAND_WORD);
     }
 
     /**
@@ -180,6 +182,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case RestoreCommand.COMMAND_WORD:
             return new RestoreCommandParser().parse(arguments);
+
+        case ListDeletedCommand.COMMAND_WORD:
+            return new ListDeletedCommand();
 
         // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):

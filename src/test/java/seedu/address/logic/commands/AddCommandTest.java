@@ -209,17 +209,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public ObservableList<Source> getFilteredDeletedSourceList() {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
         public void updateFilteredSourceList(Predicate<Source> predicate) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public void updateFilteredDeletedSourceList(Predicate<Source> predicate) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -289,20 +279,14 @@ public class AddCommandTest {
         }
 
         @Override
-        public ReadOnlyProperty<Source> selectedDeletedSourceProperty() {
+        public void switchToDeletedSources() {
             throw new AssertionError("This method should not be called.");
         }
 
         @Override
-        public Source getSelectedDeletedSource() {
+        public void switchToSources() {
             throw new AssertionError("This method should not be called.");
         }
-
-        @Override
-        public void setSelectedDeletedSource(Source source) {
-            throw new AssertionError("This method should not be called.");
-        }
-
     }
 
     /**

@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +8,8 @@ import org.junit.Test;
 
 public class ConcreteAliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
+
+        @Override
         public boolean isValidCommand(String command) {
             if (command.equals(EXISTING_COMMAND_1) || command.equals(EXISTING_COMMAND_2)) {
                 return true;
@@ -18,6 +18,7 @@ public class ConcreteAliasManagerTest {
             return false;
         }
 
+        @Override
         public boolean isUnaliasableCommand(String command) {
             if (command.equals(DISALLOWED_COMMAND_1) || command.equals(DISALLOWED_COMMAND_2)) {
                 return true;
@@ -25,6 +26,7 @@ public class ConcreteAliasManagerTest {
 
             return false;
         }
+
     }
 
     private static final String ALIAS_1 = "a";

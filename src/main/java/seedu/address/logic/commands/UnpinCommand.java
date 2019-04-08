@@ -67,4 +67,16 @@ public class UnpinCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, sourceToUnpin));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnpinCommand // instanceof handles nulls
+                && targetIndex == (((UnpinCommand) other).targetIndex)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return targetIndex;
+    }
 }

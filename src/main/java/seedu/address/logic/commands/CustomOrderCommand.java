@@ -83,4 +83,17 @@ public class CustomOrderCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, initialIndex + 1, newPosition + 1));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CustomOrderCommand // instanceof handles nulls
+                && initialIndex == (((CustomOrderCommand) other).initialIndex)
+                && newPosition == (((CustomOrderCommand) other).newPosition)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return (initialIndex + newPosition);
+    }
 }

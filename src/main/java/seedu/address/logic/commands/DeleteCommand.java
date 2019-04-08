@@ -69,4 +69,9 @@ public class DeleteCommand extends Command {
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
     }
+
+    @Override
+    public int hashCode() {
+        return targetIndex.getOneBased();
+    }
 }

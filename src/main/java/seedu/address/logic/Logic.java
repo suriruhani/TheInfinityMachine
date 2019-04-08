@@ -26,8 +26,6 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
-    void setParser(ParserMode mode);
-
     /**
      * Returns the SourceManager.
      *

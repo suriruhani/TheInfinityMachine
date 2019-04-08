@@ -133,4 +133,9 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
                 || (other instanceof SourceContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((SourceContainsKeywordsPredicate) other).keywords)); // state check
     }
+
+    @Override
+    public int hashCode() {
+        return keywords.hashCode();
+    }
 }

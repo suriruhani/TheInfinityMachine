@@ -1,10 +1,5 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,15 +62,12 @@ public class ArgumentMultimap {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ArgumentMultimap // instanceof handles nulls
-                    && (this.getPreamble().equals(((ArgumentMultimap) other).getPreamble()))
-                    && (this.getAllValues(PREFIX_TITLE).equals(((ArgumentMultimap) other)
-                        .getAllValues(PREFIX_TITLE)))
-                    && (this.getAllValues(PREFIX_TYPE).equals(((ArgumentMultimap) other)
-                        .getAllValues(PREFIX_TYPE)))
-                    && (this.getAllValues(PREFIX_DETAILS).equals(((ArgumentMultimap) other)
-                        .getAllValues(PREFIX_DETAILS)))
-                    && (this.getAllValues(PREFIX_TAG).equals(((ArgumentMultimap) other)
-                        .getAllValues(PREFIX_TAG)))
+                    && (this.argMultimap.equals(((ArgumentMultimap) other).argMultimap))
                     ); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return argMultimap.hashCode();
     }
 }

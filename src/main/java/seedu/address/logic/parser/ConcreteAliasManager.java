@@ -162,6 +162,10 @@ class ConcreteAliasManager implements AliasManager {
         saveAliases();
     }
 
+    /**
+     * Removes an alias.
+     * @throws IllegalArgumentException if alias is not registered.
+     */
     public void unregisterAlias(String alias) throws IllegalArgumentException {
         logger.info(String.format("Unregistering alias=%s.", alias));
 

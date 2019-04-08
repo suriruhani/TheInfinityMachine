@@ -42,12 +42,16 @@ public class LogicManager implements Logic {
         history = new CommandHistory();
         sourceManagerParser = new SourceManagerParser();
         recycleBinParser = new RecycleBinParser();
+        mainParser = sourceManagerParser; //set parser to SourceManagerParser on start up
 
         // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);
         model.getDeletedSources().addListener(observable -> deletedSourcesModified = true);
     }
 
+    /**
+     * Sets parser in use to SourceManagerParser or RecycleBinParser
+     */
     @Override
     public void setParser(ParserMode mode) {
         if(mode == ParserMode.RECYCLE_BIN) {

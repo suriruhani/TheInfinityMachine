@@ -23,12 +23,15 @@ import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListDeletedCommand;
 import seedu.address.logic.commands.PanicCommand;
+import seedu.address.logic.commands.PinCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.commands.UnpanicCommand;
+import seedu.address.logic.commands.UnpinCommand;
+
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -182,6 +185,12 @@ public class SourceManagerParser implements CommandValidator {
 
         case RestoreCommand.COMMAND_WORD:
             return new RestoreCommandParser().parse(arguments);
+
+        case PinCommand.COMMAND_WORD:
+            return new PinCommandParser().parse(arguments);
+
+        case UnpinCommand.COMMAND_WORD:
+            return new UnpinCommandParser().parse(arguments);
 
         case ListDeletedCommand.COMMAND_WORD:
             return new ListDeletedCommand();

@@ -7,6 +7,7 @@ import java.util.List;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
@@ -39,6 +40,12 @@ public class DeleteCommand extends Command {
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+        }
+
+        boolean isSourcePinned = PinnedSourcesCoordinationCenter.isPinnedSource(model, targetIndex.getZeroBased());
+        if (isSourcePinned == true) {
+            PinnedSourcesCoordinationCenter.decrementPinnedSources(model);
+            PinnedSourcesCoordinationCenter.saveCurrentPinnedSources(model);
         }
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());

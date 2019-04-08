@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.model.Model;
 
 /**
@@ -14,6 +15,7 @@ public class ExitCommand extends Command {
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
+        PinnedSourcesCoordinationCenter.saveCurrentPinnedSources(model);
         // Fix bug whereby model permanently loses data when exiting while in panic mode.
         // This is because the actual source manager is preserved in memory,
         // while the mock source manager has its contents written to disk (persistent storage).

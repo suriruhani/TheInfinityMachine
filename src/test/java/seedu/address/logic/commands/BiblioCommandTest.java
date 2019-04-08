@@ -22,7 +22,7 @@ import seedu.address.model.UserPrefs;
  */
 public class BiblioCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test

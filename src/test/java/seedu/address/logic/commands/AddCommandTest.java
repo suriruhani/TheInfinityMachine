@@ -287,6 +287,16 @@ public class AddCommandTest {
         public void switchToSources() {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public int getNumberOfPinnedSources() {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setNumberOfPinnedSources(int newNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
     }
 
     /**

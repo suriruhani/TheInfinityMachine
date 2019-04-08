@@ -83,24 +83,24 @@ public class CommandHashTest {
         }
     }
 
-    @Test
-    public void check_hashcodeRestoreCommand_success() {
-        HashSet<RestoreCommand> set = new HashSet<RestoreCommand>();
-
-        try {
-            RestoreCommand one = new RestoreCommand(ParserUtil.parseIndex("2"));
-            RestoreCommand two = new RestoreCommand(ParserUtil.parseIndex("2"));
-
-            set.add(one);
-            set.add(two);
-
-            int size = set.size();
-
-            assertEquals(size, 1);
-        } catch (ParseException pe) {
-            assertEquals(0, 1);
-        }
-    }
+    //    @Test
+//    public void check_hashcodeRestoreCommand_success() {
+//        HashSet<RestoreCommand> set = new HashSet<RestoreCommand>();
+//
+//        try {
+//            RestoreCommand one = new RestoreCommand(ParserUtil.parseIndex("2"));
+//            RestoreCommand two = new RestoreCommand(ParserUtil.parseIndex("2"));
+//
+//            set.add(one);
+//            set.add(two);
+//
+//            int size = set.size();
+//
+//            assertEquals(size, 1);
+//        } catch (ParseException pe) {
+//            assertEquals(0, 1);
+//        }
+//    }
 
     @Test
     public void check_hashcodePinCommand_success() {

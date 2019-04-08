@@ -63,9 +63,4 @@ public class RestoreCommand extends Command {
                 || (other instanceof RestoreCommand // instanceof handles nulls
                 && targetIndex.equals(((RestoreCommand) other).targetIndex)); // state check
     }
-
-    @Override
-    public int hashCode() {
-        return targetIndex.getOneBased();
-    }
 }

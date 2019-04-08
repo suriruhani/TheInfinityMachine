@@ -12,6 +12,7 @@ import java.util.regex.PatternSyntaxException;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.ModelManager;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.biblio.BiblioField;
 
 /**
  * Represents a Source in the address book.
@@ -25,6 +26,7 @@ public class Source {
     private final Detail detail;
 
     private final Set<Tag> tags = new HashSet<>();
+    private final Set<BiblioField> biblioFields = new HashSet<>();
 
     public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
@@ -32,6 +34,15 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+    }
+
+    public Source(Title title, Type type, Detail detail, Set<BiblioField> biblioFields, Set<Tag> tags) {
+        requireAllNonNull(title, type, detail, tags);
+        this.title = title;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+        this.biblioFields.addAll(biblioFields);
     }
 
     /**
@@ -69,11 +80,19 @@ public class Source {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags);
+    }
+
+    /**
+     * Returns an immutable BiblioFields set which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<BiblioField> getBiblioFields() {
+        return Collections.unmodifiableSet(biblioFields);
     }
 
     /**
@@ -110,13 +129,14 @@ public class Source {
         return otherSource.getTitle().equals(getTitle())
                 && otherSource.getType().equals(getType())
                 && otherSource.getDetail().equals(getDetail())
-                && otherSource.getTags().equals(getTags());
+                && otherSource.getTags().equals(getTags())
+                && otherSource.getBiblioFields().equals(getBiblioFields());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, detail, tags);
+        return Objects.hash(title, type, detail, tags, biblioFields);
     }
 
     @Override
@@ -130,6 +150,8 @@ public class Source {
                 .append(getDetail() + "\n")
                 .append("Tags: ");
         getTags().forEach(builder::append);
+        builder.append("BiblioFields: ");
+        getBiblioFields().forEach(builder::append);
         return builder.toString();
     }
 

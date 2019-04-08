@@ -10,9 +10,16 @@ import org.junit.Test;
 
 public class ConcreteAliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
-        @Override
         public boolean isValidCommand(String command) {
             if (command.equals(EXISTING_COMMAND_1) || command.equals(EXISTING_COMMAND_2)) {
+                return true;
+            }
+
+            return false;
+        }
+
+        public boolean isUnaliasableCommand(String command) {
+            if (command.equals(DISALLOWED_COMMAND_1) || command.equals(DISALLOWED_COMMAND_2)) {
                 return true;
             }
 
@@ -35,11 +42,7 @@ public class ConcreteAliasManagerTest {
     public void setup() {
         // Creates fresh instance without persistence
         // Alias persistence messes up unit test cases
-        Set<String> disallowedCommands = new HashSet<>();
-        disallowedCommands.add(DISALLOWED_COMMAND_1);
-        disallowedCommands.add(DISALLOWED_COMMAND_2);
-
-        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, null);
+        aliasManager = new ConcreteAliasManager(commandValidator, null);
     }
 
     @Test(expected = IllegalArgumentException.class)

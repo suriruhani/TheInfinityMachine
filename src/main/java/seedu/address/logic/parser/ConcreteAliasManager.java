@@ -3,7 +3,6 @@ package seedu.address.logic.parser;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
@@ -23,26 +22,20 @@ class ConcreteAliasManager implements AliasManager {
     private static final Logger logger = LogsCenter.getLogger(ConcreteAliasManager.class);
 
     private CommandValidator commandValidator;
-    private Set<String> disallowedCommands;
     private HashMap<String, String> aliases = new HashMap<>();
     private AliasStorage aliasStorage;
 
     /**
      * Instantiates a ConcreteAliasManager.
      * @param commandValidator Validates commands, must not be null.
-     * @param disallowedCommands A collection of commands that may not be aliased, must not be null.
      * @param aliasStorage An AliasStorage object to support storing aliases persistently. Pass null
      *                     to disable alias persistence (e.g. for unit testing).
      */
-    ConcreteAliasManager(CommandValidator commandValidator,
-                         Set<String> disallowedCommands,
-                         AliasStorage aliasStorage) {
+    ConcreteAliasManager(CommandValidator commandValidator, AliasStorage aliasStorage) {
         Objects.requireNonNull(commandValidator);
-        Objects.requireNonNull(disallowedCommands);
 
         logger.info("Instantiating ConcreteAliasManager.");
         this.commandValidator = commandValidator;
-        this.disallowedCommands = disallowedCommands;
         this.aliasStorage = aliasStorage;
 
         logger.info("Instantiated ConcreteAliasManager.");
@@ -147,7 +140,7 @@ class ConcreteAliasManager implements AliasManager {
         }
 
         // Guard against command being a disallowed command
-        if (disallowedCommands.contains(command)) {
+        if (commandValidator.isUnaliasableCommand(command)) {
             logger.warning("Command cannot be aliased. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_DISALLOWED_COMMAND);
         }

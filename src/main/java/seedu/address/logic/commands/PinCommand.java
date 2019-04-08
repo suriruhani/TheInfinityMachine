@@ -66,4 +66,16 @@ public class PinCommand extends Command {
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, sourceToPin));
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof PinCommand // instanceof handles nulls
+                && targetIndex == (((PinCommand) other).targetIndex)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return targetIndex;
+    }
 }

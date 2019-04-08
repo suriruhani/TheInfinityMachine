@@ -12,7 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parser for the CustomOrder command which takes in a user input.
  */
-public class CustomOrderCommandParser {
+public class CustomOrderCommandParser implements Parser<CustomOrderCommand> {
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
     /**

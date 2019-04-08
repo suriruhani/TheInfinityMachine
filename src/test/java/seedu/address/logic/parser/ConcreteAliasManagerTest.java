@@ -38,7 +38,7 @@ public class ConcreteAliasManagerTest {
         disallowedCommands.add("alias-rm");
         disallowedCommands.add("alias-ls");
 
-        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, false);
+        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, null);
     }
 
     @Test(expected = IllegalArgumentException.class)

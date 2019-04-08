@@ -22,6 +22,7 @@ public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Title title;
+    private final Author author;
     private final Type type;
     private final Detail detail;
 
@@ -34,11 +35,14 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+
+        this.author = new Author("Unknown Author");
     }
 
-    public Source(Title title, Type type, Detail detail, Set<BiblioField> biblioFields, Set<Tag> tags) {
+    public Source(Title title, Author author, Type type, Detail detail, Set<BiblioField> biblioFields, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
         this.title = title;
+        this.author = author;
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
@@ -69,6 +73,10 @@ public class Source {
 
     public Title getTitle() {
         return title;
+    }
+
+    public Author getAuthor() {
+        return author;
     }
 
     public Type getType() {
@@ -127,6 +135,7 @@ public class Source {
 
         Source otherSource = (Source) other;
         return otherSource.getTitle().equals(getTitle())
+                && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getType().equals(getType())
                 && otherSource.getDetail().equals(getDetail())
                 && otherSource.getTags().equals(getTags())
@@ -144,6 +153,8 @@ public class Source {
         final StringBuilder builder = new StringBuilder();
         builder.append("Title: ")
                 .append(getTitle() + "\n")
+                .append("Author: ")
+                .append(getAuthor() + "\n")
                 .append("Type: ")
                 .append(getType() + "\n")
                 .append("Detail: ")

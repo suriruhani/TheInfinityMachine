@@ -11,7 +11,7 @@ import static seedu.address.model.source.Source.validateSourceAttribute;
 public class Author {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Author names should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Author names can take any value, and it should not be blank";
 
     /*
      * The first character of an Author's name must not be a whitespace,

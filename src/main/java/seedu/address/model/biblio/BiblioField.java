@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class BiblioField {
 
-    public static final String MESSAGE_CONSTRAINTS = "Field body should be alphanumeric";
+    public static final String MESSAGE_CONSTRAINTS = "Field bodies can take any value, and it should not be blank";
     public static final String MESSAGE_TYPE_CONSTRAINTS= "Field type should be one of the following:\n" +
             "City\n" +
             "Date\n" +

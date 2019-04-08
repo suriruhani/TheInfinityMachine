@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.Parser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
@@ -24,6 +25,8 @@ public interface Logic {
      * @throws ParseException If an error occurs during parsing.
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
+
+    void setParser(ParserMode mode);
 
     /**
      * Returns the SourceManager.

@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.RecycleBinParser;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -30,18 +31,32 @@ public class LogicManager implements Logic {
     private final Storage storage;
     private final CommandHistory history;
     private final SourceManagerParser sourceManagerParser;
+    private final RecycleBinParser recycleBinParser;
     private boolean sourceManagerModified;
     private boolean deletedSourcesModified;
+    private SourceManagerParser mainParser;
 
     public LogicManager(Model model, Storage storage) {
         this.model = model;
         this.storage = storage;
         history = new CommandHistory();
         sourceManagerParser = new SourceManagerParser();
+        recycleBinParser = new RecycleBinParser();
 
         // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);
         model.getDeletedSources().addListener(observable -> deletedSourcesModified = true);
+    }
+
+    @Override
+    public void setParser(ParserMode mode) {
+        if(mode == ParserMode.RECYCLE_BIN) {
+            mainParser = recycleBinParser;
+        }
+
+        if (mode == ParserMode.SOURCE_MANAGER) {
+            mainParser = sourceManagerParser;
+        }
     }
 
     @Override
@@ -52,7 +67,7 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         try {
-            Command command = sourceManagerParser.parseCommand(commandText);
+            Command command = mainParser.parseCommand(commandText);
             commandResult = command.execute(model, history);
         } finally {
             history.add(commandText);

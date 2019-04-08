@@ -40,10 +40,12 @@ class ConcreteAliasManager implements AliasManager {
         Objects.requireNonNull(commandValidator);
         Objects.requireNonNull(disallowedCommands);
 
+        logger.info("Instantiating ConcreteAliasManager.");
         this.commandValidator = commandValidator;
         this.disallowedCommands = disallowedCommands;
         this.aliasStorage = aliasStorage;
 
+        logger.info("Instantiated ConcreteAliasManager.");
         initialize();
     }
 
@@ -51,7 +53,9 @@ class ConcreteAliasManager implements AliasManager {
      * Contains setup and initialization code that should be run before usage.
      */
     private void initialize() {
+        logger.info("Initializing ConcreteAliasManager for use.");
         if (aliasStorage == null) {
+            logger.info("No AlaisStorage object provided. Terminating initialization.");
             return;
         }
 
@@ -131,23 +135,32 @@ class ConcreteAliasManager implements AliasManager {
         Objects.requireNonNull(alias);
         Objects.requireNonNull(command);
 
+        logger.info(
+                String.format("Registering alias=%s to command=%s.",
+                        alias,
+                        command));
+
         // Guard against invalid alias syntax
         if (!alias.matches(REGEX_VALIDATOR)) {
+            logger.warning("Alias syntax is invalid. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_INVALID_SYNTAX);
         }
 
-        // Guard against commend being a disallowed command
+        // Guard against command being a disallowed command
         if (disallowedCommands.contains(command)) {
+            logger.warning("Command cannot be aliased. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_DISALLOWED_COMMAND);
         }
 
         // Guard against command being another registered alias
         if (isAlias(command)) {
+            logger.warning("Command is an alias and cannot be aliased. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_COMMAND_IS_ALIAS);
         }
 
         // Guard against alias being an existing command
         if (commandValidator.isValidCommand(alias)) {
+            logger.warning("Alias is a command and cannot be registered. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_ALIAS_IS_COMMAND);
         }
 
@@ -156,17 +169,22 @@ class ConcreteAliasManager implements AliasManager {
     }
 
     public void unregisterAlias(String alias) {
+        logger.info(String.format("Unregistering alias=%s.", alias));
         aliases.remove(alias);
         saveAliases();
     }
 
     public void clearAliases() {
+        logger.info("Clearing all aliases.");
         aliases.clear();
         saveAliases();
     }
 
     public Optional<String> getCommand(String alias) {
         Objects.requireNonNull(alias);
+
+        logger.info(String.format("Getting command for alias=%s.", alias));
+
         if (!isAlias(alias)) {
             return Optional.empty();
         }
@@ -176,6 +194,7 @@ class ConcreteAliasManager implements AliasManager {
     }
 
     public HashMap<String, String> getAliasList() {
+        logger.info("Getting list of aliases.");
         return (HashMap) aliases.clone();
     }
 

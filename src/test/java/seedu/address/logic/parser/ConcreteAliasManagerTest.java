@@ -68,9 +68,6 @@ public class ConcreteAliasManagerTest {
     @Test
     // Create an alias for an existing (valid) command
     public void create_existingCommand_unusedAlias() {
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
-        Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
-
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
 
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
@@ -81,19 +78,25 @@ public class ConcreteAliasManagerTest {
     @Test(expected = IllegalArgumentException.class)
     // Create an alias for a non-existing (invalid) command
     public void create_nonExistingCommand_unusedAlias() {
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
-        Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
-
         aliasManager.registerAlias(NOVEL_COMMAND_1, ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for an existing (valid) command using another command as alias
     public void create_existingCommand_aliasIsExistingCommand() {
-        Assert.assertFalse(aliasManager.isAlias(EXISTING_COMMAND_2));
-        Assert.assertFalse(aliasManager.getCommand(EXISTING_COMMAND_2).isPresent());
-
         aliasManager.registerAlias(EXISTING_COMMAND_1, EXISTING_COMMAND_2);
+    }
+
+    @Test
+    // Attempt to create an alias for an existing (valid) command using an existing alias
+    public void create_existingCommand_aliasIsExistingAlias() {
+        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
+        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
+        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
+
+        aliasManager.registerAlias(EXISTING_COMMAND_2, ALIAS_1);
+        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
+        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_2);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -108,20 +111,6 @@ public class ConcreteAliasManagerTest {
         aliasManager.registerAlias(DISALLOWED_COMMAND_1, DISALLOWED_COMMAND_2);
     }
 
-    @Test
-    // Attempt to create an alias for an existing (valid) command using an existing alias
-    public void create_existingCommand_aliasIsExistingAlias() {
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
-
-        aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
-        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
-        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
-
-        aliasManager.registerAlias(EXISTING_COMMAND_2, ALIAS_1);
-        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
-        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_2);
-    }
-
     @Test(expected = IllegalArgumentException.class)
     // Attempt to create an alias for another alias
     public void create_commandIsAlias_unusedAlias() {
@@ -130,10 +119,9 @@ public class ConcreteAliasManagerTest {
     }
 
     @Test
+    // Attempt to unregister a registered alias
     public void remove_existingAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
-        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
-        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
 
         aliasManager.unregisterAlias(ALIAS_1);
         Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
@@ -141,11 +129,9 @@ public class ConcreteAliasManagerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    // Attempt to unregister an unregistered alias
     public void remove_nonExistingAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
-        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
-        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
-
         aliasManager.unregisterAlias(ALIAS_2);
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
         Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());

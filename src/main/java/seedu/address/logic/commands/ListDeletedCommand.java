@@ -13,7 +13,7 @@ public class ListDeletedCommand extends Command {
 
     public static final String COMMAND_WORD = "list-deleted";
 
-    public static final String MESSAGE_LIST_ALL_DELETED_SUCCESS = "Listed all deleted sources!";
+    public static final String MESSAGE_LIST_ALL_DELETED_SUCCESS = "Switched to Recycle Bin mode.\nListed all deleted sources!";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {

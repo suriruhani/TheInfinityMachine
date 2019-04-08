@@ -1,21 +1,22 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListDeletedCommand;
-import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-public class RecycleBinParser extends BasicParser {
+public abstract class BasicParser {
 
-    @Override
+    /**
+     * Used for initial separation of command word and args.
+     */
+    protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
     public Command parseCommand(String userInput) throws ParseException {
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(userInput.trim());
         if (!matcher.matches()) {
@@ -27,21 +28,10 @@ public class RecycleBinParser extends BasicParser {
 
         switch (commandWord) {
 
-            case ListDeletedCommand.COMMAND_WORD:
-                return new ListDeletedCommand();
-
-            case DeleteCommand.COMMAND_WORD:
-                return new DeleteCommandParser().parse(arguments);
-
-            case RestoreCommand.COMMAND_WORD:
-                return new RestoreCommandParser().parse(arguments);
-
-            case ClearCommand.COMMAND_WORD:
-                return new ClearCommand();
-
+            case ExitCommand.COMMAND_WORD:
+                return new ExitCommand();
             default:
-                return super.parseCommand(userInput);
+                return parseCommand(userInput);
         }
     }
-
 }

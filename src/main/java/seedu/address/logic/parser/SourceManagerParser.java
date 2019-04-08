@@ -38,7 +38,7 @@ import seedu.address.storage.ConcreteAliasStorage;
 /**
  * Parses user input.
  */
-public class SourceManagerParser implements CommandValidator {
+public class SourceManagerParser extends BasicParser implements CommandValidator{
     private static final String COMMAND_ALIAS_ADD = "alias";
     private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
     private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
@@ -227,7 +227,7 @@ public class SourceManagerParser implements CommandValidator {
             String actualCommand = aliasManager.getCommand(commandWord).get();
 
             String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
-            return parseCommand(actualUserInput);
+            return super.parseCommand(actualUserInput);
         }
     }
 

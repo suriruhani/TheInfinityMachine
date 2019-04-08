@@ -4,31 +4,24 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.CountCommand;
-import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
-import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
-
 
 public class SourceManagerParserTest {
     @Rule
@@ -81,12 +74,14 @@ public class SourceManagerParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    @Ignore
     @Test
-    public void parseCommand_find() throws Exception {
-        //List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        //SearchCommand command = (SearchCommand) parser.parseCommand(
-                //SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        //assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(keywords)), command);
+    public void parseCommand_search() throws Exception {
+        ArgumentMultimap argMultimap = new ArgumentMultimap();
+        argMultimap.put(PREFIX_TITLE, VALID_TITLE_AMY);
+        SearchCommand command = (SearchCommand) parser.parseCommand(
+                SearchCommand.COMMAND_WORD + TITLE_DESC_AMY );
+        assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap)), command);
     }
 
     @Test

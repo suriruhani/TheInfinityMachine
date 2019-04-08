@@ -12,18 +12,18 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class BiblioField {
 
     public static final String MESSAGE_CONSTRAINTS = "Field bodies can take any value, and it should not be blank";
-    public static final String MESSAGE_TYPE_CONSTRAINTS= "Field type should be one of the following:\n" +
-            "City\n" +
-            "Date\n" +
-            "Journal\n" +
-            "Pages\n" +
-            "Publisher\n" +
-            "URL\n" +
-            "Webpage\n" +
-            "Website\n";
+    public static final String MESSAGE_TYPE_CONSTRAINTS = "Field type should be one of the following:\n"
+            + "City\n"
+            + "Date\n"
+            + "Journal\n"
+            + "Pages\n"
+            + "Publisher\n"
+            + "URL\n"
+            + "Webpage\n"
+            + "Website\n";
     public static final String BODY_VALIDATION_REGEX = "\\p{Alnum}+";
     public static final String[] ACCEPTED_BIBLIO_TYPES =
-            {"City","Date","Journal","Pages","Publisher","URL","Webpage","Website"};
+        {"City", "Date", "Journal", "Pages", "Publisher", "URL", "Webpage", "Website"};
 
     public final String type;
     public final String body;

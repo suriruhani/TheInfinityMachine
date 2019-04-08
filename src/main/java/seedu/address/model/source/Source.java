@@ -11,8 +11,8 @@ import java.util.regex.PatternSyntaxException;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.ModelManager;
-import seedu.address.model.tag.Tag;
 import seedu.address.model.biblio.BiblioField;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Source in the address book.

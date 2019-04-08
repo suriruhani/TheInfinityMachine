@@ -223,10 +223,11 @@ If there are only 6 sources in the database, the command moves the source locate
 === Generate bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
-Format: `biblio INDEX`
+Format: `biblio FORMAT INDEX`
 
 ****
-* Generates a bibliographical entry from the source at the specified `INDEX`.
+* Generates a bibliographical entry of the appropriate style from the source at the specified `INDEX`.
+* The format must be APA or MLA
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -426,7 +427,8 @@ e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 e.g. `search i/algorithm y/journal`
 * *List* : `list [N]`
 * *Help* : `help`
-* *Biblio* : `biblio`
+  * *Biblio* : `biblio FORMAT INDEX` +
+  e.g. `biblio APA 1`
 * *History* : `history`
 * *Adding an alias* : `alias c/COMMAND a/ALIAS` +
 e.g. `alias c/edit a/e`

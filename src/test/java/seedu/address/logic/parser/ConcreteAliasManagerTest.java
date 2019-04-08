@@ -144,17 +144,15 @@ public class ConcreteAliasManagerTest {
         Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void remove_nonExistingAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
         Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
 
-        aliasManager.unregisterAlias(ALIAS_2); // Should not throw
+        aliasManager.unregisterAlias(ALIAS_2);
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
         Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_2));
-        Assert.assertFalse(aliasManager.getCommand(ALIAS_2).isPresent());
     }
 
     @Test

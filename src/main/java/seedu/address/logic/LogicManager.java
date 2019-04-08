@@ -42,7 +42,6 @@ public class LogicManager implements Logic {
         // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);
         model.getDeletedSources().addListener(observable -> deletedSourcesModified = true);
-
     }
 
     @Override

@@ -47,7 +47,7 @@ public class SourceManagerParser implements CommandValidator {
     /**
      * Used for initial separation of command word and args.
      */
-    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+    protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     private Set<String> metaCommands = new HashSet<>();
     private Set<String> validCommands = new HashSet<>();

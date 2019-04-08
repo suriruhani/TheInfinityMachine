@@ -16,13 +16,10 @@ import seedu.address.logic.parser.RecycleBinParser;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
-import seedu.address.model.ParserMode;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.source.Source;
 import seedu.address.storage.Storage;
-
-import static seedu.address.model.ParserMode.RECYCLE_BIN;
 
 /**
  * The main LogicManager of the app.

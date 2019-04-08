@@ -6,7 +6,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BiblioCommand;
@@ -21,9 +20,9 @@ import seedu.address.logic.commands.GreetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListDeletedCommand;
 import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.PinCommand;
+import seedu.address.logic.commands.RecycleBinCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SearchCommand;
@@ -95,7 +94,7 @@ public class SourceManagerParser extends BasicParser implements CommandValidator
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
         validCommands.add(RestoreCommand.COMMAND_WORD);
-        validCommands.add(ListDeletedCommand.COMMAND_WORD);
+        validCommands.add(RecycleBinCommand.COMMAND_WORD);
     }
 
     public boolean isValidCommand(String command) {
@@ -187,8 +186,8 @@ public class SourceManagerParser extends BasicParser implements CommandValidator
         case UnpinCommand.COMMAND_WORD:
             return new UnpinCommandParser().parse(arguments);
 
-        case ListDeletedCommand.COMMAND_WORD:
-            return new ListDeletedCommand();
+        case RecycleBinCommand.COMMAND_WORD:
+            return new RecycleBinCommand();
 
         // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):

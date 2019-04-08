@@ -56,9 +56,12 @@ public class DeleteCommand extends Command {
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
         }
 
+        // add deleted source to deleted sources database
         model.addDeletedSource(sourceToDelete);
-        model.deleteSource(sourceToDelete);
         model.commitDeletedSources();
+
+        // remove source from source manager database
+        model.deleteSource(sourceToDelete);
         model.commitSourceManager();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
     }
@@ -68,10 +71,5 @@ public class DeleteCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return targetIndex.getOneBased();
     }
 }

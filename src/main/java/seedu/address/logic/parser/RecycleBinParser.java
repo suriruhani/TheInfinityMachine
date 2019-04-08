@@ -27,7 +27,7 @@ public class RecycleBinParser extends SourceManagerParser {
         switch (commandWord) {
 
             case ListDeletedCommand.COMMAND_WORD:
-                return new AddCommandParser().parse(arguments);
+                return new ListDeletedCommand();
 
             case DeleteCommand.COMMAND_WORD:
                 return new DeleteCommandParser().parse(arguments);

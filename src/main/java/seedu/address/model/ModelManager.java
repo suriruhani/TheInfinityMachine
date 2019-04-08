@@ -92,18 +92,6 @@ public class ModelManager implements Model, PanicMode {
         this(new SourceManager(), new UserPrefs(), new DeletedSources());
     }
 
-    private ParserMode mode = ParserMode.SOURCE_MANAGER;
-
-    @Override
-    public ParserMode getMode() {
-        return this.mode;
-    }
-
-    @Override
-    public void setMode(ParserMode mode) {
-        this.mode = mode;
-    }
-
     /**
      * Switches list in filteredSources list to deletedSourceList.
      */

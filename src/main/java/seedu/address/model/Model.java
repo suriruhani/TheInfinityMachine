@@ -241,14 +241,4 @@ public interface Model extends PanicMode {
      * Sets the number of pinned sources.
      */
     void setNumberOfPinnedSources(int newNumber);
-
-    /**
-     * Gets the mode of parser.
-     */
-    ParserMode getMode();
-
-    /**
-     * Sets the mode of parser.
-     */
-    void setMode(ParserMode mode);
 }

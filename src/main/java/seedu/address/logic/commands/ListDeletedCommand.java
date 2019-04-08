@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.LogicManager;
 import seedu.address.model.Model;
 
 /**

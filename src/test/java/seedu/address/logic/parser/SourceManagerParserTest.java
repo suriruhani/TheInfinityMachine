@@ -180,10 +180,10 @@ public class SourceManagerParserTest {
 
     @Test
     public void parseMetaCommand_removeAlias_validArgumentsNonExistingAlias() throws Exception {
-        // Should not throw
+        thrown.expect(ParseException.class);
+
         parser.parseCommand("alias count c");
         parser.parseCommand("alias-rm foo"); // "foo" is not an alias
-        assertTrue(parser.parseCommand("c") instanceof CountCommand);
     }
 
     @Test

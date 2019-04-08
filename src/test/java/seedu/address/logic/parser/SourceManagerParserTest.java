@@ -5,8 +5,10 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 
 import org.junit.Before;
@@ -77,8 +79,9 @@ public class SourceManagerParserTest {
     @Ignore
     @Test
     public void parseCommand_search() throws Exception {
-        ArgumentMultimap argMultimap = new ArgumentMultimap();
-        argMultimap.put(PREFIX_TITLE, VALID_TITLE_AMY);
+        String input = TITLE_DESC_AMY;
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
+                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
         SearchCommand command = (SearchCommand) parser.parseCommand(
                 SearchCommand.COMMAND_WORD + TITLE_DESC_AMY );
         assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap)), command);

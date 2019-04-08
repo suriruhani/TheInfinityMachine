@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.EmptyBinCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ExitBinCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -37,6 +37,9 @@ public class RecycleBinParser extends BasicParser {
 
         case RestoreCommand.COMMAND_WORD:
             return new RestoreCommandParser().parse(arguments);
+            
+        case CountCommand.COMMAND_WORD:
+            return new CountCommand();
 
         case EmptyBinCommand.COMMAND_WORD:
             return new EmptyBinCommand();

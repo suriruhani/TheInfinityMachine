@@ -15,6 +15,7 @@ import seedu.address.model.source.Source;
 
 /**
  * Deletes a source identified using it's displayed index from the source manager.
+ * Can also be used in recycle bin mode to delete sources permanently from the deleted source list.
  */
 public class DeleteCommand extends Command {
 

@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.regex.Matcher;
@@ -29,10 +30,18 @@ public abstract class BasicParser {
 
         switch (commandWord) {
 
-            case ExitCommand.COMMAND_WORD:
-                return new ExitCommand();
-            default:
-                throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
+        case SelectCommand.COMMAND_WORD:
+            return new SelectCommandParser().parse(arguments);
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        default:
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
+
         }
     }
 }

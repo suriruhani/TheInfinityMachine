@@ -17,6 +17,7 @@ class ConcreteAliasManager implements AliasManager {
     private static final String ERROR_DISALLOWED_COMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
+    private static final String ERROR_ALIAS_IS_UNREGISTERED = "The provided alias is not registered";
     private static final String REGEX_VALIDATOR = "([a-z]|[A-Z])+";
 
     private static final Logger logger = LogsCenter.getLogger(ConcreteAliasManager.class);
@@ -161,8 +162,15 @@ class ConcreteAliasManager implements AliasManager {
         saveAliases();
     }
 
-    public void unregisterAlias(String alias) {
+    public void unregisterAlias(String alias) throws IllegalArgumentException {
         logger.info(String.format("Unregistering alias=%s.", alias));
+
+        // Guard against alias being unregistered
+        if (!isAlias(alias)) {
+            logger.warning("Alias is not registered. Throwing IllegalArgumentException.");
+            throw new IllegalArgumentException(ERROR_ALIAS_IS_UNREGISTERED);
+        }
+
         aliases.remove(alias);
         saveAliases();
     }

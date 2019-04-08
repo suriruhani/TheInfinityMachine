@@ -78,17 +78,13 @@ public class ConcreteAliasManagerTest {
         Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     // Create an alias for a non-existing (invalid) command
     public void create_nonExistingCommand_unusedAlias() {
         Assert.assertFalse(aliasManager.isAlias(ALIAS_1));
         Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
 
         aliasManager.registerAlias(NOVEL_COMMAND_1, ALIAS_1);
-
-        Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
-        Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
-        Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), NOVEL_COMMAND_1);
     }
 
     @Test(expected = IllegalArgumentException.class)

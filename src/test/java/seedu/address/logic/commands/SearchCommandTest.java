@@ -242,8 +242,12 @@ public class SearchCommandTest {
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_DETAILS);
         pList.add(PREFIX_DETAILS);
+        pList.add(PREFIX_DETAILS);
+        pList.add(PREFIX_DETAILS);
         sList.add("e_detail");
         sList.add("e_detail");
+        sList.add("tail");
+        sList.add("eta");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
@@ -260,13 +264,37 @@ public class SearchCommandTest {
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TAG);
         pList.add(PREFIX_TAG);
+        pList.add(PREFIX_TAG);
         sList.add("friend");
         sList.add("end");
+        sList.add("fri");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
         assertEquals(Arrays.asList(ALICE, BENSON, DANIEL), model.getFilteredSourceList());
+
+    }
+
+    @Test
+    public void execute_multipleCompoundKeywords_multipleSourcesFound() {
+
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        ArrayList<Prefix> pList = new ArrayList<>();
+        ArrayList<String> sList = new ArrayList<>();
+        pList.add(PREFIX_TITLE);
+        pList.add(PREFIX_TYPE);
+        pList.add(PREFIX_DETAILS);
+        pList.add(PREFIX_TAG);
+        sList.add("alice");
+        sList.add("");
+        sList.add("_detail");
+        sList.add("end");
+        SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredSourceList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALICE), model.getFilteredSourceList());
 
     }
 

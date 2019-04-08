@@ -37,7 +37,7 @@ public class RecycleBinParser extends BasicParser {
 
         case RestoreCommand.COMMAND_WORD:
             return new RestoreCommandParser().parse(arguments);
-            
+
         case CountCommand.COMMAND_WORD:
             return new CountCommand();
 

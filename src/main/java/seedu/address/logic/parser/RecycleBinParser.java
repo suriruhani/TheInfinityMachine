@@ -1,8 +1,10 @@
 package seedu.address.logic.parser;
 
+import seedu.address.logic.EmptyBinCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ExitBinCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RecycleBinCommand;
 import seedu.address.logic.commands.RestoreCommand;
@@ -27,20 +29,24 @@ public class RecycleBinParser extends BasicParser {
 
         switch (commandWord) {
 
-            case RecycleBinCommand.COMMAND_WORD:
-                return new RecycleBinCommand();
+        case RecycleBinCommand.COMMAND_WORD:
+            return new RecycleBinCommand();
 
-            case DeleteCommand.COMMAND_WORD:
-                return new DeleteCommandParser().parse(arguments);
+        case DeleteCommand.COMMAND_WORD:
+            return new DeleteCommandParser().parse(arguments);
 
-            case RestoreCommand.COMMAND_WORD:
-                return new RestoreCommandParser().parse(arguments);
+        case RestoreCommand.COMMAND_WORD:
+            return new RestoreCommandParser().parse(arguments);
 
-            case ClearCommand.COMMAND_WORD:
-                return new ClearCommand();
+        case EmptyBinCommand.COMMAND_WORD:
+            return new EmptyBinCommand();
 
-            default:
-                throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
+        case ExitBinCommand.COMMAND_WORD:
+            return new ExitBinCommand();
+
+        default:
+            throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
+            
         }
     }
 

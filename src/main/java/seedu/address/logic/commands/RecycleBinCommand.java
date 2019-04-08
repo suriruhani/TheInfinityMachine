@@ -19,7 +19,7 @@ public class RecycleBinCommand extends Command {
             + "\nListed all deleted sources!";
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {
+    public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.setParserMode(ParserMode.RECYCLE_BIN); //switch parser to recycle bin
         model.switchToDeletedSources(); // sets delete sources data to list

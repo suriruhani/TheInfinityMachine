@@ -8,7 +8,7 @@ import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 
 /**
- * Clears the address book.
+ * Clears the source manager.
  */
 public class ClearCommand extends Command {
 

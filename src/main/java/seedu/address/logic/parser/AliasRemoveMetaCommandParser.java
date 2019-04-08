@@ -36,8 +36,12 @@ public class AliasRemoveMetaCommandParser extends AliasMetaCommandParser impleme
             throw new ParseException(String.format(MESSAGE_INVALID_SYNTAX, getCommand()));
         }
 
-        getAliasManager().unregisterAlias(splitArguments[0]);
-        return new DummyCommand(MESSAGE_SUCCESS);
+        try {
+            getAliasManager().unregisterAlias(splitArguments[0]);
+            return new DummyCommand(MESSAGE_SUCCESS);
+        } catch (IllegalArgumentException e) {
+            throw new ParseException(e.getMessage());
+        }
     }
 
 }

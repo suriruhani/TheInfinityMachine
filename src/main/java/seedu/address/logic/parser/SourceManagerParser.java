@@ -33,6 +33,7 @@ import seedu.address.logic.commands.UnpanicCommand;
 import seedu.address.logic.commands.UnpinCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.storage.ConcreteAliasStorage;
 
 /**
  * Parses user input.
@@ -48,15 +49,15 @@ public class SourceManagerParser implements CommandValidator {
      */
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    // Set of all valid commands
-    private HashSet<String> validCommands = new HashSet<>();
+    private Set<String> metaCommands = new HashSet<>();
+    private Set<String> validCommands = new HashSet<>();
 
     private AliasManager aliasManager;
 
     public SourceManagerParser() {
-        Set<String> metaCommands = initializeMetaCommands();
-        aliasManager = new ConcreteAliasManager(this, metaCommands);
+        initializeMetaCommands();
         initializeValidCommands();
+        aliasManager = new ConcreteAliasManager(this, new ConcreteAliasStorage());
     }
 
     /**
@@ -64,20 +65,18 @@ public class SourceManagerParser implements CommandValidator {
      */
     public SourceManagerParser(AliasManager aliasManager) {
         this.aliasManager = aliasManager;
+        initializeMetaCommands();
         initializeValidCommands();
     }
 
     /**
-     * Initializes and returns a set of meta-commands.
+     * Initializes the a set of meta-commands.
      */
-    private Set<String> initializeMetaCommands() {
-        Set<String> metaCommands = new HashSet<>();
+    private void initializeMetaCommands() {
         metaCommands.add(COMMAND_ALIAS_ADD);
         metaCommands.add(COMMAND_ALIAS_REMOVE);
         metaCommands.add(COMMAND_ALIAS_CLEAR);
         metaCommands.add(COMMAND_ALIAS_LIST);
-
-        return metaCommands;
     }
 
     /**
@@ -104,11 +103,12 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(ListDeletedCommand.COMMAND_WORD);
     }
 
-    /**
-     * Checks whether command is a valid command.
-     */
     public boolean isValidCommand(String command) {
         return validCommands.contains(command);
+    }
+
+    public boolean isUnaliasableCommand(String command) {
+        return metaCommands.contains(command);
     }
 
     /**

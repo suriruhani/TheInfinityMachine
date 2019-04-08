@@ -34,7 +34,7 @@ public class AliasAddMetaCommandParser extends AliasMetaCommandParser implements
             getAliasManager().registerAlias(splitArguments[0], splitArguments[1]);
             return new DummyCommand(MESSAGE_SUCCESS);
         } catch (IllegalArgumentException e) {
-            return new DummyCommand(e.getMessage());
+            throw new ParseException(e.getMessage());
         }
     }
 

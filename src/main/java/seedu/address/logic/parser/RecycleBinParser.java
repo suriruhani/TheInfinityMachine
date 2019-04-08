@@ -46,7 +46,7 @@ public class RecycleBinParser extends BasicParser {
 
         default:
             throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
-            
+
         }
     }
 

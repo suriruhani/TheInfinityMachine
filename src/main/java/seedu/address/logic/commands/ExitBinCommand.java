@@ -10,7 +10,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 public class ExitBinCommand extends Command {
     public static final String COMMAND_WORD = "exit-bin";
 
-    public static final String MESSAGE_EMPTY_BIN_SUCCESS = "Exited Recycle Bin! \n Listed all sources.";
+    public static final String MESSAGE_EMPTY_BIN_SUCCESS = "Exited Recycle Bin! \nListed all sources.";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {

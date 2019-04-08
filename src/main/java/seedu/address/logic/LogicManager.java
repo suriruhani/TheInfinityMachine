@@ -16,6 +16,7 @@ import seedu.address.logic.parser.RecycleBinParser;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ParserMode;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.source.Source;
@@ -43,6 +44,7 @@ public class LogicManager implements Logic {
         history = new CommandHistory();
         sourceManagerParser = new SourceManagerParser();
         recycleBinParser = new RecycleBinParser();
+        model.setParserMode(ParserMode.SOURCE_MANAGER); // starts with source manager parser
 
         // Set sourceManagerModified to true whenever the models' source manager is modified.
         model.getSourceManager().addListener(observable -> sourceManagerModified = true);

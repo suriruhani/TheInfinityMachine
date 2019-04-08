@@ -33,6 +33,7 @@ import seedu.address.logic.commands.UnpanicCommand;
 import seedu.address.logic.commands.UnpinCommand;
 
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.storage.ConcreteAliasStorage;
 
 /**
  * Parses user input.
@@ -55,7 +56,7 @@ public class SourceManagerParser implements CommandValidator {
 
     public SourceManagerParser() {
         Set<String> metaCommands = initializeMetaCommands();
-        aliasManager = new ConcreteAliasManager(this, metaCommands);
+        aliasManager = new ConcreteAliasManager(this, metaCommands, new ConcreteAliasStorage());
         initializeValidCommands();
     }
 

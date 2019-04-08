@@ -14,6 +14,7 @@ import seedu.address.storage.ConcreteAliasStorage;
  * Manages user-defined command aliases.
  */
 class ConcreteAliasManager implements AliasManager {
+
     private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
     private static final String ERROR_DISALLOWED_COMMAND = "This command cannot be aliased";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
@@ -22,76 +23,96 @@ class ConcreteAliasManager implements AliasManager {
 
     private static final Logger logger = LogsCenter.getLogger(ConcreteAliasManager.class);
 
-    private boolean persistentMode = true; // Disable for unit testing
-
     private CommandValidator commandValidator;
     private Set<String> disallowedCommands;
     private HashMap<String, String> aliases = new HashMap<>();
-    private AliasStorage aliasStorage = new ConcreteAliasStorage();
+    private AliasStorage aliasStorage;
 
-    ConcreteAliasManager(CommandValidator commandValidator, Set<String> disallowedCommands) {
-        this(commandValidator, disallowedCommands, true);
-    }
-
+    /**
+     * Instantiates a ConcreteAliasManager.
+     * @param commandValidator Validates commands, must not be null.
+     * @param disallowedCommands A collection of commands that may not be aliased, must not be null.
+     * @param aliasStorage An AliasStorage object to support storing aliases persistently. Pass null
+     *                     to disable alias persistence (e.g. for unit testing).
+     */
     ConcreteAliasManager(CommandValidator commandValidator,
                          Set<String> disallowedCommands,
-                         boolean persistentMode) {
+                         AliasStorage aliasStorage) {
         Objects.requireNonNull(commandValidator);
         Objects.requireNonNull(disallowedCommands);
+
         this.commandValidator = commandValidator;
         this.disallowedCommands = disallowedCommands;
-        if (persistentMode) {
-            loadStoredAliases();
-        } else {
-            this.persistentMode = false;
-        }
+        this.aliasStorage = aliasStorage;
+
+        initialize();
     }
 
     /**
-     * Getter for aliasStorage.
-     * This is not safe to mutate.
+     * Contains setup and initialization code that should be run before usage.
      */
-    AliasStorage getAliasStorage() {
-        return aliasStorage;
+    private void initialize() {
+        if (aliasStorage == null) {
+            return;
+        }
+
+        loadStoredAliases();
     }
 
     /**
-     * Loads and restores previously-stored aliases from disk into memory.
-     * If an exception is thrown, log, terminate the method, and keep `aliases` empty.
+     * Loads and restores previously-stored aliases from disk into memory,
+     * if an AliasStorage object is provided. Otherwise, do nothing.
+     * If an exception is thrown, log, terminate the method, and keep the database `aliases` empty.
      */
     private void loadStoredAliases() {
         HashMap<String, String> loadedAliases;
+        logger.info("Loading aliases from storage into memory.");
+
+        if (aliasStorage == null) {
+            logger.info("No AliasStorage object provided. Skipping loading aliases.");
+            return;
+        }
+
         try {
-            logger.info("Attempting to load aliases from storage");
+            logger.info("Decoding aliases.");
             loadedAliases = aliasStorage.readAliases();
         } catch (Exception e) {
-            logger.warning(e.toString());
+            logger.warning(
+                    String.format("Encountered error decoding aliases: %s",
+                            e.toString()));
+            logger.warning("Terminating loading aliases.");
             return;
         }
 
         aliases = new HashMap(loadedAliases);
-        logger.info("Restored aliases from storage");
+        logger.info("Loaded aliases from storage");
     }
 
     /**
-     * Saves the current state of `aliases` into disk for persistent storage.
+     * Saves the current state of `aliases` into disk for persistent storage,
+     * if an AliasStorage object is provided. Otherwise, do nothing.
      * Any exceptions thrown are logged.
-     * Does nothing if persistent mode is disabled (for unit testing).
      */
     private void saveAliases() {
-        if (!persistentMode) {
+        logger.info("Saving aliases into storage.");
+
+        if (aliasStorage == null) {
+            logger.info("No AliasStorage object provided. Skipping saving aliases.");
             return;
         }
 
         try {
-            logger.info("Attempting to save aliases to storage");
+            logger.info("Encoding aliases.");
             aliasStorage.saveAliases((HashMap) aliases.clone());
         } catch (Exception e) {
             logger.warning(
-                    String.format("Skipping saving aliases to storage; encountered exception: %s",
+                    String.format("Encountered error encoding aliases: %s",
                             e.toString()));
+            logger.warning("Terminating saving aliases.");
             return;
         }
+
+        logger.info("Saved aliases into storage.");
     }
 
     public boolean isAlias(String alias) {
@@ -158,4 +179,5 @@ class ConcreteAliasManager implements AliasManager {
     public HashMap<String, String> getAliasList() {
         return (HashMap) aliases.clone();
     }
+
 }

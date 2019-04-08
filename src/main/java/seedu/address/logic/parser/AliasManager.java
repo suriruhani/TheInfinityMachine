@@ -22,7 +22,8 @@ public interface AliasManager {
     void registerAlias(String command, String alias) throws IllegalArgumentException;
 
     /**
-     * Removes an alias. Does nothing if alias does not exist.
+     * Removes an alias.
+     * @throws IllegalArgumentException if alias is not registered.
      */
     void unregisterAlias(String alias);
 

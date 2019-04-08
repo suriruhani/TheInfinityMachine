@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import static seedu.address.logic.parser.CliSyntax.*;
+
 /**
  * Stores mapping of prefixes to their respective arguments.
  * Each key may be associated with multiple argument values.
@@ -56,5 +58,17 @@ public class ArgumentMultimap {
      */
     public String getPreamble() {
         return getValue(new Prefix("")).orElse("");
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ArgumentMultimap // instanceof handles nulls
+                && (this.getPreamble().equals(((ArgumentMultimap) other).getPreamble()))
+                && (this.getAllValues(PREFIX_TITLE).equals(((ArgumentMultimap) other).getAllValues(PREFIX_TITLE)))
+                && (this.getAllValues(PREFIX_TYPE).equals(((ArgumentMultimap) other).getAllValues(PREFIX_TYPE)))
+                && (this.getAllValues(PREFIX_DETAILS).equals(((ArgumentMultimap) other).getAllValues(PREFIX_DETAILS)))
+                && (this.getAllValues(PREFIX_TAG).equals(((ArgumentMultimap) other).getAllValues(PREFIX_TAG)))
+        ); // state check
     }
 }

@@ -27,7 +27,6 @@ public class SearchCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SearchCommand.MESSAGE_USAGE));
     }
 
-    @Ignore
     @Test
     public void parse_emptyPrefixArgs_returnsSearchCommand() {
         String input = " " + PREFIX_DETAILS + " ";
@@ -37,7 +36,6 @@ public class SearchCommandParserTest {
         assertParseSuccess(parser, " " + PREFIX_DETAILS + " ", expectedSearchCommand);
     }
 
-    @Ignore
     @Test
     public void parse_validArgs_returnsSearchCommand() {
         String input = TITLE_DESC_AMY;
@@ -50,7 +48,6 @@ public class SearchCommandParserTest {
         assertParseSuccess(parser, "\n \t" + TITLE_DESC_AMY, expectedSearchCommand);
     }
 
-    @Ignore
     @Test
     public void parse_validMultipleArgs_returnsSearchCommand() {
         String input = TYPE_DESC_AMY + TYPE_DESC_AMY;
@@ -60,7 +57,6 @@ public class SearchCommandParserTest {
         assertParseSuccess(parser, TYPE_DESC_AMY + TYPE_DESC_AMY, expectedSearchCommand);
     }
 
-    @Ignore
     @Test
     public void parse_validCompoundArgs_returnsSearchCommand() {
         String input = TYPE_DESC_AMY + TAG_DESC_BAR;

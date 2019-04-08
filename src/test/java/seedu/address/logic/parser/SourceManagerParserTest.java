@@ -76,7 +76,6 @@ public class SourceManagerParserTest {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
-    @Ignore
     @Test
     public void parseCommand_search() throws Exception {
         String input = TITLE_DESC_AMY;

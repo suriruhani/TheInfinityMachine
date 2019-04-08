@@ -10,6 +10,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ParserMode;
 import seedu.address.model.source.Source;
 
 /**
@@ -35,7 +36,13 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        model.switchToSources(); // sets source manager data to list
+
+        if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
+            model.switchToDeletedSources(); // sets deleted source data to list
+        } else {
+            model.switchToSources(); // sets source manager data to list
+        }
+
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -49,6 +56,12 @@ public class DeleteCommand extends Command {
         }
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        // for recycle bin mode, deletes source from recycle bin permanently
+        if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
+            model.removeDeletedSource(sourceToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
+        }
 
         // permanently delete from source manager list if the exact same source exists in deleted source list
         if (model.hasDeletedSource(sourceToDelete)) {

@@ -17,6 +17,7 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.PanicMode;
+import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.exceptions.SourceNotFoundException;
 import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
@@ -89,6 +90,16 @@ public class ModelManager implements Model, PanicMode {
 
     public ModelManager() {
         this(new SourceManager(), new UserPrefs(), new DeletedSources());
+    }
+
+    private ParserMode mode = ParserMode.SOURCE_MANAGER;
+
+    public ParserMode getMode() {
+        return this.mode;
+    }
+
+    public void setMode(ParserMode mode) {
+        this.mode = mode;
     }
 
     /**

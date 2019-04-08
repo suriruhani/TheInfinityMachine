@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -10,7 +9,19 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-import static seedu.address.testutil.TypicalSources.*;
+import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.CARL;
+import static seedu.address.testutil.TypicalSources.DANIEL;
+import static seedu.address.testutil.TypicalSources.ELLE;
+import static seedu.address.testutil.TypicalSources.GEORGE;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
+import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 
 import org.junit.Test;
 
@@ -22,7 +33,6 @@ import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
-import java.util.*;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code SearchCommand}.

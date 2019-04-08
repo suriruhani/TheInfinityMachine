@@ -24,6 +24,8 @@ public class ConcreteAliasManagerTest {
     private static final String ALIAS_2 = "b";
     private static final String EXISTING_COMMAND_1 = "foo";
     private static final String EXISTING_COMMAND_2 = "bar";
+    private static final String DISALLOWED_COMMAND_1 = "disallowedone";
+    private static final String DISALLOWED_COMMAND_2 = "disallowedtwo";
     private static final String NOVEL_COMMAND_1 = "novel";
 
     private CommandValidator commandValidator = new CommandValidatorStub();
@@ -34,9 +36,8 @@ public class ConcreteAliasManagerTest {
         // Creates fresh instance without persistence
         // Alias persistence messes up unit test cases
         Set<String> disallowedCommands = new HashSet<>();
-        disallowedCommands.add("alias");
-        disallowedCommands.add("alias-rm");
-        disallowedCommands.add("alias-ls");
+        disallowedCommands.add(DISALLOWED_COMMAND_1);
+        disallowedCommands.add(DISALLOWED_COMMAND_2);
 
         aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, null);
     }
@@ -95,15 +96,15 @@ public class ConcreteAliasManagerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    // Attempt to create an alias for the alias (add) meta-command
-    public void create_metaCommandAdd_unusedAlias() {
-        aliasManager.registerAlias("alias", ALIAS_1);
+    // Attempt to create an alias for a disallowed command using a valid alias
+    public void create_disallowedCommand_validAlias() {
+        aliasManager.registerAlias(DISALLOWED_COMMAND_1, ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    // Attempt to create an alias for the alias-rm meta-command
-    public void create_metaCommandRemove_unusedAlias() {
-        aliasManager.registerAlias("alias-rm", ALIAS_1);
+    // Attempt to create an alias for a disallowed command using another disallowed command
+    public void create_disallowedCommand_disallowedCommandAsAlias() {
+        aliasManager.registerAlias(DISALLOWED_COMMAND_1, DISALLOWED_COMMAND_2);
     }
 
     @Test
@@ -153,7 +154,8 @@ public class ConcreteAliasManagerTest {
 
     @Test
     public void clear_emptyAliasManager() {
-        aliasManager.clearAliases(); // Should not throw
+        aliasManager.clearAliases();
+        Assert.assertEquals(aliasManager.getAliasList().size(), 0);
     }
 
     @Test

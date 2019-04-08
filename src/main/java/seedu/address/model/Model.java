@@ -241,4 +241,14 @@ public interface Model extends PanicMode {
      * Sets the number of pinned sources.
      */
     void setNumberOfPinnedSources(int newNumber);
+
+    /**
+     * Sets the current parser to SourceManagerParser or RecycleBinParser.
+     */
+    void setParserMode(ParserMode mode);
+
+    /**
+     * Gets the parser currently being used.
+     */
+    ParserMode getParserMode();
 }

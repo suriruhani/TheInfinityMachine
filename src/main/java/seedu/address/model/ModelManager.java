@@ -37,6 +37,7 @@ public class ModelManager implements Model, PanicMode {
     private boolean panicMode = false;
     private VersionedSourceManager sourceManagerBackup = null;
     private int numPinnedSources;
+    private ParserMode mode;
 
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
@@ -428,4 +429,13 @@ public class ModelManager implements Model, PanicMode {
         this.numPinnedSources = newNumber;
     }
 
+    @Override
+    public void setParserMode(ParserMode mode){
+        this.mode = mode;
+    }
+
+    @Override
+    public ParserMode getParserMode(){
+        return this.mode;
+    }
 }

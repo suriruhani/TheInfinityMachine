@@ -24,7 +24,7 @@ import seedu.address.model.UserPrefs;
  * Contains integration tests (interaction with the Model) for {@code SelectCommand}.
  */
 public class SelectCommandTest {
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
             getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();

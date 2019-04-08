@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
@@ -30,6 +31,7 @@ public class CustomOrderCommand extends Command {
     public static final String MESSAGE_MOVE_POSITION_INVALID = "The position to move to is invalid.";
     public static final String MESSAGE_INDEX_IDENTICAL = "The source index and move position are the same.";
     public static final String MESSAGE_SUCCESS = "Source at position %d moved to position %d.";
+    public static final String MESSAGE_POSITION_PINNED = "The position is pinned.";
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
     private int initialIndex;
@@ -63,11 +65,35 @@ public class CustomOrderCommand extends Command {
             throw new CommandException(MESSAGE_INDEX_IDENTICAL);
         }
 
+        boolean isSourcePinned = PinnedSourcesCoordinationCenter.isPinnedSource(model, initialIndex);
+        boolean isPositionPinned = PinnedSourcesCoordinationCenter.isPinnedSource(model, newPosition);
+        if (isSourcePinned == true) {
+            logger.info("Source is pinned.");
+            throw new CommandException(PinnedSourcesCoordinationCenter.MESSAGE_SOURCE_PINNED);
+        }
+        if (isPositionPinned == true) {
+            logger.info("Position is pinned.");
+            throw new CommandException(MESSAGE_POSITION_PINNED);
+        }
+
         Source sourceToMove = completeSourceList.get(initialIndex);
         model.deleteSource(sourceToMove);
         model.addSourceAtIndex(sourceToMove, newPosition);
         model.commitSourceManager();
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, initialIndex + 1, newPosition + 1));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof CustomOrderCommand // instanceof handles nulls
+                && initialIndex == (((CustomOrderCommand) other).initialIndex)
+                && newPosition == (((CustomOrderCommand) other).newPosition)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return (initialIndex + newPosition);
     }
 }

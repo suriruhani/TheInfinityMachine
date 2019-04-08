@@ -232,4 +232,14 @@ public interface Model extends PanicMode {
      */
     default void disablePanicMode() {}
 
+    /**
+     * Gets the number of pinned sources.
+     */
+    int getNumberOfPinnedSources();
+
+    /**
+     * Sets the number of pinned sources.
+     */
+    void setNumberOfPinnedSources(int newNumber);
+
 }

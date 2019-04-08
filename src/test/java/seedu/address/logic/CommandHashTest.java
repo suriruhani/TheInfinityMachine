@@ -27,7 +27,7 @@ public class CommandHashTest {
 
         AddCommand one = new AddCommand(new Source(
                 new Title("Title"),
-                new Type("Type"), 
+                new Type("Type"),
                 new Detail("Detail"),
                 new HashSet<Tag>()));
         AddCommand two = new AddCommand(new Source(

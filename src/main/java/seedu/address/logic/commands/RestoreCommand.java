@@ -35,9 +35,6 @@ public class RestoreCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        if (model.getParserMode() == ParserMode.SOURCE_MANAGER) {
-            throw new CommandException(Messages.MESSAGE_UNAVAILABLE_COMMAND);
-        }
         List<Source> lastShownDeletedList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownDeletedList.size()) {

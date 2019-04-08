@@ -44,11 +44,6 @@ public class SourceManagerParser extends BasicParser implements CommandValidator
     private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
     private static final String COMMAND_ALIAS_LIST = "alias-ls";
 
-    /**
-     * Used for initial separation of command word and args.
-     */
-    protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
-
     private Set<String> metaCommands = new HashSet<>();
     private Set<String> validCommands = new HashSet<>();
 

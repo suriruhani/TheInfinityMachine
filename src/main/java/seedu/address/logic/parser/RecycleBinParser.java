@@ -12,6 +12,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import java.util.regex.Matcher;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 public class RecycleBinParser extends BasicParser {
 
@@ -40,7 +41,7 @@ public class RecycleBinParser extends BasicParser {
                 return new ClearCommand();
 
             default:
-                return super.parseCommand(userInput);
+                throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
         }
     }
 

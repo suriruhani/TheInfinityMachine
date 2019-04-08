@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 public abstract class BasicParser {
 
@@ -31,7 +32,7 @@ public abstract class BasicParser {
             case ExitCommand.COMMAND_WORD:
                 return new ExitCommand();
             default:
-                return parseCommand(userInput);
+                throw new ParseException(String.format(MESSAGE_UNKNOWN_COMMAND));
         }
     }
 }

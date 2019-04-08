@@ -55,7 +55,7 @@ public class LogicManager implements Logic {
 
         CommandResult commandResult;
         try {
-            Command command = recycleBinParser.parseCommand(commandText);
+            Command command = sourceManagerParser.parseCommand(commandText);
             commandResult = command.execute(model, history);
         } finally {
             history.add(commandText);

@@ -19,6 +19,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.exceptions.SourceNotFoundException;
+import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
 
 /**
  * Represents the in-memory model of the source manager data.
@@ -35,6 +36,7 @@ public class ModelManager implements Model, PanicMode {
     private final SimpleObjectProperty<Source> selectedDeletedSource = new SimpleObjectProperty<>();
     private boolean panicMode = false;
     private VersionedSourceManager sourceManagerBackup = null;
+    private int numPinnedSources;
 
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
@@ -56,6 +58,33 @@ public class ModelManager implements Model, PanicMode {
         filteredSources = new FilteredList<>(this.displayedSourceList);
 
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
+
+        logger.info("Loading number of pinned sources.");
+        this.numPinnedSources = PinnedSourcesStorageOperationsCenter.loadNumberOfPinnedSources();
+    }
+
+    /**
+     * Alternate ModelManager constructor with option for loading pinned source number.
+     */
+    public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs,
+                        ReadOnlyDeletedSources deletedSources, int numPinnedSources) {
+        super();
+        requireAllNonNull(sourceManager, userPrefs, deletedSources);
+
+        logger.fine("Initializing with source manager: " + sourceManager + " and user prefs " + userPrefs
+                + " and deleted sources " + deletedSources);
+
+        versionedSourceManager = new VersionedSourceManager(sourceManager);
+        versionedDeletedSources = new VersionedDeletedSources((deletedSources));
+
+        this.userPrefs = new UserPrefs(userPrefs);
+
+        displayedSourceList = new SimpleListProperty<>(versionedSourceManager.getSourceList());
+        filteredSources = new FilteredList<>(this.displayedSourceList);
+
+        filteredSources.addListener(this::ensureSelectedSourceIsValid);
+
+        this.numPinnedSources = numPinnedSources;
     }
 
     public ModelManager() {
@@ -387,6 +416,16 @@ public class ModelManager implements Model, PanicMode {
                 && filteredSources.equals(other.filteredSources)
                 && Objects.equals(selectedSource.get(), other.selectedSource.get())
                 && Objects.equals(selectedDeletedSource.get(), other.selectedDeletedSource.get());
+    }
+
+    @Override
+    public int getNumberOfPinnedSources() {
+        return this.numPinnedSources;
+    }
+
+    @Override
+    public void setNumberOfPinnedSources(int newNumber) {
+        this.numPinnedSources = newNumber;
     }
 
 }

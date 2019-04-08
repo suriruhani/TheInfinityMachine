@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.SearchCommand;

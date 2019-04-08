@@ -12,12 +12,23 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.*;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.CountCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
+import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.SourceContainsKeywordsPredicate;
@@ -82,7 +93,7 @@ public class SourceManagerParserTest {
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
                 PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
         SearchCommand command = (SearchCommand) parser.parseCommand(
-                SearchCommand.COMMAND_WORD + TITLE_DESC_AMY );
+                SearchCommand.COMMAND_WORD + TITLE_DESC_AMY);
         assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap)), command);
     }
 

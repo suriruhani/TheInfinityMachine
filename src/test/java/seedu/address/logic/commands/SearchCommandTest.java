@@ -49,10 +49,10 @@ public class SearchCommandTest {
     public void equals() {
 
         ArgumentMultimap first = new ArgumentMultimap();
-        first.put(new Prefix("first"), "");
+        first.put(PREFIX_TITLE, "");
 
         ArgumentMultimap second = new ArgumentMultimap();
-        second.put(new Prefix("second"), "");
+        second.put(PREFIX_TYPE, "");
 
         SourceContainsKeywordsPredicate firstPredicate =
                 new SourceContainsKeywordsPredicate(first);

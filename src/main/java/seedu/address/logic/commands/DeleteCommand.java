@@ -40,7 +40,8 @@ public class DeleteCommand extends Command {
 
         if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
             model.switchToDeletedSources(); // sets deleted source data to list
-        } else {
+        }
+        else {
             model.switchToSources(); // sets source manager data to list
         }
 

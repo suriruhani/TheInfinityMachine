@@ -23,7 +23,7 @@ import seedu.address.model.tag.Tag;
 public class CommandHashTest {
     @Test
     public void check_hashcodeAddCommand_success() {
-        HashSet<AddCommand> set=new HashSet<AddCommand>();
+        HashSet<AddCommand> set = new HashSet<AddCommand>();
 
         AddCommand one = new AddCommand(new Source(
                 new Title("Title"),
@@ -46,7 +46,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodeDeleteCommand_success() {
-        HashSet<DeleteCommand> set=new HashSet<DeleteCommand>();
+        HashSet<DeleteCommand> set = new HashSet<DeleteCommand>();
 
         try {
             DeleteCommand one = new DeleteCommand(ParserUtil.parseIndex("2"));
@@ -65,7 +65,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodeSelectCommand_success() {
-        HashSet<SelectCommand> set=new HashSet<SelectCommand>();
+        HashSet<SelectCommand> set = new HashSet<SelectCommand>();
 
         try {
             SelectCommand one = new SelectCommand(ParserUtil.parseIndex("2"));
@@ -84,7 +84,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodeRestoreCommand_success() {
-        HashSet<RestoreCommand> set=new HashSet<RestoreCommand>();
+        HashSet<RestoreCommand> set = new HashSet<RestoreCommand>();
 
         try {
             RestoreCommand one = new RestoreCommand(ParserUtil.parseIndex("2"));
@@ -103,7 +103,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodePinCommand_success() {
-        HashSet<PinCommand> set=new HashSet<PinCommand>();
+        HashSet<PinCommand> set = new HashSet<PinCommand>();
 
         PinCommand one = new PinCommand(2);
         PinCommand two = new PinCommand(2);
@@ -118,7 +118,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodeUnpinCommand_success() {
-        HashSet<UnpinCommand> set=new HashSet<UnpinCommand>();
+        HashSet<UnpinCommand> set = new HashSet<UnpinCommand>();
 
         UnpinCommand one = new UnpinCommand(2);
         UnpinCommand two = new UnpinCommand(2);
@@ -133,7 +133,7 @@ public class CommandHashTest {
 
     @Test
     public void check_hashcodeCustomOrderCommand_success() {
-        HashSet<CustomOrderCommand> set=new HashSet<CustomOrderCommand>();
+        HashSet<CustomOrderCommand> set = new HashSet<CustomOrderCommand>();
 
         CustomOrderCommand one = new CustomOrderCommand(2, 5);
         CustomOrderCommand two = new CustomOrderCommand(2, 5);

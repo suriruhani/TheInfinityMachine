@@ -11,14 +11,18 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.BasicParser;
 import seedu.address.logic.parser.RecycleBinParser;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.ParserMode;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.source.Source;
 import seedu.address.storage.Storage;
+
+import static seedu.address.model.ParserMode.RECYCLE_BIN;
 
 /**
  * The main LogicManager of the app.
@@ -32,6 +36,7 @@ public class LogicManager implements Logic {
     private final CommandHistory history;
     private final SourceManagerParser sourceManagerParser;
     private final RecycleBinParser recycleBinParser;
+    private BasicParser mainParser;
     private boolean sourceManagerModified;
     private boolean deletedSourcesModified;
 
@@ -53,9 +58,18 @@ public class LogicManager implements Logic {
         sourceManagerModified = false;
         deletedSourcesModified = false;
 
+        switch(model.getParserMode()) {
+        case RECYCLE_BIN:
+            mainParser = recycleBinParser;
+            break;
+        case SOURCE_MANAGER:
+            mainParser = sourceManagerParser;
+            break;
+        }
+
         CommandResult commandResult;
         try {
-            Command command = sourceManagerParser.parseCommand(commandText);
+            Command command = mainParser.parseCommand(commandText);
             commandResult = command.execute(model, history);
         } finally {
             history.add(commandText);

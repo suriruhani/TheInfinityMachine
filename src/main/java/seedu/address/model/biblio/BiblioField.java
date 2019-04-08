@@ -48,7 +48,7 @@ public class BiblioField {
      */
     public static boolean isValidType(String test) {
         for (String type: ACCEPTED_BIBLIO_TYPES) {
-            if (test.equals(type)){
+            if (test.equals(type)) {
                 return true;
             }
         }

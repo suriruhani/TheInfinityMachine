@@ -1,8 +1,6 @@
 package seedu.address.logic.parser;
 
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +8,7 @@ import org.junit.Test;
 
 public class ConcreteAliasManagerTest {
     private class CommandValidatorStub implements CommandValidator {
+
         @Override
         public boolean isValidCommand(String command) {
             if (command.equals(EXISTING_COMMAND_1) || command.equals(EXISTING_COMMAND_2)) {
@@ -18,12 +17,24 @@ public class ConcreteAliasManagerTest {
 
             return false;
         }
+
+        @Override
+        public boolean isUnaliasableCommand(String command) {
+            if (command.equals(DISALLOWED_COMMAND_1) || command.equals(DISALLOWED_COMMAND_2)) {
+                return true;
+            }
+
+            return false;
+        }
+
     }
 
     private static final String ALIAS_1 = "a";
     private static final String ALIAS_2 = "b";
     private static final String EXISTING_COMMAND_1 = "foo";
     private static final String EXISTING_COMMAND_2 = "bar";
+    private static final String DISALLOWED_COMMAND_1 = "disallowedone";
+    private static final String DISALLOWED_COMMAND_2 = "disallowedtwo";
     private static final String NOVEL_COMMAND_1 = "novel";
 
     private CommandValidator commandValidator = new CommandValidatorStub();
@@ -33,12 +44,7 @@ public class ConcreteAliasManagerTest {
     public void setup() {
         // Creates fresh instance without persistence
         // Alias persistence messes up unit test cases
-        Set<String> disallowedCommands = new HashSet<>();
-        disallowedCommands.add("alias");
-        disallowedCommands.add("alias-rm");
-        disallowedCommands.add("alias-ls");
-
-        aliasManager = new ConcreteAliasManager(commandValidator, disallowedCommands, false);
+        aliasManager = new ConcreteAliasManager(commandValidator, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -95,15 +101,15 @@ public class ConcreteAliasManagerTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    // Attempt to create an alias for the alias (add) meta-command
-    public void create_metaCommandAdd_unusedAlias() {
-        aliasManager.registerAlias("alias", ALIAS_1);
+    // Attempt to create an alias for a disallowed command using a valid alias
+    public void create_disallowedCommand_validAlias() {
+        aliasManager.registerAlias(DISALLOWED_COMMAND_1, ALIAS_1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    // Attempt to create an alias for the alias-rm meta-command
-    public void create_metaCommandRemove_unusedAlias() {
-        aliasManager.registerAlias("alias-rm", ALIAS_1);
+    // Attempt to create an alias for a disallowed command using another disallowed command
+    public void create_disallowedCommand_disallowedCommandAsAlias() {
+        aliasManager.registerAlias(DISALLOWED_COMMAND_1, DISALLOWED_COMMAND_2);
     }
 
     @Test
@@ -138,22 +144,21 @@ public class ConcreteAliasManagerTest {
         Assert.assertFalse(aliasManager.getCommand(ALIAS_1).isPresent());
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void remove_nonExistingAlias() {
         aliasManager.registerAlias(EXISTING_COMMAND_1, ALIAS_1);
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
         Assert.assertEquals(aliasManager.getCommand(ALIAS_1).get(), EXISTING_COMMAND_1);
 
-        aliasManager.unregisterAlias(ALIAS_2); // Should not throw
+        aliasManager.unregisterAlias(ALIAS_2);
         Assert.assertTrue(aliasManager.isAlias(ALIAS_1));
         Assert.assertTrue(aliasManager.getCommand(ALIAS_1).isPresent());
-        Assert.assertFalse(aliasManager.isAlias(ALIAS_2));
-        Assert.assertFalse(aliasManager.getCommand(ALIAS_2).isPresent());
     }
 
     @Test
     public void clear_emptyAliasManager() {
-        aliasManager.clearAliases(); // Should not throw
+        aliasManager.clearAliases();
+        Assert.assertEquals(aliasManager.getAliasList().size(), 0);
     }
 
     @Test

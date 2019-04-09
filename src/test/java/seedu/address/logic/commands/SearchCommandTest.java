@@ -9,14 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.BENSON;
-import static seedu.address.testutil.TypicalSources.CARL;
-import static seedu.address.testutil.TypicalSources.DANIEL;
-import static seedu.address.testutil.TypicalSources.ELLE;
-import static seedu.address.testutil.TypicalSources.GEORGE;
-import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
-import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
+import static seedu.address.testutil.TypicalSources.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -163,23 +156,23 @@ public class SearchCommandTest {
     @Test
     public void execute_oneTypeKeyword_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TYPE);
-        sList.add("carl type");
+        sList.add("alice type");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ALICE, ELLE), model.getFilteredSourceList());
 
     }
 
     @Test
     public void execute_oneDetailKeyword_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_DETAILS);
@@ -188,7 +181,7 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(CARL), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(CARL, DANIEL), model.getFilteredSourceList());
 
     }
 
@@ -211,7 +204,7 @@ public class SearchCommandTest {
     @Test
     public void execute_multipleTitleKeywords_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TITLE);
@@ -222,7 +215,7 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ALICE, DANIEL), model.getFilteredSourceList());
 
     }
 
@@ -247,22 +240,22 @@ public class SearchCommandTest {
     @Test
     public void execute_multipleDetailKeywords_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_DETAILS);
         pList.add(PREFIX_DETAILS);
         pList.add(PREFIX_DETAILS);
         pList.add(PREFIX_DETAILS);
-        sList.add("e_detail");
-        sList.add("e_detail");
+        sList.add("elle_detail");
+        sList.add("george_detail");
         sList.add("tail");
         sList.add("eta");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, ELLE, GEORGE), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ELLE, GEORGE), model.getFilteredSourceList());
 
     }
 
@@ -289,7 +282,7 @@ public class SearchCommandTest {
     @Test
     public void execute_multipleCompoundKeywords_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TITLE);
@@ -304,7 +297,7 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ALICE, DANIEL), model.getFilteredSourceList());
 
     }
 

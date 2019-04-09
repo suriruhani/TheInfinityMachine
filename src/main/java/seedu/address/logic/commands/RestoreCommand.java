@@ -43,16 +43,20 @@ public class RestoreCommand extends Command {
 
         Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
 
-        // removes duplicate source from deleted source list if the exact same source exists in source manager
+        // Removes duplicate source from deleted source list
+        // if the exact same source exists in source manager list.
         if (model.hasSource(toRestore)) {
             model.removeDeletedSource(toRestore);
             model.commitDeletedSources();
             return new CommandResult(String.format(Messages.MESSAGE_DUPLICATE_SOURCE_TO_RESTORE, toRestore));
         }
 
+        // add deleted source back to source manager list
         model.addSource(toRestore);
-        model.removeDeletedSource(toRestore);
         model.commitSourceManager();
+
+        // remove deleted source back from deleted sources list
+        model.removeDeletedSource(toRestore);
         model.commitDeletedSources();
         return new CommandResult(String.format(MESSAGE_RESTORE_SOURCE_SUCCESS, toRestore));
     }

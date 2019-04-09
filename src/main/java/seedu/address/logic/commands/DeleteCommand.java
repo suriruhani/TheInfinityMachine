@@ -57,7 +57,8 @@ public class DeleteCommand extends Command {
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
         }
 
-        // permanently delete from source manager list if the exact same source exists in deleted source list
+        // Permanently deletes the source from source manager list
+        // if the exact same source exists in deleted source list.
         if (model.hasDeletedSource(sourceToDelete)) {
             model.deleteSource(sourceToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));

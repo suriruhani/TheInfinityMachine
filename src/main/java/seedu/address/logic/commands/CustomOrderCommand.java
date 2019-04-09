@@ -10,8 +10,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.model.Model;
+import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.model.source.Source;
 
 /**

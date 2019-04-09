@@ -430,18 +430,18 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
-    public void setParserMode(ParserMode mode){
-        if(mode == ParserMode.SOURCE_MANAGER){
+    public void setParserMode(ParserMode mode) {
+        if (mode == ParserMode.SOURCE_MANAGER) {
             switchToSources();
         }
-        if(mode == ParserMode.RECYCLE_BIN){
+        if (mode == ParserMode.RECYCLE_BIN) {
             switchToDeletedSources();
         }
         this.mode = mode;
     }
 
     @Override
-    public ParserMode getParserMode(){
+    public ParserMode getParserMode() {
         return this.mode;
     }
 }

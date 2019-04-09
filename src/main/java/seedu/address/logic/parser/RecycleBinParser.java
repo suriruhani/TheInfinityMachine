@@ -1,20 +1,20 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.EmptyBinCommand;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+
+import java.util.regex.Matcher;
+
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.EmptyBinCommand;
 import seedu.address.logic.commands.ExitBinCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RecycleBinCommand;
 import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-
-import java.util.regex.Matcher;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
 /**
  * Parses user input for Recycle Bin.

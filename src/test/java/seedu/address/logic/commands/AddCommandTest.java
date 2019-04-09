@@ -20,6 +20,7 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ParserMode;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
@@ -297,6 +298,17 @@ public class AddCommandTest {
         public void setNumberOfPinnedSources(int newNumber) {
             throw new AssertionError("This method should not be called.");
         }
+
+        @Override
+        public void setParserMode(ParserMode mode) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ParserMode getParserMode() {
+            throw new AssertionError("This method should not be called.");
+        }
+
     }
 
     /**

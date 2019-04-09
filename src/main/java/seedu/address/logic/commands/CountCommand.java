@@ -4,7 +4,6 @@ import static java.util.Objects.requireNonNull;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
-import seedu.address.model.ParserMode;
 
 /**
  * Returns the total number of sources in the database.

@@ -64,6 +64,10 @@ public class LogicManager implements Logic {
         case SOURCE_MANAGER:
             mainParser = sourceManagerParser;
             break;
+        default:
+            mainParser = sourceManagerParser;
+            break;
+
         }
 
         CommandResult commandResult;

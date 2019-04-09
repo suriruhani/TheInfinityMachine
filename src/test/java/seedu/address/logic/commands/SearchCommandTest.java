@@ -151,7 +151,7 @@ public class SearchCommandTest {
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TITLE);
-        sList.add("Kurz");
+        sList.add("Carl Kurz");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
@@ -235,7 +235,7 @@ public class SearchCommandTest {
         pList.add(PREFIX_TYPE);
         pList.add(PREFIX_TYPE);
         sList.add("alice");
-        sList.add("ben");
+        sList.add("benson");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);

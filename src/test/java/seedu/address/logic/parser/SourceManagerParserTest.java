@@ -4,6 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 
 import org.junit.Before;
@@ -21,14 +26,15 @@ import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
 import seedu.address.testutil.SourceUtil;
-
 
 public class SourceManagerParserTest {
     @Rule
@@ -82,11 +88,13 @@ public class SourceManagerParserTest {
     }
 
     @Test
-    public void parseCommand_find() throws Exception {
-        //List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        //SearchCommand command = (SearchCommand) parser.parseCommand(
-                //SearchCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        //assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(keywords)), command);
+    public void parseCommand_search() throws Exception {
+        String input = TITLE_DESC_AMY;
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
+                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
+        SearchCommand command = (SearchCommand) parser.parseCommand(
+                SearchCommand.COMMAND_WORD + TITLE_DESC_AMY);
+        assertEquals(new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap)), command);
     }
 
     @Test

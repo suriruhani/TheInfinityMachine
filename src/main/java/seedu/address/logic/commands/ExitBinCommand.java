@@ -7,16 +7,19 @@ import seedu.address.model.ParserMode;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
+/**
+ * Exits the recycle bin mode.
+ */
 public class ExitBinCommand extends Command {
     public static final String COMMAND_WORD = "exit-bin";
 
-    public static final String MESSAGE_EMPTY_BIN_SUCCESS = "Exited Recycle Bin! \nListed all sources.";
+    public static final String MESSAGE_EXIT_BIN_SUCCESS = "Exited Recycle Bin! \nListed all sources.";
 
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.setParserMode(ParserMode.SOURCE_MANAGER); //switch parser to recycle bin
+        model.setParserMode(ParserMode.SOURCE_MANAGER); // switch parser mode to source manager
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-        return new CommandResult(MESSAGE_EMPTY_BIN_SUCCESS);
+        return new CommandResult(MESSAGE_EXIT_BIN_SUCCESS);
     }
 }

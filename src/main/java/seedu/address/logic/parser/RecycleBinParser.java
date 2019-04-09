@@ -1,6 +1,6 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.EmptyBinCommand;
+import seedu.address.logic.commands.EmptyBinCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;

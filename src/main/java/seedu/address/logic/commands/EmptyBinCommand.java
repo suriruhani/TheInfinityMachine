@@ -1,14 +1,13 @@
-package seedu.address.logic;
+package seedu.address.logic.commands;
 
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.CommandHistory;
 import seedu.address.model.DeletedSources;
 import seedu.address.model.Model;
 
 import static java.util.Objects.requireNonNull;
 
 /**
- * Clears the recycle bin.
+ * Clears sources in the recycle bin.
  */
 public class EmptyBinCommand extends Command {
     public static final String COMMAND_WORD = "empty-bin";

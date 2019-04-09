@@ -16,7 +16,6 @@ public class ExitBinCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.setParserMode(ParserMode.SOURCE_MANAGER); //switch parser to recycle bin
-        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         return new CommandResult(MESSAGE_EMPTY_BIN_SUCCESS);
     }

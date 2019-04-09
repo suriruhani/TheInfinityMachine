@@ -34,7 +34,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.storage.ConcreteAliasStorage;
 
 /**
- * Parses user input.
+ * Parses user input for Source Manager.
  */
 public class SourceManagerParser extends BasicParser implements CommandValidator{
     private static final String COMMAND_ALIAS_ADD = "alias";

@@ -22,7 +22,6 @@ public class RecycleBinCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.setParserMode(ParserMode.RECYCLE_BIN); //switch parser to recycle bin
-        model.switchToDeletedSources(); // sets delete sources data to list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         return new CommandResult(MESSAGE_LIST_ALL_DELETED_SUCCESS);
     }

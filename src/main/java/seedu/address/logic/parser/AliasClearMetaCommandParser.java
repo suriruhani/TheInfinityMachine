@@ -1,12 +1,11 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments for the AliasManager "alias-rm" metacommand.
  */
-public class AliasClearMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
+public class AliasClearMetaCommandParser extends AliasMetaCommandParser {
     private static final String MESSAGE_SUCCESS = "%d alias(es) cleared successfully";
     private static final String MESSAGE_INVALID_SYNTAX = "Invalid syntax. "
             + "%s doesn't accept any arguments";

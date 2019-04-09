@@ -25,6 +25,7 @@ import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
+import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
 import seedu.address.testutil.SourceBuilder;
 
 public class AddCommandTest {
@@ -295,6 +296,11 @@ public class AddCommandTest {
 
         @Override
         public void setNumberOfPinnedSources(int newNumber) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public PinnedSourcesStorageOperationsCenter getStorageOperationsCenter() {
             throw new AssertionError("This method should not be called.");
         }
     }

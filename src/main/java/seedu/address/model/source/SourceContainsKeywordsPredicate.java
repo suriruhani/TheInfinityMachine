@@ -5,8 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.function.Predicate;
 
@@ -28,36 +26,46 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     public boolean test(Source source) {
         boolean result = true;
 
-        String titleKeywords = keywords.getValue(PREFIX_TITLE).orElse("");
-        String typeKeywords = keywords.getValue(PREFIX_TYPE).orElse("");
-        String detailsKeywords = keywords.getValue(PREFIX_DETAILS).orElse("");
+        List<String> titleKeywords = keywords.getAllValues(PREFIX_TITLE);
+        List<String> typeKeywords = keywords.getAllValues(PREFIX_TYPE);
+        List<String> detailsKeywords = keywords.getAllValues(PREFIX_DETAILS);
         List<String> tagKeywords = keywords.getAllValues(PREFIX_TAG);
 
-        if (titleKeywords.equals("") && tagKeywords.isEmpty()
-                && typeKeywords.equals("") && detailsKeywords.equals("")) {
+        if ((titleKeywords.isEmpty() || checkAllEmpty(titleKeywords))
+                && (typeKeywords.isEmpty() || checkAllEmpty(typeKeywords))
+                && (detailsKeywords.isEmpty() || checkAllEmpty(detailsKeywords))
+                && (tagKeywords.isEmpty() || checkAllEmpty(tagKeywords))) {
             return false;
         }
 
-        if (!titleKeywords.equals("")) {
+        if (!titleKeywords.isEmpty() && !checkAllEmpty(titleKeywords)) {
             result = result && matchTitleKeywords(titleKeywords, source);
         }
 
-        if (!typeKeywords.equals("")) {
+        if (!typeKeywords.isEmpty() && !checkAllEmpty(typeKeywords)) {
             result = result && matchTypeKeywords(typeKeywords, source);
         }
 
-        if (!detailsKeywords.equals("")) {
+        if (!detailsKeywords.isEmpty() && !checkAllEmpty(detailsKeywords)) {
             result = result && matchDetailKeywords(detailsKeywords, source);
         }
 
-        if (!tagKeywords.isEmpty()) {
-            List<String> listTitleKeywords = new ArrayList<>();
-            for (String tag : tagKeywords) {
-                listTitleKeywords.add(tag.trim());
-            }
+        if (!tagKeywords.isEmpty() && !checkAllEmpty(tagKeywords)) {
             result = result && matchTagKeywords(tagKeywords, source);
         }
 
+        return result;
+    }
+
+    /**
+     * Evaluates true if all of the entries in a list of strings is empty
+     *
+     */
+    public boolean checkAllEmpty(List<String> keywords) {
+        boolean result = true;
+        for (String s : keywords) {
+            result = result && s.equals("");
+        }
         return result;
     }
 
@@ -72,7 +80,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         boolean result = true;
         for (String tag : tagKeywords) {
             result = result && source.getTags().stream()
-                    .anyMatch(keyword -> (keyword.tagName.toLowerCase()).contains(tag.trim().toLowerCase()));
+                    .anyMatch(keyword -> (keyword.tagName.trim().toLowerCase()).contains(tag.trim().toLowerCase()));
         }
         return result;
     }
@@ -83,10 +91,12 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
      * @param source to be tested
      * @return true if matches, else false
      */
-    private boolean matchDetailKeywords(String detailsKeywords, Source source) {
-        List<String> listDetailKeywords = Arrays.asList(detailsKeywords.trim().split("\\s+"));
-        return listDetailKeywords.stream()
-                .anyMatch(keyword -> (source.getDetail().detail.toLowerCase().contains(keyword.toLowerCase())));
+    private boolean matchDetailKeywords(List<String> detailsKeywords, Source source) {
+        boolean result = true;
+        for (String detail : detailsKeywords) {
+            result = result && (source.getDetail().detail.toLowerCase().contains(detail.toLowerCase()));
+        }
+        return result;
     }
 
     /**
@@ -95,10 +105,12 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
      * @param source to be tested
      * @return true if matches, else false
      */
-    private boolean matchTypeKeywords(String typeKeywords, Source source) {
-        List<String> listTypeKeywords = Arrays.asList(typeKeywords.trim().split("\\s+"));
-        return listTypeKeywords.stream()
-                .anyMatch(keyword -> (source.getType().type.toLowerCase()).contains(keyword.toLowerCase()));
+    private boolean matchTypeKeywords(List<String> typeKeywords, Source source) {
+        boolean result = true;
+        for (String type : typeKeywords) {
+            result = result && (source.getType().type.toLowerCase().contains(type.toLowerCase()));
+        }
+        return result;
     }
 
     /**
@@ -107,10 +119,12 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
      * @param source to be tested
      * @return true if matches, else false
      */
-    private boolean matchTitleKeywords(String titleKeywords, Source source) {
-        List<String> listTitleKeywords = Arrays.asList(titleKeywords.trim().split("\\s+"));
-        return listTitleKeywords.stream()
-                .anyMatch(keyword -> (source.getTitle().title.toLowerCase()).contains(keyword.toLowerCase()));
+    private boolean matchTitleKeywords(List<String> titleKeywords, Source source) {
+        boolean result = true;
+        for (String title : titleKeywords) {
+            result = result && (source.getTitle().title.toLowerCase().contains(title.toLowerCase()));
+        }
+        return result;
     }
 
     @Override
@@ -118,5 +132,10 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
         return other == this // short circuit if same object
                 || (other instanceof SourceContainsKeywordsPredicate // instanceof handles nulls
                 && keywords.equals(((SourceContainsKeywordsPredicate) other).keywords)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return keywords.hashCode();
     }
 }

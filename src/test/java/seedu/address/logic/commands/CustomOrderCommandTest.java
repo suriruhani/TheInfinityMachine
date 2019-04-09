@@ -10,15 +10,21 @@ import org.junit.Test;
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.source.Source;
 
 public class CustomOrderCommandTest {
-    private Model testModel = new ModelManager(
+    private Model testModelNoPinned = new ModelManager(
             getTypicalSourceManager(),
             new UserPrefs(),
             getTypicalDeletedSources(),
             0);
+    private Model testModelWithPinned = new ModelManager(
+            getTypicalSourceManager(),
+            new UserPrefs(),
+            getTypicalDeletedSources(),
+            2);
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -26,10 +32,12 @@ public class CustomOrderCommandTest {
         int sourceIndex = 3;
         int movePosition = 5;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
-                testModel.getDeletedSources());
+        Model expectedModel = new ModelManager(
+                testModelNoPinned.getSourceManager(),
+                new UserPrefs(),
+                testModelNoPinned.getDeletedSources());
 
-        Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
+        Source sourceToMove = testModelNoPinned.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
         expectedModel.addSourceAtIndex(sourceToMove, movePosition - 1);
         expectedModel.commitSourceManager();
@@ -38,7 +46,7 @@ public class CustomOrderCommandTest {
 
         assertCommandSuccess(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage,
                 expectedModel);
@@ -47,12 +55,14 @@ public class CustomOrderCommandTest {
     @Test
     public void execute_basicOperationForwardSwapEdgeCase_success() {
         int sourceIndex = 1;
-        int movePosition = testModel.getFilteredSourceList().size();
+        int movePosition = testModelNoPinned.getFilteredSourceList().size();
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
-                testModel.getDeletedSources());
+        Model expectedModel = new ModelManager(
+                testModelNoPinned.getSourceManager(),
+                new UserPrefs(),
+                testModelNoPinned.getDeletedSources());
 
-        Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
+        Source sourceToMove = testModelNoPinned.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
         expectedModel.addSourceAtIndex(sourceToMove, movePosition - 1);
         expectedModel.commitSourceManager();
@@ -61,7 +71,7 @@ public class CustomOrderCommandTest {
 
         assertCommandSuccess(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage,
                 expectedModel);
@@ -72,10 +82,12 @@ public class CustomOrderCommandTest {
         int sourceIndex = 5;
         int movePosition = 3;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
-                testModel.getDeletedSources());
+        Model expectedModel = new ModelManager(
+                testModelNoPinned.getSourceManager(),
+                new UserPrefs(),
+                testModelNoPinned.getDeletedSources());
 
-        Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
+        Source sourceToMove = testModelNoPinned.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
         expectedModel.addSourceAtIndex(sourceToMove, movePosition - 1);
         expectedModel.commitSourceManager();
@@ -84,7 +96,7 @@ public class CustomOrderCommandTest {
 
         assertCommandSuccess(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage,
                 expectedModel);
@@ -92,13 +104,15 @@ public class CustomOrderCommandTest {
 
     @Test
     public void execute_basicOperationBackwardSwapEdgeCase_success() {
-        int sourceIndex = testModel.getFilteredSourceList().size();
+        int sourceIndex = testModelNoPinned.getFilteredSourceList().size();
         int movePosition = 1;
 
-        Model expectedModel = new ModelManager(testModel.getSourceManager(), new UserPrefs(),
-                testModel.getDeletedSources());
+        Model expectedModel = new ModelManager(
+                testModelNoPinned.getSourceManager(),
+                new UserPrefs(),
+                testModelNoPinned.getDeletedSources());
 
-        Source sourceToMove = testModel.getFilteredSourceList().get(sourceIndex - 1);
+        Source sourceToMove = testModelNoPinned.getFilteredSourceList().get(sourceIndex - 1);
         expectedModel.deleteSource(sourceToMove);
         expectedModel.addSourceAtIndex(sourceToMove, movePosition - 1);
         expectedModel.commitSourceManager();
@@ -107,7 +121,7 @@ public class CustomOrderCommandTest {
 
         assertCommandSuccess(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage,
                 expectedModel);
@@ -122,7 +136,7 @@ public class CustomOrderCommandTest {
 
         assertCommandFailure(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage);
     }
@@ -136,21 +150,21 @@ public class CustomOrderCommandTest {
 
         assertCommandFailure(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage);
     }
 
     @Test
     public void execute_indexOutOfBounds_failure() {
-        int sourceIndex = testModel.getFilteredSourceList().size() + 1;
+        int sourceIndex = testModelNoPinned.getFilteredSourceList().size() + 1;
         int movePosition = 4;
 
         String expectedMessage = CustomOrderCommand.MESSAGE_SOURCE_INDEX_INVALID;
 
         assertCommandFailure(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage);
     }
@@ -164,7 +178,7 @@ public class CustomOrderCommandTest {
 
         assertCommandFailure(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
                 commandHistory,
                 expectedMessage);
     }
@@ -172,13 +186,41 @@ public class CustomOrderCommandTest {
     @Test
     public void execute_moveOutOfBounds_failure() {
         int sourceIndex = 4;
-        int movePosition = testModel.getFilteredSourceList().size() + 1;
+        int movePosition = testModelNoPinned.getFilteredSourceList().size() + 1;
 
         String expectedMessage = CustomOrderCommand.MESSAGE_MOVE_POSITION_INVALID;
 
         assertCommandFailure(
                 new CustomOrderCommand(sourceIndex, movePosition),
-                testModel,
+                testModelNoPinned,
+                commandHistory,
+                expectedMessage);
+    }
+
+    @Test
+    public void execute_moveInputPinnedSource_failure() {
+        int sourceIndex = 4;
+        int movePosition = 1;
+
+        String expectedMessage = CustomOrderCommand.MESSAGE_POSITION_PINNED;
+
+        assertCommandFailure(
+                new CustomOrderCommand(sourceIndex, movePosition),
+                testModelWithPinned,
+                commandHistory,
+                expectedMessage);
+    }
+
+    @Test
+    public void execute_indexInputPinnedSource_failure() {
+        int sourceIndex = 1;
+        int movePosition = 4;
+
+        String expectedMessage = PinnedSourcesCoordinationCenter.MESSAGE_SOURCE_PINNED;
+
+        assertCommandFailure(
+                new CustomOrderCommand(sourceIndex, movePosition),
+                testModelWithPinned,
                 commandHistory,
                 expectedMessage);
     }

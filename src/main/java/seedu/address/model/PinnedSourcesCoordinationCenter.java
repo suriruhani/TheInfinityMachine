@@ -1,4 +1,4 @@
-package seedu.address.logic;
+package seedu.address.model;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.model.Model;
+import seedu.address.logic.LogicManager;
 import seedu.address.model.source.Source;
 import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
 
@@ -99,6 +99,8 @@ public class PinnedSourcesCoordinationCenter {
     public static void saveCurrentPinnedSources (Model model) {
         int numPinnedSources = model.getNumberOfPinnedSources();
         logger.info("Writing number of sources to file.");
-        PinnedSourcesStorageOperationsCenter.writeNumberOfPinnedSourcesToFile(numPinnedSources);
+
+        PinnedSourcesStorageOperationsCenter ops = model.getStorageOperationsCenter();
+        ops.writeNumberOfPinnedSourcesToFile(numPinnedSources);
     }
 }

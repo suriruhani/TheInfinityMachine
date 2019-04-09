@@ -15,27 +15,37 @@ import seedu.address.commons.core.LogsCenter;
  */
 public class PinnedSourcesStorageOperationsCenter {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
-    private static final String DATABASE_PATH = "data/PinnedSources.txt";
+    private static String databasePath;
 
     // Establishes a path object using the name of the database file defined above
-    private static final Path FILE_PATH = Paths.get(DATABASE_PATH);
+    private static Path filePath;
+
+    public PinnedSourcesStorageOperationsCenter () {
+        databasePath = "data/PinnedSources.txt";
+        filePath = Paths.get(databasePath);
+    }
+
+    public PinnedSourcesStorageOperationsCenter (String databasePath) {
+        this.databasePath = databasePath;
+        filePath = Paths.get(databasePath);
+    }
 
     /**
      * Returns the number of pinned sources.
      *
      * @return Integer number of pinned sources.
      */
-    public static int loadNumberOfPinnedSources () {
+    public int loadNumberOfPinnedSources () {
         // Create a new integer which starts as 0
         int numPinnedSources = 0;
 
         // Create a new empty List to store the single encoded integer
         List<String> encodedPinnedSourceInteger = new ArrayList<String>();
 
-        logger.info("Attempting to read data from file: " + FILE_PATH);
+        logger.info("Attempting to read data from file: " + filePath);
         try {
             // Attempt to load the data from the txt file into the empty list created earlier
-            encodedPinnedSourceInteger = Files.readAllLines(FILE_PATH);
+            encodedPinnedSourceInteger = Files.readAllLines(filePath);
         } catch (IOException e) {
             logger.severe("Unable to read file. Assume no pinned sources.");
             return numPinnedSources;
@@ -70,7 +80,7 @@ public class PinnedSourcesStorageOperationsCenter {
      *
      * @param numPinnedSourcesToSave The number of pinned sources which is to be saved into the external txt file.
      */
-    public static void writeNumberOfPinnedSourcesToFile (int numPinnedSourcesToSave) {
+    public void writeNumberOfPinnedSourcesToFile (int numPinnedSourcesToSave) {
         // Create a new empty List to contain the single integer
         List<String> encodedPinnedSourceInteger = new ArrayList<String>();
 
@@ -78,9 +88,9 @@ public class PinnedSourcesStorageOperationsCenter {
 
         encodedPinnedSourceInteger.add(encodedPinnedSourceString);
 
-        logger.info("Attempting to write the converted integer to file: " + FILE_PATH);
+        logger.info("Attempting to write the converted integer to file: " + filePath);
         try {
-            Files.write(FILE_PATH, encodedPinnedSourceInteger);
+            Files.write(filePath, encodedPinnedSourceInteger);
         } catch (IOException e) {
             logger.severe("Unable to write to file.");
         }

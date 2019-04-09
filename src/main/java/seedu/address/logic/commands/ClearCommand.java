@@ -20,9 +20,7 @@ public class ClearCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
         model.setSourceManager(new SourceManager());
-        model.setDeletedSources(new DeletedSources());
         model.commitSourceManager();
-        model.commitDeletedSources();
         return new CommandResult(MESSAGE_SUCCESS);
     }
 }

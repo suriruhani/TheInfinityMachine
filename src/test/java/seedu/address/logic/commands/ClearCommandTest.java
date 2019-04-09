@@ -30,7 +30,7 @@ public class ClearCommandTest {
     @Test
     public void execute_nonEmptyAddressBook_success() {
         Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
-        Model expected = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(),0);
+        Model expected = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
         expected.setSourceManager(new SourceManager());
         expected.setDeletedSources(new DeletedSources());
         expected.commitSourceManager();

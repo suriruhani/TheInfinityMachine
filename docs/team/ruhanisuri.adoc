@@ -25,11 +25,11 @@ where you read something and struggle to find it again.
 
 == Summary of contributions
 
-=== *Major enhancement*: +
+== *Major enhancement*: +
 
-===== 1. Modified *the ability to search* through sources:
+==== 1. Modified *the ability to search* through sources:
 
-====== *Previously*:
+===== *Previously*:
 
 Format: `search <title>`
 
@@ -53,15 +53,24 @@ when the user stores his entire research data in the `detail`, say 3 paragraphs,
 word to word in their entirety. This defeats the purpose of the user being able to search for a source so he can use it in his
 research.
 
-====== *Modification*:
+Furthermore, this format of search only (logically) accepted one argument for each prefix tag, that is if given multiple,
+it would jut ignore it. This was implemented by using `getValue()` on the user enter argument multimap in
+`SourceContainsKeywordsPredicate`. This method only returned the last entered values and used this for the search command logic, ignore
+other tags.
+
+===== *Modification*:
 
 Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 
+The work I have done on AB4's search feature can be divided into 3 major modifications as follows:
+
+===== 1. Multiple prefix tags of different kinds:
 In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
 arguments of the type of source fields, and search for sources based on that.
 It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
 listing only those sources that satisfy all the input constraints of the matching fields.
 
+===== 2. Substring matching with incomplete words:
 Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
 This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
 It's major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
@@ -69,24 +78,31 @@ list the entire contents of the source in order to match and search it. Thus now
 as many consecutive words they are able to recall to narrow the listings. Eg. searching for `d/Artificial Intelligence` will
 enumerate all source articles that have 'artificial intelligence' in their content.
 
-====== *What it does*:
-It allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction, with substring matching.
-It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
-of the sources, and making working on the database more efficient. It also checks if the source fields contain the keywords entered
-by the user.
+===== 3. Multiple prefix tags of one type:
+Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+This renders this feature more power as now the user is able to search by all that he can recall about the source
+entry and be able to narrow down his search more to produce desired results.
 
-====== *Justification*:
+===== *What it does*:
+It allows the user to search through all the entries in the database through various fields at a time, and display
+source entries that satisfy all of the entered tags in conjunction, with substring matching, and allowing multiple tags of
+the same kind.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient. It also reduces the onus on the user to remember and recall
+the source entries maintained by allowing them to enter as many consecutive characters for a field value they can enumerate.
+
+===== *Justification*:
 This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching so the user can enter as much as
-he remembers and see the results.
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching and multiple tags
+entered so the user can enter as much as he remembers and see the results.
 
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
 logical combination, along with allowing the user to not memorize his source fields.
 
-====== *Highlights*:
+===== *Highlights*:
 
 - This enhancement does not affect existing commands and commands to be added in future. +
 - However, it changed the format of the original `search` command, which now not only takes parameters of different types, but also needs them to be prefixed by their
@@ -94,13 +110,17 @@ CLI delimiters.
 - It required an in-depth analysis of design alternatives, as the format of the original command had to be changed
 - The implementation too was challenging, as the current format of `search` command had to be changed and be prepared to
 accept and parse multiple fields entered.
-- Its was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
+- It was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
 of each of the field entered and by logical `&&` ing their results.
+- It was also tricky to implement multiple same prefix tags to be accepted as all values collected from argument multimap in `SourceContainsKeywordsPredicate` had to be changed
+from `String` from `getValue` which was used to extract the last value of the specified prefix to `List<String>` from `getAllValues()` which
+extracted argument values of all tags entered by the user without ignoring any. Then the checker methods had to be
+modified to implement an `AND` logic to ensure all these search queries are satisfied.
 - It was relatively simple to change exact matching to substring matching by using `String.contains()` method.
 - It was trivial to implement case insensitivity by converting both source value and argument value `toLowerCase()` before carrying
 out the substring comparison.
 
-====== *Credits*:
+===== *Credits*:
 Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.
 
 === *Minor enhancement*:

@@ -505,6 +505,11 @@ It's major usage is in the fact that the user will store the bulk of their data 
 list the entire contents of the source in order to match and search it. Thus now, the user is only required to `search` using
 as many consecutive words they are able to recall to narrow the listings.
 
+Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+This renders this feature more power as now the user is able to search by all that he can recall about the source
+entry and be able to narrow down his search more to produce desired results.
+
 How it works is, it allows the user to search through all the entries in the database through various fields at a time, and display
 source entries that satisfy all of the entered tags in conjunction, by checking if the source value contains these parameters.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
@@ -518,14 +523,16 @@ for those sources that satisfy all the constraints, i.e. have all the fields mat
 contains the keywords entered by the user (case insensitive).
 
 This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
-Not only that, the user can now just input whatever they are able to recall and the `search` returns all super strings instead of
-carrying out an exact matching.
+Not only that, the user can now just input whatever they are able to recall in the form of multiple prefix arguments
+and the `search` returns all super strings instead of carrying out an exact matching of just one search tag. This was implemented
+by changing all values collected from argument multimap in `SourceContainsKeywordsPredicate` to `List<String>` and `getAllValues()` instead of just `String`
+and `getValue` which used to extract the last value of the specified prefix.
 It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
 instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
 It renders the search more powerful by resulting all super-strings should the user have meant something else or to prompt them about other similar
 source entries containing what they are looking for.
 It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
-logical combination.
+logical combination, and multiple of them.
 
 Given below is an example usage scenario and how the search mechanism behaves at each step.
 
@@ -534,20 +541,32 @@ in an indexed fashion, with all details and in order of their addition.
 
 Step 2. The user executes `search i/footitle1` command and only those sources that have their title as `footitle1` are displayed.
 
-Step 3. The user executes `search i/footitle6 y/website` and only those entries are listed that have both their title as `footitle1` and type as `website`.
+Step 3. The user executes `search i/footitle1 y/website` and only those entries are listed that have their title having both `foo` and `6` and type as `website` will
+be enlisted.
 
 Step 4. The user executes `search t/CS` and all those sources that have any of their tags having 'CS' in it listed, including `CS2030`, `CS2040` and `CS2103`
 
+Step 5. The user executes `search i/` and 0 sources are listed because this is not a valid check. This is not a bug and is the intended
+feature.
+
 [NOTE]
-`search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
+`search` alone, without any arguments or with empty prefix tags, will result in error and 0 listed sources respectively.
+ See `list` command for enumerating all database entries.
+
+Step 6. The user executes `search i/algo i/wiki` and all those sources with both `algo` and `wiki` in their titles, such as
+`Wikipedia Algorithm` or `Algos of wikitionary` will be listed
+
+****
+Some content here
+****
 
 ==== Design Considerations
 
 ===== Aspect: How search executes
 
-* **Alternative 1 (current choice):** Runs through all entries and matches the arguments, field by field, and uing `&&` operation
+* **Alternative 1 (current choice):** Runs through all entries and matches the arguments, field by field, and using `&&` operation
 to combine the results.
-** Pros: Easy to implement as exact String matching can be done in Java using streams and `StringUtil.containsWordIgnoreCase(str1, str2)`.
+** Pros: Easy to implement as exact String substring matching can be done in Java using `str1.contains(str2)`.
 ** Cons: May have performance issues in terms of time usage.
 
 ===== Aspect: Data structure to support the undo/redo commands

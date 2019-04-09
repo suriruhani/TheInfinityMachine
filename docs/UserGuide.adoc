@@ -385,7 +385,7 @@ The restorated is reflected on the disk too; the JSON file is reset to its origi
 
 === Clearing all entries : `clear`
 
-Clears all entries from the source manager and all the deleted sources as well. +
+Clears all entries from the source manager. +
 Format: `clear`
 
 === Exiting the program : `exit`

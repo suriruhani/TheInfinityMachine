@@ -29,13 +29,13 @@ public class ClearCommandTest {
 
     @Test
     public void execute_nonEmptyAddressBook_success() {
-        Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
-        Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
-        expectedModel.setSourceManager(new SourceManager());
-        expectedModel.setDeletedSources(new DeletedSources());
-        expectedModel.commitSourceManager();
-        expectedModel.commitDeletedSources();
-        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expectedModel);
+        Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
+        Model expected = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(),0);
+        expected.setSourceManager(new SourceManager());
+        expected.setDeletedSources(new DeletedSources());
+        expected.commitSourceManager();
+        expected.commitDeletedSources();
+        assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expected);
     }
 
 }

@@ -9,7 +9,7 @@ import java.util.logging.Logger;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.LogicManager;
-import seedu.address.logic.PinnedSourcesCoordinationCenter;
+import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
@@ -44,15 +44,15 @@ public class UnpinCommand extends Command {
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         List<Source> completeSourceList = model.getFilteredSourceList();
 
+        if (targetIndex >= completeSourceList.size() || targetIndex < 0) {
+            logger.info("Index is invalid.");
+            throw new CommandException(MESSAGE_SOURCE_INDEX_INVALID);
+        }
+
         boolean isSourcePinned = PinnedSourcesCoordinationCenter.isPinnedSource(model, targetIndex);
         if (isSourcePinned == false) {
             logger.info("Source is not pinned.");
             throw new CommandException(MESSAGE_SOURCE_NOT_PINNED_INVALID);
-        }
-
-        if (targetIndex >= completeSourceList.size() || targetIndex < 0) {
-            logger.info("Index is invalid.");
-            throw new CommandException(MESSAGE_SOURCE_INDEX_INVALID);
         }
 
         PinnedSourcesCoordinationCenter.decrementPinnedSources(model);

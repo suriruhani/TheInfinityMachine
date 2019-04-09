@@ -355,7 +355,7 @@ The key difference between the two is that an AliasMetaCommandParser has a field
 Parsers are expected to return a Command object which SourceManagerParser returns in its `parseCommand(String userInput)` method.
 Typically, a Command object operates on the Model (e.g. AddCommand calls `model.addSource()`).
 However, meta-commands operate on the AliasManager, and not the model.
-Therefore, for this purpose, we created a class `DummyCommand` which does nothing except return a CommandResult object to display feedback to the user. 
+Therefore, for this purpose, we created a class `DummyCommand` which does nothing except return a CommandResult object to display feedback to the user.
 
 Finally, we create a `CommandValidator` interface.
 AliasManager uses the CommandValidator for two purposes:

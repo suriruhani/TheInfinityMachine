@@ -55,4 +55,9 @@ public class SearchCommand extends Command {
                 || (other instanceof SearchCommand // instanceof handles nulls
                 && predicate.equals(((SearchCommand) other).predicate)); // state check
     }
+
+    @Override
+    public int hashCode() {
+        return predicate.hashCode();
+    }
 }

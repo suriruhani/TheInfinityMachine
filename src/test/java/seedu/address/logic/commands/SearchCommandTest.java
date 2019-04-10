@@ -9,7 +9,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-import static seedu.address.testutil.TypicalSources.*;
+import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.CARL;
+import static seedu.address.testutil.TypicalSources.DANIEL;
+import static seedu.address.testutil.TypicalSources.ELLE;
+import static seedu.address.testutil.TypicalSources.GEORGE;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
+import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -156,16 +163,16 @@ public class SearchCommandTest {
     @Test
     public void execute_oneTypeKeyword_multipleSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 2);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TYPE);
-        sList.add("alice type");
+        sList.add("alice tpye");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALICE, ELLE), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ALICE), model.getFilteredSourceList());
 
     }
 
@@ -192,7 +199,7 @@ public class SearchCommandTest {
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TAG);
-        sList.add("friend");
+        sList.add("fren");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
@@ -228,7 +235,7 @@ public class SearchCommandTest {
         pList.add(PREFIX_TYPE);
         pList.add(PREFIX_TYPE);
         sList.add("alice");
-        sList.add("benson");
+        sList.add("ben");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
@@ -289,7 +296,7 @@ public class SearchCommandTest {
         pList.add(PREFIX_TYPE);
         pList.add(PREFIX_DETAILS);
         pList.add(PREFIX_TAG);
-        sList.add("alice");
+        sList.add("aliec");
         sList.add("");
         sList.add("_detail");
         sList.add("end");

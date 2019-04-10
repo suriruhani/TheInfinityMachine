@@ -1,8 +1,8 @@
 package seedu.address.logic.commands;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.PinnedSourcesCoordinationCenter;
 import seedu.address.model.Model;
+import seedu.address.model.PinnedSourcesCoordinationCenter;
 
 /**
  * Terminates the program.

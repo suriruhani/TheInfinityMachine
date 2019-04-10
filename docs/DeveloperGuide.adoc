@@ -303,18 +303,20 @@ Since the JSON file on disk automatically tracks the source manager through the 
 The command alias feature allows users to use shorthand commands to rapidly "get things done", for instance using `a` instead of `add`, or `c` instead of `count`.
 
 Users may do one of the following:
-1) Add a new alias
-2) Remove an existing alias
-3) List all aliases
 
-==== Overview:
+1. Add a new alias
+2. Remove an existing alias
+3. List all aliases
+4. Clear all aliases
+
+==== Overview
 
 This feature is backed by an in-memory database implemented as a Java `HashMap<String, String>`.
 A HashMap is chosen for several reasons:
 
-* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (`O(1)` time)
-* Checking whether an alias exists is fast (`O(1)` time)
-* HashMaps naturally facilitate the process of looking up an associated value with a given key
+* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (in `O(1)` time)
+* Checking whether an alias exists is efficient (in `O(1)` time)
+* HashMaps naturally facilitate the process of looking up an associated value of a given key
 
 *Alternative*: An alternative implementation could use a Java `ArrayList`.
 However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
@@ -326,20 +328,55 @@ Therefore, due to the key-value association inherent in the idea of an alias man
 
 image::AliasManagerClassDiagram.png[width="800"]
 
-==== Operation:
+==== Aliasing feature: implementation
+Meta-commands are not implemented as regular commands.
+Regular commands inherit `Command`, and operate on the model (their main method is `public CommandResult execute(Model model, CommandHistory history) throws CommandException {}`).
+On the other hand, meta-commands operate on AliasManager.
+Therefore, it is desirable to draw a distinction between regular commands and meta-commands throughout the codebase.
 
-SourceManagerParser detects when a meta-command is entered.
-A meta-command is one that pertains to AliasManager (and by association SourceManagerParser), e.g. `alias`, `alias-rm`, `alias-ls`, etc.
+To implement aliasing, we created the AliasManager interface to practice design by contract.
+AliasManager is command-agnostic.
+It operates through its API, and is not concerned with the choice of meta-commands selected (e.g. modifying `alias` to `alias-add`).
+We also created a class ConcreteAliasManager to implement the AliasManager interface.
 
-AliasManager exposes the meta-commands it "uses", which SourceManagerParser relies on for detection.
-However, it is acknowledged that this is not strictly necessary.
-It is safe for SourceManagerParser to redefine these meta-commands.
-The default meta-commands that AliasManager exposes should be thought of as recommended, but not mandatory, meta-commands.
-AliasManager is fundamentally command-agnostic; it does not care what meta-commands are actually used.
+As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object for dependency injection.
+Otherwise, the default constructor instantiates ConcreteAliasManager.
+
+[NOTE]
+We chose to create the AliasManager interface to decouple SourceManagerParser and ConcreteAliasManager.
+In normal operation, we would always use ConcreteAliasManager.
+However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability and maintainability.
+
+To implement the meta-commands, we create an abstract superclass `AliasMetaCommandParser` that implements `Parser<DummyCommand>`.
+This serves as an alternative class of command parsers (for meta-commands), in contrast to the regular ones which are of the type `Parser<? extends Command>`.
+The key difference between the two is that an AliasMetaCommandParser has a field storing a reference to the AliasManager object which it requires to interact with (e.g. when adding/removing an alias).
+
+[NOTE]
+Parsers are expected to return a Command object which SourceManagerParser returns in its `parseCommand(String userInput)` method.
+Typically, a Command object operates on the Model (e.g. AddCommand calls `model.addSource()`).
+However, meta-commands operate on the AliasManager, and not the model.
+Therefore, for this purpose, we created a class `DummyCommand` which does nothing except return a CommandResult object to display feedback to the user.
+
+Finally, we create a `CommandValidator` interface.
+AliasManager uses the CommandValidator for two purposes:
+
+1. Validate a command before registering an alias to it
+2. Ensure that a command isn't designated as an un-aliasable command
+
+We chose this implementation and design pattern for several reasons:
+
+1. By designating an object as a CommandValidator, we are able to avoid hardcoding the list of valid and un-aliasable commands into AliasManager.
+This makes for a more reusable component and improves testability as well as maintainability.
+
+2. Typically, the SourceManagerParser (which by definition should know about the various valid commands) is the designated CommandValidator.
+However, the SourceManagerParser also has an association with the AliasManager.
+By creating an interface, we avoid a situation of circular dependency where by both components are tightly coupled to each other.
+
+==== Aliasing feature: operation
 
 When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
-The AliasMetaCommandParser concrete subclasses parses the arguments and returns a DummyCommand response object.
+The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.
 
 [NOTE]
 
@@ -349,51 +386,40 @@ This makes SourceManagerParser more readable, declarative, and maintainable.
 This also allows us to practice the Single Responsibility Principle and Single Layer of Abstraction Principle, among others.
 Secondly, it improves testability by facilitating unit testing of smaller blocks of logic, rather than a single giant block.
 
-In normal operation, when the user uses an alias, SourceManagerParser parses the user input to extract the "command word".
-It checks whether the "command word" is an alias using AliasManager's `isAlias()` method.
-If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method
-(which returns an `Optional<String>` - this forces the caller to unwrap the optional and avoids null pointer exceptions).
+If user input is valid, the AliasMetaCommandParser, which stores a reference to the AliasManager object, operates on it through the AliasManager API.
 
-Finally, SourceManagerParser recursively calls itself using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
+In normal operation, when the user enters an alias, SourceManagerParser parses the user input to extract the "command word".
+It checks whether the "command word" is a pre-existing alias using AliasManager's `isAlias()` method.
+If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method.
 
-**Alternative:** An alternative implementation could be to modify the `HashMap<String, String>` in AliasManager into `HashMap<String, Class<? extends Command>>`. The value is thus a Command class.
-When a valid alias is used, AliasManager would instantiate the associated class and return the instance.
-However, this implementation is disfavored, for the following reasons.
+Finally, SourceManagerParser recursively calls itself once using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
 
-Firstly, SourceManagerParser works with both Command classes and Parser classes.
-Some commands, for instance `add`, have accompanying arguments to be parsed.
-For these "parsable commands", SourceManagerParser instantiates a CommandParser and calls its `.parse()` method.
-For other "non-parsable commands", for instance `clear`, SourceManagerParser instantiates and returns the command directly.
+[NOTE]
+AliasManager doesn't allow the aliasing of invalid commands, nor the aliasing of an alias.
+This is to guard against the risk of an infinite loop, e.g. where `alias1` is the alias of `alias2`, which is the alias of `alias1`.
+With the current implementation, we can be assured that the recursion depth is at most 2.
 
-Therefore, if we were to adopt this implementation, we would require 2 separate HashMaps mapping aliases to `Class<? extends Command>` and `Class<? extends Parser<? extends Command>>`.
-This introduces a lot of complexity into AliasManager, and results in some duplication of logic across SourceManagerParser and AliasManager.
-Specifically, the logic that distinguishes between commands/aliases that map to `Command` and those that map to `Parser` will be duplicated in both SourceManagerParser and AliasManager.
-This violates the DRY principle.
-
-Furthermore, doing so increases coupling across the project, as there are now associations between AliasManager and the various Commands/Parsers. We want to minimize coupling whenever possible.
-
-Therefore, by simply mapping aliases to commands, and having a single layer of recursion in SourceManagerParser whereby it calls itself with the actual command, we avoid all the above problems.
-We improve cohesion, reduce coupling, drastically reduce complexity, and improve testability.
-
-==== Persistence:
+==== Persistence feature: implementation
 The usefulness of aliases would be significantly diminished if they do not persist between sessions.
-Therefore, we want aliases to be stored on disk and automatically loaded in future sessions.
+Therefore, we want aliases to be stored on disk and automatically loaded in future sessions on application startup.
 
 To accomplish this, we create an `AliasStorage` interface, and an implementing class `ConcreteAliasStorage`.
-We also modify AliasManager to instantiate ConcreteAliasStorage upon its own instantiation.
+We also modify ConcreteAliasManager to accept an AliasStorage object during its instantiation.
+To facilitate unit testing, we allow a `null` AliasStorage object which disables data persistence.
+
+[NOTE]
+The motivations for this design pattern is similar to the discussion above for creating the AliasManager interface.
+Essentially, we want to decouple components as much as possible, support dependency injection, and improve testability and maintainability.
 
 ConcreteAliasStorage is responsible for reading/writing from/to disk,
 and therefore converting the in-memory database (HashMap object) of aliases into/from an encoded representation.
 When AliasManager's aliases database is mutated (i.e. create or remove alias), it calls ConcreteAliasStorage's `saveAliases()` method.
 
 [NOTE]
-
 **Alternative:** A more elegant implementation would be to apply the observer pattern,
 with the observer observing the aliases HashMap database, and calling `saveAliases()` when it is mutated.
 However, given the simplicity of AliasManager, we believe that applying the observer pattern will result in unnecessary overhead,
 with minimal (or no) tangible benefits.
-Firstly, the aliases HashMap database is a private field, and only accessible within AliasManager.
-Secondly, there are only 2 methods which would mutate the aliases HashMap database.
 
 Within ConcreteAliasStorage, its `saveAliases()` method encodes aliases and commands into a string,
 in the following format: `alias1:command1;alias2:command2;alias3:command3`.

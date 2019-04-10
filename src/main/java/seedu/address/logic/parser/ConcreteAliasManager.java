@@ -15,6 +15,7 @@ class ConcreteAliasManager implements AliasManager {
 
     private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
     private static final String ERROR_DISALLOWED_COMMAND = "This command cannot be aliased";
+    private static final String ERROR_INVALID_COMMAND = "Provided command is invalid";
     private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
     private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
     private static final String ERROR_ALIAS_IS_UNREGISTERED = "The provided alias is not registered";
@@ -122,6 +123,7 @@ class ConcreteAliasManager implements AliasManager {
      * If alias already exists, it will be overwritten.
      * @throws IllegalArgumentException if command has an invalid syntax (must be alphabetical only).
      * @throws IllegalArgumentException if command is a meta-command.
+     * @throws IllegalArgumentException if command is invalid.
      * @throws IllegalArgumentException if command is another registered alias.
      * @throws IllegalArgumentException if alias is an existing command.
      */
@@ -144,6 +146,12 @@ class ConcreteAliasManager implements AliasManager {
         if (commandValidator.isUnaliasableCommand(command)) {
             logger.warning("Command cannot be aliased. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_DISALLOWED_COMMAND);
+        }
+
+        // Guard against command being invalid
+        if (!commandValidator.isValidCommand(command)) {
+            logger.warning("Command is invalid. Throwing IllegalArgumentException.");
+            throw new IllegalArgumentException(ERROR_INVALID_COMMAND);
         }
 
         // Guard against command being another registered alias

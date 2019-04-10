@@ -139,7 +139,7 @@ public class Source {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, detail, tags, biblioFields);
+        return Objects.hash(title, type, detail, tags);
     }
 
     @Override

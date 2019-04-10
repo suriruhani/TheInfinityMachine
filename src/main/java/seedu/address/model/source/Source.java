@@ -155,7 +155,6 @@ public class Source {
                 .append(getDetail() + "\n")
                 .append("Tags: ");
         getTags().forEach(builder::append);
-        builder.append(getBiblioFields());
         return builder.toString();
     }
 

@@ -147,8 +147,6 @@ public class Source {
         final StringBuilder builder = new StringBuilder();
         builder.append("Title: ")
                 .append(getTitle() + "\n")
-                .append("Author: ")
-                .append(getAuthor() + "\n")
                 .append("Type: ")
                 .append(getType() + "\n")
                 .append("Detail: ")

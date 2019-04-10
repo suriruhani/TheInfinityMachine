@@ -1,9 +1,11 @@
 package seedu.address.logic.parser;
 
+import seedu.address.logic.parser.exceptions.ParseException;
+
 /**
- * An abstract class that all AliasManager meta-command parsers extends from.
+ * An abstract parser class that all meta-command parsers should subclass.
  */
-public abstract class AliasMetaCommandParser {
+public abstract class AliasMetaCommandParser implements Parser<DummyCommand> {
     private final AliasManager aliasManager;
     private final String command;
 
@@ -12,9 +14,12 @@ public abstract class AliasMetaCommandParser {
         this.command = command;
     }
 
+    public abstract DummyCommand parse(String userInput) throws ParseException;
+
     AliasManager getAliasManager() {
         return aliasManager;
     }
+
     String getCommand() {
         return command;
     }

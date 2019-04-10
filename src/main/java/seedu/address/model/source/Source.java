@@ -35,7 +35,7 @@ public class Source {
         this.detail = detail;
         this.tags.addAll(tags);
 
-        this.author = new Author("Unknown Author");
+        this.author = new Author("Default Author");
     }
 
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
@@ -129,11 +129,9 @@ public class Source {
 
         Source otherSource = (Source) other;
         return otherSource.getTitle().equals(getTitle())
-                && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getType().equals(getType())
                 && otherSource.getDetail().equals(getDetail())
-                && otherSource.getTags().equals(getTags())
-                && otherSource.getBiblioFields().equals(getBiblioFields());
+                && otherSource.getTags().equals(getTags());
     }
 
     @Override

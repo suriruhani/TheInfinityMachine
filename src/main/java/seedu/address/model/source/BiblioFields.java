@@ -1,8 +1,8 @@
 package seedu.address.model.source;
 
-import java.util.Arrays;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Arrays;
 
 /**
  * Represents a field for bibliographical information in the address book.
@@ -10,41 +10,48 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
  */
 public class BiblioFields {
 
-    public static final String[] ACCEPTED_FIELD_TYPES =
-            {"City", "Journal", "Pages", "Publisher", "URL", "Webpage", "Website", "Day", "Month", "Year"};
+    public static final String[] ACCEPTED_FIELD_HEADERS =
+        {"City", "Journal", "Pages", "Publisher", "URL", "Webpage", "Website", "Day", "Month", "Year"};
 
 
-    private final String[] fieldEntries = new String[ACCEPTED_FIELD_TYPES.length];
+    private final String[] fieldBodies = new String[ACCEPTED_FIELD_HEADERS.length];
 
     /**
      * Constructs an empty {@code BiblioFields object}.
      *
      */
-    public BiblioFields(){
-        Arrays.fill(fieldEntries, "");
+    public BiblioFields() {
+        Arrays.fill(fieldBodies, "");
     }
 
-    public void replaceField (String type, String entry) throws IllegalArgumentException{
-        requireAllNonNull(type, entry);
-        if (getTypeIndex(type) == 0) {
-            throw new IllegalArgumentException("Invalid field type. Field Type must be one of the following\n"
-            + ACCEPTED_FIELD_TYPES.toString());
+    /**
+     * Replaces a field in BiblioFields.
+     *
+     * @param header A valid biblio field type
+     * @param body A valid biblio field body
+     * @return true if edit is successful
+     */
+    public boolean replaceField (String header, String body) throws IllegalArgumentException {
+        requireAllNonNull(header, body);
+        if (getHeaderIndex(header) == 0) {
+            return false;
         } else {
-            fieldEntries[getTypeIndex(type)] = entry;
+            fieldBodies[getHeaderIndex(header)] = body;
+            return true;
         }
     }
 
-    public String[] getFieldEntries(){
-        return fieldEntries;
+    public String[] getFieldBodies() {
+        return fieldBodies;
     }
 
-    public String getField(String type){
-        return fieldEntries[getTypeIndex(type)];
+    public String getField(String header) {
+        return fieldBodies[getHeaderIndex(header)];
     }
 
-    private int getTypeIndex(String type){
-        for (int i = 0; i < ACCEPTED_FIELD_TYPES.length; i++){
-            if (ACCEPTED_FIELD_TYPES[i].equals(type)){
+    private int getHeaderIndex(String header) {
+        for (int i = 0; i < ACCEPTED_FIELD_HEADERS.length; i++) {
+            if (ACCEPTED_FIELD_HEADERS[i].equals(header)) {
                 return i;
             }
         }
@@ -55,12 +62,12 @@ public class BiblioFields {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BiblioFields // instanceof handles nulls
-                && fieldEntries.equals(((BiblioFields) other).getFieldEntries())); // State check
+                && fieldBodies.equals(((BiblioFields) other).getFieldBodies())); // State check
     }
 
     @Override
     public int hashCode() {
-        return fieldEntries.toString().hashCode();
+        return fieldBodies.toString().hashCode();
     }
 
     /**
@@ -68,8 +75,8 @@ public class BiblioFields {
      */
     public String toString() {
         String output = "Biblio fields:\n";
-        for (int i = 0; i < ACCEPTED_FIELD_TYPES.length; i++){
-            output = output + String.format("[%s: %s]\n", ACCEPTED_FIELD_TYPES[i], fieldEntries[i]);
+        for (int i = 0; i < ACCEPTED_FIELD_HEADERS.length; i++) {
+            output = output + String.format("[%s: %s]\n", ACCEPTED_FIELD_HEADERS[i], fieldBodies[i]);
         }
         return output;
     }

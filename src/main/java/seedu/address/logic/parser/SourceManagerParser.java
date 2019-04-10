@@ -54,17 +54,24 @@ public class SourceManagerParser implements CommandValidator {
 
     private AliasManager aliasManager;
 
+    /**
+     * Convenience constructor that instantiates SourceManagerParser with ConcreteAliasManager.
+     */
     public SourceManagerParser() {
-        initializeMetaCommands();
-        initializeValidCommands();
-        aliasManager = new ConcreteAliasManager(this, new ConcreteAliasStorage());
+        this(null);
     }
 
     /**
-     * Alternative constructor for dependency injection.
+     * Instantiates SourceManagerParser with an AliasManager object.
+     * @param aliasManager If null, ConcreteAliasManager will be instantiated to be used.
      */
     public SourceManagerParser(AliasManager aliasManager) {
-        this.aliasManager = aliasManager;
+        if (aliasManager == null) {
+            this.aliasManager = new ConcreteAliasManager(this, new ConcreteAliasStorage());
+        } else {
+            this.aliasManager = aliasManager;
+        }
+
         initializeMetaCommands();
         initializeValidCommands();
     }

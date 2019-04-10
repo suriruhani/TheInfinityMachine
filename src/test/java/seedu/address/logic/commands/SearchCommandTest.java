@@ -235,7 +235,7 @@ public class SearchCommandTest {
         pList.add(PREFIX_TYPE);
         pList.add(PREFIX_TYPE);
         sList.add("alice");
-        sList.add("ben");
+        sList.add("benson");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);

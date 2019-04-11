@@ -438,11 +438,15 @@ public class ModelManager implements Model, PanicMode {
 
     @Override
     public void setParserMode(ParserMode mode) {
-        if (mode == ParserMode.SOURCE_MANAGER) {
+        switch (mode) {
+        case SOURCE_MANAGER:
             switchToSources();
-        }
-        if (mode == ParserMode.RECYCLE_BIN) {
+            break;
+        case RECYCLE_BIN:
             switchToDeletedSources();
+            break;
+        default:
+            switchToSources();
         }
         this.mode = mode;
     }

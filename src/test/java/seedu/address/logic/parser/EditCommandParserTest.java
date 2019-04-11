@@ -1,24 +1,24 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DETAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TYPE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -49,7 +49,7 @@ public class EditCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_TITLE_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_TITLE_ENGINEERING, MESSAGE_INVALID_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", EditCommand.MESSAGE_NOT_EDITED);
@@ -61,10 +61,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + TITLE_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + TITLE_DESC_ENGINEERING, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + TITLE_DESC_AMY, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + TITLE_DESC_ENGINEERING, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
@@ -87,7 +87,7 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1" + TAG_EMPTY + TAG_DESC_FOO + TAG_DESC_BAR, Tag.MESSAGE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "1" + INVALID_TITLE_DESC + INVALID_TYPE_DESC + VALID_DETAIL_AMY,
+        assertParseFailure(parser, "1" + INVALID_TITLE_DESC + INVALID_TYPE_DESC + VALID_DETAIL_ENGINEERING,
                 Title.MESSAGE_CONSTRAINTS);
     }
 
@@ -95,10 +95,10 @@ public class EditCommandParserTest {
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_SOURCE;
         String userInput = targetIndex.getOneBased() + TAG_DESC_BAR
-                + TYPE_DESC_AMY + DETAIL_DESC_AMY + TITLE_DESC_AMY + TAG_DESC_FOO;
+                + TYPE_DESC_ENGINEERING + DETAIL_DESC_ENGINEERING + TITLE_DESC_ENGINEERING + TAG_DESC_FOO;
 
-        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_AMY)
-                .withType(VALID_TYPE_AMY).withDetail(VALID_DETAIL_AMY)
+        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_ENGINEERING)
+                .withType(VALID_TYPE_ENGINEERING).withDetail(VALID_DETAIL_ENGINEERING)
                 .withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -108,10 +108,10 @@ public class EditCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_SOURCE;
-        String userInput = targetIndex.getOneBased() + TYPE_DESC_AMY;
+        String userInput = targetIndex.getOneBased() + TYPE_DESC_ENGINEERING;
 
         EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder()
-                .withType(VALID_TYPE_AMY).build();
+                .withType(VALID_TYPE_ENGINEERING).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -121,20 +121,20 @@ public class EditCommandParserTest {
     public void parse_oneFieldSpecified_success() {
         // title
         Index targetIndex = INDEX_THIRD_SOURCE;
-        String userInput = targetIndex.getOneBased() + TITLE_DESC_AMY;
-        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_AMY).build();
+        String userInput = targetIndex.getOneBased() + TITLE_DESC_ENGINEERING;
+        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_ENGINEERING).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // type
-        userInput = targetIndex.getOneBased() + TYPE_DESC_AMY;
-        descriptor = new EditSourceDescriptorBuilder().withType(VALID_TYPE_AMY).build();
+        userInput = targetIndex.getOneBased() + TYPE_DESC_ENGINEERING;
+        descriptor = new EditSourceDescriptorBuilder().withType(VALID_TYPE_ENGINEERING).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // detail
-        userInput = targetIndex.getOneBased() + DETAIL_DESC_AMY;
-        descriptor = new EditSourceDescriptorBuilder().withDetail(VALID_DETAIL_AMY).build();
+        userInput = targetIndex.getOneBased() + DETAIL_DESC_ENGINEERING;
+        descriptor = new EditSourceDescriptorBuilder().withDetail(VALID_DETAIL_ENGINEERING).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
@@ -148,12 +148,12 @@ public class EditCommandParserTest {
     @Test
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_FIRST_SOURCE;
-        String userInput = targetIndex.getOneBased() + DETAIL_DESC_AMY + TYPE_DESC_AMY
-                + TAG_DESC_FOO + DETAIL_DESC_AMY + TYPE_DESC_AMY + TAG_DESC_FOO
-                + DETAIL_DESC_BOB + TYPE_DESC_BOB + TAG_DESC_BAR;
+        String userInput = targetIndex.getOneBased() + DETAIL_DESC_ENGINEERING + TYPE_DESC_ENGINEERING
+                + TAG_DESC_FOO + DETAIL_DESC_ENGINEERING + TYPE_DESC_ENGINEERING + TAG_DESC_FOO
+                + DETAIL_DESC_NETWORK + TYPE_DESC_NETWORK + TAG_DESC_BAR;
 
         EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder()
-                .withType(VALID_TYPE_BOB).withDetail(VALID_DETAIL_BOB).withTags(VALID_TAG_FOO, VALID_TAG_BAR)
+                .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK).withTags(VALID_TAG_FOO, VALID_TAG_BAR)
                 .build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
 
@@ -164,16 +164,16 @@ public class EditCommandParserTest {
     public void parse_invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_SOURCE;
-        String userInput = targetIndex.getOneBased() + INVALID_TYPE_DESC + TYPE_DESC_BOB;
+        String userInput = targetIndex.getOneBased() + INVALID_TYPE_DESC + TYPE_DESC_NETWORK;
         EditSourceDescriptor descriptor =
-                new EditSourceDescriptorBuilder().withType(VALID_TYPE_BOB).build();
+                new EditSourceDescriptorBuilder().withType(VALID_TYPE_NETWORK).build();
         EditCommand expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + TYPE_DESC_BOB + DETAIL_DESC_BOB;
-        descriptor = new EditSourceDescriptorBuilder().withType(VALID_TYPE_BOB)
-                .withDetail(VALID_DETAIL_BOB).build();
+        userInput = targetIndex.getOneBased() + TYPE_DESC_NETWORK + DETAIL_DESC_NETWORK;
+        descriptor = new EditSourceDescriptorBuilder().withType(VALID_TYPE_NETWORK)
+                .withDetail(VALID_DETAIL_NETWORK).build();
         expectedCommand = new EditCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }

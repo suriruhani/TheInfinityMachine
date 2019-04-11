@@ -1,12 +1,12 @@
 {
   "sources": [ {
-    "title": "Alice Pauline",
-    "type": "94351253",
-    "detail": "alice@example.com",
-    "tagged": [ "friends" ]
+    "title": "Algorithm Research",
+    "type": "article",
+    "detail": "A research about algorithms.",
+    "tagged": [ "research" ]
   }, {
-    "title": "Alice Pauline",
+    "title": "Algorithm Research",
     "type": "94351253",
-    "detail": "alice@example.com"
+    "detail": "A research about algorithms."
   } ]
 }

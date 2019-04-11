@@ -2,9 +2,9 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.HOON;
-import static seedu.address.testutil.TypicalSources.IDA;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.PROGRAMMING;
+import static seedu.address.testutil.TypicalSources.STRUCTURE;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.io.IOException;
@@ -86,14 +86,14 @@ public class JsonSourceManagerStorageTest {
         assertEquals(original, new SourceManager(readBack));
 
         // Modify data, overwrite exiting file, and read back
-        original.addSource(HOON);
-        original.removeSource(ALICE);
+        original.addSource(STRUCTURE);
+        original.removeSource(ALGORITHM_RESEARCH);
         jsonSourceManagerStorage.saveSourceManager(original, filePath);
         readBack = jsonSourceManagerStorage.readSourceManager(filePath).get();
         assertEquals(original, new SourceManager(readBack));
 
         // Save and read without specifying file path
-        original.addSource(IDA);
+        original.addSource(PROGRAMMING);
         jsonSourceManagerStorage.saveSourceManager(original); // file path not specified
         readBack = jsonSourceManagerStorage.readSourceManager().get(); // file path not specified
         assertEquals(original, new SourceManager(readBack));

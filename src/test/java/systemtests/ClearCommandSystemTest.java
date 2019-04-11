@@ -1,10 +1,12 @@
 package systemtests;
 
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -38,13 +40,13 @@ public class ClearCommandSystemTest extends SourceManagerSystemTest {
 
         /* Case: selects first card in source list and clears source manager -> cleared and no card selected */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        //        selectSource(Index.fromOneBased(1));
+        selectSource(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardDeselected();
 
         /* Case: filters the source list before clearing -> entire source manager cleared */
         executeCommand(UndoCommand.COMMAND_WORD); // restores the original source manager
-        //        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
         assertSelectedCardUnchanged();
 

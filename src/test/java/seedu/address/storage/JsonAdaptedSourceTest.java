@@ -2,7 +2,7 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.storage.JsonAdaptedSource.MISSING_FIELD_MESSAGE_FORMAT;
-import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +22,17 @@ public class JsonAdaptedSourceTest {
     private static final String INVALID_DETAIL = " example"; // Leading white space is illegal
     private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_TITLE = BENSON.getTitle().toString();
-    private static final String VALID_TYPE = BENSON.getType().toString();
-    private static final String VALID_DETAIL = BENSON.getDetail().toString();
-    private static final List<JsonAdaptedTag> VALID_TAGS = BENSON.getTags().stream()
+    private static final String VALID_TITLE = SENSOR_RESEARCH.getTitle().toString();
+    private static final String VALID_TYPE = SENSOR_RESEARCH.getType().toString();
+    private static final String VALID_DETAIL = SENSOR_RESEARCH.getDetail().toString();
+    private static final List<JsonAdaptedTag> VALID_TAGS = SENSOR_RESEARCH.getTags().stream()
             .map(JsonAdaptedTag::new)
             .collect(Collectors.toList());
 
     @Test
     public void toModelType_validSourceDetails_returnsSource() throws Exception {
-        JsonAdaptedSource source = new JsonAdaptedSource(BENSON);
-        assertEquals(BENSON, source.toModelType());
+        JsonAdaptedSource source = new JsonAdaptedSource(SENSOR_RESEARCH);
+        assertEquals(SENSOR_RESEARCH, source.toModelType());
     }
 
     @Test

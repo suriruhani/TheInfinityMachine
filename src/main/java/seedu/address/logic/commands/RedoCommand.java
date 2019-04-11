@@ -30,7 +30,6 @@ public class RedoCommand extends Command {
 
         model.redoSourceManager();
         model.redoDeletedSources();
-        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         return new CommandResult(MESSAGE_SUCCESS);
     }

@@ -20,7 +20,6 @@ public class CountCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.switchToSources(); // sets source manager data to list
         int count = model.getFilteredSourceList().size();
         return new CommandResult(String.format(MESSAGE_SUCCESS, count));
     }

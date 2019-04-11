@@ -10,7 +10,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -37,7 +36,7 @@ public class SelectCommandTest {
         assertExecutionSuccess(INDEX_THIRD_SOURCE);
         assertExecutionSuccess(lastSourceIndex);
     }
-    @Ignore
+
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);

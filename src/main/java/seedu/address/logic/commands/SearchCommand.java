@@ -44,7 +44,6 @@ public class SearchCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) {
         requireNonNull(model);
-        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(predicate);
         return new CommandResult(
                 String.format(Messages.MESSAGE_SOURCES_LISTED_OVERVIEW, model.getFilteredSourceList().size()));

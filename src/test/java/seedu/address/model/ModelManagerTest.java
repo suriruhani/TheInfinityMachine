@@ -148,7 +148,8 @@ public class ModelManagerTest {
 
     @Test
     public void equals() {
-        SourceManager sourceManager = new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).withSource(SENSOR_RESEARCH).build();
+        SourceManager sourceManager = new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH)
+                .withSource(SENSOR_RESEARCH).build();
         SourceManager differentSourceManager = new SourceManager();
         UserPrefs userPrefs = new UserPrefs();
         DeletedSources differentDeletedSources = new DeletedSources();

@@ -11,11 +11,11 @@ import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 import static seedu.address.testutil.TypicalSources.ENGINEERING;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
+import static seedu.address.testutil.TypicalSources.PROGRAMMING;
 import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.STRUCTURE;
-import static seedu.address.testutil.TypicalSources.PROGRAMMING;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Test;
 

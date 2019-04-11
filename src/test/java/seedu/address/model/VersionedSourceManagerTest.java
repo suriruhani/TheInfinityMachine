@@ -18,9 +18,12 @@ import seedu.address.testutil.SourceManagerBuilder;
 
 public class VersionedSourceManagerTest {
 
-    private final ReadOnlySourceManager sourceManagerWithAlice = new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).build();
-    private final ReadOnlySourceManager sourceManagerWithBenson = new SourceManagerBuilder().withSource(SENSOR_RESEARCH).build();
-    private final ReadOnlySourceManager sourceManagerWithCarl = new SourceManagerBuilder().withSource(SMART_COMPUTERS).build();
+    private final ReadOnlySourceManager sourceManagerWithAlice =
+            new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).build();
+    private final ReadOnlySourceManager sourceManagerWithBenson =
+            new SourceManagerBuilder().withSource(SENSOR_RESEARCH).build();
+    private final ReadOnlySourceManager sourceManagerWithCarl =
+            new SourceManagerBuilder().withSource(SMART_COMPUTERS).build();
     private final ReadOnlySourceManager emptySourceManager = new SourceManagerBuilder().build();
 
     @Test

@@ -24,8 +24,8 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
 import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
-import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 
 import org.junit.Test;
 

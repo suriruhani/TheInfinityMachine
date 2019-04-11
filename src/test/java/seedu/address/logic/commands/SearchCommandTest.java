@@ -9,12 +9,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
+import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
 import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 

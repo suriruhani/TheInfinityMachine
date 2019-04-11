@@ -18,7 +18,8 @@ public class EditSourceDescriptorTest {
     @Test
     public void equals() {
         // same values -> returns true
-        EditCommand.EditSourceDescriptor descriptorWithSameValues = new EditCommand.EditSourceDescriptor(DESC_ENGINEERING);
+        EditCommand.EditSourceDescriptor descriptorWithSameValues =
+                new EditCommand.EditSourceDescriptor(DESC_ENGINEERING);
         assertTrue(DESC_ENGINEERING.equals(descriptorWithSameValues));
 
         // same object -> returns true
@@ -34,20 +35,20 @@ public class EditSourceDescriptorTest {
         assertFalse(DESC_ENGINEERING.equals(DESC_NETWORK));
 
         // different title -> returns false
-        EditCommand.EditSourceDescriptor editedAmy =
+        EditCommand.EditSourceDescriptor editedEngineering =
                 new EditSourceDescriptorBuilder(DESC_ENGINEERING).withTitle(VALID_TITLE_NETWORK).build();
-        assertFalse(DESC_ENGINEERING.equals(editedAmy));
+        assertFalse(DESC_ENGINEERING.equals(editedEngineering));
 
         // different type -> returns false
-        editedAmy = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withType(VALID_TYPE_NETWORK).build();
-        assertFalse(DESC_ENGINEERING.equals(editedAmy));
+        editedEngineering = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withType(VALID_TYPE_NETWORK).build();
+        assertFalse(DESC_ENGINEERING.equals(editedEngineering));
 
         // different detail -> returns false
-        editedAmy = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withDetail(VALID_DETAIL_NETWORK).build();
-        assertFalse(DESC_ENGINEERING.equals(editedAmy));
+        editedEngineering = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withDetail(VALID_DETAIL_NETWORK).build();
+        assertFalse(DESC_ENGINEERING.equals(editedEngineering));
 
         // different tags -> returns false
-        editedAmy = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withTags(VALID_TAG_BAR).build();
-        assertFalse(DESC_ENGINEERING.equals(editedAmy));
+        editedEngineering = new EditSourceDescriptorBuilder(DESC_ENGINEERING).withTags(VALID_TAG_BAR).build();
+        assertFalse(DESC_ENGINEERING.equals(editedEngineering));
     }
 }

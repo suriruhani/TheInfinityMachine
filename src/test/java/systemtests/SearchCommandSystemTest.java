@@ -3,10 +3,10 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_SOURCES_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,8 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
          */
         String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH); //first titles of Benson and Daniel are "Meier"
+        //first titles of Benson and Daniel are "Meier"
+        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

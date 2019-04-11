@@ -62,7 +62,8 @@ public class TypicalSources {
     public static final Source ENGINEERING = new SourceBuilder().withTitle(VALID_TITLE_ENGINEERING)
             .withType(VALID_TYPE_ENGINEERING).withDetail(VALID_DETAIL_ENGINEERING).withTags(VALID_TAG_FOO).build();
     public static final Source NETWORK = new SourceBuilder().withTitle(VALID_TITLE_NETWORK)
-            .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK).withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
+            .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK)
+            .withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
 
     public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches MEIER
 

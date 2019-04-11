@@ -3,8 +3,8 @@ package seedu.address.storage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
-import static seedu.address.testutil.TypicalSources.STRUCTURE;
 import static seedu.address.testutil.TypicalSources.PROGRAMMING;
+import static seedu.address.testutil.TypicalSources.STRUCTURE;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.io.IOException;

@@ -170,6 +170,9 @@ to take in multiple arguments of each prefix and search
 in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
 Similar fields are also shown, allowing for room should the user have made a typing mistake, or the user meant something
 else, or the user just wants to see other related sources with similar field values.
+If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above or in the Developer Guide.
+Rest assured, the intended results will never be missed out.
 
 Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 

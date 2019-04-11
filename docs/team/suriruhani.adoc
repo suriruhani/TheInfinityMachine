@@ -138,6 +138,9 @@ modified to implement an `AND` logic to ensure all these search queries are sati
 - It was relatively simple to change exact matching to substring matching by using `String.contains()` method.
 - It was trivial to implement case insensitivity by converting both source value and argument value `toLowerCase()` before carrying
 out the substring comparison.
+- If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above.
+- Rest assured, the intended results will never be missed out.
 
 ===== *Credits*:
 Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.

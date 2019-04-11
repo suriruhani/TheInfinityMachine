@@ -536,6 +536,25 @@ source entries that satisfy all of the entered tags in conjunction, by checking 
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
 of the sources, and making working on the database more efficient.
 
+Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
+powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
+or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).
+
+However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
+broaded by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
+
+1. Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.
+2. If not, this feature at the very least shows user _'similar'_ or _'other related'_ entries that may be useful in their
+research project as they search for a particular entry. This can help in giving user more ideas about related sources in the same field.
+
+This distance is know as the Levenshtein distance or the edit distance,
+after the Russian scientist Vladimir Levenshtein who devised the algorithm in 1965. This algorithm is used to determine how different
+two strings are from each other by outputing the integer number of transformations (insertions, deletions and substitutions) needed to transform
+one string to the other.
+
+The algorithm implementation for this section of the code was inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung].
+
 Additionally, it uses:
 
 * `SourceContainsKeywordsPredicate.java` -- Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs
@@ -558,14 +577,21 @@ Given below is an example usage scenario and how the search mechanism behaves at
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-Step 2. The user executes `search i/footitle1` command and only those sources that have their title as `footitle1` are displayed.
+Step 2. The user executes `search i/algorithms` command and only those sources that have their title as `algorithms` are displayed.
 
-Step 3. The user executes `search i/footitle6 y/website` and only those entries are listed that have both their title as `footitle1` and type as `website`.
+Step 3. The user executes `search i/homework y/website` and only those entries are listed that have both their title as `homeowork` and type as `website`.
 
 Step 4. The user executes `search t/CS` and all those sources that have any of their tags having 'CS' in it listed, including `CS2030`, `CS2040` and `CS2103`
 
 [NOTE]
 `search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
+
+Step 5. The user executes `search i/algorihtm` as a typing error, the command still displays all those sources that have their title as
+`algorithms` and other related words.
+
+Step 6. The user executes `search d/training an intelligent agent t/CS2039`, the search displays all sources with
+having the exact sentence 'training an intelligent agent' or any of its related similar strings in it's body, and those with
+tag 'CS2039' or any of the related modules such as 'CS2030', 'CS2040'.
 
 ==== Design Considerations
 

@@ -189,7 +189,7 @@ functionality based on whether an argument was passed by the user or not.
 Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.
 
 === *Code contributed*:
-[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#search=suriruhani&sort=displayName&since=2019-02-10&until=2019-04-02&timeframe=day&reverse=false&repoSort=true[Reposense contribution]] +
+[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=suriruhani[Reposense contribution]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/SearchCommand.java[search command code]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/SearchCommandTest.java[search command test]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java[list command code]] +

@@ -64,11 +64,16 @@ Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 
 The work I have done on AB4's search feature can be divided into 3 major modifications as follows:
 
-===== 1. Multiple prefix tags of different kinds:
+===== 1. Multiple prefix tags of different (and same) kinds:
 In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
 arguments of the type of source fields, and search for sources based on that.
 It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
 listing only those sources that satisfy all the input constraints of the matching fields.
+
+Furthermore, the search command is able to take in multiple arguments of each prefix and search
+in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+This renders this feature more power as now the user is able to search by all that he can recall about the source
+entry and be able to narrow down his search more to produce desired results.
 
 ===== 2. Substring matching with incomplete words:
 Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
@@ -78,11 +83,25 @@ list the entire contents of the source in order to match and search it. Thus now
 as many consecutive words they are able to recall to narrow the listings. Eg. searching for `d/Artificial Intelligence` will
 enumerate all source articles that have 'artificial intelligence' in their content.
 
-===== 3. Multiple prefix tags of one type:
-Furthermore, the search command is able to take in multiple arguments of each prefix and search
-in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
-This renders this feature more power as now the user is able to search by all that he can recall about the source
-entry and be able to narrow down his search more to produce desired results.
+===== 3. Auto-correction feature for typing mistakes:
+Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
+powerful by accomodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
+or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).
+
+However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
+broaded by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
+
+1. Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.
+2. If not, this feature at the very least shows user _'similar'_ or _'other related'_ entries that may be useful in their
+research project as they search for a particular entry. This can help in giving user more ideas about related sources in the same field.
+
+This distance is know as the Levenshtein distance or the edit distance,
+after the Russian scientist Vladimir Levenshtein who devised the algorithm in 1965. This algorithm is used to determine how different
+two strings are from each other by outputing the integer number of transformations (insertions, deletions and substitutions) needed to transform
+one string to the other.
+
+The algorithm implementation for this section of the code was inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung]. +
 
 ===== *What it does*:
 It allows the user to search through all the entries in the database through various fields at a time, and display

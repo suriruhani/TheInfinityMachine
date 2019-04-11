@@ -64,38 +64,8 @@ public class RecycleBinParser extends SourceManagerParser {
         case ExitBinCommand.COMMAND_WORD:
             return new ExitBinCommand();
 
-        // Meta-commands (pertaining to AliasManager)
-        // Meta-commands (pertaining to AliasManager):
-        // For these, we include implementation details because these are meta-commands
-        // that relate directly to AliasManager (and by association, SourceManagerParser).
-
-        case COMMAND_ALIAS_ADD:
-            return new AliasAddMetaCommandParser(aliasManager, COMMAND_ALIAS_ADD)
-                    .parse(arguments);
-
-        case COMMAND_ALIAS_REMOVE:
-            return new AliasRemoveMetaCommandParser(aliasManager, COMMAND_ALIAS_REMOVE)
-                    .parse(arguments);
-
-        case COMMAND_ALIAS_CLEAR:
-            return new AliasClearMetaCommandParser(aliasManager, COMMAND_ALIAS_CLEAR)
-                    .parse(arguments);
-
-        case COMMAND_ALIAS_LIST:
-            return new AliasListMetaCommandParser(aliasManager, COMMAND_ALIAS_LIST)
-                    .parse(arguments);
-
         default:
-            // Throw ParseException if input is not an alias
-            if (!aliasManager.isAlias(commandWord)) {
-                throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
-            }
-
-            // This should never throw NoSuchElementException because we ensured the validity of the alias
-            String actualCommand = aliasManager.getCommand(commandWord).get();
-
-            String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
-            return parseCommand(actualUserInput);
+            throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }
     }
 

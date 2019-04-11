@@ -447,6 +447,7 @@ public class ModelManager implements Model, PanicMode {
             break;
         default:
             switchToSources();
+            break;
         }
         this.mode = mode;
     }

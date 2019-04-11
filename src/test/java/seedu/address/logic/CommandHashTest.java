@@ -5,14 +5,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CustomOrderCommand;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.PinCommand;
-import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.ParserUtil;

@@ -1,10 +1,10 @@
 package seedu.address.logic.commands;
 
+import static seedu.address.logic.commands.ExitBinCommand.MESSAGE_EXIT_BIN_SUCCESS;
+
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.PinnedSourcesCoordinationCenter;
-
-import static seedu.address.logic.commands.ExitBinCommand.MESSAGE_EXIT_BIN_SUCCESS;
 
 /**
  * Terminates the program.

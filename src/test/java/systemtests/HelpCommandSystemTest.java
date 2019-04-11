@@ -29,7 +29,6 @@ public class HelpCommandSystemTest extends SourceManagerSystemTest {
 
     private final GuiRobot guiRobot = new GuiRobot();
 
-    @Ignore
     @Test
     public void openHelpWindow() {
         //use accelerator
@@ -75,7 +74,6 @@ public class HelpCommandSystemTest extends SourceManagerSystemTest {
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
     }
 
-    @Ignore
     @Test
     public void help_multipleCommands_onlyOneHelpWindowOpen() {
         getMainMenu().openHelpWindowUsingMenu();

@@ -1,15 +1,25 @@
 package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
 import static seedu.address.testutil.TypicalSources.AMY;
+import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.CARL;
+import static seedu.address.testutil.TypicalSources.HOON;
+import static seedu.address.testutil.TypicalSources.IDA;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -60,46 +70,44 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
         /* Case: add a source with all fields same as another source in the source manager except type
          * -> added
          */
-        //        toAdd = new SourceBuilder(AMY).withType(VALID_TYPE_BOB).build();
-        //        command = SourceUtil.getAddCommand(toAdd);
-        //        assertCommandSuccess(command, toAdd);
-        //
-        //        /* Case: add to empty source manager -> added */
-        //        deleteAllSources();
-        //        assertCommandSuccess(AMY);
-        //
-        //        /* Case: add a source with tags, command with parameters in random order -> added */
-        //        toAdd = BENSON;
-        //        command = AddCommand.COMMAND_WORD + TAG_DESC_FOO + DETAIL_DESC_BOB + TITLE_DESC_BOB
-        //                + TAG_DESC_BAR + TYPE_DESC_BOB;
-        //        assertCommandSuccess(command, toAdd);
-        //
-        //        /* Case: add a source, missing tags -> added */
-        //        assertCommandSuccess(HOON);
-        //
-        //        /* -------------------------- Perform
-        //        add operation on the shown filtered list ------------------------------ */
-        //
-        //        /* Case: filters the source list before adding -> added */
-        //        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
-        //        assertCommandSuccess(IDA);
-        //
-        //        /* ------------------------ Perform
-        //        add operation while a source card is selected --------------------------- */
-        //
-        //        /* Case: selects first card in the source list,
-        //        add a source -> added, card selection remains unchanged */
-        //        selectSource(Index.fromOneBased(1));
-        //        assertCommandSuccess(CARL);
+        toAdd = new SourceBuilder(AMY).withType(VALID_TYPE_BOB).build();
+        command = SourceUtil.getAddCommand(toAdd);
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add to empty source manager -> added */
+        deleteAllSources();
+        assertCommandSuccess(AMY);
+
+        /* Case: add a source with tags, command with parameters in random order -> added */
+        toAdd = BENSON;
+        command = AddCommand.COMMAND_WORD + TAG_DESC_FOO + DETAIL_DESC_BOB + TITLE_DESC_BOB
+                + TAG_DESC_BAR + TYPE_DESC_BOB;
+        assertCommandSuccess(command, toAdd);
+
+        /* Case: add a source, missing tags -> added */
+        assertCommandSuccess(HOON);
+
+        /* -------------------------- Perform
+        add operation on the shown filtered list ------------------------------ */
+
+        /* Case: filters the source list before adding -> added */
+        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        assertCommandSuccess(IDA);
+
+        /* ------------------------ Perform
+        add operation while a source card is selected --------------------------- */
+
+        /* Case: selects first card in the source list,
+        add a source -> added, card selection remains unchanged */
+        selectSource(Index.fromOneBased(1));
+        assertCommandSuccess(CARL);
 
         /* ----------------------------------- Perform
          invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate source -> rejected */
-        //        command = SourceUtil.getAddCommand(HOON);
-        //        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_SOURCE);
-
-        // I
+        command = SourceUtil.getAddCommand(HOON);
+        assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_SOURCE);
     }
 
     /**

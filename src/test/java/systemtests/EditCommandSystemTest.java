@@ -46,7 +46,6 @@ import seedu.address.testutil.SourceUtil;
 
 public class EditCommandSystemTest extends SourceManagerSystemTest {
 
-    @Ignore
     @Test
     public void edit() {
         Model model = getModel();

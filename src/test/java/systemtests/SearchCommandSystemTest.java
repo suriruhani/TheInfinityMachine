@@ -24,7 +24,6 @@ import java.util.List;
 
 public class SearchCommandSystemTest extends SourceManagerSystemTest {
 
-    @Ignore
     @Test
     public void search() {
         /* Case: search multiple sources in source manager, command with leading spaces and trailing spaces

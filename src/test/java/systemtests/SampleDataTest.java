@@ -44,7 +44,6 @@ public class SampleDataTest extends SourceManagerSystemTest {
         }
     }
 
-    @Ignore
     @Test
     public void sourceManager_dataFileDoesNotExist_loadSampleData() {
         Source[] expectedList = SampleDataUtil.getSampleSources();

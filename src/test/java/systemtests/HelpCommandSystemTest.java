@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import guitests.GuiRobot;

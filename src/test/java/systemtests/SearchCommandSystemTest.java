@@ -8,7 +8,9 @@ import static seedu.address.testutil.TypicalSources.CARL;
 import static seedu.address.testutil.TypicalSources.DANIEL;
 import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
 
-import org.junit.Ignore;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -19,8 +21,6 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class SearchCommandSystemTest extends SourceManagerSystemTest {
 

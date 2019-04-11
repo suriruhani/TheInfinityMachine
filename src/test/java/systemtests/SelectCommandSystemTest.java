@@ -10,7 +10,6 @@ import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -62,8 +61,8 @@ public class SelectCommandSystemTest extends SourceManagerSystemTest {
          */
         showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
         int invalidIndex = getModel().getSourceManager().getSourceList().size();
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
-        MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " "
+                + invalidIndex, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
 
         /* Case: filtered person list, select index within bounds of address book
         and person list -> selected */
@@ -85,8 +84,8 @@ public class SelectCommandSystemTest extends SourceManagerSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredSourceList().size() + 1;
-        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
-        MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " "
+                + invalidIndex, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
 
         /* Case: invalid arguments (alphabets) -> rejected */
         assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",

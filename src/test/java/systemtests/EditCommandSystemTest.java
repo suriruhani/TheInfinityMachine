@@ -27,7 +27,6 @@ import static seedu.address.testutil.TypicalSources.ALICE;
 import static seedu.address.testutil.TypicalSources.BENSON;
 import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -167,24 +166,20 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
                 EditCommand.MESSAGE_NOT_EDITED);
 
         /* Case: invalid title -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
-            INDEX_FIRST_SOURCE.getOneBased() + INVALID_TITLE_DESC,
-                Title.MESSAGE_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TITLE_DESC, Title.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid type -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
-            INDEX_FIRST_SOURCE.getOneBased() + INVALID_TYPE_DESC,
-                Type.MESSAGE_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TYPE_DESC, Type.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid detail -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
-            INDEX_FIRST_SOURCE.getOneBased() + INVALID_DETAIL_DESC,
-                Detail.MESSAGE_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_SOURCE.getOneBased() + INVALID_DETAIL_DESC, Detail.MESSAGE_CONSTRAINTS);
 
         /* Case: invalid tag -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " +
-            INDEX_FIRST_SOURCE.getOneBased() + INVALID_TAG_DESC,
-                Tag.MESSAGE_CONSTRAINTS);
+        assertCommandFailure(EditCommand.COMMAND_WORD + " "
+            + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
 
         /* Case: edit a source with new values same as another source's values -> rejected */
         executeCommand(SourceUtil.getAddCommand(BENSON));

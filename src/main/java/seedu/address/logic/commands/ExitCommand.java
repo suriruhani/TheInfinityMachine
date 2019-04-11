@@ -1,7 +1,5 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.ExitBinCommand.MESSAGE_EXIT_BIN_SUCCESS;
-
 import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.PinnedSourcesCoordinationCenter;
@@ -24,7 +22,7 @@ public class ExitCommand extends Command {
 
         model.disablePanicMode(); // Automatically disable panic mode before exiting program
 
-        return new CommandResult(MESSAGE_EXIT_BIN_SUCCESS, false, true);
+        return new CommandResult(MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true);
     }
 
 }

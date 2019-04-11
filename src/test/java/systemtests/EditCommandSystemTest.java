@@ -3,29 +3,29 @@ package systemtests;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DETAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TYPE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.BENSON;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Test;
 
@@ -58,9 +58,9 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
          */
         Index index = INDEX_FIRST_SOURCE;
         String command = " " + EditCommand.COMMAND_WORD + "  "
-            + index.getOneBased() + "  " + TITLE_DESC_BOB + "  "
-                + " " + TYPE_DESC_BOB + "  " + DETAIL_DESC_BOB + " " + TAG_DESC_BAR + " ";
-        Source editedSource = new SourceBuilder(BENSON).withTags(VALID_TAG_BAR).build();
+            + index.getOneBased() + "  " + TITLE_DESC_NETWORK + "  "
+                + " " + TYPE_DESC_NETWORK + "  " + DETAIL_DESC_NETWORK + " " + TAG_DESC_BAR + " ";
+        Source editedSource = new SourceBuilder(SENSOR_RESEARCH).withTags(VALID_TAG_BAR).build();
         assertCommandSuccess(command, index, editedSource);
 
         /* Case: undo editing the last source in the list -> last source restored */
@@ -75,27 +75,27 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: edit a source with new values same as existing values -> edited */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
-                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
-        assertCommandSuccess(command, index, BENSON);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_NETWORK
+                + DETAIL_DESC_NETWORK + TAG_DESC_FOO + TAG_DESC_BAR;
+        assertCommandSuccess(command, index, SENSOR_RESEARCH);
 
         /* Case: edit a source with new values same
             as another source's values but with different title -> edited */
-        assertTrue(getModel().getSourceManager().getSourceList().contains(BENSON));
+        assertTrue(getModel().getSourceManager().getSourceList().contains(SENSOR_RESEARCH));
         index = INDEX_SECOND_SOURCE;
-        assertNotEquals(getModel().getFilteredSourceList().get(index.getZeroBased()), BENSON);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_AMY + TYPE_DESC_BOB
-                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
-        editedSource = new SourceBuilder(BENSON).withTitle(VALID_TITLE_AMY).build();
+        assertNotEquals(getModel().getFilteredSourceList().get(index.getZeroBased()), SENSOR_RESEARCH);
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_ENGINEERING + TYPE_DESC_NETWORK
+                + DETAIL_DESC_NETWORK + TAG_DESC_FOO + TAG_DESC_BAR;
+        editedSource = new SourceBuilder(SENSOR_RESEARCH).withTitle(VALID_TITLE_ENGINEERING).build();
         assertCommandSuccess(command, index, editedSource);
 
         /* Case: edit a source with new values same as another source's values but with different type
          * -> edited
          */
         index = INDEX_SECOND_SOURCE;
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_AMY
-                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
-        editedSource = new SourceBuilder(BENSON).withType(VALID_TYPE_AMY).build();
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_ENGINEERING
+                + DETAIL_DESC_NETWORK + TAG_DESC_FOO + TAG_DESC_BAR;
+        editedSource = new SourceBuilder(SENSOR_RESEARCH).withType(VALID_TYPE_ENGINEERING).build();
         assertCommandSuccess(command, index, editedSource);
 
         /* Case: clear tags -> cleared */
@@ -109,20 +109,20 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
             while a filtered list is being shown ------------------------ */
 
         /* Case: filtered source list, edit index within bounds of source manager and source list -> edited */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         index = INDEX_FIRST_SOURCE;
         assertTrue(index.getZeroBased() < getModel().getFilteredSourceList().size());
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TITLE_DESC_BOB;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + " " + TITLE_DESC_NETWORK;
         sourceToEdit = getModel().getFilteredSourceList().get(index.getZeroBased());
-        editedSource = new SourceBuilder(sourceToEdit).withTitle(VALID_TITLE_BOB).build();
+        editedSource = new SourceBuilder(sourceToEdit).withTitle(VALID_TITLE_NETWORK).build();
         assertCommandSuccess(command, index, editedSource);
 
         /* Case: filtered source list, edit index within bounds of source manager but out of bounds of source list
          * -> rejected
          */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         int invalidIndex = getModel().getSourceManager().getSourceList().size();
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_NETWORK,
                 Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
 
         /* --------------------- Performing edit operation
@@ -135,30 +135,30 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
         showAllSources();
         index = INDEX_FIRST_SOURCE;
         selectSource(index);
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_AMY + TYPE_DESC_AMY
-                + DETAIL_DESC_AMY + TAG_DESC_FOO;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_ENGINEERING + TYPE_DESC_ENGINEERING
+                + DETAIL_DESC_ENGINEERING + TAG_DESC_FOO;
         // this can be misleading: card selection actually remains unchanged but the
         // browser's url is updated to reflect the new source's name
-        assertCommandSuccess(command, index, ALICE, index);
+        assertCommandSuccess(command, index, ALGORITHM_RESEARCH, index);
 
         /* --------------------------------- Performing
             invalid edit operation -------------------------------------- */
 
         /* Case: invalid index (0) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " 0" + TITLE_DESC_NETWORK,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (-1) -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " -1" + TITLE_DESC_NETWORK,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: invalid index (size + 1) -> rejected */
         invalidIndex = getModel().getFilteredSourceList().size() + 1;
-        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + invalidIndex + TITLE_DESC_NETWORK,
                 Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
 
         /* Case: missing index -> rejected */
-        assertCommandFailure(EditCommand.COMMAND_WORD + TITLE_DESC_BOB,
+        assertCommandFailure(EditCommand.COMMAND_WORD + TITLE_DESC_NETWORK,
                 String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
 
         /* Case: missing all fields -> rejected */
@@ -182,30 +182,30 @@ public class EditCommandSystemTest extends SourceManagerSystemTest {
             + INDEX_FIRST_SOURCE.getOneBased() + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS);
 
         /* Case: edit a source with new values same as another source's values -> rejected */
-        executeCommand(SourceUtil.getAddCommand(BENSON));
-        assertTrue(getModel().getSourceManager().getSourceList().contains(BENSON));
+        executeCommand(SourceUtil.getAddCommand(SENSOR_RESEARCH));
+        assertTrue(getModel().getSourceManager().getSourceList().contains(SENSOR_RESEARCH));
         index = INDEX_FIRST_SOURCE;
-        assertFalse(getModel().getFilteredSourceList().get(index.getZeroBased()).equals(BENSON));
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
-                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
+        assertFalse(getModel().getFilteredSourceList().get(index.getZeroBased()).equals(SENSOR_RESEARCH));
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_NETWORK
+                + DETAIL_DESC_NETWORK + TAG_DESC_FOO + TAG_DESC_BAR;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
 
         /* Case: edit a source with new values same as another source's
             values but with different tags -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
-                + DETAIL_DESC_BOB + TAG_DESC_BAR;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_NETWORK
+                + DETAIL_DESC_NETWORK + TAG_DESC_BAR;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
 
         /* Case: edit a source with new values same as another source's
             values but with different detail -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_BOB
-                + DETAIL_DESC_AMY + TAG_DESC_FOO + TAG_DESC_BAR;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_NETWORK
+                + DETAIL_DESC_ENGINEERING + TAG_DESC_FOO + TAG_DESC_BAR;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
 
         /* Case: edit a source with new values same as another source's
             values but with different type -> rejected */
-        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_BOB + TYPE_DESC_AMY
-                + DETAIL_DESC_BOB + TAG_DESC_FOO + TAG_DESC_BAR;
+        command = EditCommand.COMMAND_WORD + " " + index.getOneBased() + TITLE_DESC_NETWORK + TYPE_DESC_ENGINEERING
+                + DETAIL_DESC_NETWORK + TAG_DESC_FOO + TAG_DESC_BAR;
         assertCommandFailure(command, EditCommand.MESSAGE_DUPLICATE_SOURCE);
     }
 

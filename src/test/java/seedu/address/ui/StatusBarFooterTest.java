@@ -1,7 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
 
@@ -60,12 +60,12 @@ public class StatusBarFooterTest extends GuiUnitTest {
         assertStatusBarContent("", SYNC_STATUS_INITIAL);
 
         // after source manager is updated
-        guiRobot.interact(() -> sourceManager.addSource(ALICE));
+        guiRobot.interact(() -> sourceManager.addSource(ALGORITHM_RESEARCH));
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
 
         // after deleted source list is updated
-        guiRobot.interact(() -> deletedSources.addDeletedSource(ALICE));
+        guiRobot.interact(() -> deletedSources.addDeletedSource(ALGORITHM_RESEARCH));
         assertStatusBarContent(RELATIVE_PATH.resolve(STUB_SAVE_LOCATION).toString(),
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }

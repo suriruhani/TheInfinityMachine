@@ -3,10 +3,10 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_SOURCES_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalSources.BENSON;
-import static seedu.address.testutil.TypicalSources.CARL;
-import static seedu.address.testutil.TypicalSources.DANIEL;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
+import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,28 +29,28 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         /* Case: search multiple sources in source manager, command with leading spaces and trailing spaces
          * -> 2 sources found
          */
-        String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER + "   ";
+        String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT + "   ";
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL); //first titles of Benson and Daniel are "Meier"
+        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH); //first titles of Benson and Daniel are "Meier"
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous search command where source list is displaying the sources we are searching
          * -> 2 sources found
          */
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search source where source list is not displaying the source we are searching -> 1 source found */
         command = SearchCommand.COMMAND_WORD + " Carl";
-        ModelHelper.setFilteredList(expectedModel, CARL);
+        ModelHelper.setFilteredList(expectedModel, SMART_COMPUTERS);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple sources in source manager, 2 keywords -> 2 sources found */
         command = SearchCommand.COMMAND_WORD + " Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, BENSON, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -83,10 +83,10 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
 
         /* Case: search same sources in source manager after deleting 1 of them -> 1 source found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assertFalse(getModel().getSourceManager().getSourceList().contains(BENSON));
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        assertFalse(getModel().getSourceManager().getSourceList().contains(SENSOR_RESEARCH));
+        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -114,17 +114,17 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         assertSelectedCardUnchanged();
 
         /* Case: search address of source in source manager -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " " + DANIEL.getType().type;
+        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getType().type;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search email of source in source manager -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " " + DANIEL.getDetail().detail;
+        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getDetail().detail;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search tags of source in source manager -> 0 sources found */
-        List<Tag> tags = new ArrayList<>(DANIEL.getTags());
+        List<Tag> tags = new ArrayList<>(VR_RESEARCH.getTags());
         command = SearchCommand.COMMAND_WORD + " " + tags.get(0).tagName;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -132,17 +132,17 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         /* Case: search while a source is selected -> selected card deselected */
         showAllSources();
         selectSource(Index.fromOneBased(1));
-        assertFalse(getSourceListPanel().getHandleToSelectedCard().getTitle().equals(DANIEL.getTitle().title));
+        assertFalse(getSourceListPanel().getHandleToSelectedCard().getTitle().equals(VR_RESEARCH.getTitle().title));
         command = SearchCommand.COMMAND_WORD + " Daniel";
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
         /* Case: search source in empty source manager -> 0 sources found */
         deleteAllSources();
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
+        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 

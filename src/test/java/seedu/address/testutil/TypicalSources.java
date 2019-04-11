@@ -1,13 +1,13 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,49 +22,49 @@ import seedu.address.model.source.Source;
  */
 public class TypicalSources {
 
-    public static final Source ALICE = new SourceBuilder().withTitle("Alice Pauline")
-            .withType("alice type")
-            .withDetail("alice_detail")
-            .withTags("friends").build();
-    public static final Source BENSON = new SourceBuilder().withTitle("Benson Meier")
-            .withType("benson type")
-            .withDetail("benson_detail")
-            .withTags("owesMoney", "friends").build();
-    public static final Source CARL = new SourceBuilder().withTitle("Carl Kurz")
-            .withType("carl type")
-            .withDetail("carl_detail").build();
-    public static final Source DANIEL = new SourceBuilder().withTitle("Daniel Meier")
-            .withType("daniel type")
-            .withDetail("daniel_detail")
-            .withTags("friends").build();
-    public static final Source ELLE = new SourceBuilder().withTitle("Elle Meyer")
-            .withType("elle type")
-            .withDetail("elle_detail").build();
-    public static final Source FIONA = new SourceBuilder().withTitle("Fiona Kunz")
-            .withType("fiona type")
-            .withDetail("fiona_detail").build();
-    public static final Source GEORGE = new SourceBuilder().withTitle("George Best")
-            .withType("george type")
-            .withDetail("george_detail").build();
-    public static final Source ALGORITHMS = new SourceBuilder().withTitle("Algorithms 101")
-            .withType("Coding")
-            .withDetail("How to write algorithms for code.").build();
+    public static final Source ALGORITHM_RESEARCH = new SourceBuilder().withTitle("Algorithm Researchers")
+            .withType("article")
+            .withDetail("A research about researchers on algorithms.")
+            .withTags("research").build();
+    public static final Source SENSOR_RESEARCH = new SourceBuilder().withTitle("Sensor Research")
+            .withType("article")
+            .withDetail("A research about sensors.")
+            .withTags("sensor", "research").build();
+    public static final Source SMART_COMPUTERS = new SourceBuilder().withTitle("Smart Computers 101")
+            .withType("computer tutorial")
+            .withDetail("How to build smart computers").build();
+    public static final Source VR_RESEARCH = new SourceBuilder().withTitle("Virtual Reality Research")
+            .withType("article")
+            .withDetail("A research about virtual reality.")
+            .withTags("research").build();
+    public static final Source AR_RESEARCH = new SourceBuilder().withTitle("Augmented Reality Research")
+            .withType("article")
+            .withDetail("A research about augmented reality.").build();
+    public static final Source GAME_DEVELOPMENT = new SourceBuilder().withTitle("Game Development")
+            .withType("tutorial")
+            .withDetail("How to develop games for today's market.").build();
+    public static final Source AI_RESEARCH = new SourceBuilder().withTitle("Artificial Intelligence Research")
+            .withType("article")
+            .withDetail("A research on artificial intelligence.").build();
+    public static final Source RESEARCH_METHOD = new SourceBuilder().withTitle("The Correct Way to Research")
+            .withType("tutorial")
+            .withDetail("The best way to conduct research.").build();
 
     // Manually added
-    public static final Source HOON = new SourceBuilder().withTitle("Hoon Meier")
-            .withType("hoon type")
-            .withDetail("hoon_detail").build();
-    public static final Source IDA = new SourceBuilder().withTitle("Ida Mueller")
-            .withType("ida type")
-            .withDetail("ida_detail").build();
+    public static final Source STRUCTURE = new SourceBuilder().withTitle("Structure Experiment")
+            .withType("experiment")
+            .withDetail("Experiments about structures.").build();
+    public static final Source PROGRAMMING = new SourceBuilder().withTitle("PROGRAMMING METHODOLOGY")
+            .withType("methodology")
+            .withDetail("All about programming methodology.").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Source AMY = new SourceBuilder().withTitle(VALID_TITLE_AMY)
-            .withType(VALID_TYPE_AMY).withDetail(VALID_DETAIL_AMY).withTags(VALID_TAG_FOO).build();
-    public static final Source BOB = new SourceBuilder().withTitle(VALID_TITLE_BOB)
-            .withType(VALID_TYPE_BOB).withDetail(VALID_DETAIL_BOB).withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
+    public static final Source ENGINEERING = new SourceBuilder().withTitle(VALID_TITLE_ENGINEERING)
+            .withType(VALID_TYPE_ENGINEERING).withDetail(VALID_DETAIL_ENGINEERING).withTags(VALID_TAG_FOO).build();
+    public static final Source NETWORK = new SourceBuilder().withTitle(VALID_TITLE_NETWORK)
+            .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK).withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
 
-    public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches MEIER
 
     private TypicalSources() {} // prevents instantiation
 
@@ -91,10 +91,11 @@ public class TypicalSources {
     }
 
     public static List<Source> getTypicalSources() {
-        return new ArrayList<>(Arrays.asList(ALICE, BENSON, CARL, DANIEL, ELLE, FIONA, GEORGE));
+        return new ArrayList<>(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH, SMART_COMPUTERS, VR_RESEARCH,
+                AR_RESEARCH, GAME_DEVELOPMENT, AI_RESEARCH));
     }
 
     public static List<Source> getTypicalDeletedSourcesList() {
-        return new ArrayList<>(Arrays.asList(ALGORITHMS));
+        return new ArrayList<>(Arrays.asList(RESEARCH_METHOD));
     }
 }

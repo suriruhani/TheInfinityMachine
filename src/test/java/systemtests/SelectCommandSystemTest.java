@@ -8,7 +8,7 @@ import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_SOURCE_S
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Test;
 
@@ -59,7 +59,7 @@ public class SelectCommandSystemTest extends SourceManagerSystemTest {
         manager but out of bounds of source list
          * -> rejected
          */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         int invalidIndex = getModel().getSourceManager().getSourceList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " "
                 + invalidIndex, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);

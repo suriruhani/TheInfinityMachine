@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.BENSON;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -90,39 +90,39 @@ public class ModelManagerTest {
 
     @Test
     public void hasSource_sourceNotInSourceManager_returnsFalse() {
-        assertFalse(modelManager.hasSource(ALICE));
+        assertFalse(modelManager.hasSource(ALGORITHM_RESEARCH));
     }
 
     @Test
     public void hasSource_sourceInSourceManager_returnsTrue() {
-        modelManager.addSource(ALICE);
-        assertTrue(modelManager.hasSource(ALICE));
+        modelManager.addSource(ALGORITHM_RESEARCH);
+        assertTrue(modelManager.hasSource(ALGORITHM_RESEARCH));
     }
 
     @Test
     public void deleteSource_sourceIsSelectedAndFirstSourceInFilteredSourceList_selectionCleared() {
-        modelManager.addSource(ALICE);
-        modelManager.setSelectedSource(ALICE);
-        modelManager.deleteSource(ALICE);
+        modelManager.addSource(ALGORITHM_RESEARCH);
+        modelManager.setSelectedSource(ALGORITHM_RESEARCH);
+        modelManager.deleteSource(ALGORITHM_RESEARCH);
         assertEquals(null, modelManager.getSelectedSource());
     }
 
     @Test
     public void deleteSource_sourceIsSelectedAndSecondSourceInFilteredSourceList_firstSourceSelected() {
-        modelManager.addSource(ALICE);
-        modelManager.addSource(BENSON);
-        assertEquals(Arrays.asList(ALICE, BENSON), modelManager.getFilteredSourceList());
-        modelManager.setSelectedSource(BENSON);
-        modelManager.deleteSource(BENSON);
-        assertEquals(ALICE, modelManager.getSelectedSource());
+        modelManager.addSource(ALGORITHM_RESEARCH);
+        modelManager.addSource(SENSOR_RESEARCH);
+        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH), modelManager.getFilteredSourceList());
+        modelManager.setSelectedSource(SENSOR_RESEARCH);
+        modelManager.deleteSource(SENSOR_RESEARCH);
+        assertEquals(ALGORITHM_RESEARCH, modelManager.getSelectedSource());
     }
 
     @Test
     public void setSource_sourceIsSelected_selectedSourceUpdated() {
-        modelManager.addSource(ALICE);
-        modelManager.setSelectedSource(ALICE);
-        Source updatedAlice = new SourceBuilder(ALICE).withType("foo").build();
-        modelManager.setSource(ALICE, updatedAlice);
+        modelManager.addSource(ALGORITHM_RESEARCH);
+        modelManager.setSelectedSource(ALGORITHM_RESEARCH);
+        Source updatedAlice = new SourceBuilder(ALGORITHM_RESEARCH).withType("foo").build();
+        modelManager.setSource(ALGORITHM_RESEARCH, updatedAlice);
         assertEquals(updatedAlice, modelManager.getSelectedSource());
     }
 
@@ -135,20 +135,20 @@ public class ModelManagerTest {
     @Test
     public void setSelectedSource_sourceNotInFilteredSourceList_throwsSourceNotFoundException() {
         thrown.expect(SourceNotFoundException.class);
-        modelManager.setSelectedSource(ALICE);
+        modelManager.setSelectedSource(ALGORITHM_RESEARCH);
     }
 
     @Test
     public void setSelectedSource_sourceInFilteredSourceList_setsSelectedSource() {
-        modelManager.addSource(ALICE);
-        assertEquals(Collections.singletonList(ALICE), modelManager.getFilteredSourceList());
-        modelManager.setSelectedSource(ALICE);
-        assertEquals(ALICE, modelManager.getSelectedSource());
+        modelManager.addSource(ALGORITHM_RESEARCH);
+        assertEquals(Collections.singletonList(ALGORITHM_RESEARCH), modelManager.getFilteredSourceList());
+        modelManager.setSelectedSource(ALGORITHM_RESEARCH);
+        assertEquals(ALGORITHM_RESEARCH, modelManager.getSelectedSource());
     }
 
     @Test
     public void equals() {
-        SourceManager sourceManager = new SourceManagerBuilder().withSource(ALICE).withSource(BENSON).build();
+        SourceManager sourceManager = new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).withSource(SENSOR_RESEARCH).build();
         SourceManager differentSourceManager = new SourceManager();
         UserPrefs userPrefs = new UserPrefs();
         DeletedSources differentDeletedSources = new DeletedSources();
@@ -174,7 +174,7 @@ public class ModelManagerTest {
         // Todo: Rewrite test in a way that makes sense for source manager.
 
         // different filteredList -> returns false
-        // String[] keywords = ALICE.getTitle().fullName.split("\\s+");
+        // String[] keywords = ALGORITHM_RESEARCH.getTitle().fullName.split("\\s+");
         // modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
         // assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
 

@@ -8,7 +8,7 @@ import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TestUtil.getSource;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Test;
 
@@ -59,7 +59,7 @@ public class DeleteCommandSystemTest extends SourceManagerSystemTest {
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
         /* Case: filtered source list, delete index within bounds of address book and source list -> deleted */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         Index index = INDEX_FIRST_SOURCE;
         assertTrue(index.getZeroBased() < getModel().getFilteredSourceList().size());
         assertCommandSuccess(index);
@@ -67,7 +67,7 @@ public class DeleteCommandSystemTest extends SourceManagerSystemTest {
         /* Case: filtered source list, delete index within bounds of address book but out of bounds of source list
          * -> rejected
          */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
         int invalidIndex = getModel().getSourceManager().getSourceList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
         assertCommandFailure(command, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);

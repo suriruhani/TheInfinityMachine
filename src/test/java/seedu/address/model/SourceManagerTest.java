@@ -3,7 +3,7 @@ package seedu.address.model;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.util.Arrays;
@@ -51,8 +51,9 @@ public class SourceManagerTest {
     @Test
     public void resetData_withDuplicateSources_throwsDuplicateSourceException() {
         // Two sources with the same fields
-        Source editedAlice = new SourceBuilder(ALICE).withDetail("alice_detail").withTags("bar").build();
-        List<Source> newSources = Arrays.asList(ALICE, editedAlice);
+        Source editedAlgorithm = new SourceBuilder(ALGORITHM_RESEARCH).withDetail("A research on algorithms.")
+                .withTags("research").build();
+        List<Source> newSources = Arrays.asList(ALGORITHM_RESEARCH, editedAlgorithm);
         SourceManagerStub newData = new SourceManagerStub(newSources);
 
         thrown.expect(DuplicateSourceException.class);
@@ -67,20 +68,21 @@ public class SourceManagerTest {
 
     @Test
     public void hasSource_sourceNotInSourceManager_returnsFalse() {
-        assertFalse(sourceManager.hasSource(ALICE));
+        assertFalse(sourceManager.hasSource(ALGORITHM_RESEARCH));
     }
 
     @Test
     public void hasSource_sourceInSourceManager_returnsTrue() {
-        sourceManager.addSource(ALICE);
-        assertTrue(sourceManager.hasSource(ALICE));
+        sourceManager.addSource(ALGORITHM_RESEARCH);
+        assertTrue(sourceManager.hasSource(ALGORITHM_RESEARCH));
     }
 
     @Test
     public void hasSource_sourceWithSameFieldsInSourceManager_returnsTrue() {
-        sourceManager.addSource(ALICE);
-        Source editedAlice = new SourceBuilder(ALICE).withDetail("alice_detail").withTags("bar").build();
-        assertTrue(sourceManager.hasSource(editedAlice));
+        sourceManager.addSource(ALGORITHM_RESEARCH);
+        Source editedAlgorithm = new SourceBuilder(ALGORITHM_RESEARCH)
+                .withDetail("A research about researchers on algorithms.").withTags("research").build();
+        assertTrue(sourceManager.hasSource(editedAlgorithm));
     }
 
     @Test
@@ -94,7 +96,7 @@ public class SourceManagerTest {
         SimpleIntegerProperty counter = new SimpleIntegerProperty();
         InvalidationListener listener = observable -> counter.set(counter.get() + 1);
         sourceManager.addListener(listener);
-        sourceManager.addSource(ALICE);
+        sourceManager.addSource(ALGORITHM_RESEARCH);
         assertEquals(1, counter.get());
     }
 
@@ -104,7 +106,7 @@ public class SourceManagerTest {
         InvalidationListener listener = observable -> counter.set(counter.get() + 1);
         sourceManager.addListener(listener);
         sourceManager.removeListener(listener);
-        sourceManager.addSource(ALICE);
+        sourceManager.addSource(ALGORITHM_RESEARCH);
         assertEquals(0, counter.get());
     }
 

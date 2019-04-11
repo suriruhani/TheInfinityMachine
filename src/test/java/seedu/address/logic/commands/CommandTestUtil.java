@@ -25,21 +25,21 @@ import seedu.address.testutil.EditSourceDescriptorBuilder;
  */
 public class CommandTestUtil {
 
-    public static final String VALID_TITLE_AMY = "Amy Bee";
-    public static final String VALID_TITLE_BOB = "Bob Choo";
-    public static final String VALID_TYPE_AMY = "amy type";
-    public static final String VALID_TYPE_BOB = "bob type";
-    public static final String VALID_DETAIL_AMY = "amy_detail";
-    public static final String VALID_DETAIL_BOB = "bob_detail";
+    public static final String VALID_TITLE_ENGINEERING = "ENGINEERING SOFTWARE";
+    public static final String VALID_TITLE_NETWORK = "NETWORK RESEARCH";
+    public static final String VALID_TYPE_ENGINEERING = "tutorial";
+    public static final String VALID_TYPE_NETWORK = "research";
+    public static final String VALID_DETAIL_ENGINEERING = "How to engineer software.";
+    public static final String VALID_DETAIL_NETWORK = "A research about networks.";
     public static final String VALID_TAG_FOO = "foo";
     public static final String VALID_TAG_BAR = "bar";
 
-    public static final String TITLE_DESC_AMY = " " + PREFIX_TITLE + VALID_TITLE_AMY;
-    public static final String TITLE_DESC_BOB = " " + PREFIX_TITLE + VALID_TITLE_BOB;
-    public static final String TYPE_DESC_AMY = " " + PREFIX_TYPE + VALID_TYPE_AMY;
-    public static final String TYPE_DESC_BOB = " " + PREFIX_TYPE + VALID_TYPE_BOB;
-    public static final String DETAIL_DESC_AMY = " " + PREFIX_DETAILS + VALID_DETAIL_AMY;
-    public static final String DETAIL_DESC_BOB = " " + PREFIX_DETAILS + VALID_DETAIL_BOB;
+    public static final String TITLE_DESC_ENGINEERING = " " + PREFIX_TITLE + VALID_TITLE_ENGINEERING;
+    public static final String TITLE_DESC_NETWORK = " " + PREFIX_TITLE + VALID_TITLE_NETWORK;
+    public static final String TYPE_DESC_ENGINEERING = " " + PREFIX_TYPE + VALID_TYPE_ENGINEERING;
+    public static final String TYPE_DESC_NETWORK = " " + PREFIX_TYPE + VALID_TYPE_NETWORK;
+    public static final String DETAIL_DESC_ENGINEERING = " " + PREFIX_DETAILS + VALID_DETAIL_ENGINEERING;
+    public static final String DETAIL_DESC_NETWORK = " " + PREFIX_DETAILS + VALID_DETAIL_NETWORK;
     public static final String TAG_DESC_FOO = " " + PREFIX_TAG + VALID_TAG_FOO;
     public static final String TAG_DESC_BAR = " " + PREFIX_TAG + VALID_TAG_BAR;
 
@@ -51,15 +51,15 @@ public class CommandTestUtil {
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditSourceDescriptor DESC_AMY;
-    public static final EditCommand.EditSourceDescriptor DESC_BOB;
+    public static final EditCommand.EditSourceDescriptor DESC_ENGINEERING;
+    public static final EditCommand.EditSourceDescriptor DESC_NETWORK;
 
     static {
-        DESC_AMY = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_AMY)
-                .withType(VALID_TYPE_AMY).withDetail(VALID_DETAIL_AMY)
+        DESC_ENGINEERING = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_ENGINEERING)
+                .withType(VALID_TYPE_ENGINEERING).withDetail(VALID_DETAIL_ENGINEERING)
                 .withTags(VALID_TAG_FOO).build();
-        DESC_BOB = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB)
-                .withType(VALID_TYPE_BOB).withDetail(VALID_DETAIL_BOB)
+        DESC_NETWORK = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK)
+                .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK)
                 .withTags(VALID_TAG_FOO, VALID_TAG_BAR).build();
     }
 

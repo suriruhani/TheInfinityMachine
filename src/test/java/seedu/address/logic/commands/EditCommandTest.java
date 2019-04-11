@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
@@ -61,11 +61,11 @@ public class EditCommandTest {
         Source lastSource = model.getFilteredSourceList().get(indexLastSource.getZeroBased());
 
         SourceBuilder sourceInList = new SourceBuilder(lastSource);
-        Source editedSource = sourceInList.withTitle(VALID_TITLE_BOB).withType(VALID_TYPE_BOB)
+        Source editedSource = sourceInList.withTitle(VALID_TITLE_NETWORK).withType(VALID_TYPE_NETWORK)
                 .withTags(VALID_TAG_FOO).build();
 
-        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB)
-                .withType(VALID_TYPE_BOB).withTags(VALID_TAG_FOO).build();
+        EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK)
+                .withType(VALID_TYPE_NETWORK).withTags(VALID_TAG_FOO).build();
         EditCommand editCommand = new EditCommand(indexLastSource, descriptor);
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
@@ -97,9 +97,9 @@ public class EditCommandTest {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);
 
         Source sourceInFilteredList = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
-        Source editedSource = new SourceBuilder(sourceInFilteredList).withTitle(VALID_TITLE_BOB).build();
+        Source editedSource = new SourceBuilder(sourceInFilteredList).withTitle(VALID_TITLE_NETWORK).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_SOURCE,
-                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build());
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK).build());
 
         String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_SOURCE_SUCCESS, editedSource);
 
@@ -136,7 +136,7 @@ public class EditCommandTest {
     public void execute_invalidSourceIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
         EditSourceDescriptor descriptor =
-                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
@@ -154,7 +154,7 @@ public class EditCommandTest {
         assertTrue(outOfBoundIndex.getZeroBased() < model.getSourceManager().getSourceList().size());
 
         EditCommand editCommand = new EditCommand(outOfBoundIndex,
-                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build());
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK).build());
 
         assertCommandFailure(editCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
@@ -187,7 +187,7 @@ public class EditCommandTest {
     public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
         EditSourceDescriptor descriptor =
-                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_BOB).build();
+                new EditSourceDescriptorBuilder().withTitle(VALID_TITLE_NETWORK).build();
         EditCommand editCommand = new EditCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> source manager state not added into model
@@ -234,10 +234,10 @@ public class EditCommandTest {
 
     @Test
     public void equals() {
-        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_SOURCE, DESC_AMY);
+        final EditCommand standardCommand = new EditCommand(INDEX_FIRST_SOURCE, DESC_ENGINEERING);
 
         // same values -> returns true
-        EditSourceDescriptor copyDescriptor = new EditSourceDescriptor(DESC_AMY);
+        EditSourceDescriptor copyDescriptor = new EditSourceDescriptor(DESC_ENGINEERING);
         EditCommand commandWithSameValues = new EditCommand(INDEX_FIRST_SOURCE, copyDescriptor);
         assertTrue(standardCommand.equals(commandWithSameValues));
 
@@ -251,10 +251,10 @@ public class EditCommandTest {
         assertFalse(standardCommand.equals(new ClearCommand()));
 
         // different index -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_SOURCE, DESC_AMY)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_SECOND_SOURCE, DESC_ENGINEERING)));
 
         // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_SOURCE, DESC_BOB)));
+        assertFalse(standardCommand.equals(new EditCommand(INDEX_FIRST_SOURCE, DESC_NETWORK)));
     }
 
 }

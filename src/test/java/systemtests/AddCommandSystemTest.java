@@ -1,21 +1,21 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_BAR;
 import static seedu.address.logic.commands.CommandTestUtil.TAG_DESC_FOO;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_BOB;
-import static seedu.address.testutil.TypicalSources.AMY;
-import static seedu.address.testutil.TypicalSources.BENSON;
-import static seedu.address.testutil.TypicalSources.CARL;
-import static seedu.address.testutil.TypicalSources.HOON;
-import static seedu.address.testutil.TypicalSources.IDA;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_MEIER;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
+import static seedu.address.testutil.TypicalSources.ENGINEERING;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
+import static seedu.address.testutil.TypicalSources.STRUCTURE;
+import static seedu.address.testutil.TypicalSources.PROGRAMMING;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Test;
 
@@ -41,13 +41,13 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
          * -> added
          */
         /*
-         * TODO: This test will fail, because ALICE isn't AMY. Ask Fabian about this.
-         * Basically, you need to see how ALICE and AMY were originally implemented as Persons,
+         * TODO: This test will fail, because ALGORITHM_RESEARCH isn't ENGINEERING. Ask Fabian about this.
+         * Basically, you need to see how ALGORITHM_RESEARCH and ENGINEERING were originally implemented as Persons,
          * and replicate as Sources.
          */
-        Source toAdd = AMY;
-        String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_AMY + "  "
-                + TYPE_DESC_AMY + "   " + DETAIL_DESC_AMY + "   " + TAG_DESC_FOO + " ";
+        Source toAdd = ENGINEERING;
+        String command = "   " + AddCommand.COMMAND_WORD + "  " + TITLE_DESC_ENGINEERING + "  "
+                + TYPE_DESC_ENGINEERING + "   " + DETAIL_DESC_ENGINEERING + "   " + TAG_DESC_FOO + " ";
         assertCommandSuccess(command, toAdd);
 
         /* Case: undo adding Amy to the list -> Amy deleted */
@@ -62,37 +62,37 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: add a source with all fields same as another source in the source manager except title -> added */
-        toAdd = new SourceBuilder(AMY).withTitle(VALID_TITLE_BOB).build();
-        command = AddCommand.COMMAND_WORD + TITLE_DESC_BOB + TYPE_DESC_AMY + DETAIL_DESC_AMY
+        toAdd = new SourceBuilder(ENGINEERING).withTitle(VALID_TITLE_NETWORK).build();
+        command = AddCommand.COMMAND_WORD + TITLE_DESC_NETWORK + TYPE_DESC_ENGINEERING + DETAIL_DESC_ENGINEERING
                 + TAG_DESC_FOO;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a source with all fields same as another source in the source manager except type
          * -> added
          */
-        toAdd = new SourceBuilder(AMY).withType(VALID_TYPE_BOB).build();
+        toAdd = new SourceBuilder(ENGINEERING).withType(VALID_TYPE_NETWORK).build();
         command = SourceUtil.getAddCommand(toAdd);
         assertCommandSuccess(command, toAdd);
 
         /* Case: add to empty source manager -> added */
         deleteAllSources();
-        assertCommandSuccess(AMY);
+        assertCommandSuccess(ENGINEERING);
 
         /* Case: add a source with tags, command with parameters in random order -> added */
-        toAdd = BENSON;
-        command = AddCommand.COMMAND_WORD + TAG_DESC_FOO + DETAIL_DESC_BOB + TITLE_DESC_BOB
-                + TAG_DESC_BAR + TYPE_DESC_BOB;
+        toAdd = SENSOR_RESEARCH;
+        command = AddCommand.COMMAND_WORD + TAG_DESC_FOO + DETAIL_DESC_NETWORK + TITLE_DESC_NETWORK
+                + TAG_DESC_BAR + TYPE_DESC_NETWORK;
         assertCommandSuccess(command, toAdd);
 
         /* Case: add a source, missing tags -> added */
-        assertCommandSuccess(HOON);
+        assertCommandSuccess(STRUCTURE);
 
         /* -------------------------- Perform
         add operation on the shown filtered list ------------------------------ */
 
         /* Case: filters the source list before adding -> added */
-        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
-        assertCommandSuccess(IDA);
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
+        assertCommandSuccess(PROGRAMMING);
 
         /* ------------------------ Perform
         add operation while a source card is selected --------------------------- */
@@ -100,13 +100,13 @@ public class AddCommandSystemTest extends SourceManagerSystemTest {
         /* Case: selects first card in the source list,
         add a source -> added, card selection remains unchanged */
         selectSource(Index.fromOneBased(1));
-        assertCommandSuccess(CARL);
+        assertCommandSuccess(SMART_COMPUTERS);
 
         /* ----------------------------------- Perform
          invalid add operations --------------------------------------- */
 
         /* Case: add a duplicate source -> rejected */
-        command = SourceUtil.getAddCommand(HOON);
+        command = SourceUtil.getAddCommand(STRUCTURE);
         assertCommandFailure(command, AddCommand.MESSAGE_DUPLICATE_SOURCE);
     }
 

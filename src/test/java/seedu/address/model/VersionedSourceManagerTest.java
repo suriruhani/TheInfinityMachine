@@ -4,9 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static seedu.address.testutil.TypicalSources.ALICE;
-import static seedu.address.testutil.TypicalSources.BENSON;
-import static seedu.address.testutil.TypicalSources.CARL;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,9 +18,12 @@ import seedu.address.testutil.SourceManagerBuilder;
 
 public class VersionedSourceManagerTest {
 
-    private final ReadOnlySourceManager sourceManagerWithAlice = new SourceManagerBuilder().withSource(ALICE).build();
-    private final ReadOnlySourceManager sourceManagerWithBenson = new SourceManagerBuilder().withSource(BENSON).build();
-    private final ReadOnlySourceManager sourceManagerWithCarl = new SourceManagerBuilder().withSource(CARL).build();
+    private final ReadOnlySourceManager sourceManagerWithAlice =
+            new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).build();
+    private final ReadOnlySourceManager sourceManagerWithBenson =
+            new SourceManagerBuilder().withSource(SENSOR_RESEARCH).build();
+    private final ReadOnlySourceManager sourceManagerWithCarl =
+            new SourceManagerBuilder().withSource(SMART_COMPUTERS).build();
     private final ReadOnlySourceManager emptySourceManager = new SourceManagerBuilder().build();
 
     @Test

@@ -23,7 +23,8 @@ public class RestoreCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_RESTORE_SOURCE_SUCCESS = "Restored Source: %1$s";
+    public static final String MESSAGE_RESTORE_SOURCE_SUCCESS = "Restored Source:\n---------------------"
+            + "--------------\n%1$s";
 
     private final Index targetIndex;
 
@@ -34,7 +35,6 @@ public class RestoreCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        model.switchToDeletedSources(); // sets deleted sources data to list
         List<Source> lastShownDeletedList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownDeletedList.size()) {
@@ -43,16 +43,20 @@ public class RestoreCommand extends Command {
 
         Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
 
-        // removes duplicate source from deleted source list if the exact same source exists in source manager
+        // Removes duplicate source from deleted source list
+        // if the exact same source exists in source manager list.
         if (model.hasSource(toRestore)) {
             model.removeDeletedSource(toRestore);
             model.commitDeletedSources();
             return new CommandResult(String.format(Messages.MESSAGE_DUPLICATE_SOURCE_TO_RESTORE, toRestore));
         }
 
+        // add deleted source back to source manager list
         model.addSource(toRestore);
-        model.removeDeletedSource(toRestore);
         model.commitSourceManager();
+
+        // remove deleted source back from deleted sources list
+        model.removeDeletedSource(toRestore);
         model.commitDeletedSources();
         return new CommandResult(String.format(MESSAGE_RESTORE_SOURCE_SUCCESS, toRestore));
     }
@@ -62,10 +66,5 @@ public class RestoreCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof RestoreCommand // instanceof handles nulls
                 && targetIndex.equals(((RestoreCommand) other).targetIndex)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return targetIndex.getOneBased();
     }
 }

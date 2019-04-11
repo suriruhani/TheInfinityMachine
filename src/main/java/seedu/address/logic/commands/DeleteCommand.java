@@ -9,11 +9,13 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.ParserMode;
 import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.model.source.Source;
 
 /**
  * Deletes a source identified using it's displayed index from the source manager.
+ * Can also be used in recycle bin mode to delete sources permanently from the deleted source list.
  */
 public class DeleteCommand extends Command {
 
@@ -35,7 +37,6 @@ public class DeleteCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-        model.switchToSources(); // sets source manager data to list
         List<Source> lastShownList = model.getFilteredSourceList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
@@ -50,15 +51,25 @@ public class DeleteCommand extends Command {
 
         Source sourceToDelete = lastShownList.get(targetIndex.getZeroBased());
 
-        // permanently delete from source manager list if the exact same source exists in deleted source list
+        // for recycle bin mode, deletes source from recycle bin permanently
+        if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
+            model.removeDeletedSource(sourceToDelete);
+            return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
+        }
+
+        // Permanently deletes the source from source manager list
+        // if the exact same source exists in deleted source list.
         if (model.hasDeletedSource(sourceToDelete)) {
             model.deleteSource(sourceToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
         }
 
+        // add deleted source to deleted sources database
         model.addDeletedSource(sourceToDelete);
-        model.deleteSource(sourceToDelete);
         model.commitDeletedSources();
+
+        // remove source from source manager database
+        model.deleteSource(sourceToDelete);
         model.commitSourceManager();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
     }
@@ -68,10 +79,5 @@ public class DeleteCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
                 && targetIndex.equals(((DeleteCommand) other).targetIndex)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return targetIndex.getOneBased();
     }
 }

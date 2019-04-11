@@ -31,9 +31,7 @@ public class ClearCommandTest {
         Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
         Model expected = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
         expected.setSourceManager(new SourceManager());
-        expected.setDeletedSources(new DeletedSources());
         expected.commitSourceManager();
-        expected.commitDeletedSources();
         assertCommandSuccess(new ClearCommand(), model, commandHistory, ClearCommand.MESSAGE_SUCCESS, expected);
     }
 

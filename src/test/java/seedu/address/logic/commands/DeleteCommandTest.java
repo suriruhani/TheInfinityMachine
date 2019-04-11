@@ -1,8 +1,10 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
@@ -38,10 +40,16 @@ public class DeleteCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
                 model.getDeletedSources());
+
+        // add deleted source to deleted sources database
+        expectedModel.addDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        // remove source from source manager database
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
-        //        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
     @Test
@@ -61,14 +69,22 @@ public class DeleteCommandTest {
 
         String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
 
-        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
+
+        // add deleted source to deleted sources database
+        expectedModel.addDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        // remove source from source manager database
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
+
         showNoSource(expectedModel);
 
-        //        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
-    @Ignore
+
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);
@@ -87,6 +103,12 @@ public class DeleteCommandTest {
         Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
         Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
+
+        // add deleted source to deleted sources database
+        expectedModel.addDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        // remove source from source manager database
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
@@ -95,13 +117,15 @@ public class DeleteCommandTest {
 
         // undo -> reverts sourceManager back to previous state and filtered source list to show all sources
         expectedModel.undoSourceManager();
-        //        assertCommandSuccess(new UndoCommand(), model, commandHistory,
-        //        UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        expectedModel.undoDeletedSources();
+        assertCommandSuccess(new UndoCommand(), model, commandHistory,
+        UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
         // redo -> same first source deleted again
-        //        expectedModel.redoSourceManager();
-        //        assertCommandSuccess(new RedoCommand(), model, commandHistory,
-        //        RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        expectedModel.redoSourceManager();
+        expectedModel.redoDeletedSources();
+        assertCommandSuccess(new RedoCommand(), model, commandHistory,
+        RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -118,11 +142,12 @@ public class DeleteCommandTest {
     }
 
     /**
-     * 1. Deletes a {@code Source} from a filtered list.
-     * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted source in the
+     * 1. Deletes a {@code Source} from a filtered list
+     * 2. Adds the source to the deleted sources list.
+     * 3. Undo the deletion.
+     * 4. The unfiltered list should be shown now. Verify that the index of the previously deleted source in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the source object regardless of indexing.
+     * 5. Redo the deletion. This ensures {@code RedoCommand} deletes the source object regardless of indexing.
      */
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameSourceDeleted() throws Exception {
@@ -131,6 +156,12 @@ public class DeleteCommandTest {
 
         showSourceAtIndex(model, INDEX_SECOND_SOURCE);
         Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+
+        // add deleted source to deleted sources database
+        expectedModel.addDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        // remove source from source manager database
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
@@ -139,14 +170,16 @@ public class DeleteCommandTest {
 
         // undo -> reverts sourceManager back to previous state and filtered source list to show all sources
         expectedModel.undoSourceManager();
-        //        assertCommandSuccess(new UndoCommand(), model, commandHistory,
-        //        UndoCommand.MESSAGE_SUCCESS, expectedModel);
+        expectedModel.undoDeletedSources();
+        assertCommandSuccess(new UndoCommand(), model, commandHistory,
+        UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        //        assertNotEquals(sourceToDelete, model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased()));
+        assertNotEquals(sourceToDelete, model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased()));
         // redo -> deletes same second source in unfiltered source list
-        //        expectedModel.redoSourceManager();
-        //        assertCommandSuccess(new RedoCommand(), model, commandHistory,
-        //        RedoCommand.MESSAGE_SUCCESS, expectedModel);
+        expectedModel.redoSourceManager();
+        expectedModel.redoDeletedSources();
+        assertCommandSuccess(new RedoCommand(), model, commandHistory,
+        RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
@@ -172,7 +205,7 @@ public class DeleteCommandTest {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show no one.
+     * Updates {@code model}'s filtered list to show no sources.
      */
     private void showNoSource(Model model) {
         model.updateFilteredSourceList(p -> false);

@@ -6,6 +6,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BiblioCommand;
@@ -36,16 +37,21 @@ import seedu.address.storage.ConcreteAliasStorage;
 /**
  * Parses user input for Source Manager.
  */
-public class SourceManagerParser extends BasicParser implements CommandValidator {
-    private static final String COMMAND_ALIAS_ADD = "alias";
-    private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
-    private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
-    private static final String COMMAND_ALIAS_LIST = "alias-ls";
+public class SourceManagerParser implements CommandValidator {
+    protected static final String COMMAND_ALIAS_ADD = "alias";
+    protected static final String COMMAND_ALIAS_REMOVE = "alias-rm";
+    protected static final String COMMAND_ALIAS_CLEAR = "alias-clear";
+    protected static final String COMMAND_ALIAS_LIST = "alias-ls";
 
-    private Set<String> metaCommands = new HashSet<>();
-    private Set<String> validCommands = new HashSet<>();
+    /**
+     * Used for initial separation of command word and args.
+     */
+    protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    private AliasManager aliasManager;
+    protected Set<String> metaCommands = new HashSet<>();
+    protected Set<String> validCommands = new HashSet<>();
+
+    protected AliasManager aliasManager;
 
     public SourceManagerParser() {
         initializeMetaCommands();
@@ -216,7 +222,7 @@ public class SourceManagerParser extends BasicParser implements CommandValidator
             String actualCommand = aliasManager.getCommand(commandWord).get();
 
             String actualUserInput = userInput.replaceFirst(commandWord, actualCommand);
-            return super.parseCommand(actualUserInput);
+            return parseCommand(actualUserInput);
         }
     }
 

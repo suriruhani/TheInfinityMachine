@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
@@ -12,9 +13,11 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ArgumentMultimap;
 import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 
 /**
@@ -123,11 +126,12 @@ public class CommandTestUtil {
      * {@code model}'s source manager.
      */
     public static void showSourceAtIndex(Model model, Index targetIndex) {
-        //assertTrue(targetIndex.getZeroBased() < model.getFilteredSourceList().size());
-        //Source source = model.getFilteredSourceList().get(targetIndex.getZeroBased());
-        //final String[] splitTitle = source.getTitle().title.split("\\s+");
-        //model.updateFilteredSourceList(new SourceContainsKeywordsPredicate(Arrays.asList(splitTitle[0])));
-        //assertEquals(1, model.getFilteredSourceList().size());
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredSourceList().size());
+        Source source = model.getFilteredSourceList().get(targetIndex.getZeroBased());
+        ArgumentMultimap argMap = new ArgumentMultimap();
+        argMap.put(PREFIX_TITLE, source.getTitle().title);
+        model.updateFilteredSourceList(new SourceContainsKeywordsPredicate(argMap));
+        assertEquals(1, model.getFilteredSourceList().size());
     }
 
     /**

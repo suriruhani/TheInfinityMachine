@@ -11,7 +11,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.BasicParser;
 import seedu.address.logic.parser.RecycleBinParser;
 import seedu.address.logic.parser.SourceManagerParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -34,7 +33,7 @@ public class LogicManager implements Logic {
     private final CommandHistory history;
     private final SourceManagerParser sourceManagerParser;
     private final RecycleBinParser recycleBinParser;
-    private BasicParser mainParser;
+    private SourceManagerParser mainParser;
     private boolean sourceManagerModified;
     private boolean deletedSourcesModified;
 

@@ -1,16 +1,26 @@
 package systemtests;
 
+import static junit.framework.TestCase.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_SOURCE_SUCCESS;
+import static seedu.address.testutil.TestUtil.getLastIndex;
+import static seedu.address.testutil.TestUtil.getMidIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
+import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
 
 import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends SourceManagerSystemTest {
+
     @Ignore
     @Test
     public void select() {
@@ -23,78 +33,78 @@ public class SelectCommandSystemTest extends SourceManagerSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_SOURCE);
 
         /* Case: select the last card in the source list -> selected */
-        //        Index personCount = getLastIndex(getModel());
-        //        command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
-        //        assertCommandSuccess(command, personCount);
-        //
-        //        /* Case: undo previous selection -> rejected */
-        //        command = UndoCommand.COMMAND_WORD;
-        //        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
-        //        assertCommandFailure(command, expectedResultMessage);
-        //
-        //        /* Case: redo selecting last card in the list -> rejected */
-        //        command = RedoCommand.COMMAND_WORD;
-        //        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
-        //        assertCommandFailure(command, expectedResultMessage);
-        //
-        //        /* Case: select the middle card in the source list -> selected */
-        //        Index middleIndex = getMidIndex(getModel());
-        //        command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
-        //        assertCommandSuccess(command, middleIndex);
-        //
-        //        /* Case: select the current selected card -> selected */
-        //        assertCommandSuccess(command, middleIndex);
-        //
-        //        /* ------------------------ Perform select operations on the shown
-        //        filtered list ---------------------------- */
-        //
-        //        /* Case: filtered source list, select index within bounds of source
-        //        manager but out of bounds of source list
-        //         * -> rejected
-        //         */
-        //        showSourcesWithTitle(KEYWORD_MATCHING_MEIER);
-        //        int invalidIndex = getModel().getSourceManager().getSourceList().size();
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
-        //        MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
-        //
-        //        /* Case: filtered person list, select index within bounds of address book
-        //        and person list -> selected */
-        //        Index validIndex = Index.fromOneBased(1);
-        //        assertTrue(validIndex.getZeroBased() < getModel().getFilteredSourceList().size());
-        //        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
-        //        assertCommandSuccess(command, validIndex);
-        //
-        //        /* ----------------------------------- Perform invalid select operations
-        //        ------------------------------------ */
-        //
-        //        /* Case: invalid index (0) -> rejected */
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
-        //                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        //
-        //        /* Case: invalid index (-1) -> rejected */
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
-        //                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        //
-        //        /* Case: invalid index (size + 1) -> rejected */
-        //        invalidIndex = getModel().getFilteredSourceList().size() + 1;
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex,
-        //        MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
-        //
-        //        /* Case: invalid arguments (alphabets) -> rejected */
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
-        //                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        //
-        //        /* Case: invalid arguments (extra argument) -> rejected */
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
-        //                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
-        //
-        //        /* Case: mixed case command word -> rejected */
-        //        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
-        //
-        //        /* Case: select from empty address book -> rejected */
-        //        deleteAllSources();
-        //        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased(),
-        //                MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+        Index personCount = getLastIndex(getModel());
+        command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
+        assertCommandSuccess(command, personCount);
+
+        /* Case: undo previous selection -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo selecting last card in the list -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: select the middle card in the source list -> selected */
+        Index middleIndex = getMidIndex(getModel());
+        command = SelectCommand.COMMAND_WORD + " " + middleIndex.getOneBased();
+        assertCommandSuccess(command, middleIndex);
+
+        /* Case: select the current selected card -> selected */
+        assertCommandSuccess(command, middleIndex);
+
+        /* ------------------------ Perform select operations on the shown
+        filtered list ---------------------------- */
+
+        /* Case: filtered source list, select index within bounds of source
+        manager but out of bounds of source list
+         * -> rejected
+         */
+        showSourcesWithTitle(KEYWORD_MATCHING_EXPERIMENT);
+        int invalidIndex = getModel().getSourceManager().getSourceList().size();
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " "
+                + invalidIndex, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+
+        /* Case: filtered person list, select index within bounds of address book
+        and person list -> selected */
+        Index validIndex = Index.fromOneBased(1);
+        assertTrue(validIndex.getZeroBased() < getModel().getFilteredSourceList().size());
+        command = SelectCommand.COMMAND_WORD + " " + validIndex.getOneBased();
+        assertCommandSuccess(command, validIndex);
+
+        /* ----------------------------------- Perform invalid select operations
+        ------------------------------------ */
+
+        /* Case: invalid index (0) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + 0,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (-1) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + -1,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+
+        /* Case: invalid index (size + 1) -> rejected */
+        invalidIndex = getModel().getFilteredSourceList().size() + 1;
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " "
+                + invalidIndex, MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+
+        /* Case: invalid arguments (alphabets) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+
+        /* Case: invalid arguments (extra argument) -> rejected */
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " 1 abc",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+
+        /* Case: select from empty address book -> rejected */
+        deleteAllSources();
+        assertCommandFailure(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_SOURCE.getOneBased(),
+                MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
     /**
@@ -118,15 +128,15 @@ public class SelectCommandSystemTest extends SourceManagerSystemTest {
         int preExecutionSelectedCardIndex = getSourceListPanel().getSelectedCardIndex();
 
         executeCommand(command);
-        //        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
 
         if (preExecutionSelectedCardIndex == expectedSelectedCardIndex.getZeroBased()) {
             assertSelectedCardUnchanged();
         } else {
-            //            assertSelectedCardChanged(expectedSelectedCardIndex);
+            assertSelectedCardChanged(expectedSelectedCardIndex);
         }
 
-        //        assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 

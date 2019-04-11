@@ -2,7 +2,7 @@ package seedu.address.ui;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static seedu.address.testutil.TypicalSources.ALICE;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class SourcePanelTest extends GuiUnitTest {
         assertEquals(SourcePanel.DEFAULT_PAGE, sourcePanelHandle.getLoadedUrl());
 
         // associated web page of a source
-        guiRobot.interact(() -> selectedSource.set(ALICE));
+        guiRobot.interact(() -> selectedSource.set(ALGORITHM_RESEARCH));
         Source sampleSource = new SourceBuilder().build();
         String html = sourcePanel.generateDetail(sampleSource);
         sourcePanel.loadSourcePage(html);

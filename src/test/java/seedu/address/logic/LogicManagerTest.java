@@ -3,10 +3,10 @@ package seedu.address.logic;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_AMY;
-import static seedu.address.testutil.TypicalSources.AMY;
+import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ENGINEERING;
+import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_ENGINEERING;
+import static seedu.address.testutil.TypicalSources.ENGINEERING;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,6 +20,7 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
@@ -71,14 +72,12 @@ public class LogicManagerTest {
         assertHistoryCorrect(deleteCommand);
     }
 
-    /*
     @Test
     public void execute_validCommand_success() {
         String listCommand = ListCommand.COMMAND_WORD;
         assertCommandSuccess(listCommand, ListCommand.MESSAGE_LIST_ALL_SUCCESS, model);
         assertHistoryCorrect(listCommand);
     }
-    */
 
     @Test
     public void execute_storageThrowsIoException_throwsCommandException() throws Exception {
@@ -92,9 +91,9 @@ public class LogicManagerTest {
         logic = new LogicManager(model, storage);
 
         // Execute add command
-        String addCommand = AddCommand.COMMAND_WORD + TITLE_DESC_AMY + TYPE_DESC_AMY
-                + DETAIL_DESC_AMY;
-        Source expectedSource = new SourceBuilder(AMY).withTags().build();
+        String addCommand = AddCommand.COMMAND_WORD + TITLE_DESC_ENGINEERING + TYPE_DESC_ENGINEERING
+                + DETAIL_DESC_ENGINEERING;
+        Source expectedSource = new SourceBuilder(ENGINEERING).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addSource(expectedSource);
         expectedModel.commitSourceManager();

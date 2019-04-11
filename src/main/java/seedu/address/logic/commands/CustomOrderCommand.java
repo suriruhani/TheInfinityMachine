@@ -45,8 +45,6 @@ public class CustomOrderCommand extends Command {
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
-
-        model.switchToSources(); // sets source manager data to list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         List<Source> completeSourceList = model.getFilteredSourceList();
 

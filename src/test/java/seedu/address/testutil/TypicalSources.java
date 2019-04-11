@@ -45,7 +45,7 @@ public class TypicalSources {
             .withDetail("How to develop games for today's market.").build();
     public static final Source AI_RESEARCH = new SourceBuilder().withTitle("Artificial Intelligence Research")
             .withType("article")
-            .withDetail("A research on artificial intelligence.").build();
+            .withDetail("A research about artificial intelligence.").build();
     public static final Source RESEARCH_METHOD = new SourceBuilder().withTitle("The Correct Way to Research")
             .withType("tutorial")
             .withDetail("The best way to conduct research.").build();

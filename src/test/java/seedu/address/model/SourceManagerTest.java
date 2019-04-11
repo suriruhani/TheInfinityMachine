@@ -51,8 +51,8 @@ public class SourceManagerTest {
     @Test
     public void resetData_withDuplicateSources_throwsDuplicateSourceException() {
         // Two sources with the same fields
-        Source editedAlgorithm = new SourceBuilder(ALGORITHM_RESEARCH).withDetail("A research on algorithms.")
-                .withTags("research").build();
+        Source editedAlgorithm = new SourceBuilder(ALGORITHM_RESEARCH)
+                .withDetail("A research about researchers on algorithms.").withTags("research").build();
         List<Source> newSources = Arrays.asList(ALGORITHM_RESEARCH, editedAlgorithm);
         SourceManagerStub newData = new SourceManagerStub(newSources);
 

@@ -1,39 +1,39 @@
 {
   "_comment": "SourceManager save file which contains the same Source values as in TypicalSources#getTypicalSourceManager()",
   "sources" : [ {
-    "title" : "Alice Pauline",
-    "type" : "alice type",
-    "detail" : "alice_detail",
-    "tagged" : [ "friends" ]
+    "title" : "Algorithm Researchers",
+    "type" : "article",
+    "detail" : "A research about researchers on algorithms.",
+    "tagged" : [ "research" ]
   }, {
-    "title" : "Benson Meier",
-    "type" : "benson type",
-    "detail" : "benson_detail",
-    "tagged" : [ "owesMoney", "friends" ]
+    "title" : "Sensor Research",
+    "type" : "article",
+    "detail" : "A research about sensors.",
+    "tagged" : [ "sensor", "research" ]
   }, {
-    "title" : "Carl Kurz",
-    "type" : "carl type",
-    "detail" : "carl_detail",
+    "title" : "Smart Computers 101",
+    "type" : "computer tutorial",
+    "detail" : "How to build smart computers",
     "tagged" : [ ]
   }, {
-    "title" : "Daniel Meier",
-    "type" : "daniel type",
-    "detail" : "daniel_detail",
-    "tagged" : [ "friends" ]
+    "title" : "Virtual Reality Research",
+    "type" : "article",
+    "detail" : "A research about virtual reality.",
+    "tagged" : [ "research" ]
   }, {
-    "title" : "Elle Meyer",
-    "type" : "elle type",
-    "detail" : "elle_detail",
+    "title" : "Augmented Reality Research",
+    "type" : "article",
+    "detail" : "A research about augmented reality.",
     "tagged" : [ ]
   }, {
-    "title" : "Fiona Kunz",
-    "type" : "fiona type",
-    "detail" : "fiona_detail",
+    "title" : "Game Development",
+    "type" : "tutorial",
+    "detail" : "How to develop games for today's market.",
     "tagged" : [ ]
   }, {
-    "title" : "George Best",
-    "type" : "george type",
-    "detail" : "george_detail",
+    "title" : "Artificial Intelligence Research",
+    "type" : "article",
+    "detail" : "A research on artificial intelligence.",
     "tagged" : [ ]
   } ]
 }

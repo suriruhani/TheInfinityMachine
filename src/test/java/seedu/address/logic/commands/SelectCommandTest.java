@@ -37,7 +37,7 @@ public class SelectCommandTest {
         assertExecutionSuccess(INDEX_THIRD_SOURCE);
         assertExecutionSuccess(lastSourceIndex);
     }
-    @Ignore
+
     @Test
     public void execute_invalidIndexUnfilteredList_failure() {
         Index outOfBoundsIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);

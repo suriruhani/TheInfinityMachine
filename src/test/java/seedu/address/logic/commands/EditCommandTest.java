@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -146,7 +147,6 @@ public class EditCommandTest {
      * Edit filtered list where index is larger than size of filtered list,
      * but smaller than size of source manager
      */
-    @Ignore
     @Test
     public void execute_invalidSourceIndexFilteredList_failure() {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);
@@ -214,10 +214,10 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(INDEX_FIRST_SOURCE, descriptor);
         Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
                 model.getDeletedSources());
-
         showSourceAtIndex(model, INDEX_SECOND_SOURCE);
         Source sourceToEdit = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
         expectedModel.setSource(sourceToEdit, editedSource);
+        expectedModel.updateFilteredSourceList(Model.PREDICATE_SHOW_ALL_SOURCES);
         expectedModel.commitSourceManager();
 
         // edit -> edits second source in unfiltered source list / first source in filtered source list

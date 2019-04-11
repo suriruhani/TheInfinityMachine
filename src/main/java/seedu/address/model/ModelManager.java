@@ -38,6 +38,7 @@ public class ModelManager implements Model, PanicMode {
     private VersionedSourceManager sourceManagerBackup = null;
     private int numPinnedSources;
     private ParserMode mode;
+    private PinnedSourcesStorageOperationsCenter storageOps;
 
     /**
      * Initializes a ModelManager with the given sourceManager and userPrefs.
@@ -61,11 +62,13 @@ public class ModelManager implements Model, PanicMode {
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
 
         logger.info("Loading number of pinned sources.");
-        this.numPinnedSources = PinnedSourcesStorageOperationsCenter.loadNumberOfPinnedSources();
+        this.storageOps = new PinnedSourcesStorageOperationsCenter();
+        this.numPinnedSources = storageOps.loadNumberOfPinnedSources();
     }
 
     /**
-     * Alternate ModelManager constructor with option for loading pinned source number.
+     * Alternate ModelManager constructor with option for loading pinned source number. To be used for tests only.
+     * Writes the number of pinned sources stipulated into the file at the start start.
      */
     public ModelManager(ReadOnlySourceManager sourceManager, ReadOnlyUserPrefs userPrefs,
                         ReadOnlyDeletedSources deletedSources, int numPinnedSources) {
@@ -85,7 +88,11 @@ public class ModelManager implements Model, PanicMode {
 
         filteredSources.addListener(this::ensureSelectedSourceIsValid);
 
+        logger.info("Writing number of pinned sources.");
+        this.storageOps = new PinnedSourcesStorageOperationsCenter("src/test/data/PinnedSourcesTest.txt");
+
         this.numPinnedSources = numPinnedSources;
+        storageOps.writeNumberOfPinnedSourcesToFile(this.numPinnedSources);
     }
 
     public ModelManager() {
@@ -443,5 +450,10 @@ public class ModelManager implements Model, PanicMode {
     @Override
     public ParserMode getParserMode() {
         return this.mode;
+    }
+
+    @Override
+    public PinnedSourcesStorageOperationsCenter getStorageOperationsCenter () {
+        return this.storageOps;
     }
 }

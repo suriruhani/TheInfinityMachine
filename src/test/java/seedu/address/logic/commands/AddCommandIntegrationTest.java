@@ -25,7 +25,7 @@ public class AddCommandIntegrationTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
+        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     }
 
     @Test

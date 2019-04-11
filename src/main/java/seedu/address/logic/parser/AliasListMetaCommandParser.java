@@ -2,13 +2,12 @@ package seedu.address.logic.parser;
 
 import java.util.HashMap;
 
-import seedu.address.logic.commands.Command;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Parses input arguments for the AliasManager "alias-ls" metacommand.
  */
-public class AliasListMetaCommandParser extends AliasMetaCommandParser implements Parser<Command> {
+public class AliasListMetaCommandParser extends AliasMetaCommandParser {
     private static final String MESSAGE_EMPTY = "There are no aliases to list";
 
 

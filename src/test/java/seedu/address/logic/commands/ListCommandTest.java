@@ -26,8 +26,8 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources());
-        expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
+        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
+        expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources(), 0);
     }
 
     @Test

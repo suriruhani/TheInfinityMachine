@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.commands.PanicMode;
 import seedu.address.model.source.Source;
+import seedu.address.storage.PinnedSourcesStorageOperationsCenter;
 
 /**
  * The API of the Model component.
@@ -251,4 +252,9 @@ public interface Model extends PanicMode {
      * Gets the parser currently being used.
      */
     ParserMode getParserMode();
+
+    /**
+     * Gets the storage operations center for pinned sources.
+     */
+    PinnedSourcesStorageOperationsCenter getStorageOperationsCenter();
 }

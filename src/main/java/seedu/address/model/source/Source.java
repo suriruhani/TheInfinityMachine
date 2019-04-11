@@ -21,14 +21,27 @@ public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final Title title;
+    private final Author author;
     private final Type type;
     private final Detail detail;
+    private final BiblioFields biblioFields = new BiblioFields();
 
     private final Set<Tag> tags = new HashSet<>();
 
     public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
         this.title = title;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+
+        this.author = new Author("Default Author");
+    }
+
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
+        requireAllNonNull(title, author, type, detail, tags);
+        this.title = title;
+        this.author = author;
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
@@ -60,6 +73,10 @@ public class Source {
         return title;
     }
 
+    public Author getAuthor() {
+        return author;
+    }
+
     public Type getType() {
         return type;
     }
@@ -68,8 +85,12 @@ public class Source {
         return detail;
     }
 
+    public BiblioFields getBiblioFields() {
+        return biblioFields;
+    }
+
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable tag set which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {

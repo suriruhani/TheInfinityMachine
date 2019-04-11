@@ -85,7 +85,7 @@ enumerate all source articles that have 'artificial intelligence' in their conte
 
 ===== 3. Auto-correction feature for typing mistakes:
 Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
-powerful by accomodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
+powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
 or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
 (lower bounded by the difference in the string lengths of the two strings).
 

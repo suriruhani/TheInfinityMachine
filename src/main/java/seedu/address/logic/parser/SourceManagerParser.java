@@ -38,20 +38,20 @@ import seedu.address.storage.ConcreteAliasStorage;
  * Parses user input for Source Manager.
  */
 public class SourceManagerParser implements CommandValidator {
-    protected static final String COMMAND_ALIAS_ADD = "alias";
-    protected static final String COMMAND_ALIAS_REMOVE = "alias-rm";
-    protected static final String COMMAND_ALIAS_CLEAR = "alias-clear";
-    protected static final String COMMAND_ALIAS_LIST = "alias-ls";
+    private static final String COMMAND_ALIAS_ADD = "alias";
+    private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
+    private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
+    private static final String COMMAND_ALIAS_LIST = "alias-ls";
 
     /**
      * Used for initial separation of command word and args.
      */
     protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    protected Set<String> metaCommands = new HashSet<>();
-    protected Set<String> validCommands = new HashSet<>();
+    private Set<String> metaCommands = new HashSet<>();
+    private Set<String> validCommands = new HashSet<>();
 
-    protected AliasManager aliasManager;
+    private AliasManager aliasManager;
 
     /**
      * Convenience constructor that instantiates SourceManagerParser with ConcreteAliasManager.

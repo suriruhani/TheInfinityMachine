@@ -20,18 +20,18 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Source[] getSampleSources() {
         return new Source[] {
-            new Source(new Title("FooTitle1"), new Type("FooType1"), new Detail("FooDetail1"),
-                getTagSet("footag1")),
-            new Source(new Title("FooTitle2"), new Type("FooType2"), new Detail("FooDetail2"),
-                getTagSet("footag2", "footag1")),
-            new Source(new Title("FooTitle3"), new Type("FooType3"), new Detail("FooDetail3"),
-                getTagSet("footag3")),
-            new Source(new Title("FooTitle4"), new Type("FooType4"), new Detail("FooDetail4"),
-                getTagSet("footag4")),
-            new Source(new Title("FooTitle5"), new Type("FooType5"), new Detail("FooDetail5"),
-                getTagSet("footag5")),
-            new Source(new Title("FooTitle6"), new Type("FooType6"), new Detail("FooDetail6"),
-                getTagSet("footag2"))
+            new Source(new Title("Algorithm Research"), new Type("article"),
+                    new Detail("A research about researchers on algorithms."), getTagSet("research")),
+            new Source(new Title("Sensor Research"), new Type("article"),
+                    new Detail("A research about sensors."), getTagSet("sensors", "research")),
+            new Source(new Title("Game Development 101"), new Type("tutorial"),
+                    new Detail("How to develop games for today's market."), getTagSet("game", "introduction")),
+            new Source(new Title("Artificial Intelligence Research"), new Type("article"),
+                    new Detail("A research about artificial intelligence."), getTagSet("research")),
+            new Source(new Title("Virtual Reality Research"), new Type("article"),
+                    new Detail("A research about virtual reality."), getTagSet("research")),
+            new Source(new Title("Augmented Reality Research"), new Type("article"),
+                    new Detail("A research about augmented reality."), getTagSet("research"))
         };
     }
 

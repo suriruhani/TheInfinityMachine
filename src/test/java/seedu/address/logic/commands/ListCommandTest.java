@@ -75,7 +75,6 @@ public class ListCommandTest {
 
     @Test
     public void execute_listNegativeN_showsLastN() throws ParseException {
-        //showSourceAtIndex(model, INDEX_FIRST_SOURCE);
         ListCommand command = new ListCommandParser().parse(" -2");
         expectedModel.updateFilteredSourceList(command.makePredicateForLastN(2, model.getFilteredSourceList().size()));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_LAST_N_SUCCESS,
@@ -85,7 +84,6 @@ public class ListCommandTest {
 
     @Test
     public void execute_listXY_showsXY() throws ParseException {
-        //showSourceAtIndex(model, INDEX_FIRST_SOURCE);
         ListCommand command = new ListCommandParser().parse(" 3 5");
         expectedModel.updateFilteredSourceList(command.makePredicateForXToY(3, 5));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_X_TO_Y_SUCCESS,
@@ -93,4 +91,24 @@ public class ListCommandTest {
         assertEquals(Arrays.asList(SMART_COMPUTERS, VR_RESEARCH, AR_RESEARCH), model.getFilteredSourceList());
     }
 
+    @Test
+    public void execute_listSameXY_showsX() throws ParseException {
+        ListCommand command = new ListCommandParser().parse(" 2 2");
+        expectedModel.updateFilteredSourceList(command.makePredicateForXToY(2, 2));
+        assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_X_TO_Y_SUCCESS,
+                2, 2), expectedModel);
+        assertEquals(Arrays.asList(SENSOR_RESEARCH), model.getFilteredSourceList());
+    }
+
+    @Ignore
+    @Test
+    public void execute_listXYreverseRange_showsError() throws ParseException {
+        //showSourceAtIndex(model, INDEX_FIRST_SOURCE);
+        ListCommand command = new ListCommandParser().parse(" 5 3");
+        //expectedModel.updateFilteredSourceList(command.makePredicateForTopN(2));
+//        assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_TOP_N_SUCCESS,
+//                2), expectedModel);
+        assertCommandFailure(command, model, commandHistory, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+        //assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH), model.getFilteredSourceList());
+    }
 }

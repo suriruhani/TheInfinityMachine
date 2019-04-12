@@ -9,8 +9,8 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.source.Source;
 import seedu.address.model.source.BiblioFields;
+import seedu.address.model.source.Source;
 
 /**
  * Generates a bibliography from a source at the specified index of appropriate style.

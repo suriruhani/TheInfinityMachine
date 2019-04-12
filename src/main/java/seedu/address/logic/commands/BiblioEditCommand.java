@@ -34,7 +34,7 @@ public class BiblioEditCommand extends Command {
     public BiblioEditCommand(Index targetIndex, String header, String body) {
         this.targetIndex = targetIndex;
         this.header = header;
-        this.body =  body;
+        this.body = body;
     }
 
     @Override

@@ -24,9 +24,9 @@ public class Source {
     private final Author author;
     private final Type type;
     private final Detail detail;
-    public final BiblioFields biblioFields;
 
     private final Set<Tag> tags = new HashSet<>();
+    public final BiblioFields biblioFields;
 
     public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);

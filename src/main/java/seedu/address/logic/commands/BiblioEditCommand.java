@@ -9,7 +9,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
-import seedu.address.model.PinnedSourcesCoordinationCenter;
 import seedu.address.model.source.Source;
 
 /**
@@ -51,7 +50,7 @@ public class BiblioEditCommand extends Command {
         Source sourceToEdit = lastShownList.get(targetIndex.getZeroBased());
         Source editedSource = sourceToEdit;
 
-         if (editedSource.biblioFields.replaceField(header, body) == true) {
+        if (editedSource.biblioFields.replaceField(header, body) == true) {
             model.setSource(sourceToEdit, editedSource);
             model.updateFilteredSourceList(Model.PREDICATE_SHOW_ALL_SOURCES);
             model.commitSourceManager();

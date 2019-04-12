@@ -59,43 +59,43 @@ public class BiblioCommand extends Command {
         String biblioEntry;
 
         switch (format) {
-            case "APA":
-                switch (targetSource.getType().type) {
-                    case "Book":
-                        biblioEntry = ApaBook(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    case "Website":
-                        biblioEntry = ApaWebsite(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    case "Journal Article":
-                        biblioEntry = ApaJournal(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    default:
-                        throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
-                }
-            case "MLA":
-                switch (targetSource.getType().type) {
-                    case "Book":
-                        biblioEntry = MlaBook(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    case "Website":
-                        biblioEntry = MlaWebsite(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    case "Journal Article":
-                        biblioEntry = MlaJournal(targetSource);
-                        return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
-                    default:
-                        throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
-                }
+        case "APA":
+            switch (targetSource.getType().type) {
+            case "Book":
+                biblioEntry = apaBook(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            case "Website":
+                biblioEntry = apaWebsite(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            case "Journal Article":
+                biblioEntry = apaJournal(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
             default:
-                throw new CommandException(MESSAGE_UNSUPPORTED_FORMAT);
+                throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
+            }
+        case "MLA":
+            switch (targetSource.getType().type) {
+            case "Book":
+                biblioEntry = mlaBook(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            case "Website":
+                biblioEntry = mlaWebsite(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            case "Journal Article":
+                biblioEntry = mlaJournal(targetSource);
+                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+            default:
+                throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
+            }
+        default:
+            throw new CommandException(MESSAGE_UNSUPPORTED_FORMAT);
         }
     }
 
     /**
      * Generates a bibliography entry for a book in APA style.
      */
-    private String ApaBook(Source targetSource) {
+    private String apaBook(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;
@@ -142,7 +142,7 @@ public class BiblioCommand extends Command {
     /**
      * Generates a bibliography entry for a Journal Article in APA style.
      */
-    private String ApaJournal(Source targetSource) {
+    private String apaJournal(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;
@@ -189,7 +189,7 @@ public class BiblioCommand extends Command {
     /**
      * Generates a bibliography entry for a Website in APA style.
      */
-    private String ApaWebsite(Source targetSource) {
+    private String apaWebsite(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;
@@ -254,7 +254,7 @@ public class BiblioCommand extends Command {
     /**
      * Generates a bibliography entry for a Book in MLA style.
      */
-    private String MlaBook(Source targetSource) {
+    private String mlaBook(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;
@@ -309,7 +309,7 @@ public class BiblioCommand extends Command {
     /**
      * Generates a bibliography entry for a Journal Article in MLA style.
      */
-    private String MlaJournal(Source targetSource) {
+    private String mlaJournal(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;
@@ -364,7 +364,7 @@ public class BiblioCommand extends Command {
     /**
      * Generates a bibliography entry for a Journal Article in MLA style.
      */
-    private String MlaWebsite(Source targetSource) {
+    private String mlaWebsite(Source targetSource) {
 
         boolean hasUnpopulatedField = false;
         String biblioEntry;

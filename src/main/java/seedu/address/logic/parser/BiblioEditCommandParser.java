@@ -20,7 +20,8 @@ public class BiblioEditCommandParser implements Parser<BiblioEditCommand> {
         try {
             String[] tokenizedArguments = args.split(" ");
             if (tokenizedArguments.length != 4) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioEditCommand.MESSAGE_USAGE));
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        BiblioEditCommand.MESSAGE_USAGE));
             }
             Index index = ParserUtil.parseIndex(tokenizedArguments[1]);
             String header = tokenizedArguments[2];

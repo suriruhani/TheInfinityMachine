@@ -26,11 +26,11 @@ public class BiblioCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_validStylevalidIndex_success() {
-        BiblioCommand biblioCommand = new BiblioCommand("APA", INDEX_FIRST_SOURCE);
+    public void execute_validIndexValidStyle_success() {
+        BiblioCommand biblioCommand = new BiblioCommand(INDEX_FIRST_SOURCE, "APA");
 
         try {
-            String expectedMessage = new BiblioCommand("APA", INDEX_FIRST_SOURCE)
+            String expectedMessage = new BiblioCommand(INDEX_FIRST_SOURCE, "APA")
                     .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(),
                                               getTypicalDeletedSources()), new CommandHistory())
                     .getFeedbackToUser();
@@ -43,22 +43,22 @@ public class BiblioCommandTest {
     }
 
     @Test
-    public void execute_invalidStyleValidIndex_failure() {
-        BiblioCommand biblioCommand = new BiblioCommand("Foo", INDEX_FIRST_SOURCE);
-        assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_COMMAND_FORMAT);
+    public void execute_validIndexInvalidStyle_failure() {
+        BiblioCommand biblioCommand = new BiblioCommand(INDEX_FIRST_SOURCE, "Foo");
+        assertCommandFailure(biblioCommand, model, commandHistory, BiblioCommand.MESSAGE_UNSUPPORTED_FORMAT);
     }
 
     @Test
-    public void execute_validStyleInvalidIndex_failure() {
+    public void execute_invalidIndexValidStyle_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
-        BiblioCommand biblioCommand = new BiblioCommand("APA", outOfBoundIndex);
+        BiblioCommand biblioCommand = new BiblioCommand(outOfBoundIndex, "APA");
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
     @Test
-    public void execute_invalidStyleInvalidIndex_failure() {
+    public void execute_invalidIndexInvalidStyle_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
-        BiblioCommand biblioCommand = new BiblioCommand("Foo", outOfBoundIndex);
+        BiblioCommand biblioCommand = new BiblioCommand(outOfBoundIndex, "Foo");
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 }

@@ -27,19 +27,23 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all sources!";
 
-    public static final String MESSAGE_LIST_N_SUCCESS = "Listed top %d sources!";
+    public static final String MESSAGE_LIST_TOP_N_SUCCESS = "Listed top %d sources!";
 
-    public static final String MESSAGE_LIST_X_Y_SUCCESS = "Listed sources from %d to %d!";
+    public static final String MESSAGE_LIST_LAST_N_SUCCESS = "Listed last %d sources!";
+
+    public static final String MESSAGE_LIST_X_TO_Y_SUCCESS = "Listed sources from %d to %d!";
 
     private Index targetIndex = null;
     private Index fromIndex =  null;
     private Index toIndex = null;
+    private boolean posFlag = true;
 
     public ListCommand() {}
 
     //Constructor overloading to account for an optional parameter
-    public ListCommand(Index targetIndex) {
+    public ListCommand(Index targetIndex, boolean posFlag) {
         this.targetIndex = targetIndex;
+        this.posFlag = posFlag;
     }
 
     public ListCommand(Index toIndex, Index fromIndex) {
@@ -49,7 +53,8 @@ public class ListCommand extends Command {
 
     /**
      * A method which constructs a predicate to output top n sources
-     * Parameters: positive integer n
+     * @param n positive integer
+     * @return Predicate which evaluates true for first n sources only
      */
     private Predicate<Source> makePredicateForTopN(int n) {
         return new Predicate<>() {
@@ -59,12 +64,39 @@ public class ListCommand extends Command {
                     count++;
                     return true;
                 } else {
+                    count++;
                     return false;
                 }
             }
         };
     }
 
+    /**
+     * A method which constructs a predicate to output last n sources
+     * @param n positive integer
+     * @return Predicate which evaluates true for last n sources only
+     */
+    private Predicate<Source> makePredicateForLastN(int n, int size) {
+        return new Predicate<>() {
+            private int count = 1;
+            public boolean test(Source source) {
+                if (size - count < n) {
+                    count++;
+                    return true;
+                } else {
+                    count++;
+                    return false;
+                }
+            }
+        };
+    }
+
+    /**
+     * A method which constructs a predicate to output sources between index x and y
+     * @param x a positive number
+     * @param y a positive number
+     * @return Predicate which evaluates true for sources between x and y only
+     */
     private Predicate<Source> makePredicateForXToY(int x, int y) {
         return new Predicate<>() {
             private int count = 1;
@@ -89,13 +121,19 @@ public class ListCommand extends Command {
         if (toIndex != null && fromIndex != null) {
             fromIndex = fromIndex.getOneBased() > size ? Index.fromOneBased(size) : fromIndex;
             model.updateFilteredSourceList(makePredicateForXToY(toIndex.getOneBased(), fromIndex.getOneBased()));
-            return new CommandResult(String.format(MESSAGE_LIST_X_Y_SUCCESS,
+            return new CommandResult(String.format(MESSAGE_LIST_X_TO_Y_SUCCESS,
                     toIndex.getOneBased(), fromIndex.getOneBased()));
         } else if (targetIndex != null) { //when LIST is used with an argument (show N)
-            //to ensure N is capped at list size
-            targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
-            model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
-            return new CommandResult(String.format(MESSAGE_LIST_N_SUCCESS, targetIndex.getOneBased()));
+            if (posFlag) {
+                //to ensure N is capped at list size
+                targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
+                model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
+                return new CommandResult(String.format(MESSAGE_LIST_TOP_N_SUCCESS, targetIndex.getOneBased()));
+            } else {
+                targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
+                model.updateFilteredSourceList(makePredicateForLastN(targetIndex.getOneBased(), size));
+                return new CommandResult(String.format(MESSAGE_LIST_LAST_N_SUCCESS, targetIndex.getOneBased()));
+            }
         } else { //when LIST is used without an argument (show all)
             return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
         }

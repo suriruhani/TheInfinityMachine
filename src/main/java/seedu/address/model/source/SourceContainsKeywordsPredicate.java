@@ -55,6 +55,11 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
             result = result && matchTagKeywords(tagKeywords, source);
         }
 
+
+        if (result) {
+            System.out.println(source.getTitle().title);
+        }
+
         return result;
     }
 

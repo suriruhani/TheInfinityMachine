@@ -3,15 +3,12 @@ package systemtests;
 import static org.junit.Assert.assertFalse;
 import static seedu.address.commons.core.Messages.MESSAGE_SOURCES_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalSources.KEYWORD_MATCHING_EXPERIMENT;
-import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
-import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
+import static seedu.address.logic.parser.CliSyntax.*;
+import static seedu.address.testutil.TypicalSources.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -19,13 +16,15 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.parser.ArgumentMultimap;
+import seedu.address.logic.parser.Prefix;
 import seedu.address.model.Model;
+import seedu.address.model.source.SourceContainsKeywordsPredicate;
 import seedu.address.model.tag.Tag;
 
 
 public class SearchCommandSystemTest extends SourceManagerSystemTest {
 
-    @Ignore
     @Test
     public void search() {
         /* Case: search multiple sources in source manager, command with leading spaces and trailing spaces
@@ -33,7 +32,6 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
          */
         String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT + "   ";
         Model expectedModel = getModel();
-        //first titles of Benson and Daniel are "Meier"
         ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
@@ -93,64 +91,67 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: search source in source manager,
-        keyword is same as name but of different case -> 1 source found */
-        command = SearchCommand.COMMAND_WORD + " MeIeR";
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+//        /* Case: search source in source manager,
+//        keyword is same as name but of different case -> 1 source found */
+//        command = SearchCommand.COMMAND_WORD + " MeIeR";
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
 
-        /* Case: search source in source manager, keyword is substring of name -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " Mei";
-        ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+//        /* Case: search source in source manager, keyword is substring of name -> 0 sources found */
+//        command = SearchCommand.COMMAND_WORD + " Mei";
+//        ModelHelper.setFilteredList(expectedModel);
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
 
-        /* Case: search source in source manager, name is substring of keyword -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " Meiers";
-        ModelHelper.setFilteredList(expectedModel);
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+//        /* Case: search source in source manager, name is substring of keyword -> 0 sources found */
+//        command = SearchCommand.COMMAND_WORD + " Meiers";
+//        ModelHelper.setFilteredList(expectedModel);
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
 
         /* Case: search source not in source manager -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " Mark";
+        command = SearchCommand.COMMAND_WORD + " " + PREFIX_TITLE + "A black hole is a region of spacetime " +
+                "exhibiting strong gravitational effects";
+        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: search address of source in source manager -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getType().type;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: search email of source in source manager -> 0 sources found */
-        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getDetail().detail;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
-
-        /* Case: search tags of source in source manager -> 0 sources found */
-        List<Tag> tags = new ArrayList<>(VR_RESEARCH.getTags());
-        command = SearchCommand.COMMAND_WORD + " " + tags.get(0).tagName;
-        assertCommandSuccess(command, expectedModel);
-        assertSelectedCardUnchanged();
+//        /* Case: search address of source in source manager -> 0 sources found */
+//        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getType().type;
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
+//
+//        /* Case: search email of source in source manager -> 0 sources found */
+//        command = SearchCommand.COMMAND_WORD + " " + VR_RESEARCH.getDetail().detail;
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
+//
+//        /* Case: search tags of source in source manager -> 0 sources found */
+//        List<Tag> tags = new ArrayList<>(VR_RESEARCH.getTags());
+//        command = SearchCommand.COMMAND_WORD + " " + PREFIX_TAG + tags.get(0).tagName;
+//        assertCommandSuccess(command, expectedModel);
+//        assertSelectedCardUnchanged();
 
         /* Case: search while a source is selected -> selected card deselected */
         showAllSources();
         selectSource(Index.fromOneBased(1));
         assertFalse(getSourceListPanel().getHandleToSelectedCard().getTitle().equals(VR_RESEARCH.getTitle().title));
-        command = SearchCommand.COMMAND_WORD + " Daniel";
-        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
+        command = SearchCommand.COMMAND_WORD + TAG_PREFIX_RESEARCH;
+        ModelHelper.setFilteredList(expectedModel, AR_RESEARCH, SENSOR_RESEARCH, VR_RESEARCH, ALGORITHM_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardDeselected();
 
         /* Case: search source in empty source manager -> 0 sources found */
         deleteAllSources();
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_RESEARCH;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
+        ModelHelper.setFilteredList(expectedModel, ALGORITHM_RESEARCH, SENSOR_RESEARCH, VR_RESEARCH,
+                AR_RESEARCH, AI_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: mixed case command word -> rejected */
-        command = "search Meier";
+        command = "sEaRch Experiment";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
 

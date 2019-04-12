@@ -300,6 +300,28 @@ public class SearchCommandTest {
 
     }
 
+    @Test
+    public void temp() {
+
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
+        ArrayList<Prefix> pList = new ArrayList<>();
+        ArrayList<String> sList = new ArrayList<>();
+        pList.add(PREFIX_TAG);
+//        pList.add(PREFIX_TYPE);
+//        pList.add(PREFIX_DETAILS);
+//        pList.add(PREFIX_TAG);
+//        sList.add("algorithm");
+//        sList.add("");
+        sList.add("research");
+//        sList.add("search");
+        SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
+        SearchCommand command = new SearchCommand(predicate);
+        expectedModel.updateFilteredSourceList(predicate);
+        assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
+        assertEquals(Arrays.asList(ALGORITHM_RESEARCH), model.getFilteredSourceList());
+
+    }
+
     /**
      * Parses {@code userInput} into a {@code SourceContainsKeywordsPredicate}.
      */

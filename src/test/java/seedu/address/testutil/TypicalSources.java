@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
+import static seedu.address.logic.parser.CliSyntax.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,8 +66,13 @@ public class TypicalSources {
             .withType(VALID_TYPE_NETWORK).withDetail(VALID_DETAIL_NETWORK)
             .withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
 
-    public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches EXPERIMENT
 
+    public static final String KEYWORD_MATCHING_RESEARCH = "Research";
+    public static final String TITLE_PREFIX_RESEARCH = " " + PREFIX_TITLE + KEYWORD_MATCHING_RESEARCH;
+    public static final String TYPE_PREFIX_RESEARCH = " " + PREFIX_TYPE + KEYWORD_MATCHING_RESEARCH;;
+    public static final String DETAIL_PREFIX_RESEARCH = " " + PREFIX_DETAILS + KEYWORD_MATCHING_RESEARCH;;
+    public static final String TAG_PREFIX_RESEARCH = " " + PREFIX_TAG + KEYWORD_MATCHING_RESEARCH;;
     private TypicalSources() {} // prevents instantiation
 
     /**

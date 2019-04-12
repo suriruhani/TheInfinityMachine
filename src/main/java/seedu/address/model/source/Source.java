@@ -20,12 +20,13 @@ import seedu.address.model.tag.Tag;
 public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    public final BiblioFields biblioFields;
+
     private final Title title;
     private final Author author;
     private final Type type;
     private final Detail detail;
     private final Set<Tag> tags = new HashSet<>();
-    public final BiblioFields biblioFields;
 
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, author, type, detail, tags);
@@ -34,6 +35,7 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+        
         this.biblioFields = new BiblioFields();
     }
 

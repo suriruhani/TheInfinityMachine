@@ -18,6 +18,7 @@ import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -94,10 +95,11 @@ public class EditCommand extends Command {
 
         Title updatedTitle = editSourceDescriptor.getTitle().orElse(sourceToEdit.getTitle());
         Type updatedType = editSourceDescriptor.getType().orElse(sourceToEdit.getType());
+        Author updatedAuthor = editSourceDescriptor.getAuthor().orElse(sourceToEdit.getAuthor());
         Detail updatedDetails = editSourceDescriptor.getDetails().orElse(sourceToEdit.getDetail());
         Set<Tag> updatedTags = editSourceDescriptor.getTags().orElse(sourceToEdit.getTags());
 
-        return new Source(updatedTitle, updatedType, updatedDetails, updatedTags);
+        return new Source(updatedTitle, updatedAuthor, updatedType, updatedDetails, updatedTags);
     }
 
     @Override
@@ -125,6 +127,7 @@ public class EditCommand extends Command {
     public static class EditSourceDescriptor {
         private Title title;
         private Type type;
+        private Author author;
         private Detail details;
         private Set<Tag> tags;
 
@@ -137,6 +140,7 @@ public class EditCommand extends Command {
         public EditSourceDescriptor(EditSourceDescriptor toCopy) {
             setTitle(toCopy.title);
             setType(toCopy.type);
+            setAuthor(toCopy.author);
             setDetails(toCopy.details);
             setTags(toCopy.tags);
         }
@@ -145,7 +149,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(title, type, details, tags);
+            return CollectionUtil.isAnyNonNull(title, type, author, details, tags);
         }
 
         public void setTitle(Title title) {
@@ -162,6 +166,14 @@ public class EditCommand extends Command {
 
         public Optional<Type> getType() {
             return Optional.ofNullable(type);
+        }
+
+        public void setAuthor(Author author) {
+            this.author = author;
+        }
+
+        public Optional<Author> getAuthor() {
+            return Optional.ofNullable(author);
         }
 
         public void setDetails(Detail details) {
@@ -206,6 +218,7 @@ public class EditCommand extends Command {
 
             return getTitle().equals(e.getTitle())
                     && getType().equals(e.getType())
+                    && getAuthor().equals(e.getAuthor())
                     && getDetails().equals(e.getDetails())
                     && getTags().equals(e.getTags());
         }

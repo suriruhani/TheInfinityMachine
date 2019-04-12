@@ -37,6 +37,7 @@ public class ModelManager implements Model, PanicMode {
     private boolean panicMode = false;
     private VersionedSourceManager sourceManagerBackup = null;
     private int numPinnedSources;
+    private ParserMode mode;
     private PinnedSourcesStorageOperationsCenter storageOps;
 
     /**
@@ -436,8 +437,28 @@ public class ModelManager implements Model, PanicMode {
     }
 
     @Override
+    public void setParserMode(ParserMode mode) {
+        switch (mode) {
+        case SOURCE_MANAGER:
+            switchToSources();
+            break;
+        case RECYCLE_BIN:
+            switchToDeletedSources();
+            break;
+        default:
+            switchToSources();
+            break;
+        }
+        this.mode = mode;
+    }
+
+    @Override
+    public ParserMode getParserMode() {
+        return this.mode;
+    }
+
+    @Override
     public PinnedSourcesStorageOperationsCenter getStorageOperationsCenter () {
         return this.storageOps;
     }
-
 }

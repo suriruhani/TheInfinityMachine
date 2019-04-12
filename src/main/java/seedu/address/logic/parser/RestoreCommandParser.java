@@ -6,7 +6,6 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-
 /**
  * Parses input arguments and creates a new RestoreCommand object
  */

@@ -22,11 +22,10 @@ import seedu.address.logic.commands.GreetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.ListDeletedCommand;
 import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.PinCommand;
+import seedu.address.logic.commands.RecycleBinCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -37,18 +36,18 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.storage.ConcreteAliasStorage;
 
 /**
- * Parses user input.
+ * Parses user input for Source Manager.
  */
 public class SourceManagerParser implements CommandValidator {
+    /**
+     * Used for initial separation of command word and args.
+     */
+    protected static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
+
     private static final String COMMAND_ALIAS_ADD = "alias";
     private static final String COMMAND_ALIAS_REMOVE = "alias-rm";
     private static final String COMMAND_ALIAS_CLEAR = "alias-clear";
     private static final String COMMAND_ALIAS_LIST = "alias-ls";
-
-    /**
-     * Used for initial separation of command word and args.
-     */
-    private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
     private Set<String> metaCommands = new HashSet<>();
     private Set<String> validCommands = new HashSet<>();
@@ -107,8 +106,7 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(UnpanicCommand.COMMAND_WORD);
         validCommands.add(CountCommand.COMMAND_WORD);
         validCommands.add(GreetCommand.COMMAND_WORD);
-        validCommands.add(RestoreCommand.COMMAND_WORD);
-        validCommands.add(ListDeletedCommand.COMMAND_WORD);
+        validCommands.add(RecycleBinCommand.COMMAND_WORD);
     }
 
     public boolean isValidCommand(String command) {
@@ -203,8 +201,8 @@ public class SourceManagerParser implements CommandValidator {
         case UnpinCommand.COMMAND_WORD:
             return new UnpinCommandParser().parse(arguments);
 
-        case ListDeletedCommand.COMMAND_WORD:
-            return new ListDeletedCommand();
+        case RecycleBinCommand.COMMAND_WORD:
+            return new RecycleBinCommand();
 
         // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):

@@ -63,29 +63,29 @@ public class BiblioCommand extends Command {
             switch (targetSource.getType().type) {
             case "Book":
                 biblioEntry = apaBook(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             case "Website":
                 biblioEntry = apaWebsite(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             case "Journal Article":
                 biblioEntry = apaJournal(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             default:
-                throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
+                return new CommandResult(MESSAGE_UNSUPPORTED_TYPE);
             }
         case "MLA":
             switch (targetSource.getType().type) {
             case "Book":
                 biblioEntry = mlaBook(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             case "Website":
                 biblioEntry = mlaWebsite(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             case "Journal Article":
                 biblioEntry = mlaJournal(targetSource);
-                return new CommandResult(String.format(MESSAGE_SUCCESS + biblioEntry));
+                return new CommandResult(MESSAGE_SUCCESS + biblioEntry);
             default:
-                throw new CommandException(MESSAGE_UNSUPPORTED_TYPE);
+                return new CommandResult(MESSAGE_UNSUPPORTED_TYPE);
             }
         default:
             throw new CommandException(MESSAGE_UNSUPPORTED_FORMAT);

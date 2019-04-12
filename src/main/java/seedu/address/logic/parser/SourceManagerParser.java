@@ -193,9 +193,6 @@ public class SourceManagerParser implements CommandValidator {
         case BiblioEditCommand.COMMAND_WORD:
             return new BiblioEditCommandParser().parse(arguments);
 
-        case RestoreCommand.COMMAND_WORD:
-            return new RestoreCommandParser().parse(arguments);
-
         case PinCommand.COMMAND_WORD:
             return new PinCommandParser().parse(arguments);
 

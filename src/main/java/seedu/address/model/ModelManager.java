@@ -202,7 +202,7 @@ public class ModelManager implements Model, PanicMode {
         userPrefs.setDeletedSourceFilePath(deletedSourcesFilePath);
     }
 
-    //=========== AddressBook ================================================================================
+    //=========== SourceDatabase ================================================================================
 
     @Override
     public void setSourceManager(ReadOnlySourceManager sourceManager) {

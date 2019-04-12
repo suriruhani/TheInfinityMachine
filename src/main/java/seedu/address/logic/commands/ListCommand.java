@@ -57,7 +57,7 @@ public class ListCommand extends Command {
      * @param n positive integer
      * @return Predicate which evaluates true for first n sources only
      */
-    private Predicate<Source> makePredicateForTopN(int n) {
+    public Predicate<Source> makePredicateForTopN(int n) {
         return new Predicate<>() {
             private int count = 0;
             public boolean test(Source source) {
@@ -77,7 +77,7 @@ public class ListCommand extends Command {
      * @param n positive integer
      * @return Predicate which evaluates true for last n sources only
      */
-    private Predicate<Source> makePredicateForLastN(int n, int size) {
+    public Predicate<Source> makePredicateForLastN(int n, int size) {
         return new Predicate<>() {
             private int count = 1;
             public boolean test(Source source) {
@@ -98,7 +98,7 @@ public class ListCommand extends Command {
      * @param y a positive number
      * @return Predicate which evaluates true for sources between x and y only
      */
-    private Predicate<Source> makePredicateForXToY(int x, int y) {
+    public Predicate<Source> makePredicateForXToY(int x, int y) {
         return new Predicate<>() {
             private int count = 1;
             public boolean test(Source source) {

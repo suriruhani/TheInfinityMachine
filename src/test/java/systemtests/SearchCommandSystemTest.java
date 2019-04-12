@@ -30,45 +30,48 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
         /* Case: search multiple sources in source manager, command with leading spaces and trailing spaces
          * -> 2 sources found
          */
-        String command = "   " + SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT + "   ";
+        String command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_RESEARCH;
         Model expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH);
+        ModelHelper.setFilteredList(expectedModel, ALGORITHM_RESEARCH, SENSOR_RESEARCH, VR_RESEARCH,
+            AR_RESEARCH, AI_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: repeat previous search command where source list is displaying the sources we are searching
          * -> 2 sources found
          */
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_RESEARCH;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search source where source list is not displaying the source we are searching -> 1 source found */
-        command = SearchCommand.COMMAND_WORD + " Carl";
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_SMARTCOMP;
         ModelHelper.setFilteredList(expectedModel, SMART_COMPUTERS);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple sources in source manager, 2 keywords -> 2 sources found */
-        command = SearchCommand.COMMAND_WORD + " Benson Daniel";
-        ModelHelper.setFilteredList(expectedModel, SENSOR_RESEARCH, VR_RESEARCH);
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_RESEARCH + TITLE_PREFIX_AI;
+        ModelHelper.setFilteredList(expectedModel, AI_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple sources in source manager, 2 keywords in reversed order -> 2 sources found */
-        command = SearchCommand.COMMAND_WORD + " Daniel Benson";
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_AI + TITLE_PREFIX_RESEARCH ;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple sources in source manager, 2 keywords with 1 repeat -> 2 sources found */
-        command = SearchCommand.COMMAND_WORD + " Daniel Benson Daniel";
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_AI + TITLE_PREFIX_RESEARCH + TITLE_PREFIX_AI;
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
         /* Case: search multiple sources in source manager, 2 matching keywords and 1 non-matching keyword
          * -> 2 sources found
          */
-        command = SearchCommand.COMMAND_WORD + " Daniel Benson NonMatchingKeyWord";
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_AI + TITLE_PREFIX_RESEARCH
+                + " " + PREFIX_TITLE + "Black holes";
+        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -84,18 +87,18 @@ public class SearchCommandSystemTest extends SourceManagerSystemTest {
 
         /* Case: search same sources in source manager after deleting 1 of them -> 1 source found */
         executeCommand(DeleteCommand.COMMAND_WORD + " 1");
-        assertFalse(getModel().getSourceManager().getSourceList().contains(SENSOR_RESEARCH));
-        command = SearchCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_EXPERIMENT;
+        assertFalse(getModel().getSourceManager().getSourceList().contains(ALGORITHM_RESEARCH));
+        command = SearchCommand.COMMAND_WORD + TITLE_PREFIX_AI;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, VR_RESEARCH);
+        ModelHelper.setFilteredList(expectedModel, AI_RESEARCH);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-//        /* Case: search source in source manager,
-//        keyword is same as name but of different case -> 1 source found */
-//        command = SearchCommand.COMMAND_WORD + " MeIeR";
-//        assertCommandSuccess(command, expectedModel);
-//        assertSelectedCardUnchanged();
+        /* Case: search source in source manager,
+        keyword is same as name but of different case -> 1 source found */
+        command = SearchCommand.COMMAND_WORD + " " + PREFIX_TITLE + "ARTificiAL inTELLIgenCE ";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
 
 //        /* Case: search source in source manager, keyword is substring of name -> 0 sources found */
 //        command = SearchCommand.COMMAND_WORD + " Mei";

@@ -306,14 +306,14 @@ public class SearchCommandTest {
         String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 1);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
-        pList.add(PREFIX_TAG);
-//        pList.add(PREFIX_TYPE);
+        pList.add(PREFIX_TITLE);
+        //pList.add(PREFIX_TITLE);
 //        pList.add(PREFIX_DETAILS);
 //        pList.add(PREFIX_TAG);
 //        sList.add("algorithm");
 //        sList.add("");
-        sList.add("research");
-//        sList.add("search");
+        sList.add("artificial intelligence");
+        //sList.add("research");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);

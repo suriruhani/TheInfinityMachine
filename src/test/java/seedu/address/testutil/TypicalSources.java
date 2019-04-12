@@ -72,7 +72,14 @@ public class TypicalSources {
     public static final String TITLE_PREFIX_RESEARCH = " " + PREFIX_TITLE + KEYWORD_MATCHING_RESEARCH;
     public static final String TYPE_PREFIX_RESEARCH = " " + PREFIX_TYPE + KEYWORD_MATCHING_RESEARCH;;
     public static final String DETAIL_PREFIX_RESEARCH = " " + PREFIX_DETAILS + KEYWORD_MATCHING_RESEARCH;;
-    public static final String TAG_PREFIX_RESEARCH = " " + PREFIX_TAG + KEYWORD_MATCHING_RESEARCH;;
+    public static final String TAG_PREFIX_RESEARCH = " " + PREFIX_TAG + KEYWORD_MATCHING_RESEARCH;
+
+    public static final String KEYWORD_MATCHING_SMARTCOMP = "Smart Computers";
+    public static final String TITLE_PREFIX_SMARTCOMP =" " + PREFIX_TITLE + KEYWORD_MATCHING_SMARTCOMP;
+
+    public static final String KEYWORD_MATCHING_AI = "Artifical Intelligence";
+    public static final String TITLE_PREFIX_AI =" " + PREFIX_TITLE + KEYWORD_MATCHING_AI;
+
     private TypicalSources() {} // prevents instantiation
 
     /**

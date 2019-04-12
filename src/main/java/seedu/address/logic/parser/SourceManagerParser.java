@@ -26,6 +26,7 @@ import seedu.address.logic.commands.PanicCommand;
 import seedu.address.logic.commands.PinCommand;
 import seedu.address.logic.commands.RecycleBinCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;

@@ -24,7 +24,7 @@ public class Source {
     private final Author author;
     private final Type type;
     private final Detail detail;
-    private final BiblioFields biblioFields = new BiblioFields();
+    public final BiblioFields biblioFields;
 
     private final Set<Tag> tags = new HashSet<>();
 
@@ -36,6 +36,7 @@ public class Source {
         this.tags.addAll(tags);
 
         this.author = new Author("Default Author");
+        this.biblioFields = new BiblioFields();
     }
 
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
@@ -45,6 +46,18 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+
+        this.biblioFields = new BiblioFields();
+    }
+
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, BiblioFields biblioFields) {
+        requireAllNonNull(title, author, type, detail, tags, biblioFields);
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+        this.biblioFields = biblioFields;
     }
 
     /**

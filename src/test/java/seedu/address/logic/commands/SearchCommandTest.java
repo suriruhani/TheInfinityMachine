@@ -300,6 +300,13 @@ public class SearchCommandTest {
 
     }
 
+    /*
+
+
+    <-----------TO BE REMOVED----------->
+
+
+     */
     @Test
     public void temp() {
 

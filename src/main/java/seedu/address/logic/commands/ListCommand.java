@@ -46,6 +46,7 @@ public class ListCommand extends Command {
         this.posFlag = posFlag;
     }
 
+    //Constructor overloading to account for two optional parameter
     public ListCommand(Index toIndex, Index fromIndex) {
         this.toIndex = toIndex;
         this.fromIndex = fromIndex;

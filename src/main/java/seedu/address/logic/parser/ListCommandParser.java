@@ -20,9 +20,15 @@ public class ListCommandParser implements Parser<ListCommand> {
         try {
             if (args.length() == 0) {
                 return new ListCommand();
+            }
+            String[] splitArgs = args.split("\\s+");
+            if (splitArgs.length == 2){
+                Index targetIndex = ParserUtil.parseIndex(splitArgs[1]);
+                return new ListCommand(targetIndex);
             } else {
-                Index index = ParserUtil.parseIndex(args);
-                return new ListCommand(index);
+                Index toIndex = ParserUtil.parseIndex(splitArgs[1]);
+                Index fromIndex = ParserUtil.parseIndex(splitArgs[2]);
+                return new ListCommand(toIndex, fromIndex);
             }
         } catch (ParseException pe) {
             throw new ParseException(

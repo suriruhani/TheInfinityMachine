@@ -29,14 +29,23 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_LIST_N_SUCCESS = "Listed top %d sources!";
 
+    public static final String MESSAGE_LIST_X_Y_SUCCESS = "Listed sources from %d to %d!";
+
     private Index targetIndex = null;
+    private Index fromIndex =  null;
+    private Index toIndex = null;
+
+    public ListCommand() {}
 
     //Constructor overloading to account for an optional parameter
     public ListCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
 
-    public ListCommand() {}
+    public ListCommand(Index toIndex, Index fromIndex) {
+        this.toIndex = toIndex;
+        this.fromIndex = fromIndex;
+    }
 
     /**
      * A method which constructs a predicate to output top n sources
@@ -56,13 +65,33 @@ public class ListCommand extends Command {
         };
     }
 
+    private Predicate<Source> makePredicateForXToY(int x, int y) {
+        return new Predicate<>() {
+            private int count = 1;
+            public boolean test(Source source) {
+                if (count >= x && count <= y) {
+                    count++;
+                    return true;
+                } else {
+                    count++;
+                    return false;
+                }
+            }
+        };
+    }
+
     @Override
     public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {
         requireNonNull(model);
         //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
         int size = model.getFilteredSourceList().size();
-        if (targetIndex != null) { //when LIST is used with an argument (show N)
+        if (toIndex != null && fromIndex != null) {
+            fromIndex = fromIndex.getOneBased() > size ? Index.fromOneBased(size) : fromIndex;
+            model.updateFilteredSourceList(makePredicateForXToY(toIndex.getOneBased(), fromIndex.getOneBased()));
+            return new CommandResult(String.format(MESSAGE_LIST_X_Y_SUCCESS,
+                    toIndex.getOneBased(), fromIndex.getOneBased()));
+        } else if (targetIndex != null) { //when LIST is used with an argument (show N)
             //to ensure N is capped at list size
             targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
             model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));

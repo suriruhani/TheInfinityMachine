@@ -34,7 +34,6 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
-        
         this.biblioFields = new BiblioFields();
     }
 

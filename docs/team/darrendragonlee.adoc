@@ -23,7 +23,7 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 * *Minor Enhancement*: Added the Custom Order command to the application
 ** What it does: This function allows greater flexibility and personalisation for the application by giving users manual control over the order of which they want their sources to appear.
 ** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management and organisation component of the application. Critical sources can be given priority and be moved to the top while older or outdated sources can be relegated to the bottom of the list.
-** Implementation: This new feature utilised the additional model functionality from the pin command but still required thorough testing before deployment.  
+** Implementation: This new feature utilised the additional model functionality from the pin command but still required thorough testing before deployment.
 
 * *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=darrendragonlee[Project Dashboard]]
 

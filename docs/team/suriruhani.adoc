@@ -9,54 +9,16 @@
 
 == Overview
 
-"To understand matters rightly we should understand their details; and as that knowledge is almost infinite, our knowledge
-is always superficial and imperfect." - Francois de La Rochefoucauld
-
-The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However,
-that does not mean that the process of learning what we have discovered should be a difficult one.
-
-Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research
-material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy
-university students who are able to use CLI and wish to organize and tag research information or any other data that they
-may wish to store.
-
-No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget
-where you read something and struggle to find it again.
+Our project, the Infinity Machine, is an application useful for efficient management of textual information
+of any kind, say research material. It allows users to store information by the their *title*, *type*, *details* and multiple *tags* and allows
+for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and intended
+for tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.
 
 == Summary of contributions
 
 == *Major enhancement*: +
 
 ==== 1. Modified *the ability to search* through sources:
-
-===== *Previously*:
-
-Format: `search <title>`
-
-In the given codebase of AB4, the `search` command could only take one type of arguments, of title type, and listed all
-sources that have one of those titles present in them.
-This search was case-insensitive.
-
-For example, when a user executes the command `search algorithm`, all those sources which have the
-title of 'algorithm' (or any of the case combination) will be populated on the GUI, with all their details
-such as their titles, types, details and tags. This list will be indexed (numbered). Only exact matches are\
-considered.
-
-This provides the users with limited functionality as they are only able to search through the sources by their titles.
-Ideally, we would want to give the user a more powerful search function that allows them to search through the sources
-with more fields and parameters, for example used in conjunction.
-
-Another limitation of the AB4 implementation is that it tests for exact (case insensitive) matching between the keywords
-entered by the user and the field values of sources. This is very intuitive because this would expect the user to remember and
-recall the exact tag, title, type or detail they had entered when creating the source (or after editing). This is especially useless
-when the user stores his entire research data in the `detail`, say 3 paragraphs, now to reproduce the source he must enter those 3 paragraphs
-word to word in their entirety. This defeats the purpose of the user being able to search for a source so he can use it in his
-research.
-
-Furthermore, this format of search only (logically) accepted one argument for each prefix tag, that is if given multiple,
-it would jut ignore it. This was implemented by using `getValue()` on the user enter argument multimap in
-`SourceContainsKeywordsPredicate`. This method only returned the last entered values and used this for the search command logic, ignore
-other tags.
 
 ===== *Modification*:
 
@@ -148,15 +110,6 @@ Most of the feature was developed independently, with some design and implementa
 === *Minor enhancement*:
 
 ==== 1. Modified *the ability to list* sources:
-
-===== *Previously*:
-Format: `list`
-
-In AB4, `list` command was a very useful feature which displayed to the user all the sources present in the database.
-The list command by default displayed all the sources in the order of least recently added first and displayed along with it
-all the details of the source, such as title, type, detail and tags.
-
-For example, when the user executes `list`, we see the updated list of all the source and their fields.
 
 ===== *Modification*:
 Format: `list [n]`
@@ -267,8 +220,3 @@ include::../DeveloperGuide.adoc[tag=list]
 include::../DeveloperGuide.adoc[tag=search]
 
 ---
-//== PROJECT: PowerPointLabs
-//
-//---
-//
-//_{Optionally, you may include other projects in your portfolio.}_

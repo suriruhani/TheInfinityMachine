@@ -13,7 +13,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;

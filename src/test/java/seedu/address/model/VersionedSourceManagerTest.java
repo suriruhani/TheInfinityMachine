@@ -216,7 +216,8 @@ public class VersionedSourceManagerTest {
                 prepareSourceManagerList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         // same values -> returns true
-        VersionedSourceManager copy = prepareSourceManagerList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
+        VersionedSourceManager copy =
+                prepareSourceManagerList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         assertTrue(versionedSourceManager.equals(copy));
 
         // same object -> returns true

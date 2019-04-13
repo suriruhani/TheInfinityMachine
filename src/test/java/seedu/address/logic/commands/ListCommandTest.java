@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
@@ -31,8 +30,10 @@ public class ListCommandTest {
 
     @Before
     public void setUp() {
-        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
-        expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources(), 0);
+        model = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+                getTypicalDeletedSources(), 0);
+        expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources(), 0);
     }
 
     @Test
@@ -61,14 +62,15 @@ public class ListCommandTest {
     @Test
     public void execute_listNegativeN_showsLastN() {
         ListCommand command = new ListCommand(Index.fromOneBased(2), false);
-        expectedModel.updateFilteredSourceList(command.makePredicateForLastN(2, model.getFilteredSourceList().size()));
+        expectedModel.updateFilteredSourceList(
+                command.makePredicateForLastN(2, model.getFilteredSourceList().size()));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_LAST_N_SUCCESS,
                 2), expectedModel);
         assertEquals(Arrays.asList(GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
     }
 
     @Test
-    public void execute_listXY_showsXY() throws ParseException {
+    public void execute_listXY_showsXY() {
         ListCommand command = new ListCommand(Index.fromOneBased(3), Index.fromOneBased(5));
         expectedModel.updateFilteredSourceList(command.makePredicateForXToY(3, 5));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_X_TO_Y_SUCCESS,
@@ -87,12 +89,8 @@ public class ListCommandTest {
 
     @Test
     public void execute_listXYreverseRange_showsError() {
-        //showSourceAtIndex(model, INDEX_FIRST_SOURCE);
         ListCommand command = new ListCommand(Index.fromOneBased(5), Index.fromOneBased(3));
-        //expectedModel.updateFilteredSourceList(command.makePredicateForTopN(2));
-//        assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_TOP_N_SUCCESS,
-//                2), expectedModel);
-        assertCommandFailure(command, model, commandHistory, String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
-        //assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH), model.getFilteredSourceList());
+        assertCommandFailure(command, model, commandHistory,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
     }
 }

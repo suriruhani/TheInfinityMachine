@@ -20,23 +20,13 @@ import seedu.address.model.tag.Tag;
 public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    public final BiblioFields biblioFields;
+
     private final Title title;
     private final Author author;
     private final Type type;
     private final Detail detail;
-    private final BiblioFields biblioFields = new BiblioFields();
-
     private final Set<Tag> tags = new HashSet<>();
-
-    /*public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
-        requireAllNonNull(title, type, detail, tags);
-        this.title = title;
-        this.type = type;
-        this.detail = detail;
-        this.tags.addAll(tags);
-
-        this.author = new Author("Default Author");
-    }*/
 
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, author, type, detail, tags);
@@ -45,6 +35,28 @@ public class Source {
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+        this.biblioFields = new BiblioFields();
+    }
+
+    public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
+        requireAllNonNull(title, type, detail, tags);
+        this.title = title;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+
+        this.author = new Author("Default Author");
+        this.biblioFields = new BiblioFields();
+    }
+
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, BiblioFields biblioFields) {
+        requireAllNonNull(title, author, type, detail, tags, biblioFields);
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+        this.biblioFields = biblioFields;
     }
 
     /**

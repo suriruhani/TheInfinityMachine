@@ -3,6 +3,7 @@ package seedu.address.logic;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.TITLE_DESC_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.TYPE_DESC_ENGINEERING;
@@ -92,7 +93,7 @@ public class LogicManagerTest {
 
         // Execute add command
         String addCommand = AddCommand.COMMAND_WORD + TITLE_DESC_ENGINEERING + TYPE_DESC_ENGINEERING
-                + DETAIL_DESC_ENGINEERING;
+                + AUTHOR_DESC_ENGINEERING + DETAIL_DESC_ENGINEERING;
         Source expectedSource = new SourceBuilder(ENGINEERING).withTags().build();
         ModelManager expectedModel = new ModelManager();
         expectedModel.addSource(expectedSource);

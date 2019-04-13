@@ -2,6 +2,7 @@
   "sources": [ {
     "title": "Source with invalid title field: Ha!ns Mu@ster",
     "type": "9482424",
+    "author" : "John Doe",
     "detail": "hans@example.com",
   } ]
 }

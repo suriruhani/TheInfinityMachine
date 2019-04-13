@@ -51,7 +51,7 @@ public class CommandTestUtil {
     public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "!@#$%^&*()"; // Special characters not allowed
     public static final String INVALID_TYPE_DESC = " " + PREFIX_TYPE + "!@#$%^&*()"; // Special characters not allowed
     public static final String INVALID_DETAIL_DESC = " " + PREFIX_DETAILS; // empty string not allowed for details
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "foobar*"; // '*' not allowed in tags
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + " "; // empty tag
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

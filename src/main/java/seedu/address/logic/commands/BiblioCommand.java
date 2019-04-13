@@ -97,7 +97,6 @@ public class BiblioCommand extends Command {
      */
     private String apaBook(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -111,7 +110,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
@@ -121,7 +119,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder City>: ";
             suggestedFields = suggestedFields + "City; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getPublisher() != null) {
@@ -129,13 +126,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Publisher>. ";
             suggestedFields = suggestedFields + "Publisher; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 
@@ -144,7 +140,6 @@ public class BiblioCommand extends Command {
      */
     private String apaJournal(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -158,7 +153,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         biblioEntry += String.format("%s. ", targetTitle);
@@ -168,7 +162,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<i><Placeholder Journal></i>, ";
             suggestedFields = suggestedFields + "Journal; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getPages() != null) {
@@ -176,13 +169,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Pages>. ";
             suggestedFields = suggestedFields + "Pages; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 
@@ -191,7 +183,6 @@ public class BiblioCommand extends Command {
      */
     private String apaWebsite(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -206,7 +197,6 @@ public class BiblioCommand extends Command {
             } else {
                 biblioEntry += String.format("(%s, ", biblioFields.getMonth());
                 suggestedFields = suggestedFields + "Day; ";
-                hasUnpopulatedField = true;
             }
         } else {
             biblioEntry += "(";
@@ -214,7 +204,6 @@ public class BiblioCommand extends Command {
                 suggestedFields = suggestedFields + "Day; ";
             }
             suggestedFields = suggestedFields + "Month; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getYear() != null) {
@@ -222,7 +211,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
@@ -232,7 +220,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "Retrieved from <Placeholder Website>: ";
             suggestedFields = suggestedFields + "Website; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getUrl() != null) {
@@ -240,13 +227,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder URL>. ";
             suggestedFields = suggestedFields + "URL; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 
@@ -256,7 +242,6 @@ public class BiblioCommand extends Command {
      */
     private String mlaBook(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -272,7 +257,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder City>: ";
             suggestedFields = suggestedFields + "City; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getPublisher() != null) {
@@ -280,7 +264,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Publisher>. ";
             suggestedFields = suggestedFields + "Publisher; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getYear() != null) {
@@ -288,7 +271,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getMedium() != null) {
@@ -296,13 +278,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Medium>. ";
             suggestedFields = suggestedFields + "Medium; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 
@@ -311,7 +292,6 @@ public class BiblioCommand extends Command {
      */
     private String mlaJournal(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -327,7 +307,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<i><Placeholder Journal></i> ";
             suggestedFields = suggestedFields + "Journal; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getYear() != null) {
@@ -335,7 +314,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getPages() != null) {
@@ -343,7 +321,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Pages>. ";
             suggestedFields = suggestedFields + "Pages; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getMedium() != null) {
@@ -351,13 +328,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Medium>. ";
             suggestedFields = suggestedFields + "Medium; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 
@@ -366,7 +342,6 @@ public class BiblioCommand extends Command {
      */
     private String mlaWebsite(Source targetSource) {
 
-        boolean hasUnpopulatedField = false;
         String biblioEntry;
         String suggestedFields = "";
         BiblioFields biblioFields = targetSource.getBiblioFields();
@@ -383,14 +358,12 @@ public class BiblioCommand extends Command {
             } else {
                 biblioEntry += String.format("%s, ", biblioFields.getMonth());
                 suggestedFields = suggestedFields + "Day; ";
-                hasUnpopulatedField = true;
             }
         } else {
             if (biblioFields.getDay() == null) {
                 suggestedFields = suggestedFields + "Day; ";
             }
             suggestedFields = suggestedFields + "Month; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getYear() != null) {
@@ -398,7 +371,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "n.d. ";
             suggestedFields = suggestedFields + "Year; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getMedium() != null) {
@@ -406,7 +378,6 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<Placeholder Medium>. ";
             suggestedFields = suggestedFields + "Medium; ";
-            hasUnpopulatedField = true;
         }
 
         if (biblioFields.getUrl() != null) {
@@ -414,13 +385,12 @@ public class BiblioCommand extends Command {
         } else {
             biblioEntry += "<<Placeholder URL>>. ";
             suggestedFields = suggestedFields + "URL; ";
-            hasUnpopulatedField = true;
         }
 
-        if (hasUnpopulatedField) {
-            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
-        } else {
+        if (suggestedFields.equals("")) {
             return biblioEntry;
+        } else {
+            return biblioEntry + MESSAGE_UNPOPULATED_FIELDS + suggestedFields;
         }
     }
 }

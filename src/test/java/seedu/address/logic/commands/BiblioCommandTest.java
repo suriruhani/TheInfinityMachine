@@ -26,7 +26,7 @@ public class BiblioCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_validIndexValidStyle_success() {
+    public void execute_validIndexApaStyle_success() {
         BiblioCommand biblioCommand = new BiblioCommand(INDEX_FIRST_SOURCE, "APA");
 
         try {
@@ -36,6 +36,23 @@ public class BiblioCommandTest {
                     .getFeedbackToUser();
             ModelManager expectedModel = new ModelManager(model.getSourceManager(),
                                                           new UserPrefs(), getTypicalDeletedSources());
+            assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (CommandException ce) {
+            assert false : "CommandException thrown";
+        }
+    }
+
+    @Test
+    public void execute_validIndexMlaStyle_success() {
+        BiblioCommand biblioCommand = new BiblioCommand(INDEX_FIRST_SOURCE, "MLA");
+
+        try {
+            String expectedMessage = new BiblioCommand(INDEX_FIRST_SOURCE, "MLA")
+                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+                            getTypicalDeletedSources()), new CommandHistory())
+                    .getFeedbackToUser();
+            ModelManager expectedModel = new ModelManager(model.getSourceManager(),
+                    new UserPrefs(), getTypicalDeletedSources());
             assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
         } catch (CommandException ce) {
             assert false : "CommandException thrown";

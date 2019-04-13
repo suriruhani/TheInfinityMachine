@@ -11,7 +11,6 @@ public class BiblioFields {
     public static final String[] ACCEPTED_FIELD_HEADERS =
         {"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"};
 
-
     private final String[] fieldBodies = new String[ACCEPTED_FIELD_HEADERS.length];
 
     /**

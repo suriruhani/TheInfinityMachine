@@ -26,7 +26,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_SOURCE;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
@@ -74,7 +73,6 @@ public class EditCommandParserTest {
         assertParseFailure(parser, "1 j/ string", MESSAGE_INVALID_FORMAT);
     }
 
-    @Ignore
     @Test
     public void parse_invalidTags_failure() {
         assertParseFailure(parser, "1" + INVALID_TAG_DESC, Tag.MESSAGE_CONSTRAINTS); // invalid tag

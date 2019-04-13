@@ -61,18 +61,41 @@ Format: `help`
 
 Displays the User Guide for a quick reference.
 
-=== Adding a person: `add`
+=== Adding a source: `add`
 
 Adds a new source to the list of sources +
-Format: `add i/TITLE y/TYPE d/DETAILS [t/TAG]...`
+Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
 
-[TIP]
-A source can have any number of tags (including 0)
+[NOTE]
+====
+The entry fields for the various source information have the following limitations:
+
+* TITLE
+** A mantatory field.
+** Cannot have special characters but can include numbers and spaces.
+
+* TYPE
+** A mantatory field.
+** Cannot have special characters but can include numbers and spaces.
+
+* AUTHOR
+** A mantatory field.
+** No limitation on the characters to be entered.
+
+* DETAIL
+** A mantatory field.
+** No limitation on the characters to be entered.
+
+* TAG
+** An optional field.
+** Cannot have special characters but can include numbers and spaces.
+** Can have any number including 0.
+====
 
 Examples:
 
-* `add i/Algorithms Wikipedia y/Website d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
-* `add i/Artificial Intelligence IEEE y/Journal Article d/introductory facts on artificial intelligence t/Science Journal t/AI`
+* `add i/Algorithms Wikipedia y/Website a/Jason Mills d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
+* `add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
 
 === Deleting a source : `delete`
@@ -137,7 +160,14 @@ Lists all deleted sources in the database.
 === Editing a source : `edit`
 
 Edits an existing source in the database. +
-Format: `edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
+Format: `edit INDEX [i/TITLE] [y/TYPE] [a/AUTHOR] [d/DETAILS] [t/TAG]...`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
 
 ****
 * Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...
@@ -147,10 +177,38 @@ Format: `edit INDEX [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 * Entering just `t/` without any thing after that will simply delete all tags for that entry.
 ****
 
+[NOTE]
+====
+The entry fields for the various source information have the following limitations:
+
+* TITLE
+** A mantatory field.
+** Cannot have special characters but can include numbers and spaces.
+
+* TYPE
+** A mantatory field.
+** Cannot have special characters but can include numbers and spaces.
+
+* AUTHOR
+** A mantatory field.
+** No limitation on the characters to be entered.
+
+* DETAIL
+** A mantatory field.
+** No limitation on the characters to be entered.
+
+* TAG
+** An optional field.
+** Cannot have special characters but can include numbers and spaces.
+** Can have any number including 0.
+====
+
 Examples:
 
 * `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology` +
-Edits the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
+Edits the 2nd source, changing the title and tags of the source to be `Photosynthesis Wikipedia` and `Photosynthesis, Biology` respectively.
+* `edit 3 y/Journal a/Gerard DuGalle` +
+Edits the 3rd source, changing the type and author of the source to be `Journal` and `Gerard DuGalle` respectively.
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
 
@@ -205,7 +263,14 @@ where argument N in [ ] is optional.
 === Reordering sources to your liking : `order`
 
 Moves the specified source from one position to another as defined by the user. +
-Format: `delete ORIGINAL_INDEX NEW_INDEX`
+Format: `order ORIGINAL_INDEX NEW_INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
 
 ****
 * Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
@@ -419,7 +484,7 @@ Will allow users to generate simple encryption keys which will help keep their r
 == Command Summary
 
 * *Add* `add i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
-e.g. `add i/Artificial Intelligence IEEE y/Journal Article d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI`
+e.g. `add i/Artificial Intelligence IEEE y/Journal Article a/Hugh Johnson d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -430,6 +495,8 @@ e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
 e.g. `search i/algorithm y/journal`
 * *List* : `list [N]`
+* *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` + 
+e.g. `order 3 5`
 * *Help* : `help`
   * *Biblio* : `biblio FORMAT INDEX` +
   e.g. `biblio APA 1`

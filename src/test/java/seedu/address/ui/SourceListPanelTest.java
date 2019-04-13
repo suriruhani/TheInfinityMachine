@@ -17,6 +17,7 @@ import guitests.guihandles.SourceListPanelHandle;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -80,8 +81,9 @@ public class SourceListPanelTest extends GuiUnitTest {
         for (int i = 0; i < sourceCount; i++) {
             Title title = new Title(i + "a");
             Type type = new Type("000");
+            Author author = new Author("Author");
             Detail detail = new Detail("a@aa");
-            Source source = new Source(title, type, detail, Collections.emptySet());
+            Source source = new Source(title, author, type, detail, Collections.emptySet());
             backingList.add(source);
         }
         return backingList;

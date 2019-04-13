@@ -3,36 +3,43 @@
   "sources" : [ {
     "title" : "Algorithm Researchers",
     "type" : "article",
+    "author" : "Fredrick Poznan",
     "detail" : "A research about researchers on algorithms.",
     "tagged" : [ "research" ]
   }, {
     "title" : "Sensor Research",
     "type" : "article",
+    "author" : "John Markson",
     "detail" : "A research about sensors.",
     "tagged" : [ "sensor", "research" ]
   }, {
     "title" : "Smart Computers 101",
     "type" : "computer tutorial",
+    "author" : "David Kim",
     "detail" : "How to build smart computers",
     "tagged" : [ ]
   }, {
     "title" : "Virtual Reality Research",
     "type" : "article",
+    "author" : "Johann Johnson",
     "detail" : "A research about virtual reality.",
     "tagged" : [ "research" ]
   }, {
     "title" : "Augmented Reality Research",
     "type" : "article",
+    "author" : "Joseph Jackson",
     "detail" : "A research about augmented reality.",
     "tagged" : [ ]
   }, {
     "title" : "Game Development",
     "type" : "tutorial",
+    "author" : "Selena Macro",
     "detail" : "How to develop games for today's market.",
     "tagged" : [ ]
   }, {
     "title" : "Artificial Intelligence Research",
     "type" : "article",
+    "author" : "Joana Micro",
     "detail" : "A research about artificial intelligence.",
     "tagged" : [ ]
   } ]

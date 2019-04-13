@@ -70,7 +70,7 @@ Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
 * Multiple of each type of source information can be entered into a single add command.
 * The system will only take the last entered bit of information as the final one
 ** If there are multiple titles entered like `i/Algorithms Wikipedia i/General Algorithms i/Algorithms Basic`, only the last one will be taken. In this case it will be `Algorithms Basic`.
-* The above rule is applicable to all information fields except Tag.  
+* The above rule is applicable to all information fields except Tag.
 ****
 
 [NOTE]

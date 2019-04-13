@@ -35,13 +35,17 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 *** Updated the existing add and edit commands to be able to incorporate research sources (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/88[#88])
 **** Refactored a significant amount of code to ensure functionality across the entire model.
 
+** Test Enhancements
+*** Added hashcode overrides to numerous existing features to ensure compliance with the hashcode contract (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203])
+**** Incorporated comprehensive tests for said function to check for non-compliance if any
+
 ** Documentation:
 *** Made comprehensive overall updates to the User Guide which made it more accurate and inclusive (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/133[#133])
 *** Added a section on User Stories to the Developer Guide to better direct the development of the application (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/125[#125])
 *** Added a large section encompassing all the use cases for every function in the application to the Developer Guide to assist in testing the functions for the correct outputs (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/134[#134])
 
 ** Community:
-*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128])
+*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128], https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203])
 
 == Contributions to the User Guide
 

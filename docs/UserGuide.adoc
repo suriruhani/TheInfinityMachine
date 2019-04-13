@@ -267,8 +267,69 @@ where argument N in [ ] is optional.
 * Tags, Details, Type are also displayed along with the sources
 ****
 
-=== Reordering sources to your liking : `order`
+=== Organisational Tools : `order` and `pin`
+The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.
 
+Pinned sources are saved between sessions, allowing users to retain whatever edits they have made.
+
+==== Pinning important sources : `pin`
+Marks a source as pinned and moves it to the top of the list where it will remain.
+Format: `pin INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
+
+****
+* The `INDEX` refers to the index number shown in the displayed source list.
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
+* The specified source to be pinned will move up and replace the source at the first position, pushing all sources after that down by 1 position.
+****
+
+[NOTE]
+====
+You can delete a pinned source with no issue by entering the `delete` command followed by the index of the pinned source.
+
+However, do note that deleting a pinned source will remove the source from the list.
+====
+
+Examples:
+
+* `pin 4` +
+Marks source number 4 as pinned and moves it to the top of the list.
+
+==== Unpinning sources : `unpin`
+Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
+Format: `unpin INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
+
+****
+* The `INDEX` refers to the index number shown in the displayed source list.
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
+* The specified source to be unpinned will be moved down to the position of the first unpinned source if there are pinned sources after the source to be unpinned.
+* If the source to be unpinned is the only or the last pinned source, then its position does not change.
+****
+
+[NOTE]
+====
+Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
+====
+
+Examples:
+
+* `unpin 4` +
+Reverts source 4, which was originally pinned, to its unpinned state and moves it down to the first unpinned source's position.
+
+==== Reordering sources to your liking : `order`
 Moves the specified source from one position to another as defined by the user. +
 Format: `order ORIGINAL_INDEX NEW_INDEX`
 
@@ -281,12 +342,17 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 
 ****
 * Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
-* The index refers to the index number shown in the displayed source list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The indexes refers to the index numbers shown in the displayed source list.
+* The indexes *must be positive integers* 1, 2, 3, ...
 * The specified source will replace the original source at that index.
 ** If the souce was shifted forward, sources before the `NEW_INDEX` will be shifted back and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ****
+
+[IMPORTANT]
+====
+You cannot swap a source that is pinned or swap a source to the location of a pinned source.
+====
 
 Examples:
 

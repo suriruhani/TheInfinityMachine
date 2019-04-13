@@ -219,6 +219,7 @@ Edits the 3rd source, changing the type and author of the source to be `Journal`
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
 
+// tag::search[]
 
 === Searching a source: `search`
 
@@ -264,22 +265,59 @@ Returns any source(s) having tags `ML` and having the word `intelligence` somewh
 Returns the source(s) with both substrings 'data' and 'algo' included in them.
 * `search y/wesbite`
 Returns the source(s) of type 'website' [and other similar strings, if any]
+// end::search[]
+// tag::list[]
 
 === Listing all sources : `list`
 
-Displays a list of all sources currently in the database, without filtering. +
-Optional argument N used to list only the top N sources to the user, where N is a positive integer
-(any other value throws error). +
-Format: `list [N]`
-where argument N in [ ] is optional.
+Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed. +
+Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively. +
+With one parameter passed, a positive N lists top N sources from the top, a negative N lists top N sources from the bottom [bottom N sources]. +
+With two parameters, the range must have both N and M as positive indices and N must not be smaller than M. +
+None of the values can ever be 0. The listing feature is always relative to the original list of the entire database.
+
+Format: `list [N] [M]`
+where argument N and M in [ ] are optional [either enter none, N, or (N and M)]
+
+The four main formats and their usages are described below:
+
+==== list: (no arguments)
+When no arguments are passed to `list`, it works same way as in the original AB4 logic, listing *all* the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.
+
+Example: `list` +
+Lists all the sources indexed from 1 onwards with all their details.
+
+==== list N: (one positive argument)
+When one positive integer is passed to `list`, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+
+Example: `list 5` +
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+==== list -N: (one negative argument)
+When one negative integer is passed to `list`, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+
+Example: `list -5` +
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+==== list N, M: (two positive arguments)
+When two positive integers are passed to `list`, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 ... till (M-N+1).
+
+Example: `list 6, 9` +
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
 
 ****
-* Lists all sources present in the database in the order of their addition, if no argument passed
-* Lists top N sources if a single integer N is passed
-* Throws error if more than one arguments are passed
-* The paramter passed, N, must be a positive integer else error is thrown
+* More than 2 parameters passed will be ignored, and the first two will be tested for the fourth case of range(N,M) listing.
+* In single parameter, the integer can be positive or negative but not 0.
+* In two parameter, the two integers must both be positive, with second greater than or equal to the first (both non-zero).
+* Any number of spaces in between the number is accepted, they are trimed away and integers are used to determine the list command type.
 * Tags, Details, Type are also displayed along with the sources
 ****
+
+// end::list[]
 
 === Organisational Tools : `order` and `pin`
 The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.

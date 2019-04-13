@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditSourceDescriptor;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -33,6 +34,7 @@ public class EditSourceDescriptorBuilder {
         descriptor = new EditSourceDescriptor();
         descriptor.setTitle(source.getTitle());
         descriptor.setType(source.getType());
+        descriptor.setAuthor(source.getAuthor());
         descriptor.setDetails(source.getDetail());
         descriptor.setTags(source.getTags());
     }
@@ -50,6 +52,14 @@ public class EditSourceDescriptorBuilder {
      */
     public EditSourceDescriptorBuilder withType(String type) {
         descriptor.setType(new Type(type));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Type} of the {@code EditSourceDescriptor} that we are building.
+     */
+    public EditSourceDescriptorBuilder withAuthor(String author) {
+        descriptor.setAuthor(new Author(author));
         return this;
     }
 

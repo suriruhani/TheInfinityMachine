@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
@@ -31,6 +32,7 @@ public class SourceUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_TITLE + source.getTitle().title + " ");
         sb.append(PREFIX_TYPE + source.getType().type + " ");
+        sb.append(PREFIX_AUTHOR + source.getAuthor().author + " ");
         sb.append(PREFIX_DETAILS + source.getDetail().detail + " ");
         source.getTags().stream().forEach(
             s -> sb.append(PREFIX_TAG + s.tagName + " ")
@@ -45,6 +47,7 @@ public class SourceUtil {
         StringBuilder sb = new StringBuilder();
         descriptor.getTitle().ifPresent(title -> sb.append(PREFIX_TITLE).append(title.title).append(" "));
         descriptor.getType().ifPresent(type -> sb.append(PREFIX_TYPE).append(type.type).append(" "));
+        descriptor.getAuthor().ifPresent(author -> sb.append(PREFIX_AUTHOR).append(author.author).append(" "));
         descriptor.getDetails().ifPresent(detail -> sb.append(PREFIX_DETAILS).append(detail.detail).append(" "));
         if (descriptor.getTags().isPresent()) {
             Set<Tag> tags = descriptor.getTags().get();

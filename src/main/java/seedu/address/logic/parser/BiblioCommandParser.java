@@ -19,15 +19,14 @@ public class BiblioCommandParser implements Parser<BiblioCommand> {
     public BiblioCommand parse(String args) throws ParseException {
         try {
             String[] tokenizedArguments = args.split(" ");
-            String format = tokenizedArguments[1];
-
-            if (tokenizedArguments.length != 3
-                || format.length() == 0) {
+            if (tokenizedArguments.length != 3) {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioCommand.MESSAGE_USAGE));
             }
 
-            Index index = ParserUtil.parseIndex(tokenizedArguments[2]);
-            return new BiblioCommand(format, index);
+            Index index = ParserUtil.parseIndex(tokenizedArguments[1]);
+            String format = tokenizedArguments[2];
+
+            return new BiblioCommand(index, format);
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioCommand.MESSAGE_USAGE), pe);

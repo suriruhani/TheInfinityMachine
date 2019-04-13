@@ -4,7 +4,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -23,7 +22,7 @@ public class ListCommandParser implements Parser<ListCommand> {
                 return new ListCommand();
             }
             String[] splitArgs = args.split("\\s+");
-            if (splitArgs.length == 2){
+            if (splitArgs.length == 2) {
                 if (Integer.parseInt(splitArgs[1]) >= 0) {
                     Index targetIndex = ParserUtil.parseIndex(splitArgs[1]);
                     return new ListCommand(targetIndex, true);

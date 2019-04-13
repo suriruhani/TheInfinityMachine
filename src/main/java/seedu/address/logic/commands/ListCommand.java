@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
@@ -37,7 +36,7 @@ public class ListCommand extends Command {
     public static final String MESSAGE_LIST_X_TO_Y_SUCCESS = "Listed sources from %d to %d!";
 
     private Index targetIndex = null;
-    private Index fromIndex =  null;
+    private Index fromIndex = null;
     private Index toIndex = null;
     private boolean posFlag = true;
 
@@ -117,7 +116,7 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException, CommandException {
+    public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         try {
             requireNonNull(model);
             //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
@@ -145,7 +144,7 @@ public class ListCommand extends Command {
             } else { //when LIST is used without an argument (show all)
                 return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
             }
-        } catch (CommandException ce) {
+        } catch (Exception ce) {
             throw new CommandException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), ce);
         }
@@ -158,7 +157,7 @@ public class ListCommand extends Command {
                 && ((targetIndex == ((ListCommand) other).targetIndex
                         || targetIndex.equals(((ListCommand) other).targetIndex))
                     && (toIndex == ((ListCommand) other).toIndex
-                        ||toIndex.equals(((ListCommand) other).toIndex))
+                        || toIndex.equals(((ListCommand) other).toIndex))
                     && (fromIndex == ((ListCommand) other).fromIndex
                         || fromIndex.equals(((ListCommand) other).fromIndex))
                     && (posFlag == ((ListCommand) other).posFlag))); // state check

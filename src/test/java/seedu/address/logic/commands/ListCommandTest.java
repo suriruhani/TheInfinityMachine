@@ -6,7 +6,17 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
-import static seedu.address.testutil.TypicalSources.*;
+import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.GAME_DEVELOPMENT;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
+import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
+import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
+
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +26,6 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-
-import java.util.Arrays;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCommand.
@@ -70,7 +78,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listXY_showsXY() {
+    public void execute_listXandY_showsXandY() {
         ListCommand command = new ListCommand(Index.fromOneBased(3), Index.fromOneBased(5));
         expectedModel.updateFilteredSourceList(command.makePredicateForXToY(3, 5));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_X_TO_Y_SUCCESS,
@@ -79,7 +87,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listSameXY_showsX() {
+    public void execute_listSameXandY_showsX() {
         ListCommand command = new ListCommand(Index.fromOneBased(2), Index.fromOneBased(2));
         expectedModel.updateFilteredSourceList(command.makePredicateForXToY(2, 2));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_X_TO_Y_SUCCESS,
@@ -88,7 +96,7 @@ public class ListCommandTest {
     }
 
     @Test
-    public void execute_listXYreverseRange_showsError() {
+    public void execute_listXandYreverseRange_showsError() {
         ListCommand command = new ListCommand(Index.fromOneBased(5), Index.fromOneBased(3));
         assertCommandFailure(command, model, commandHistory,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));

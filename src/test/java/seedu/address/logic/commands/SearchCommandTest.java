@@ -9,13 +9,22 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-import static seedu.address.testutil.TypicalSources.*;
+import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
+import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
+import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.GAME_DEVELOPMENT;
+import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
+import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
+import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
+import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
@@ -32,7 +41,8 @@ import seedu.address.model.source.SourceContainsKeywordsPredicate;
  */
 public class SearchCommandTest {
 
-    private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
+    private Model model = new ModelManager(getTypicalSourceManager(),
+            new UserPrefs(), getTypicalDeletedSources(), 0);
     private Model expectedModel = new ModelManager(getTypicalSourceManager(), new UserPrefs(),
             getTypicalDeletedSources());
     private CommandHistory commandHistory = new CommandHistory();
@@ -254,7 +264,8 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, VR_RESEARCH, AR_RESEARCH, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, VR_RESEARCH, AR_RESEARCH, AI_RESEARCH),
+                model.getFilteredSourceList());
 
     }
 
@@ -307,6 +318,7 @@ public class SearchCommandTest {
 
 
      */
+    @Ignore
     @Test
     public void temp() {
 
@@ -314,18 +326,18 @@ public class SearchCommandTest {
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TITLE);
-        //pList.add(PREFIX_TITLE);
-//        pList.add(PREFIX_DETAILS);
-//        pList.add(PREFIX_TAG);
-//        sList.add("algorithm");
-//        sList.add("");
+        pList.add(PREFIX_TITLE);
+        pList.add(PREFIX_DETAILS);
+        pList.add(PREFIX_TAG);
+        sList.add("algorithm");
+        sList.add("");
         sList.add("artificial intelligence");
         //sList.add("research");
         SourceContainsKeywordsPredicate predicate = preparePredicate(pList, sList);
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH), model.getFilteredSourceList());
+        assertEquals(Collections.singletonList(ALGORITHM_RESEARCH), model.getFilteredSourceList());
 
     }
 

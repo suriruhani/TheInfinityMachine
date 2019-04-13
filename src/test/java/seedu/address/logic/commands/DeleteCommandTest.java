@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -8,6 +9,7 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
+import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
@@ -17,6 +19,7 @@ import org.junit.Test;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ParserMode;
@@ -61,12 +64,9 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
-    @Ignore
     @Test
     public void execute_validIndexFilteredList_success() {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);
-
-        model.setParserMode(ParserMode.SOURCE_MANAGER);
 
         Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
         DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
@@ -84,7 +84,6 @@ public class DeleteCommandTest {
         expectedModel.deleteSource(sourceToDelete);
         expectedModel.commitSourceManager();
 
-        showNoSource(expectedModel);
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
@@ -181,6 +180,97 @@ public class DeleteCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
+    /**
+     * Deletes a source from the Recycle Bin Filtered list.
+     * Note that this is a permanent delete for the current model.
+     */
+    @Test
+    public void execute_validIndexRecycleBinFilteredList_success() {
+        model.setParserMode(ParserMode.RECYCLE_BIN); // switch mode to Recycle Bin
+        showSourceAtIndex(model, INDEX_FIRST_SOURCE);
+
+        Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
+
+        // remove deleted source from recycle bin permanently
+        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
+        expectedModel.removeDeletedSource(sourceToDelete);
+
+        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_validIndexRecycleBinUnfilteredList_success() {
+        model.setParserMode(ParserMode.RECYCLE_BIN); // switch mode to Recycle Bin
+
+        Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
+
+        // remove deleted source from recycle bin permanently
+        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
+        expectedModel.removeDeletedSource(sourceToDelete);
+
+        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Deletes a source in the Source Manager permanently when the same source exists in the Recycle Bin.
+     */
+    @Test
+    public void execute_sameSourceExistInRecycleBin_success() throws CommandException {
+        Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+        DeleteCommand deleteCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
+
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
+
+        // add deleted source to deleted sources database
+        expectedModel.addDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        // remove source from source manager database
+        expectedModel.deleteSource(sourceToDelete);
+        expectedModel.commitSourceManager();
+
+        assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
+
+        // add another source of the same data
+        expectedModel.addSource(sourceToDelete);
+        expectedModel.commitSourceManager();
+
+        AddCommand addCommand = new AddCommand(sourceToDelete);
+        addCommand.execute(model, commandHistory);
+
+        Source duplicateSourceToDelete = model.getFilteredSourceList().get(INDEX_SEVENTH_SOURCE.getZeroBased());
+        CommandResult commandResult = new DeleteCommand(INDEX_SEVENTH_SOURCE).execute(model, commandHistory);
+
+        // permanently delete if same source exists in recycle bin
+        if (expectedModel.hasDeletedSource(duplicateSourceToDelete)) {
+            expectedModel.deleteSource(duplicateSourceToDelete);
+            expectedModel.commitSourceManager();
+        }
+        assertEquals(String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, duplicateSourceToDelete),
+                commandResult.getFeedbackToUser());
+        assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
+
+        // check deleted sources list
+        model.switchToDeletedSources();
+        expectedModel.switchToDeletedSources();
+        assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
+    }
+
     @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_SOURCE);
@@ -201,14 +291,5 @@ public class DeleteCommandTest {
 
         // different source -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
-    }
-
-    /**
-     * Updates {@code model}'s filtered list to show no sources.
-     */
-    private void showNoSource(Model model) {
-        model.updateFilteredSourceList(p -> false);
-
-        assertTrue(model.getFilteredSourceList().isEmpty());
     }
 }

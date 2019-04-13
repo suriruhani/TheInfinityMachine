@@ -1,13 +1,5 @@
 package seedu.address.testutil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import seedu.address.model.DeletedSources;
-import seedu.address.model.SourceManager;
-import seedu.address.model.source.Source;
-
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_AUTHOR_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_DETAIL_ENGINEERING;
@@ -18,6 +10,14 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import seedu.address.model.DeletedSources;
+import seedu.address.model.SourceManager;
+import seedu.address.model.source.Source;
 
 /**
  * A utility class containing a list of {@code Source} objects to be used in tests.

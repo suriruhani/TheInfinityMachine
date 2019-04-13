@@ -114,47 +114,97 @@ public class AddCommandParserTest {
         String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing title prefix
-        assertParseFailure(parser, VALID_TITLE_NETWORK + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + DETAIL_DESC_NETWORK,
+        assertParseFailure(parser,
+                VALID_TITLE_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK,
                 expectedMessage);
 
         // missing type prefix
-        assertParseFailure(parser, TITLE_DESC_NETWORK + VALID_TYPE_NETWORK + AUTHOR_DESC_NETWORK + DETAIL_DESC_NETWORK,
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + VALID_TYPE_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK,
                 expectedMessage);
 
         // missing detail prefix
-        assertParseFailure(parser, TITLE_DESC_NETWORK + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + VALID_DETAIL_NETWORK,
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + VALID_DETAIL_NETWORK,
                 expectedMessage);
 
         // all prefixes missing
-        assertParseFailure(parser, VALID_TITLE_NETWORK + VALID_TYPE_NETWORK + VALID_AUTHOR_NETWORK + VALID_DETAIL_NETWORK,
+        assertParseFailure(parser,
+                VALID_TITLE_NETWORK
+                        + VALID_TYPE_NETWORK
+                        + VALID_AUTHOR_NETWORK
+                        + VALID_DETAIL_NETWORK,
                 expectedMessage);
     }
 
     @Test
     public void parse_invalidValue_failure() {
         // invalid title
-        assertParseFailure(parser, INVALID_TITLE_DESC + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + DETAIL_DESC_NETWORK
-                + TAG_DESC_BAR + TAG_DESC_FOO, Title.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                INVALID_TITLE_DESC
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK
+                        + TAG_DESC_BAR
+                        + TAG_DESC_FOO,
+                Title.MESSAGE_CONSTRAINTS);
 
         // invalid type
-        assertParseFailure(parser, TITLE_DESC_NETWORK + INVALID_TYPE_DESC + AUTHOR_DESC_NETWORK + DETAIL_DESC_NETWORK
-                + TAG_DESC_BAR + TAG_DESC_FOO, Type.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + INVALID_TYPE_DESC
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK
+                        + TAG_DESC_BAR
+                        + TAG_DESC_FOO,
+                Type.MESSAGE_CONSTRAINTS);
 
         // invalid detail
-        assertParseFailure(parser, TITLE_DESC_NETWORK + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + INVALID_DETAIL_DESC
-                + TAG_DESC_BAR + TAG_DESC_FOO, Detail.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + INVALID_DETAIL_DESC
+                        + TAG_DESC_BAR
+                        + TAG_DESC_FOO,
+                Detail.MESSAGE_CONSTRAINTS);
 
         // invalid tag
-        assertParseFailure(parser, TITLE_DESC_NETWORK + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + DETAIL_DESC_NETWORK
-                + INVALID_TAG_DESC + VALID_TAG_FOO, Tag.MESSAGE_CONSTRAINTS);
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK
+                        + INVALID_TAG_DESC
+                        + VALID_TAG_FOO,
+                Tag.MESSAGE_CONSTRAINTS);
 
         // two invalid values, only first invalid value reported
-        assertParseFailure(parser, INVALID_TITLE_DESC + TYPE_DESC_NETWORK + AUTHOR_DESC_NETWORK + INVALID_DETAIL_DESC,
+        assertParseFailure(parser,
+                INVALID_TITLE_DESC
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + INVALID_DETAIL_DESC,
                 Title.MESSAGE_CONSTRAINTS);
 
         // non-empty preamble
-        assertParseFailure(parser, PREAMBLE_NON_EMPTY + TITLE_DESC_NETWORK + AUTHOR_DESC_NETWORK + TYPE_DESC_NETWORK
-                + DETAIL_DESC_NETWORK + TAG_DESC_BAR + TAG_DESC_FOO,
+        assertParseFailure(parser,
+                PREAMBLE_NON_EMPTY
+                        + TITLE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK
+                        + TAG_DESC_BAR
+                        + TAG_DESC_FOO,
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 }

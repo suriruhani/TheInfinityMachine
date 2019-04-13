@@ -8,7 +8,11 @@ import seedu.address.model.DeletedSources;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.SourceManager;
-import seedu.address.model.source.*;
+import seedu.address.model.source.Author;
+import seedu.address.model.source.Detail;
+import seedu.address.model.source.Source;
+import seedu.address.model.source.Title;
+import seedu.address.model.source.Type;
 import seedu.address.model.tag.Tag;
 
 /**

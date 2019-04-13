@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.BiblioEditCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.source.BiblioFields;
 
 /**
  * Parses input arguments and creates a new BiblioEditCommand object
@@ -23,13 +24,25 @@ public class BiblioEditCommandParser implements Parser<BiblioEditCommand> {
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                         BiblioEditCommand.MESSAGE_USAGE));
             }
+
             Index index = ParserUtil.parseIndex(tokenizedArguments[1]);
             String header = tokenizedArguments[2];
             String body = tokenizedArguments[3];
 
+            boolean isValidHeader = false;
+            for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
+                if (header.equals(BiblioFields.ACCEPTED_FIELD_HEADERS[i])) {
+                    isValidHeader = true;
+                }
+            }
 
+            if (!isValidHeader) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        BiblioEditCommand.MESSAGE_USAGE));
+            }
 
             return new BiblioEditCommand(index, header, body);
+
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, BiblioEditCommand.MESSAGE_USAGE), pe);

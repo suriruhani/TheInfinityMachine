@@ -144,7 +144,8 @@ public class Source {
                 && otherSource.getType().equals(getType())
                 && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getDetail().equals(getDetail())
-                && otherSource.getTags().equals(getTags());
+                && otherSource.getTags().equals(getTags())
+                && otherSource.getBiblioFields().equals(getBiblioFields());
     }
 
     @Override

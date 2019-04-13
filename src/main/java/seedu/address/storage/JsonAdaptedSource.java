@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -29,6 +30,7 @@ class JsonAdaptedSource {
     private final String author;
     private final String detail;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
+    private final String[] fieldBodies;
 
     /**
      * Constructs a {@code JsonAdaptedSource} with the given person details.
@@ -39,6 +41,7 @@ class JsonAdaptedSource {
             @JsonProperty("type") String type,
             @JsonProperty("author") String author,
             @JsonProperty("detail") String detail,
+            @JsonProperty("fieldBodies") String[] fieldBodies,
             @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.title = title;
         this.type = type;
@@ -47,6 +50,7 @@ class JsonAdaptedSource {
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
+        this.fieldBodies = fieldBodies;
     }
 
     /**
@@ -60,6 +64,7 @@ class JsonAdaptedSource {
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        fieldBodies = source.biblioFields.getFieldBodies();
     }
 
     /**
@@ -106,7 +111,16 @@ class JsonAdaptedSource {
         final Detail modelDetail = new Detail(detail);
 
         final Set<Tag> modelTags = new HashSet<>(sourceTags);
-        return new Source(modelTitle, modelAuthor, modelType, modelDetail, modelTags);
+
+        if (fieldBodies == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    BiblioFields.class.getSimpleName()));
+        }
+        final BiblioFields modelBiblioFields = new BiblioFields();
+        for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
+            modelBiblioFields.replaceField(BiblioFields.ACCEPTED_FIELD_HEADERS[i], fieldBodies[i]);
+        }
+        return new Source(modelTitle, modelAuthor, modelType, modelDetail, modelTags, modelBiblioFields);
     }
 
 }

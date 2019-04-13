@@ -1,5 +1,7 @@
 package seedu.address.model.source;
 
+import java.util.Arrays;
+
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 /**
@@ -18,6 +20,7 @@ public class BiblioFields {
      *
      */
     public BiblioFields() {
+        Arrays.fill(fieldBodies, "");
     }
 
     /**
@@ -100,7 +103,7 @@ public class BiblioFields {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BiblioFields // instanceof handles nulls
-                && fieldBodies.equals(((BiblioFields) other).getFieldBodies())); // State check
+                && Arrays.equals(((BiblioFields) other).getFieldBodies(), getFieldBodies())); // State check
     }
 
     @Override

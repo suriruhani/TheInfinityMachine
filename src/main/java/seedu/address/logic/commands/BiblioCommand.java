@@ -105,7 +105,7 @@ public class BiblioCommand extends Command {
 
         biblioEntry = String.format("%s. ", targetAuthor);
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("(%s). ", biblioFields.getYear());
         } else {
             biblioEntry += "(n.d.). ";
@@ -114,14 +114,14 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
 
-        if (biblioFields.getCity() != null) {
+        if (biblioFields.getCity() != "") {
             biblioEntry += String.format("%s: ", biblioFields.getCity());
         } else {
             biblioEntry += "<Placeholder City>: ";
             suggestedFields = suggestedFields + "City; ";
         }
 
-        if (biblioFields.getPublisher() != null) {
+        if (biblioFields.getPublisher() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getPublisher());
         } else {
             biblioEntry += "<Placeholder Publisher>. ";
@@ -148,7 +148,7 @@ public class BiblioCommand extends Command {
 
         biblioEntry = String.format("%s. ", targetAuthor);
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("(%s). ", biblioFields.getYear());
         } else {
             biblioEntry += "(n.d.). ";
@@ -157,14 +157,14 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("%s. ", targetTitle);
 
-        if (biblioFields.getJournal() != null) {
+        if (biblioFields.getJournal() != "") {
             biblioEntry += String.format("<i>%s</i>, ", biblioFields.getJournal());
         } else {
             biblioEntry += "<i><Placeholder Journal></i>, ";
             suggestedFields = suggestedFields + "Journal; ";
         }
 
-        if (biblioFields.getPages() != null) {
+        if (biblioFields.getPages() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getPublisher());
         } else {
             biblioEntry += "<Placeholder Pages>. ";
@@ -191,8 +191,8 @@ public class BiblioCommand extends Command {
 
         biblioEntry = String.format("%s. ", targetAuthor);
 
-        if (biblioFields.getMonth() != null) {
-            if (biblioFields.getDay() != null) {
+        if (biblioFields.getMonth() != "") {
+            if (biblioFields.getDay() != "") {
                 biblioEntry += String.format("(%s %s, ", biblioFields.getDay(), biblioFields.getMonth());
             } else {
                 biblioEntry += String.format("(%s, ", biblioFields.getMonth());
@@ -200,13 +200,13 @@ public class BiblioCommand extends Command {
             }
         } else {
             biblioEntry += "(";
-            if (biblioFields.getDay() == null) {
+            if (biblioFields.getDay() == "") {
                 suggestedFields = suggestedFields + "Day; ";
             }
             suggestedFields = suggestedFields + "Month; ";
         }
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("%s). ", biblioFields.getYear());
         } else {
             biblioEntry += "n.d.). ";
@@ -215,14 +215,14 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
 
-        if (biblioFields.getWebsite() != null) {
+        if (biblioFields.getWebsite() != "") {
             biblioEntry += String.format("Retrieved from %s: ", biblioFields.getWebsite());
         } else {
             biblioEntry += "Retrieved from <Placeholder Website>: ";
             suggestedFields = suggestedFields + "Website; ";
         }
 
-        if (biblioFields.getUrl() != null) {
+        if (biblioFields.getUrl() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getUrl());
         } else {
             biblioEntry += "<Placeholder URL>. ";
@@ -252,28 +252,28 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
 
-        if (biblioFields.getCity() != null) {
+        if (biblioFields.getCity() != "") {
             biblioEntry += String.format("%s: ", biblioFields.getCity());
         } else {
             biblioEntry += "<Placeholder City>: ";
             suggestedFields = suggestedFields + "City; ";
         }
 
-        if (biblioFields.getPublisher() != null) {
+        if (biblioFields.getPublisher() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getPublisher());
         } else {
             biblioEntry += "<Placeholder Publisher>. ";
             suggestedFields = suggestedFields + "Publisher; ";
         }
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getYear());
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
         }
 
-        if (biblioFields.getMedium() != null) {
+        if (biblioFields.getMedium() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getMedium());
         } else {
             biblioEntry += "<Placeholder Medium>. ";
@@ -302,28 +302,28 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("\"%s\". ", targetTitle);
 
-        if (biblioFields.getJournal() != null) {
+        if (biblioFields.getJournal() != "") {
             biblioEntry += String.format("<i>%s</i> ", biblioFields.getJournal());
         } else {
             biblioEntry += "<i><Placeholder Journal></i> ";
             suggestedFields = suggestedFields + "Journal; ";
         }
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getYear());
         } else {
             biblioEntry += "(n.d.). ";
             suggestedFields = suggestedFields + "Year; ";
         }
 
-        if (biblioFields.getPages() != null) {
+        if (biblioFields.getPages() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getPublisher());
         } else {
             biblioEntry += "<Placeholder Pages>. ";
             suggestedFields = suggestedFields + "Pages; ";
         }
 
-        if (biblioFields.getMedium() != null) {
+        if (biblioFields.getMedium() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getMedium());
         } else {
             biblioEntry += "<Placeholder Medium>. ";
@@ -352,35 +352,35 @@ public class BiblioCommand extends Command {
 
         biblioEntry += String.format("<i>%s</i>. ", targetTitle);
 
-        if (biblioFields.getMonth() != null) {
-            if (biblioFields.getDay() != null) {
+        if (biblioFields.getMonth() != "") {
+            if (biblioFields.getDay() != "") {
                 biblioEntry += String.format("%s %s, ", biblioFields.getDay(), biblioFields.getMonth());
             } else {
                 biblioEntry += String.format("%s, ", biblioFields.getMonth());
                 suggestedFields = suggestedFields + "Day; ";
             }
         } else {
-            if (biblioFields.getDay() == null) {
+            if (biblioFields.getDay() == "") {
                 suggestedFields = suggestedFields + "Day; ";
             }
             suggestedFields = suggestedFields + "Month; ";
         }
 
-        if (biblioFields.getYear() != null) {
+        if (biblioFields.getYear() != "") {
             biblioEntry += String.format("%s). ", biblioFields.getYear());
         } else {
             biblioEntry += "n.d. ";
             suggestedFields = suggestedFields + "Year; ";
         }
 
-        if (biblioFields.getMedium() != null) {
+        if (biblioFields.getMedium() != "") {
             biblioEntry += String.format("%s. ", biblioFields.getMedium());
         } else {
             biblioEntry += "<Placeholder Medium>. ";
             suggestedFields = suggestedFields + "Medium; ";
         }
 
-        if (biblioFields.getUrl() != null) {
+        if (biblioFields.getUrl() != "") {
             biblioEntry += String.format("<%s>. ", biblioFields.getUrl());
         } else {
             biblioEntry += "<<Placeholder URL>>. ";

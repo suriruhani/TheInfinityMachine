@@ -32,7 +32,7 @@ public class TypicalSources {
             .withTags("research").build();
     public static final Source SENSOR_RESEARCH = new SourceBuilder()
             .withTitle("Sensor Research")
-            .withType("Journal Article")
+            .withType("Website")
             .withAuthor("John Markson")
             .withDetail("A research about sensors.")
             .withTags("sensor", "research").build();
@@ -40,7 +40,8 @@ public class TypicalSources {
             .withTitle("Smart Computers 101")
             .withType("Website")
             .withAuthor("David Kim")
-            .withDetail("How to build smart computers").build();
+            .withDetail("How to build smart computers")
+            .withBiblioFields().build();
     public static final Source VR_RESEARCH = new SourceBuilder()
             .withTitle("Virtual Reality Research")
             .withType("Journal Article")
@@ -51,7 +52,8 @@ public class TypicalSources {
             .withTitle("Augmented Reality Research")
             .withType("Journal Article")
             .withAuthor("Joseph Jackson")
-            .withDetail("A research about augmented reality.").build();
+            .withDetail("A research about augmented reality.")
+            .withBiblioFields().build();
     public static final Source GAME_DEVELOPMENT = new SourceBuilder()
             .withTitle("Game Development")
             .withType("Book")
@@ -59,9 +61,10 @@ public class TypicalSources {
             .withDetail("How to develop games for today's market.").build();
     public static final Source AI_RESEARCH = new SourceBuilder()
             .withTitle("Artificial Intelligence Research")
-            .withType("Journal Article")
+            .withType("Book")
             .withAuthor("Joana Micro")
-            .withDetail("A research about artificial intelligence.").build();
+            .withDetail("A research about artificial intelligence.")
+            .withBiblioFields().build();
     public static final Source RESEARCH_METHOD = new SourceBuilder()
             .withTitle("The Correct Way to Research")
             .withType("Journal Article")

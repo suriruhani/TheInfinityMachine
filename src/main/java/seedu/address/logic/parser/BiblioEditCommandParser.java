@@ -31,7 +31,7 @@ public class BiblioEditCommandParser implements Parser<BiblioEditCommand> {
 
             boolean isValidHeader = false;
             for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
-                if (header.equals(BiblioFields.ACCEPTED_FIELD_HEADERS)) {
+                if (header.equals(BiblioFields.ACCEPTED_FIELD_HEADERS[i])) {
                     isValidHeader = true;
                 }
             }

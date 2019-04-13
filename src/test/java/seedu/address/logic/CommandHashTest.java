@@ -5,14 +5,11 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.HashSet;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.CustomOrderCommand;
-import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.PinCommand;
-import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.ParserUtil;
@@ -50,25 +47,6 @@ public class CommandHashTest {
         assertEquals(size, 1);
     }
 
-    @Ignore
-    @Test
-    public void check_hashcodeDeleteCommand_success() {
-        HashSet<DeleteCommand> set = new HashSet<DeleteCommand>();
-
-        try {
-            DeleteCommand one = new DeleteCommand(ParserUtil.parseIndex("2"));
-            DeleteCommand two = new DeleteCommand(ParserUtil.parseIndex("2"));
-
-            set.add(one);
-            set.add(two);
-
-            int size = set.size();
-
-            assertEquals(size, 1);
-        } catch (ParseException pe) {
-            assertEquals(0, 1);
-        }
-    }
 
     @Test
     public void check_hashcodeSelectCommand_success() {
@@ -77,26 +55,6 @@ public class CommandHashTest {
         try {
             SelectCommand one = new SelectCommand(ParserUtil.parseIndex("2"));
             SelectCommand two = new SelectCommand(ParserUtil.parseIndex("2"));
-
-            set.add(one);
-            set.add(two);
-
-            int size = set.size();
-
-            assertEquals(size, 1);
-        } catch (ParseException pe) {
-            assertEquals(0, 1);
-        }
-    }
-
-    @Ignore
-    @Test
-    public void check_hashcodeRestoreCommand_success() {
-        HashSet<RestoreCommand> set = new HashSet<RestoreCommand>();
-
-        try {
-            RestoreCommand one = new RestoreCommand(ParserUtil.parseIndex("2"));
-            RestoreCommand two = new RestoreCommand(ParserUtil.parseIndex("2"));
 
             set.add(one);
             set.add(two);

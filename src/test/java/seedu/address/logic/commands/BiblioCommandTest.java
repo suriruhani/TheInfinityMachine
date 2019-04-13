@@ -61,4 +61,43 @@ public class BiblioCommandTest {
         BiblioCommand biblioCommand = new BiblioCommand(outOfBoundIndex, "Foo");
         assertCommandFailure(biblioCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
+
+    @Test
+    public void execute_mlaStyle_success() {
+        int maxIndex = model.getFilteredSourceList().size();
+        for (int i = 0; i < maxIndex; i++) {
+            Index currentIndex = Index.fromZeroBased(i);
+            execute_singleSource_success(currentIndex, "MLA");
+        }
+    }
+
+    @Test
+    public void execute_apaStyle_success() {
+        int maxIndex = model.getFilteredSourceList().size();
+        for (int i = 0; i < maxIndex; i++) {
+            Index currentIndex = Index.fromZeroBased(i);
+            execute_singleSource_success(currentIndex, "APA");
+        }
+    }
+
+    /**
+     * Utility for creating a biblio for a single source.
+     * @param index Index for source
+     * @param format Format for biblio, must be "APA" or "MLA"
+     */
+    private void execute_singleSource_success(Index index, String format) {
+        BiblioCommand biblioCommand = new BiblioCommand(index, format);
+
+        try {
+            String expectedMessage = new BiblioCommand(index, format)
+                    .execute(new ModelManager(getTypicalSourceManager(), new UserPrefs(),
+                            getTypicalDeletedSources()), new CommandHistory())
+                    .getFeedbackToUser();
+            ModelManager expectedModel = new ModelManager(model.getSourceManager(),
+                    new UserPrefs(), getTypicalDeletedSources());
+            assertCommandSuccess(biblioCommand, model, commandHistory, expectedMessage, expectedModel);
+        } catch (CommandException ce) {
+            assert false : "CommandException thrown";
+        }
+    }
 }

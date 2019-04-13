@@ -2,45 +2,52 @@
   "_comment": "SourceManager save file which contains the same Source values as in TypicalSources#getTypicalSourceManager()",
   "sources" : [ {
     "title" : "Algorithm Researchers",
-    "type" : "article",
+    "type" : "Article",
     "author" : "Fredrick Poznan",
     "detail" : "A research about researchers on algorithms.",
+    "fieldBodies" : [ "", "", "", "", "", "", "", "", "", "" ],
     "tagged" : [ "research" ]
   }, {
     "title" : "Sensor Research",
-    "type" : "article",
+    "type" : "Website",
     "author" : "John Markson",
     "detail" : "A research about sensors.",
+    "fieldBodies" : [ "", "", "", "", "", "", "", "", "", "" ],
     "tagged" : [ "sensor", "research" ]
   }, {
     "title" : "Smart Computers 101",
-    "type" : "computer tutorial",
+    "type" : "Website",
     "author" : "David Kim",
     "detail" : "How to build smart computers",
+    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
     "tagged" : [ ]
   }, {
     "title" : "Virtual Reality Research",
-    "type" : "article",
+    "type" : "Journal Article",
     "author" : "Johann Johnson",
     "detail" : "A research about virtual reality.",
+    "fieldBodies" : [ "", "", "", "", "", "", "", "", "", "" ],
     "tagged" : [ "research" ]
   }, {
     "title" : "Augmented Reality Research",
-    "type" : "article",
+    "type" : "Journal Article",
     "author" : "Joseph Jackson",
     "detail" : "A research about augmented reality.",
+    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
     "tagged" : [ ]
   }, {
     "title" : "Game Development",
-    "type" : "tutorial",
+    "type" : "Book",
     "author" : "Selena Macro",
     "detail" : "How to develop games for today's market.",
+    "fieldBodies" : [ "", "", "", "", "", "", "", "", "", "" ],
     "tagged" : [ ]
   }, {
     "title" : "Artificial Intelligence Research",
-    "type" : "article",
+    "type" : "Book",
     "author" : "Joana Micro",
     "detail" : "A research about artificial intelligence.",
+    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
     "tagged" : [ ]
   } ]
 }

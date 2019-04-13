@@ -18,11 +18,11 @@ import seedu.address.testutil.SourceManagerBuilder;
 
 public class VersionedSourceManagerTest {
 
-    private final ReadOnlySourceManager sourceManagerWithAlice =
+    private final ReadOnlySourceManager sourceManagerWithAlgorithmResearch =
             new SourceManagerBuilder().withSource(ALGORITHM_RESEARCH).build();
-    private final ReadOnlySourceManager sourceManagerWithBenson =
+    private final ReadOnlySourceManager sourceManagerWithSensorResearch =
             new SourceManagerBuilder().withSource(SENSOR_RESEARCH).build();
-    private final ReadOnlySourceManager sourceManagerWithCarl =
+    private final ReadOnlySourceManager sourceManagerWithSmartComputers =
             new SourceManagerBuilder().withSource(SMART_COMPUTERS).build();
     private final ReadOnlySourceManager emptySourceManager = new SourceManagerBuilder().build();
 
@@ -40,19 +40,19 @@ public class VersionedSourceManagerTest {
     @Test
     public void commit_multipleSourceManagerPointerAtEndOfStateList_noStatesRemovedCurrentStateSaved() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         versionedSourceManager.commit();
         assertSourceManagerListStatus(versionedSourceManager,
-                Arrays.asList(emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson),
-                sourceManagerWithBenson,
+                Arrays.asList(emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch),
+                sourceManagerWithSensorResearch,
                 Collections.emptyList());
     }
 
     @Test
     public void commit_multipleSourceManagerPointerNotAtEndOfStateList_statesAfterPointerRemovedCurrentStateSaved() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 2);
 
         versionedSourceManager.commit();
@@ -65,7 +65,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canUndo_multipleSourceManagerPointerAtEndOfStateList_returnsTrue() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         assertTrue(versionedSourceManager.canUndo());
     }
@@ -73,7 +73,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canUndo_multipleSourceManagerPointerAtStartOfStateList_returnsTrue() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 1);
 
         assertTrue(versionedSourceManager.canUndo());
@@ -89,7 +89,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canUndo_multipleSourceManagerPointerAtStartOfStateList_returnsFalse() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 2);
 
         assertFalse(versionedSourceManager.canUndo());
@@ -98,7 +98,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canRedo_multipleSourceManagerPointerNotAtEndOfStateList_returnsTrue() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 1);
 
         assertTrue(versionedSourceManager.canRedo());
@@ -107,7 +107,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canRedo_multipleSourceManagerPointerAtStartOfStateList_returnsTrue() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 2);
 
         assertTrue(versionedSourceManager.canRedo());
@@ -123,7 +123,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void canRedo_multipleSourceManagerPointerAtEndOfStateList_returnsFalse() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         assertFalse(versionedSourceManager.canRedo());
     }
@@ -131,26 +131,26 @@ public class VersionedSourceManagerTest {
     @Test
     public void undo_multipleSourceManagerPointerAtEndOfStateList_success() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         versionedSourceManager.undo();
         assertSourceManagerListStatus(versionedSourceManager,
                 Collections.singletonList(emptySourceManager),
-                sourceManagerWithAlice,
-                Collections.singletonList(sourceManagerWithBenson));
+                sourceManagerWithAlgorithmResearch,
+                Collections.singletonList(sourceManagerWithSensorResearch));
     }
 
     @Test
     public void undo_multipleSourceManagerPointerNotAtStartOfStateList_success() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 1);
 
         versionedSourceManager.undo();
         assertSourceManagerListStatus(versionedSourceManager,
                 Collections.emptyList(),
                 emptySourceManager,
-                Arrays.asList(sourceManagerWithAlice, sourceManagerWithBenson));
+                Arrays.asList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch));
     }
 
     @Test
@@ -163,7 +163,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void undo_multipleSourceManagerPointerAtStartOfStateList_throwsNoUndoableStateException() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 2);
 
         assertThrows(VersionedSourceManager.NoUndoableStateException.class, versionedSourceManager::undo);
@@ -172,27 +172,27 @@ public class VersionedSourceManagerTest {
     @Test
     public void redo_multipleSourceManagerPointerNotAtEndOfStateList_success() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 1);
 
         versionedSourceManager.redo();
         assertSourceManagerListStatus(versionedSourceManager,
-                Arrays.asList(emptySourceManager, sourceManagerWithAlice),
-                sourceManagerWithBenson,
+                Arrays.asList(emptySourceManager, sourceManagerWithAlgorithmResearch),
+                sourceManagerWithSensorResearch,
                 Collections.emptyList());
     }
 
     @Test
     public void redo_multipleSourceManagerPointerAtStartOfStateList_success() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 2);
 
         versionedSourceManager.redo();
         assertSourceManagerListStatus(versionedSourceManager,
                 Collections.singletonList(emptySourceManager),
-                sourceManagerWithAlice,
-                Collections.singletonList(sourceManagerWithBenson));
+                sourceManagerWithAlgorithmResearch,
+                Collections.singletonList(sourceManagerWithSensorResearch));
     }
 
     @Test
@@ -205,7 +205,7 @@ public class VersionedSourceManagerTest {
     @Test
     public void redo_multipleSourceManagerPointerAtEndOfStateList_throwsNoRedoableStateException() {
         VersionedSourceManager versionedSourceManager = prepareSourceManagerList(
-                emptySourceManager, sourceManagerWithAlice, sourceManagerWithBenson);
+                emptySourceManager, sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         assertThrows(VersionedSourceManager.NoRedoableStateException.class, versionedSourceManager::redo);
     }
@@ -213,10 +213,11 @@ public class VersionedSourceManagerTest {
     @Test
     public void equals() {
         VersionedSourceManager versionedSourceManager =
-                prepareSourceManagerList(sourceManagerWithAlice, sourceManagerWithBenson);
+                prepareSourceManagerList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
 
         // same values -> returns true
-        VersionedSourceManager copy = prepareSourceManagerList(sourceManagerWithAlice, sourceManagerWithBenson);
+        VersionedSourceManager copy =
+                prepareSourceManagerList(sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         assertTrue(versionedSourceManager.equals(copy));
 
         // same object -> returns true
@@ -230,12 +231,12 @@ public class VersionedSourceManagerTest {
 
         // different state list -> returns false
         VersionedSourceManager differentSourceManagerList =
-                prepareSourceManagerList(sourceManagerWithBenson, sourceManagerWithCarl);
+                prepareSourceManagerList(sourceManagerWithSensorResearch, sourceManagerWithSmartComputers);
         assertFalse(versionedSourceManager.equals(differentSourceManagerList));
 
         // different current pointer index -> returns false
         VersionedSourceManager differentCurrentStatePointer = prepareSourceManagerList(
-                sourceManagerWithAlice, sourceManagerWithBenson);
+                sourceManagerWithAlgorithmResearch, sourceManagerWithSensorResearch);
         shiftCurrentStatePointerLeftwards(versionedSourceManager, 1);
         assertFalse(versionedSourceManager.equals(differentCurrentStatePointer));
     }

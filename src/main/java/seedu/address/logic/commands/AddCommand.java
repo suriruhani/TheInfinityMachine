@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
@@ -22,11 +23,13 @@ public class AddCommand extends Command {
             + "Parameters: "
             + PREFIX_TITLE + "SOURCE_TITLE "
             + PREFIX_TYPE + "SOURCE_TYPE "
+            + PREFIX_AUTHOR + "AUTHOR_NAME"
             + PREFIX_DETAILS + "SOURCE_DETAILS "
             + "[" + PREFIX_TAG + "SOURCE_TAG]...\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_TITLE + "Wikipedia Algorithms "
             + PREFIX_TYPE + "Website "
+            + PREFIX_AUTHOR + "Jason Smith James "
             + PREFIX_DETAILS + "Basic definitions of algorithms "
             + PREFIX_TAG + "Algorithms "
             + PREFIX_TAG + "Introduction";

@@ -7,8 +7,8 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-
 import org.junit.rules.ExpectedException;
+
 import seedu.address.logic.commands.CountCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EmptyBinCommand;

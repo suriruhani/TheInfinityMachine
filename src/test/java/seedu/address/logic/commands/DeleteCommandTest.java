@@ -60,7 +60,6 @@ public class DeleteCommandTest {
         assertCommandFailure(deleteCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
-    @Ignore
     @Test
     public void execute_validIndexFilteredList_success() {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);

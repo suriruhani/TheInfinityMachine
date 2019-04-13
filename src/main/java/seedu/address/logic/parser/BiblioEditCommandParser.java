@@ -30,8 +30,8 @@ public class BiblioEditCommandParser implements Parser<BiblioEditCommand> {
             String body = tokenizedArguments[3];
 
             boolean isValidHeader = false;
-            for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++){
-                if (header.equals(BiblioFields.ACCEPTED_FIELD_HEADERS)){
+            for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
+                if (header.equals(BiblioFields.ACCEPTED_FIELD_HEADERS)) {
                     isValidHeader = true;
                 }
             }

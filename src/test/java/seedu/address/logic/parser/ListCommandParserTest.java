@@ -13,6 +13,7 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 
 import org.junit.Test;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.model.source.SourceContainsKeywordsPredicate;
@@ -27,12 +28,32 @@ public class ListCommandParserTest {
     }
 
     @Test
-    public void parse_emptyPrefixArgs_returnsSearchCommand() {
-        String input = " " + PREFIX_DETAILS + " ";
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
-                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
-        SearchCommand expectedSearchCommand = new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap));
-        assertParseSuccess(parser, " " + PREFIX_DETAILS + " ", expectedSearchCommand);
+    public void parse_spaceArg_runsList() {
+        assertParseSuccess(parser, "    ", new ListCommand());
+    }
+
+    @Test
+    public void parse_singlePositiveArg_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(2), true);
+        assertParseSuccess(parser, " 2" , expectedListCommand);
+    }
+
+    @Test
+    public void parse_singleNegativeArg_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(1), false);
+        assertParseSuccess(parser, " -1" , expectedListCommand);
+    }
+
+    @Test
+    public void parse_twoRangeArgs_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(2), Index.fromOneBased(3));
+        assertParseSuccess(parser, " 2 3" , expectedListCommand);
+    }
+
+    @Test
+    public void parse_twoNonRangeArgs_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(3), Index.fromOneBased(2));
+        assertParseFailure(parser, " 3 2" , ListCommand.MESSAGE_USAGE);
     }
 
     @Test

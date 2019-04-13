@@ -19,7 +19,7 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         try {
-            if (args.length() == 0) {
+            if (args.trim().length() == 0) {
                 return new ListCommand();
             }
             String[] splitArgs = args.split("\\s+");

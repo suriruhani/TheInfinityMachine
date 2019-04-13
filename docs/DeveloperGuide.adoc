@@ -373,7 +373,7 @@ However, the SourceManagerParser also has an association with the AliasManager.
 By creating an interface, we avoid a situation of circular dependency where by both components are tightly coupled to each other.
 
 ==== Aliasing feature: operation
-
+===== Meta-commands
 When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
 The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.
@@ -388,11 +388,16 @@ Secondly, it improves testability by facilitating unit testing of smaller blocks
 
 If user input is valid, the AliasMetaCommandParser, which stores a reference to the AliasManager object, operates on it through the AliasManager API.
 
+===== Aliases
 In normal operation, when the user enters an alias, SourceManagerParser parses the user input to extract the "command word".
 It checks whether the "command word" is a pre-existing alias using AliasManager's `isAlias()` method.
 If so, it fetches the original command that the alias is associated to using AliasManager's `getCommand()` method.
 
 Finally, SourceManagerParser recursively calls itself once using the original command retrieved from AliasManager to execute the original command that the alias is associated with.
+
+This sequence diagram provides a high-level overview of this operation. Finer-level details have been omitted.
+
+image::AliasManagerSequenceDiagram.png[width="800"]
 
 [NOTE]
 AliasManager doesn't allow the aliasing of invalid commands, nor the aliasing of an alias.

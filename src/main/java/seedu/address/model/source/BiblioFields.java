@@ -2,6 +2,8 @@ package seedu.address.model.source;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Arrays;
+
 /**
  * Represents a field for bibliographical information in the address book.
  * Guarantees: All entries are populated by placeholders if not defined by user.
@@ -11,7 +13,6 @@ public class BiblioFields {
     public static final String[] ACCEPTED_FIELD_HEADERS =
         {"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"};
 
-
     private final String[] fieldBodies = new String[ACCEPTED_FIELD_HEADERS.length];
 
     /**
@@ -19,6 +20,7 @@ public class BiblioFields {
      *
      */
     public BiblioFields() {
+        Arrays.fill(fieldBodies, "");
     }
 
     /**
@@ -101,7 +103,7 @@ public class BiblioFields {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BiblioFields // instanceof handles nulls
-                && fieldBodies.equals(((BiblioFields) other).getFieldBodies())); // State check
+                && Arrays.equals(((BiblioFields) other).getFieldBodies(), getFieldBodies())); // State check
     }
 
     @Override

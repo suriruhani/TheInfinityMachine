@@ -1,12 +1,15 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_SOURCES;
 
 import java.util.function.Predicate;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Source;
 
@@ -114,29 +117,37 @@ public class ListCommand extends Command {
     }
 
     @Override
-    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException {
-        requireNonNull(model);
-        //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
-        model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
-        int size = model.getFilteredSourceList().size();
-        if (toIndex != null && fromIndex != null) {
-            fromIndex = fromIndex.getOneBased() > size ? Index.fromOneBased(size) : fromIndex;
-            model.updateFilteredSourceList(makePredicateForXToY(toIndex.getOneBased(), fromIndex.getOneBased()));
-            return new CommandResult(String.format(MESSAGE_LIST_X_TO_Y_SUCCESS,
-                    toIndex.getOneBased(), fromIndex.getOneBased()));
-        } else if (targetIndex != null) { //when LIST is used with an argument (show N)
-            if (posFlag) {
-                //to ensure N is capped at list size
-                targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
-                model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
-                return new CommandResult(String.format(MESSAGE_LIST_TOP_N_SUCCESS, targetIndex.getOneBased()));
-            } else {
-                targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
-                model.updateFilteredSourceList(makePredicateForLastN(targetIndex.getOneBased(), size));
-                return new CommandResult(String.format(MESSAGE_LIST_LAST_N_SUCCESS, targetIndex.getOneBased()));
+    public CommandResult execute(Model model, CommandHistory history) throws IndexOutOfBoundsException, CommandException {
+        try {
+            requireNonNull(model);
+            //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
+            model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            int size = model.getFilteredSourceList().size();
+            if (toIndex != null && fromIndex != null) {
+                if (toIndex.getOneBased() > fromIndex.getOneBased()) {
+                    throw new CommandException("To-Index cannot be greater than From-Index!");
+                }
+                fromIndex = fromIndex.getOneBased() > size ? Index.fromOneBased(size) : fromIndex;
+                model.updateFilteredSourceList(makePredicateForXToY(toIndex.getOneBased(), fromIndex.getOneBased()));
+                return new CommandResult(String.format(MESSAGE_LIST_X_TO_Y_SUCCESS,
+                        toIndex.getOneBased(), fromIndex.getOneBased()));
+            } else if (targetIndex != null) { //when LIST is used with an argument (show N)
+                if (posFlag) {
+                    //to ensure N is capped at list size
+                    targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
+                    model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
+                    return new CommandResult(String.format(MESSAGE_LIST_TOP_N_SUCCESS, targetIndex.getOneBased()));
+                } else {
+                    targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
+                    model.updateFilteredSourceList(makePredicateForLastN(targetIndex.getOneBased(), size));
+                    return new CommandResult(String.format(MESSAGE_LIST_LAST_N_SUCCESS, targetIndex.getOneBased()));
+                }
+            } else { //when LIST is used without an argument (show all)
+                return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
             }
-        } else { //when LIST is used without an argument (show all)
-            return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+        } catch (CommandException ce) {
+            throw new CommandException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), ce);
         }
     }
 

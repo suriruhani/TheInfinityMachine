@@ -4,6 +4,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -34,14 +35,14 @@ public class ListCommandParser implements Parser<ListCommand> {
             } else {
                 Index toIndex = ParserUtil.parseIndex(splitArgs[1]);
                 Index fromIndex = ParserUtil.parseIndex(splitArgs[2]);
-                if (toIndex.getOneBased() > fromIndex.getOneBased()) {
-                    throw new ParseException("To Index cannot be greater than From Index!");
-                }
+
                 return new ListCommand(toIndex, fromIndex);
             }
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), pe);
+        } catch (IndexOutOfBoundsException ie) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), ie);
         }
     }
 

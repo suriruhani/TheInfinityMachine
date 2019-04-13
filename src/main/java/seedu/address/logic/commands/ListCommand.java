@@ -155,6 +155,9 @@ public class ListCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ListCommand // instanceof handles nulls
-                && targetIndex.equals(((ListCommand) other).targetIndex)); // state check
+                && (targetIndex.equals(((ListCommand) other).targetIndex)
+                    && toIndex.equals(((ListCommand) other).toIndex)
+                    && fromIndex.equals(((ListCommand) other).fromIndex)
+                    && (posFlag == ((ListCommand) other).posFlag))); // state check
     }
 }

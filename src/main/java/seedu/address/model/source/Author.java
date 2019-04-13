@@ -10,7 +10,7 @@ import static seedu.address.model.source.Source.validateSourceAttribute;
  */
 public class Author {
 
-    public static final String MESSAGE_CONSTRAINTS =  "Author names can take any value, and it should not be blank";
+    public static final String MESSAGE_CONSTRAINTS = "Author names can take any value, and it should not be blank";
 
     /*
      * The first character of an Author's name must not be a whitespace,

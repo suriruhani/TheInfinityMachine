@@ -17,7 +17,7 @@ public class ClearCommandTest {
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
-    public void execute_emptyAddressBook_success() {
+    public void execute_emptySourceManager_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
         expectedModel.commitSourceManager();
@@ -26,7 +26,7 @@ public class ClearCommandTest {
     }
 
     @Test
-    public void execute_nonEmptyAddressBook_success() {
+    public void execute_nonEmptySourceManager_success() {
         Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
         Model expected = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
         expected.setSourceManager(new SourceManager());

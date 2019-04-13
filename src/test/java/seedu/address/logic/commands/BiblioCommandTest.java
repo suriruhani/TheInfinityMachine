@@ -65,7 +65,7 @@ public class BiblioCommandTest {
     @Test
     public void execute_mlaStyle_success() {
         int maxIndex = model.getFilteredSourceList().size();
-        for (int i = 0; i < maxIndex; i++){
+        for (int i = 0; i < maxIndex; i++) {
             Index currentIndex = Index.fromZeroBased(i);
             execute_singleSource_success(currentIndex, "MLA");
         }
@@ -74,12 +74,17 @@ public class BiblioCommandTest {
     @Test
     public void execute_apaStyle_success() {
         int maxIndex = model.getFilteredSourceList().size();
-        for (int i = 0; i < maxIndex; i++){
+        for (int i = 0; i < maxIndex; i++) {
             Index currentIndex = Index.fromZeroBased(i);
             execute_singleSource_success(currentIndex, "APA");
         }
     }
 
+    /**
+     * Utility for creating a biblio for a single source.
+     * @param index Index for source
+     * @param format Format for biblio, must be "APA" or "MLA"
+     */
     private void execute_singleSource_success(Index index, String format) {
         BiblioCommand biblioCommand = new BiblioCommand(index, format);
 

@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Title;
 import seedu.address.model.source.Type;
@@ -41,14 +40,16 @@ public class JsonAdaptedSourceTest {
     @Test
     public void toModelType_invalidTitle_throwsIllegalValueException() {
         JsonAdaptedSource source =
-                new JsonAdaptedSource(INVALID_TITLE, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL, VALID_FIELDBODIES, VALID_TAGS);
+                new JsonAdaptedSource(INVALID_TITLE, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL,
+                        VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = Title.MESSAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
 
     @Test
     public void toModelType_nullTitle_throwsIllegalValueException() {
-        JsonAdaptedSource source = new JsonAdaptedSource(null, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL, VALID_FIELDBODIES, VALID_TAGS);
+        JsonAdaptedSource source = new JsonAdaptedSource(null, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL,
+                VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Title.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
@@ -56,14 +57,16 @@ public class JsonAdaptedSourceTest {
     @Test
     public void toModelType_invalidType_throwsIllegalValueException() {
         JsonAdaptedSource source =
-                new JsonAdaptedSource(VALID_TITLE, INVALID_TYPE, VALID_AUTHOR, VALID_DETAIL, VALID_FIELDBODIES, VALID_TAGS);
+                new JsonAdaptedSource(VALID_TITLE, INVALID_TYPE, VALID_AUTHOR, VALID_DETAIL,
+                        VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = Type.MESSAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
 
     @Test
     public void toModelType_nullType_throwsIllegalValueException() {
-        JsonAdaptedSource source = new JsonAdaptedSource(VALID_TITLE, null, VALID_AUTHOR, VALID_DETAIL, VALID_FIELDBODIES, VALID_TAGS);
+        JsonAdaptedSource source = new JsonAdaptedSource(VALID_TITLE, null, VALID_AUTHOR, VALID_DETAIL,
+                VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
@@ -71,14 +74,16 @@ public class JsonAdaptedSourceTest {
     @Test
     public void toModelType_invalidDetail_throwsIllegalValueException() {
         JsonAdaptedSource source =
-                new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, INVALID_DETAIL, VALID_FIELDBODIES, VALID_TAGS);
+                new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, INVALID_DETAIL,
+                        VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = Detail.MESSAGE_CONSTRAINTS;
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
 
     @Test
     public void toModelType_nullDetail_throwsIllegalValueException() {
-        JsonAdaptedSource source = new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, null, VALID_FIELDBODIES, VALID_TAGS);
+        JsonAdaptedSource source = new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, null,
+                VALID_FIELDBODIES, VALID_TAGS);
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Detail.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
@@ -88,8 +93,8 @@ public class JsonAdaptedSourceTest {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);
         invalidTags.add(new JsonAdaptedTag(INVALID_TAG));
         JsonAdaptedSource source =
-                new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL, VALID_FIELDBODIES, invalidTags);
+                new JsonAdaptedSource(VALID_TITLE, VALID_TYPE, VALID_AUTHOR, VALID_DETAIL,
+                        VALID_FIELDBODIES, invalidTags);
         Assert.assertThrows(IllegalValueException.class, source::toModelType);
     }
-
 }

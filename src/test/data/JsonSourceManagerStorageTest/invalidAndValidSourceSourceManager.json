@@ -2,10 +2,12 @@
   "sources": [ {
     "title": "Valid Source",
     "type": "9482424",
+    "author" : "Jason Lim",
     "detail": "hans@example.com"
   }, {
     "title": "Source With Invalid Detail Field",
     "type": "9482424",
+    "author" : "Phoenix Johnson",
     "detail": " hans@example.com"
   } ]
 }

@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -25,21 +27,30 @@ class JsonAdaptedSource {
 
     private final String title;
     private final String type;
+    private final String author;
     private final String detail;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
+    private final String[] fieldBodies;
 
     /**
      * Constructs a {@code JsonAdaptedSource} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedSource(@JsonProperty("title") String title, @JsonProperty("type") String type,
-            @JsonProperty("detail") String detail, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+    public JsonAdaptedSource(
+            @JsonProperty("title") String title,
+            @JsonProperty("type") String type,
+            @JsonProperty("author") String author,
+            @JsonProperty("detail") String detail,
+            @JsonProperty("fieldBodies") String[] fieldBodies,
+            @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.title = title;
         this.type = type;
+        this.author = author;
         this.detail = detail;
         if (tagged != null) {
             this.tagged.addAll(tagged);
         }
+        this.fieldBodies = fieldBodies;
     }
 
     /**
@@ -48,10 +59,12 @@ class JsonAdaptedSource {
     public JsonAdaptedSource(Source source) {
         title = source.getTitle().title;
         type = source.getType().type;
+        author = source.getAuthor().author;
         detail = source.getDetail().detail;
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
+        fieldBodies = source.biblioFields.getFieldBodies();
     }
 
     /**
@@ -81,6 +94,14 @@ class JsonAdaptedSource {
         }
         final Type modelType = new Type(type);
 
+        if (author == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Author.class.getSimpleName()));
+        }
+        if (!Author.isValidAuthor(author)) {
+            throw new IllegalValueException(Type.MESSAGE_CONSTRAINTS);
+        }
+        final Author modelAuthor = new Author(author);
+
         if (detail == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Detail.class.getSimpleName()));
         }
@@ -90,7 +111,16 @@ class JsonAdaptedSource {
         final Detail modelDetail = new Detail(detail);
 
         final Set<Tag> modelTags = new HashSet<>(sourceTags);
-        return new Source(modelTitle, modelType, modelDetail, modelTags);
+
+        if (fieldBodies == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    BiblioFields.class.getSimpleName()));
+        }
+        final BiblioFields modelBiblioFields = new BiblioFields();
+        for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
+            modelBiblioFields.replaceField(BiblioFields.ACCEPTED_FIELD_HEADERS[i], fieldBodies[i]);
+        }
+        return new Source(modelTitle, modelAuthor, modelType, modelDetail, modelTags, modelBiblioFields);
     }
 
 }

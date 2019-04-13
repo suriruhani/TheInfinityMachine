@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.BiblioCommand;
+import seedu.address.logic.commands.BiblioEditCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CountCommand;
@@ -187,6 +188,9 @@ public class SourceManagerParser implements CommandValidator {
 
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
+
+        case BiblioEditCommand.COMMAND_WORD:
+            return new BiblioEditCommandParser().parse(arguments);
 
         case PinCommand.COMMAND_WORD:
             return new PinCommandParser().parse(arguments);

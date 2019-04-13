@@ -11,8 +11,7 @@ import java.util.Arrays;
 public class BiblioFields {
 
     public static final String[] ACCEPTED_FIELD_HEADERS =
-        {"City", "Journal", "Pages", "Publisher", "URL", "Webpage", "Website", "Day", "Month", "Year"};
-
+        {"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"};
 
     private final String[] fieldBodies = new String[ACCEPTED_FIELD_HEADERS.length];
 
@@ -31,9 +30,9 @@ public class BiblioFields {
      * @param body A valid biblio field body
      * @return true if edit is successful
      */
-    public boolean replaceField (String header, String body) throws IllegalArgumentException {
+    public boolean replaceField (String header, String body) {
         requireAllNonNull(header, body);
-        if (getHeaderIndex(header) == 0) {
+        if (getHeaderIndex(header) == -1) {
             return false;
         } else {
             fieldBodies[getHeaderIndex(header)] = body;
@@ -41,11 +40,53 @@ public class BiblioFields {
         }
     }
 
+    // Simple utilities for getting fields.
+
+    public String getCity() {
+        return getField("City");
+    }
+
+    public String getJournal() {
+        return getField("Journal");
+    }
+
+    public String getMedium() {
+        return getField("Medium");
+    }
+
+    public String getPages() {
+        return getField("Pages");
+    }
+
+    public String getPublisher() {
+        return getField("Publisher");
+    }
+
+    public String getUrl() {
+        return getField("URL");
+    }
+
+    public String getWebsite() {
+        return getField("Website");
+    }
+
+    public String getDay() {
+        return getField("Day");
+    }
+
+    public String getMonth() {
+        return getField("Month");
+    }
+
+    public String getYear() {
+        return getField("Year");
+    }
+
     public String[] getFieldBodies() {
         return fieldBodies;
     }
 
-    public String getField(String header) {
+    private String getField(String header) {
         return fieldBodies[getHeaderIndex(header)];
     }
 
@@ -55,14 +96,14 @@ public class BiblioFields {
                 return i;
             }
         }
-        return 0;
+        return -1;
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof BiblioFields // instanceof handles nulls
-                && fieldBodies.equals(((BiblioFields) other).getFieldBodies())); // State check
+                && Arrays.equals(((BiblioFields) other).getFieldBodies(), getFieldBodies())); // State check
     }
 
     @Override

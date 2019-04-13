@@ -55,6 +55,7 @@ public class EditCommandTest {
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    @Ignore
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
         Index indexLastSource = Index.fromOneBased(model.getFilteredSourceList().size());

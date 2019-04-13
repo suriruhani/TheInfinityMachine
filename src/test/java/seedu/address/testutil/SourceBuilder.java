@@ -3,6 +3,8 @@ package seedu.address.testutil;
 import java.util.HashSet;
 import java.util.Set;
 
+import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -17,17 +19,22 @@ public class SourceBuilder {
 
     public static final String DEFAULT_TITLE = "Default Title";
     public static final String DEFAULT_TYPE = "Default Type";
+    public static final String DEFAULT_AUTHOR = "Default Author";
     public static final String DEFAULT_DETAIL = "Default Detail";
 
     private Title title;
     private Type type;
+    private Author author;
     private Detail detail;
     private Set<Tag> tags;
+    private BiblioFields biblioFields = new BiblioFields();
 
     public SourceBuilder() {
         title = new Title(DEFAULT_TITLE);
         type = new Type(DEFAULT_TYPE);
+        author = new Author(DEFAULT_AUTHOR);
         detail = new Detail(DEFAULT_DETAIL);
+
         tags = new HashSet<>();
     }
 
@@ -37,8 +44,10 @@ public class SourceBuilder {
     public SourceBuilder(Source sourceToCopy) {
         title = sourceToCopy.getTitle();
         type = sourceToCopy.getType();
+        author = sourceToCopy.getAuthor();
         detail = sourceToCopy.getDetail();
         tags = new HashSet<>(sourceToCopy.getTags());
+        biblioFields = sourceToCopy.getBiblioFields();
     }
 
     /**
@@ -66,6 +75,14 @@ public class SourceBuilder {
     }
 
     /**
+     * Sets the {@code Type} of the {@code Source} that we are building.
+     */
+    public SourceBuilder withAuthor(String author) {
+        this.author = new Author(author);
+        return this;
+    }
+
+    /**
      * Sets the {@code Detail} of the {@code Source} that we are building.
      */
     public SourceBuilder withDetail(String detail) {
@@ -73,8 +90,18 @@ public class SourceBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code Detail} of the {@code Source} that we are building.
+     */
+    public SourceBuilder withBiblioFields() {
+        for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
+            this.biblioFields.replaceField(BiblioFields.ACCEPTED_FIELD_HEADERS[i], "<Placeholder>");
+        }
+        return this;
+    }
+
     public Source build() {
-        return new Source(title, type, detail, tags);
+        return new Source(title, author, type, detail, tags, biblioFields);
     }
 
 }

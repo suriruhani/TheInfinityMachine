@@ -20,13 +20,23 @@ import seedu.address.model.tag.Tag;
 public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
+    public final BiblioFields biblioFields;
+
     private final Title title;
     private final Author author;
     private final Type type;
     private final Detail detail;
-    private final BiblioFields biblioFields = new BiblioFields();
-
     private final Set<Tag> tags = new HashSet<>();
+
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
+        requireAllNonNull(title, author, type, detail, tags);
+        this.title = title;
+        this.author = author;
+        this.type = type;
+        this.detail = detail;
+        this.tags.addAll(tags);
+        this.biblioFields = new BiblioFields();
+    }
 
     public Source(Title title, Type type, Detail detail, Set<Tag> tags) {
         requireAllNonNull(title, type, detail, tags);
@@ -36,15 +46,17 @@ public class Source {
         this.tags.addAll(tags);
 
         this.author = new Author("Default Author");
+        this.biblioFields = new BiblioFields();
     }
 
-    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags) {
-        requireAllNonNull(title, author, type, detail, tags);
+    public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, BiblioFields biblioFields) {
+        requireAllNonNull(title, author, type, detail, tags, biblioFields);
         this.title = title;
         this.author = author;
         this.type = type;
         this.detail = detail;
         this.tags.addAll(tags);
+        this.biblioFields = biblioFields;
     }
 
     /**
@@ -130,14 +142,16 @@ public class Source {
         Source otherSource = (Source) other;
         return otherSource.getTitle().equals(getTitle())
                 && otherSource.getType().equals(getType())
+                && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getDetail().equals(getDetail())
-                && otherSource.getTags().equals(getTags());
+                && otherSource.getTags().equals(getTags())
+                && otherSource.getBiblioFields().equals(getBiblioFields());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, detail, tags);
+        return Objects.hash(title, type, author, detail, tags);
     }
 
     @Override
@@ -147,6 +161,8 @@ public class Source {
                 .append(getTitle() + "\n")
                 .append("Type: ")
                 .append(getType() + "\n")
+                .append("Author: ")
+                .append(getAuthor() + "\n")
                 .append("Detail: ")
                 .append(getDetail() + "\n")
                 .append("Tags: ");

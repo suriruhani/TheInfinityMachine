@@ -34,6 +34,12 @@ public class ListCommandParserTest {
     }
 
     @Test
+    public void parse_singlePositiveArgWithSpaces_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(2), true);
+        assertParseSuccess(parser, "   2    " , expectedListCommand);
+    }
+
+    @Test
     public void parse_twoRangeArgs_returnsSearchCommand() {
         ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(2), Index.fromOneBased(3));
         assertParseSuccess(parser, " 2 3" , expectedListCommand);
@@ -45,5 +51,21 @@ public class ListCommandParserTest {
         assertParseSuccess(parser, " 2 2" , expectedListCommand);
     }
 
+    @Test
+    public void parse_twoRangeArgsWithSpace_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(1), Index.fromOneBased(4));
+        assertParseSuccess(parser, "   1    4  " , expectedListCommand);
+    }
 
+    @Test
+    public void parse_moreThanTwoArgs_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(2), Index.fromOneBased(3));
+        assertParseSuccess(parser, " 2 3 4" , expectedListCommand);
+    }
+
+    @Test
+    public void parse_moreThanTwoArgsWithSpaces_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(1), Index.fromOneBased(3));
+        assertParseSuccess(parser, " 1     3        4 5" , expectedListCommand);
+    }
 }

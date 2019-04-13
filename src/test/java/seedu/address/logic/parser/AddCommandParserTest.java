@@ -28,7 +28,6 @@ import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSucces
 import static seedu.address.testutil.TypicalSources.ENGINEERING;
 import static seedu.address.testutil.TypicalSources.NETWORK;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
@@ -147,7 +146,6 @@ public class AddCommandParserTest {
                 expectedMessage);
     }
 
-    @Ignore
     @Test
     public void parse_invalidTags_failure() {
         // invalid tag

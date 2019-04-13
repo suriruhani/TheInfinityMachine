@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -82,7 +81,6 @@ public class JsonAdaptedSourceTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, source::toModelType);
     }
 
-    @Ignore
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {
         List<JsonAdaptedTag> invalidTags = new ArrayList<>(VALID_TAGS);

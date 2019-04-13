@@ -113,8 +113,8 @@ class JsonAdaptedSource {
         final Set<Tag> modelTags = new HashSet<>(sourceTags);
 
         if (fieldBodies == null) {
-            throw new IllegalValueException
-                    (String.format(MISSING_FIELD_MESSAGE_FORMAT, BiblioFields.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    BiblioFields.class.getSimpleName()));
         }
         final BiblioFields modelBiblioFields = new BiblioFields();
         for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {

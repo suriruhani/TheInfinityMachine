@@ -92,11 +92,12 @@ public class SourcePanel extends UiPart<Region> {
         htmlBuilder.append("Source Tags: " + tags + "</br></br>");
         htmlBuilder.append("<b>Biblio Fields</b></br>");
         htmlBuilder.append("--------------------------------------</br>");
-        for(String biblio: biblioFields){
-            if(biblio.startsWith("["))
-                htmlBuilder.append(biblio.substring(1, biblio.length()-1) + "</br>");
-            else
+        for (String biblio: biblioFields) {
+            if (biblio.startsWith("[")) {
+                htmlBuilder.append(biblio.substring(1, biblio.length() - 1) + "</br>");
+            } else {
                 htmlBuilder.append(biblio + "</br>");
+            }
         }
         htmlBuilder.append("</br><br>" + detail + "</br>");
         htmlBuilder.append("</body></html>");

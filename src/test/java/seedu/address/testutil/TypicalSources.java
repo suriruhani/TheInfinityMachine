@@ -27,61 +27,64 @@ public class TypicalSources {
 
     public static final Source ALGORITHM_RESEARCH = new SourceBuilder()
             .withTitle("Algorithm Researchers")
-            .withType("article")
+            .withType("Article")
             .withAuthor("Fredrick Poznan")
             .withDetail("A research about researchers on algorithms.")
             .withTags("research").build();
     public static final Source SENSOR_RESEARCH = new SourceBuilder()
             .withTitle("Sensor Research")
-            .withType("article")
+            .withType("Website")
             .withAuthor("John Markson")
             .withDetail("A research about sensors.")
             .withTags("sensor", "research").build();
     public static final Source SMART_COMPUTERS = new SourceBuilder()
             .withTitle("Smart Computers 101")
-            .withType("computer tutorial")
+            .withType("Website")
             .withAuthor("David Kim")
-            .withDetail("How to build smart computers").build();
+            .withDetail("How to build smart computers")
+            .withBiblioFields().build();
     public static final Source VR_RESEARCH = new SourceBuilder()
             .withTitle("Virtual Reality Research")
-            .withType("article")
+            .withType("Journal Article")
             .withAuthor("Johann Johnson")
             .withDetail("A research about virtual reality.")
             .withTags("research").build();
     public static final Source AR_RESEARCH = new SourceBuilder()
             .withTitle("Augmented Reality Research")
-            .withType("article")
+            .withType("Journal Article")
             .withAuthor("Joseph Jackson")
-            .withDetail("A research about augmented reality.").build();
+            .withDetail("A research about augmented reality.")
+            .withBiblioFields().build();
     public static final Source GAME_DEVELOPMENT = new SourceBuilder()
             .withTitle("Game Development")
-            .withType("tutorial")
+            .withType("Book")
             .withAuthor("Selena Macro")
             .withDetail("How to develop games for today's market.").build();
     public static final Source AI_RESEARCH = new SourceBuilder()
             .withTitle("Artificial Intelligence Research")
-            .withType("article")
+            .withType("Book")
             .withAuthor("Joana Micro")
-            .withDetail("A research about artificial intelligence.").build();
+            .withDetail("A research about artificial intelligence.")
+            .withBiblioFields().build();
     public static final Source RESEARCH_METHOD = new SourceBuilder()
             .withTitle("The Correct Way to Research")
-            .withType("tutorial")
+            .withType("Journal Article")
             .withAuthor("Lee Shin Hyung")
             .withDetail("The best way to conduct research.").build();
 
     // Manually added
     public static final Source STRUCTURE = new SourceBuilder()
             .withTitle("Structure Experiment")
-            .withType("experiment")
+            .withType("Journal Article")
             .withAuthor("Park Yi San")
             .withDetail("Experiments about structures.").build();
     public static final Source PROGRAMMING = new SourceBuilder()
             .withTitle("PROGRAMMING METHODOLOGY")
-            .withType("methodology")
+            .withType("Website")
             .withAuthor("Zhong Xing")
             .withDetail("All about programming methodology.").build();
 
-    // Manually added - Person's details found in {@code CommandTestUtil}
+    // Manually added - Source's details found in {@code CommandTestUtil}
     public static final Source ENGINEERING = new SourceBuilder()
             .withTitle(VALID_TITLE_ENGINEERING)
             .withType(VALID_TYPE_ENGINEERING)

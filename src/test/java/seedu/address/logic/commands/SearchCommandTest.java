@@ -153,6 +153,7 @@ public class SearchCommandTest {
 
     }
 
+    @Ignore
     @Test
     public void execute_oneTypeKeyword_multipleSourcesFound() {
 

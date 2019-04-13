@@ -5,6 +5,7 @@ import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_ENGINEERI
 import static seedu.address.logic.commands.CommandTestUtil.AUTHOR_DESC_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.DETAIL_DESC_NETWORK;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_AUTHOR_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_DETAIL_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_TITLE_DESC;
@@ -31,6 +32,7 @@ import static seedu.address.testutil.TypicalSources.NETWORK;
 import org.junit.Test;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -70,6 +72,16 @@ public class AddCommandParserTest {
                 TITLE_DESC_NETWORK
                         + TYPE_DESC_ENGINEERING
                         + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_NETWORK
+                        + DETAIL_DESC_NETWORK
+                        + TAG_DESC_FOO,
+                new AddCommand(expectedSource));
+
+        // multiple authors - last author accepted
+        assertParseSuccess(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + AUTHOR_DESC_ENGINEERING
                         + AUTHOR_DESC_NETWORK
                         + DETAIL_DESC_NETWORK
                         + TAG_DESC_FOO,
@@ -129,6 +141,14 @@ public class AddCommandParserTest {
                         + DETAIL_DESC_NETWORK,
                 expectedMessage);
 
+        // missing author prefix
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + VALID_AUTHOR_NETWORK
+                        + DETAIL_DESC_NETWORK,
+                expectedMessage);
+
         // missing detail prefix
         assertParseFailure(parser,
                 TITLE_DESC_NETWORK
@@ -180,6 +200,16 @@ public class AddCommandParserTest {
                         + TAG_DESC_BAR
                         + TAG_DESC_FOO,
                 Type.MESSAGE_CONSTRAINTS);
+
+        // invalid author
+        assertParseFailure(parser,
+                TITLE_DESC_NETWORK
+                        + TYPE_DESC_NETWORK
+                        + INVALID_AUTHOR_DESC
+                        + DETAIL_DESC_NETWORK
+                        + TAG_DESC_BAR
+                        + TAG_DESC_FOO,
+                Author.MESSAGE_CONSTRAINTS);
 
         // invalid detail
         assertParseFailure(parser,

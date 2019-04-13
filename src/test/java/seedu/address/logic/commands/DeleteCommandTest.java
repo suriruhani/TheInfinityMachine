@@ -225,6 +225,10 @@ public class DeleteCommandTest {
 
     /**
      * Deletes a source in the Source Manager permanently when the same source exists in the Recycle Bin.
+     * 1. Deletes a {@code Source} from the source manager list
+     * 2. Adds the source to the deleted sources list (recycle bin).
+     * 3. Add another source to the source manager list containing the exact same contents.
+     * 4. Source added in (3) gets permanently deleted instead of being added to the recycle bin.
      */
     @Test
     public void execute_sameSourceExistInRecycleBin_success() throws CommandException {

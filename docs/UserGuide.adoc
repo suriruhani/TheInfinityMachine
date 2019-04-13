@@ -288,6 +288,7 @@ Pinned sources are saved between sessions, allowing users to retain whatever edi
 
 ==== Pinning important sources : `pin`
 Marks a source as pinned and moves it to the top of the list where it will remain.
+
 Format: `pin INDEX`
 
 [NOTE]
@@ -317,6 +318,7 @@ Marks source number 4 as pinned and moves it to the top of the list.
 
 ==== Unpinning sources : `unpin`
 Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
+
 Format: `unpin INDEX`
 
 [NOTE]
@@ -333,7 +335,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 * If the source to be unpinned is the only or the last pinned source, then its position does not change.
 ****
 
-[NOTE]
+[WARNING]
 ====
 Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
 ====
@@ -344,7 +346,8 @@ Examples:
 Reverts source 4, which was originally pinned, to its unpinned state and moves it down to the first unpinned source's position.
 
 ==== Reordering sources to your liking : `order`
-Moves the specified source from one position to another as defined by the user. +
+Moves the specified source from one position to another as defined by the user.
+
 Format: `order ORIGINAL_INDEX NEW_INDEX`
 
 [NOTE]
@@ -363,7 +366,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ****
 
-[IMPORTANT]
+[WARNING]
 ====
 You cannot swap a source that is pinned or swap a source to the location of a pinned source.
 ====
@@ -582,6 +585,10 @@ e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
 e.g. `search i/algorithm y/journal`
 * *List* : `list [N]`
+* *Pin* : `pin INDEX` +
+e.g. `pin 3`
+* *Unpin* : `unpin INDEX` +
+e.g. `unpin 3`
 * *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` +
 e.g. `order 3 5`
 * *Help* : `help`

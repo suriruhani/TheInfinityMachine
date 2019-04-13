@@ -160,7 +160,7 @@ public class AddCommandParserTest {
                         + VALID_TAG_FOO,
                 Tag.MESSAGE_CONSTRAINTS);
     }
-    
+
     @Test
     public void parse_invalidValue_failure() {
         // invalid title

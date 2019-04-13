@@ -66,6 +66,13 @@ Displays the User Guide for a quick reference.
 Adds a new source to the list of sources +
 Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
 
+****
+* Multiple of each type of source information can be entered into a single add command.
+* The system will only take the last entered bit of information as the final one
+** If there are multiple titles entered like `i/Algorithms Wikipedia i/General Algorithms i/Algorithms Basic`, only the last one will be taken. In this case it will be `Algorithms Basic`.
+* The above rule is applicable to all information fields except Tag.  
+****
+
 [NOTE]
 ====
 The entry fields for the various source information have the following limitations:
@@ -495,7 +502,7 @@ e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
 e.g. `search i/algorithm y/journal`
 * *List* : `list [N]`
-* *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` + 
+* *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` +
 e.g. `order 3 5`
 * *Help* : `help`
   * *Biblio* : `biblio FORMAT INDEX` +

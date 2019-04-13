@@ -1,8 +1,8 @@
 package seedu.address.model.source;
 
-import java.util.Arrays;
-
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Arrays;
 
 /**
  * Represents a field for bibliographical information in the address book.

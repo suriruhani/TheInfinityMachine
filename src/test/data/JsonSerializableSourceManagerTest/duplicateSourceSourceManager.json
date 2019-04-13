@@ -2,11 +2,13 @@
   "sources": [ {
     "title": "Algorithm Research",
     "type": "article",
+    "author" : "Johnson Phone",
     "detail": "A research about algorithms.",
     "tagged": [ "research" ]
   }, {
     "title": "Algorithm Research",
     "type": "94351253",
+    "author" : "Kane Miasma",
     "detail": "A research about algorithms."
   } ]
 }

@@ -142,6 +142,7 @@ public class Source {
         Source otherSource = (Source) other;
         return otherSource.getTitle().equals(getTitle())
                 && otherSource.getType().equals(getType())
+                && otherSource.getAuthor().equals(getAuthor())
                 && otherSource.getDetail().equals(getDetail())
                 && otherSource.getTags().equals(getTags());
     }
@@ -149,7 +150,7 @@ public class Source {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, detail, tags);
+        return Objects.hash(title, type, author, detail, tags);
     }
 
     @Override
@@ -159,6 +160,8 @@ public class Source {
                 .append(getTitle() + "\n")
                 .append("Type: ")
                 .append(getType() + "\n")
+                .append("Author: ")
+                .append(getAuthor() + "\n")
                 .append("Detail: ")
                 .append(getDetail() + "\n")
                 .append("Tags: ");

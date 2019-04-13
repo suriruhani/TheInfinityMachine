@@ -153,7 +153,6 @@ public class SearchCommandTest {
 
     }
 
-    @Ignore
     @Test
     public void execute_oneTypeKeyword_multipleSourcesFound() {
 
@@ -166,7 +165,7 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(SMART_COMPUTERS, GAME_DEVELOPMENT), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
 
     }
 

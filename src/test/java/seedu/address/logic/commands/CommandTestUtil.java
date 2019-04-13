@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
@@ -29,6 +30,8 @@ public class CommandTestUtil {
     public static final String VALID_TITLE_NETWORK = "NETWORK RESEARCH";
     public static final String VALID_TYPE_ENGINEERING = "tutorial";
     public static final String VALID_TYPE_NETWORK = "research";
+    public static final String VALID_AUTHOR_NETWORK = "Robbert Dumont";
+    public static final String VALID_AUTHOR_ENGINEERING = "Mark Wilkinson";
     public static final String VALID_DETAIL_ENGINEERING = "How to engineer software.";
     public static final String VALID_DETAIL_NETWORK = "A research about networks.";
     public static final String VALID_TAG_FOO = "foo";
@@ -38,6 +41,8 @@ public class CommandTestUtil {
     public static final String TITLE_DESC_NETWORK = " " + PREFIX_TITLE + VALID_TITLE_NETWORK;
     public static final String TYPE_DESC_ENGINEERING = " " + PREFIX_TYPE + VALID_TYPE_ENGINEERING;
     public static final String TYPE_DESC_NETWORK = " " + PREFIX_TYPE + VALID_TYPE_NETWORK;
+    public static final String AUTHOR_DESC_ENGINEERING = " " + PREFIX_AUTHOR + VALID_AUTHOR_ENGINEERING;
+    public static final String AUTHOR_DESC_NETWORK = " " + PREFIX_AUTHOR + VALID_AUTHOR_NETWORK;
     public static final String DETAIL_DESC_ENGINEERING = " " + PREFIX_DETAILS + VALID_DETAIL_ENGINEERING;
     public static final String DETAIL_DESC_NETWORK = " " + PREFIX_DETAILS + VALID_DETAIL_NETWORK;
     public static final String TAG_DESC_FOO = " " + PREFIX_TAG + VALID_TAG_FOO;
@@ -45,8 +50,9 @@ public class CommandTestUtil {
 
     public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "!@#$%^&*()"; // Special characters not allowed
     public static final String INVALID_TYPE_DESC = " " + PREFIX_TYPE + "!@#$%^&*()"; // Special characters not allowed
+    public static final String INVALID_AUTHOR_DESC = " " + PREFIX_AUTHOR; // empty string not allowed for author
     public static final String INVALID_DETAIL_DESC = " " + PREFIX_DETAILS; // empty string not allowed for details
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "foobar*"; // '*' not allowed in tags
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "footag*"; // tags cannot have special characters
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

@@ -17,6 +17,7 @@ import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UnpinCommand;
 import seedu.address.logic.parser.ParserUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -30,11 +31,13 @@ public class CommandHashTest {
 
         AddCommand one = new AddCommand(new Source(
                 new Title("Title"),
+                new Author("Author"),
                 new Type("Type"),
                 new Detail("Detail"),
                 new HashSet<Tag>()));
         AddCommand two = new AddCommand(new Source(
                 new Title("Title"),
+                new Author("Author"),
                 new Type("Type"),
                 new Detail("Detail"),
                 new HashSet<Tag>()));

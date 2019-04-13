@@ -8,6 +8,7 @@ import seedu.address.model.DeletedSources;
 import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 import seedu.address.model.SourceManager;
+import seedu.address.model.source.Author;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -20,17 +21,17 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Source[] getSampleSources() {
         return new Source[] {
-            new Source(new Title("Algorithm Research"), new Type("article"),
+            new Source(new Title("Algorithm Research"), new Author("Fredrick Poznan"), new Type("article"),
                     new Detail("A research about researchers on algorithms."), getTagSet("research")),
-            new Source(new Title("Sensor Research"), new Type("article"),
+            new Source(new Title("Sensor Research"), new Author("Patrick Wyvern"), new Type("article"),
                     new Detail("A research about sensors."), getTagSet("sensors", "research")),
-            new Source(new Title("Game Development 101"), new Type("tutorial"),
+            new Source(new Title("Game Development 101"), new Author("Johann Stahl"), new Type("tutorial"),
                     new Detail("How to develop games for today's market."), getTagSet("game", "introduction")),
-            new Source(new Title("Artificial Intelligence Research"), new Type("article"),
+            new Source(new Title("Artificial Intelligence Research"), new Author("Smith James"), new Type("article"),
                     new Detail("A research about artificial intelligence."), getTagSet("research")),
-            new Source(new Title("Virtual Reality Research"), new Type("article"),
+            new Source(new Title("Virtual Reality Research"), new Author("Ben Stathem"), new Type("article"),
                     new Detail("A research about virtual reality."), getTagSet("research")),
-            new Source(new Title("Augmented Reality Research"), new Type("article"),
+            new Source(new Title("Augmented Reality Research"), new Author("John Snow"), new Type("article"),
                     new Detail("A research about augmented reality."), getTagSet("research"))
         };
     }

@@ -137,7 +137,6 @@ public class ParserUtilTest {
         ParserUtil.parseTag(null);
     }
 
-    @Ignore
     @Test
     public void parseTag_invalidValue_throwsParseException() throws Exception {
         thrown.expect(ParseException.class);

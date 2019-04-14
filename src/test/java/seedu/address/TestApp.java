@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.exceptions.DataConversionException;
-import seedu.address.model.DeletedSources;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyDeletedSources;
@@ -28,7 +27,8 @@ import systemtests.ModelHelper;
  */
 public class TestApp extends MainApp {
 
-    public static final Path SAVE_LOCATION_FOR_TESTING = TestUtil.getFilePathInSandboxFolder("sampleData.json");
+    public static final Path SAVE_LOCATION_FOR_TESTING =
+            TestUtil.getFilePathInSandboxFolder("sampleData.json");
     public static final Path SAVE_LOCATION_FOR_TESTING_DELETED_SOURCES =
             TestUtil.getFilePathInSandboxFolder("sampleDeletedData.json");
 
@@ -54,8 +54,10 @@ public class TestApp extends MainApp {
 
         // If some initial local data has been provided, write those to the file
         if (initialDataSupplier.get() != null && deletedDataSupplier.get() != null) {
-            JsonSourceManagerStorage jsonSourceManagerStorage = new JsonSourceManagerStorage(saveFileLocation);
-            JsonDeletedSourcesStorage jsonDeletedSourcesStorage = new JsonDeletedSourcesStorage(saveFileLocationDeletedSources);
+            JsonSourceManagerStorage jsonSourceManagerStorage =
+                    new JsonSourceManagerStorage(saveFileLocation);
+            JsonDeletedSourcesStorage jsonDeletedSourcesStorage =
+                    new JsonDeletedSourcesStorage(saveFileLocationDeletedSources);
             try {
                 jsonSourceManagerStorage.saveSourceManager(initialDataSupplier.get());
                 jsonDeletedSourcesStorage.saveDeletedSources(deletedDataSupplier.get());

@@ -1,6 +1,5 @@
 package seedu.address.logic.commands;
 
-import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
@@ -218,7 +217,7 @@ public class DeleteCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-     // Permanently deletes a source from the Recycle Bin Filtered list.
+    // Permanently deletes a source from the Recycle Bin Filtered list.
     @Test
     public void execute_validIndexRecycleBinFilteredList_success() {
         model.setParserMode(ParserMode.RECYCLE_BIN); // switch mode to Recycle Bin
@@ -231,16 +230,15 @@ public class DeleteCommandTest {
 
         ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
                 model.getDeletedSources());
+        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
 
         // remove deleted source from recycle bin permanently
         expectedModel.removeDeletedSource(sourceToDelete);
         expectedModel.commitDeletedSources();
-
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
-     // Deletes a source from the Recycle Bin Unfiltered list.
-     // Deletes the source permanently.
+    // Permanently Deletes a source from the Recycle Bin Unfiltered list.
     @Test
     public void execute_validIndexRecycleBinUnfilteredList_success() {
         model.setParserMode(ParserMode.RECYCLE_BIN); // switch mode to Recycle Bin

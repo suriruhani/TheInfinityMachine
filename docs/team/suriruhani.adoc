@@ -26,49 +26,20 @@ Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 
 The work I have done on AB4's search feature can be divided into 3 major modifications as follows:
 
-===== 1. Multiple prefix tags of different (and same) kinds:
-In the implementation of The Infinity Machine, search function now has an added functionality of being able to take in multiple
-arguments of the type of source fields, and search for sources based on that.
-It searches in conjunction using multiple fields including title, type, detail and tag(s) input by the user,
-listing only those sources that satisfy all the input constraints of the matching fields.
+1. *Multiple prefix tags of different (and same) kinds*: The search function now has an added functionality of being able to take in multiple
+arguments of the *same* and *different* type of source fields, and search for sources based on its conjunction.
 
-Furthermore, the search command is able to take in multiple arguments of each prefix and search
-in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
-This renders this feature more power as now the user is able to search by all that he can recall about the source
-entry and be able to narrow down his search more to produce desired results.
+2. *Substring matching with incomplete words*: It is enabled with substring matching as against exact field matching.
+Each argument is checked for its presence inside the source
+fields and a source is found only if all the user entered arguments are present inside the source's respective field values.
 
-===== 2. Substring matching with incomplete words:
-Another addition to its functionality is that this search feature is enabled with substring matching as against exact field matching.
-This renders this feature more powerful as the user may not always be able to remember exactly the title or tag of the source.
-It's major usage is in the fact that the user will store the bulk of their data in the details field, and it is unintuitive to have them
-list the entire contents of the source in order to match and search it. Thus now, the user is only required to `search` using
-as many consecutive words they are able to recall to narrow the listings. Eg. searching for `d/Artificial Intelligence` will
-enumerate all source articles that have 'artificial intelligence' in their content.
-
-===== 3. Auto-correction feature for typing mistakes:
-Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
-powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
-or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+3. *Auto-correction feature for typing mistakes*: It is also able to find string matches with minor typing errors in the spelling,
+implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 3 character swaps needed to transform between the strings
 (lower bounded by the difference in the string lengths of the two strings).
 
-However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
-broaded by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
-
-1. Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.
-2. If not, this feature at the very least shows user _'similar'_ or _'other related'_ entries that may be useful in their
-research project as they search for a particular entry. This can help in giving user more ideas about related sources in the same field.
-
-This distance is know as the Levenshtein distance or the edit distance,
-after the Russian scientist Vladimir Levenshtein who devised the algorithm in 1965. This algorithm is used to determine how different
-two strings are from each other by outputing the integer number of transformations (insertions, deletions and substitutions) needed to transform
-one string to the other.
-
-The algorithm implementation for this section of the code was inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung]. +
-
 ===== *What it does*:
-It allows the user to search through all the entries in the database through various fields at a time, and display
-source entries that satisfy all of the entered tags in conjunction, with substring matching, and allowing multiple tags of
-the same kind.
+It allows the user to search through all the entries in the database through various fields at a time, same and different, and display
+source entries that satisfy all of the entered tags in conjunction, with substring matching and typo accommodation.
 It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
 of the sources, and making working on the database more efficient. It also reduces the onus on the user to remember and recall
 the source entries maintained by allowing them to enter as many consecutive characters for a field value they can enumerate.
@@ -88,20 +59,8 @@ logical combination, along with allowing the user to not memorize his source fie
 - This enhancement does not affect existing commands and commands to be added in future. +
 - However, it changed the format of the original `search` command, which now not only takes parameters of different types, but also needs them to be prefixed by their
 CLI delimiters.
-- It required an in-depth analysis of design alternatives, as the format of the original command had to be changed
-- The implementation too was challenging, as the current format of `search` command had to be changed and be prepared to
-accept and parse multiple fields entered.
-- It was also tricky to implement the conjunction of the fields as separate methods had to be written for checking for the presence
-of each of the field entered and by logical `&&` ing their results.
-- It was also tricky to implement multiple same prefix tags to be accepted as all values collected from argument multimap in `SourceContainsKeywordsPredicate` had to be changed
-from `String` from `getValue` which was used to extract the last value of the specified prefix to `List<String>` from `getAllValues()` which
-extracted argument values of all tags entered by the user without ignoring any. Then the checker methods had to be
-modified to implement an `AND` logic to ensure all these search queries are satisfied.
-- It was relatively simple to change exact matching to substring matching by using `String.contains()` method.
-- It was trivial to implement case insensitivity by converting both source value and argument value `toLowerCase()` before carrying
-out the substring comparison.
-- If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
-the intended behaviour because of the reasons and rationale explained above.
+- If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug as this is
+the intended behaviour because of the two features that render the search result space more broadened than before.
 - Rest assured, the intended results will never be missed out.
 
 ===== *Credits*:
@@ -112,53 +71,32 @@ Most of the feature was developed independently, with some design and implementa
 ==== 1. Modified *the ability to list* sources:
 
 ===== *Modification*:
-Format: `list [n]`
-inside [] means optional
+Format: `list [N] [M]` +
+Inside [] means optional.
 
-However, one may feel that such act of populating *all* the sources on the GUI may be cluttering the view unnecessarily.
-Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
-which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view.
-This could be helpful in:
+The new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those many sources from the entire source list.
 
-1. Iteratively examining all the sources by restricting how many are shown at one time.
-2. Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources.
+The various formats now accepted are:
 
-Thus, the new modification to the command changes its format optionally, allowing user to be able to pass a parameter
-and list only those many sources from the top, that is from the least-recently added. This may be intuitively useful when say
-you want to perform certain operations in this new list of sources that are displayed by their time of addition.
-Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
-the user could just execute `list 10` to access
-those entries and then perform a `delete <INDEX>` accordingly.
+1. *`list` with no arguments*: Works as the original `list` command and shows all the sources and their details, unfiltered.
+2. *`list N` with one positive argument*: Shows the top N sources with all their details only.
+3. *`list -N` with one negative arguments*: Shows the last N sources or the TOp N sources from the bottom with their details.
+4. *`list N M` with two positive arguments*: With M>=N, shows sources between the indices N and M with all their details only.
 
-For example, the user may still execute `list` command to see the updated list of all the source and their fields.
-
-But now, one may also enter `list 21` to list the top 21 sources only, allowing user to streamline their retrieval for more
-efficient operations on the sources.
+All these resulting sources are appropriately numbered as 1, 2 .. and so on regardless of their index in the original source list.
 
 ===== *What it does*:
-It allows the user to now pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
-The original working of the `list` command showing all entries is still intact, thus just appending extra functionality without
-changing the original logic.
+It allows the user to now pass optional arguments to `list` command and then displays only those indexed source entries in the original source database as per the cases above.
+The original working of the `list` command showing all entries is still maintained, with now 3 added functionalities.
 
 ===== *Justification*:
 This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
-It helps him to narrow down his search, say should he want to view the N first added sources. This ensures more effective retrieval and
+It helps him to narrow down his search by being able t specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
 operations on the sources, such as following it by index dependent operations such as `edit` and `delete` for instance.
 
 ===== *Highlights*:
 - This enhancement does not affect existing commands and commands to be added in future.
-- It required an in-depth analysis of design alternatives. Especially when it came to adding the ability
-for the command to be able to work both with 1 parameter and no parameters.
-Some design considerations were
-** Using variable arguments: in `parser` method of `ListCommandParser` class, but this would require changing the
-Interface `Parser<T>`. This technique did not work for making `ListCommand` objects for the same reason.
-** Using method overloading: This did not work for `parser` method because of the interface restrictions, however
-this was used in the constructor of `LogicCommand` class, creating two objects depending on whether a `targetIndex` was passed
-or not.
-** Using args.length(): Ultimately used in `parse` method for a simple check whether an
-argument is passed or not.
-- The implementation too was challenging, as the current format of `list` command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
-functionality based on whether an argument was passed by the user or not.
 
 ===== *Credits*:
 Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.

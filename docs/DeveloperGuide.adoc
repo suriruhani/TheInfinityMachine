@@ -556,7 +556,7 @@ or a missing character etc. The implementation current accounts for less than 3 
 (lower bounded by the difference in the string lengths of the two strings).
 
 However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
-broaded by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
+broadened by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
 
 1. Obviously, this is targeted at accounting for the slightest chance that the user may have made a typo.
 2. If not, this feature at the very least shows user _'similar'_ or _'other related'_ entries that may be useful in their
@@ -568,7 +568,6 @@ two strings are from each other by outputing the integer number of transformatio
 one string to the other.
 
 The algorithm implementation for this section of the code was inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung].
-
 
 If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
 the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.

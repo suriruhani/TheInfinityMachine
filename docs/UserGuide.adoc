@@ -374,9 +374,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [WARNING]
-====
 Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
-====
 
 Examples:
 
@@ -405,9 +403,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [WARNING]
-====
 You cannot swap a source that is pinned or swap a source to the location of a pinned source.
-====
 
 Examples:
 
@@ -434,6 +430,7 @@ Format: `biblio FORMAT INDEX`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
+// tag::alias[]
 === Command aliases : `alias`
 Note: Aliases do not work in recycle-bin mode.
 
@@ -484,10 +481,15 @@ If the user attempts to remove a non-existent alias, nothing happens.
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
 
+==== Clearing all aliases: `alias-clear`
+Clears all defined aliases and their associaetd commands. +
+Format: `alias-clear`
+
 ==== Alias persistence
 Aliases are persistent across usage sessions.
 When an alias is created or removed, this is recorded to disk.
 No action is required on the user's part.
+// end::alias[]
 
 === Counting total number of sources: `count`
 
@@ -573,6 +575,7 @@ If the user exits the application in panic mode (using the `exit` command), the 
 
 However, if the application is closed directly **while in panic mode**, **permanent data loss** will occur.
 ====
+// end::panic[]
 
 // tag::unpanic[]
 === Disabling panic mode : `unpanic`
@@ -582,6 +585,7 @@ Format: `unpanic`
 
 This reverses the effect of panic mode by restoring the user's original data.
 The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.
+// end::unpanic[]
 
 === Clearing all entries : `clear`
 
@@ -636,11 +640,12 @@ e.g. `order 3 5`
   * *Biblio* : `biblio FORMAT INDEX` +
   e.g. `biblio APA 1`
 * *History* : `history`
-* *Adding an alias* : `alias c/COMMAND a/ALIAS` +
-e.g. `alias c/edit a/e`
+* *Adding an alias* : `alias COMMAND ALIAS` +
+e.g. `alias list ls`
 * *Removing an alias* : `alias-rm ALIAS` +
-e.g. `alias-rm c`
+e.g. `alias-rm ls`
 * *Listing all aliases* : `alias-ls`
+* *Clearing all aliases* : `alias-clear`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Panic* : `panic`

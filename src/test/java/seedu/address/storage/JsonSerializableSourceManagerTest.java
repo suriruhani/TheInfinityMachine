@@ -25,7 +25,6 @@ public class JsonSerializableSourceManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Ignore
     @Test
     public void toModelType_typicalSourcesFile_success() throws Exception {
         JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(TYPICAL_SOURCES_FILE,

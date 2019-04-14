@@ -16,7 +16,6 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import seedu.address.commons.core.Messages;
@@ -40,7 +39,6 @@ public class EditCommandTest {
     private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Ignore
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Source editedSource = TypicalSources.getNonDefaultSource();

@@ -171,8 +171,8 @@ public class RestoreCommandTest {
         assertTrue(restoreFirstCommand.equals(restoreFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = new DeleteCommand(INDEX_FIRST_SOURCE);
-        assertTrue(restoreFirstCommand.equals(deleteFirstCommandCopy));
+        RestoreCommand restoreFirstCommandCopy = new RestoreCommand(INDEX_FIRST_SOURCE);
+        assertTrue(restoreFirstCommand.equals(restoreFirstCommandCopy));
 
         // different types -> returns false
         assertFalse(restoreFirstCommand.equals(1));

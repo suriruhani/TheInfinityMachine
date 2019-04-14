@@ -9,6 +9,7 @@ import org.testfx.api.FxToolkit;
 import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
+import seedu.address.model.ReadOnlyDeletedSources;
 import seedu.address.model.ReadOnlySourceManager;
 
 /**
@@ -21,10 +22,13 @@ public class SystemTestSetupHelper {
     /**
      * Sets up a new {@code TestApp} and returns it.
      */
-    public TestApp setupApplication(Supplier<ReadOnlySourceManager> sourceManager, Path saveFileLocation) {
+    public TestApp setupApplication(Supplier<ReadOnlySourceManager> sourceManager,
+                                    Supplier<ReadOnlyDeletedSources> deletedSources, Path saveFileLocation,
+                                    Path saveFileLocationDeletedSources) {
         try {
             FxToolkit.registerStage(Stage::new);
-            FxToolkit.setupApplication(() -> testApp = new TestApp(sourceManager, saveFileLocation));
+            FxToolkit.setupApplication(() -> testApp = new TestApp(sourceManager, deletedSources,
+                    saveFileLocation, saveFileLocationDeletedSources));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.", te);
         }

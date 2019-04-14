@@ -26,6 +26,9 @@ public class DeleteCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MESSAGE_DUPLICATE_SOURCE = "Since the same source exists in the Recycle Bin. "
+            + "It will be deleted permanently.\nRefer to the help section to find out more about duplicate sources.\n";
+
     public static final String MESSAGE_DELETE_SOURCE_SUCCESS = "Deleted Source:\n---------------------"
             + "--------------\n%1$s";
     private final Index targetIndex;
@@ -54,6 +57,7 @@ public class DeleteCommand extends Command {
         // for recycle bin mode, deletes source from recycle bin permanently
         if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
             model.removeDeletedSource(sourceToDelete);
+            model.commitDeletedSources();
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
         }
 
@@ -61,7 +65,10 @@ public class DeleteCommand extends Command {
         // if the exact same source exists in deleted source list.
         if (model.hasDeletedSource(sourceToDelete)) {
             model.deleteSource(sourceToDelete);
-            return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
+            model.commitSourceManager();
+            return new CommandResult(String.format(MESSAGE_DUPLICATE_SOURCE,
+                    MESSAGE_DELETE_SOURCE_SUCCESS,
+                    sourceToDelete));
         }
 
         // add deleted source to deleted sources database

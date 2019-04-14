@@ -31,6 +31,8 @@ public class SourceCard extends UiPart<Region> {
     @FXML
     private Label title;
     @FXML
+    private Label author;
+    @FXML
     private Label type;
     @FXML
     private Label detail;
@@ -42,6 +44,7 @@ public class SourceCard extends UiPart<Region> {
         this.source = source;
         id.setText(displayedIndex + ". ");
         title.setText(source.getTitle().title);
+        author.setText(source.getAuthor().author);
         type.setText(source.getType().type);
         detail.setText(source.getDetail().detail);
         source.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));

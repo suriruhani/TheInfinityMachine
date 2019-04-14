@@ -383,6 +383,8 @@ Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 === Command aliases : `alias`
+Note: Aliases do not work in recycle-bin mode.
+
 ==== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +
 Format: `alias COMMAND ALIAS`
@@ -508,9 +510,10 @@ Panic mode is a privacy-focused feature that swaps out the user's data store wit
 When it is enabled, the application window replaces the original list of sources with an empty list.
 This change is reflected on disk too; the JSON file of sources is replaced by an empty dummy file that tracks the dummy data store.
 The original data store exists only in memory, until panic mode is disabled.
+This feature protects user data against spying, both from shoulder-surfing and more sophisticated spyware that may be monitoring the user's disk.
 
 In panic mode, the dummy data store behaves exactly like a real one.
-Therefore, all commands (e.g. add, remove, etc.) mutate the dummy data store (and the dummy JSON file), **without affecting the actual data store.**
+Therefore, all commands (e.g. add, remove, etc.) operate on the dummy data store (and the dummy JSON file), **without affecting the actual data store.** After exiting panic mode, all data created while in panic mode will be purged permanently. Therefore, dummy data created in panic mode will not persist between panic mode sessions.
 
 [NOTE]
 ====

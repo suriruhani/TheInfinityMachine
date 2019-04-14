@@ -56,8 +56,6 @@ https://github.com/nus-cs2103-AY1819S2/forum/issues/43[5])
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=panic]
-
 include::../UserGuide.adoc[tag=unpanic]
 
 include::../UserGuide.adoc[tag=alias]

@@ -382,6 +382,7 @@ Format: `biblio FORMAT INDEX`
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
+// tag::alias[]
 === Command aliases : `alias`
 Note: Aliases do not work in recycle-bin mode.
 
@@ -431,6 +432,10 @@ If the user attempts to remove a non-existent alias, nothing happens.
 ==== Listing all aliases: `alias-ls`
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
+
+==== Clearing all aliases: `alias-clear`
+Clears all defined aliases and their associaetd commands. +
+Format: `alias-clear`
 
 ==== Alias persistence
 Aliases are persistent across usage sessions.
@@ -584,11 +589,12 @@ e.g. `order 3 5`
   * *Biblio* : `biblio FORMAT INDEX` +
   e.g. `biblio APA 1`
 * *History* : `history`
-* *Adding an alias* : `alias c/COMMAND a/ALIAS` +
-e.g. `alias c/edit a/e`
+* *Adding an alias* : `alias COMMAND ALIAS` +
+e.g. `alias list ls`
 * *Removing an alias* : `alias-rm ALIAS` +
-e.g. `alias-rm c`
+e.g. `alias-rm ls`
 * *Listing all aliases* : `alias-ls`
+* *Clearing all aliases* : `alias-clear`
 * *Undo* : `undo`
 * *Redo* : `redo`
 * *Panic* : `panic`

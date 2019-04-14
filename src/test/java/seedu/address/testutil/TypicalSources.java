@@ -138,7 +138,7 @@ public class TypicalSources {
         return new ArrayList<>(Arrays.asList(RESEARCH_METHOD));
     }
 
-    public static Source getNonDefaultSource(){
+    public static Source getNonDefaultSource() {
         return ENGINEERING;
     }
 }

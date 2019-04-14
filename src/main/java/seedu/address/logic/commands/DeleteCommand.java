@@ -66,7 +66,8 @@ public class DeleteCommand extends Command {
         if (model.hasDeletedSource(sourceToDelete)) {
             model.deleteSource(sourceToDelete);
             model.commitSourceManager();
-            return new CommandResult(String.format(MESSAGE_DUPLICATE_SOURCE + MESSAGE_DELETE_SOURCE_SUCCESS,
+            return new CommandResult(String.format(MESSAGE_DUPLICATE_SOURCE,
+                    MESSAGE_DELETE_SOURCE_SUCCESS,
                     sourceToDelete));
         }
 

@@ -119,6 +119,49 @@ public class RestoreCommandTest {
         assertCommandFailure(restoreCommand, model, commandHistory, RestoreCommand.MESSAGE_RESTORE_DUPLICATE_SOURCE);
     }
 
+    // Test undo and redo on restoration of a source in Recycle Bin mode.
+    @Test
+    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
+        Source toRestore = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+        RestoreCommand restoreCommand = new RestoreCommand(INDEX_FIRST_SOURCE);
+        Model expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(), model.getDeletedSources());
+        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
+
+        // add deleted source back to source manager list
+        expectedModel.addSource(toRestore);
+        expectedModel.commitSourceManager();
+
+        // remove deleted source back from deleted sources list
+        expectedModel.removeDeletedSource(toRestore);
+        expectedModel.commitDeletedSources();
+
+        // restore -> first source restored
+        restoreCommand.execute(model, commandHistory);
+
+        // undo -> reverts deletedSources back to previous state and filtered source list to show all sources
+        expectedModel.undoSourceManager();
+        expectedModel.undoDeletedSources();
+        assertCommandSuccess(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // redo -> same first source deleted again
+        expectedModel.redoSourceManager();
+        expectedModel.redoDeletedSources();
+        assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredSourceList().size() + 1);
+        RestoreCommand restoreCommand = new RestoreCommand(outOfBoundIndex);
+
+        // execution failed -> source manager state not added into model
+        assertCommandFailure(restoreCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
+
+        // single source manager state in model -> undoCommand and redoCommand fail
+        assertCommandFailure(new UndoCommand(), model, commandHistory, UndoCommand.MESSAGE_FAILURE);
+        assertCommandFailure(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_FAILURE);
+    }
+
     @Test
     public void equals() {
         RestoreCommand restoreFirstCommand = new RestoreCommand(INDEX_FIRST_SOURCE);

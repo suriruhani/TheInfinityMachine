@@ -126,9 +126,8 @@ public class DeleteCommandTest {
         assertCommandSuccess(new RedoCommand(), model, commandHistory, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
-
-     // Deletes a source in Recycle Bin mode. Test undo and redo on this command.
-     // Deleting a source in Recycle Bin mode removes it permanently from the database.
+    // Test undo and redo on deletion of a source in Recycle Bin mode.
+    // Deleting a source in Recycle Bin mode removes it permanently from the database.
     @Test
     public void executeUndoRedo_validIndexRecycleBin_success() throws Exception {
         model.setParserMode(ParserMode.RECYCLE_BIN);
@@ -241,7 +240,7 @@ public class DeleteCommandTest {
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
-    
+
      // Deletes a source from the Recycle Bin Unfiltered list.
      // Deletes the source permanently.
     @Test

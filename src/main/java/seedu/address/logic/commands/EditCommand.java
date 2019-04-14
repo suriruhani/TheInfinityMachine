@@ -206,15 +206,6 @@ public class EditCommand extends Command {
         }
 
         @Override
-        public String toString(){
-            String result = title.title + "\n"
-                    + type.type + "\n"
-                    + author.author + "\n"
-                    + details.detail + "\n";
-            return result;
-        }
-
-        @Override
         public boolean equals(Object other) {
             // short circuit if same object
             if (other == this) {

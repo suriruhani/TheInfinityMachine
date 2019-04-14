@@ -322,9 +322,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [WARNING]
-====
 Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
-====
 
 Examples:
 
@@ -353,9 +351,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [WARNING]
-====
 You cannot swap a source that is pinned or swap a source to the location of a pinned source.
-====
 
 Examples:
 

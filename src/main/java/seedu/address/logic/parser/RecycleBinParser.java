@@ -12,8 +12,10 @@ import seedu.address.logic.commands.EmptyBinCommand;
 import seedu.address.logic.commands.ExitBinCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.RecycleBinCommand;
+import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RestoreCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -54,6 +56,12 @@ public class RecycleBinParser extends SourceManagerParser {
 
         case CountCommand.COMMAND_WORD:
             return new CountCommand();
+
+        case UndoCommand.COMMAND_WORD:
+            return new UndoCommand();
+
+        case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
 
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);

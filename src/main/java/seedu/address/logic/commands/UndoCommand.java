@@ -24,9 +24,16 @@ public class UndoCommand extends Command {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        // if undo only interacts with source manager
+        // if undo only interacts with source manager mode
         if (model.canUndoSourceManager() && !model.canUndoDeletedSources()) {
             model.undoSourceManager();
+            model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+
+        // if undo only interacts with delete source mode
+        if (!model.canUndoSourceManager() && model.canUndoDeletedSources()) {
+            model.undoDeletedSources();
             model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
             return new CommandResult(MESSAGE_SUCCESS);
         }

@@ -31,6 +31,13 @@ public class RedoCommand extends Command {
             return new CommandResult(MESSAGE_SUCCESS);
         }
 
+        // if redo only interacts with delete source mode
+        if (!model.canRedoSourceManager() && model.canRedoDeletedSources()) {
+            model.redoDeletedSources();
+            model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+
         model.redoSourceManager();
         model.redoDeletedSources();
         model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);

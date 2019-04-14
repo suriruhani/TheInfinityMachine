@@ -296,7 +296,7 @@ This is because when panic mode is activated, we store the original source manag
 Therefore, should panic mode be activated while already in panic mode, `sourceManagerBackup` will now store the dummy source manager, and the original source manager will be deallocated and eventually purged from memory by Java's garbage collector.
 
 Since the JSON file on disk automatically tracks the source manager through the observer pattern, it automatically updates to track and reflect the data in the dummy source manager.
-
+// end::panic[]
 
 // tag::alias[]
 === Command Alias feature
@@ -444,6 +444,7 @@ Conversely, `readAliases()` parses this string and reconstructs the aliases Hash
 JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
 However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
 Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.
+// end::alias[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -728,8 +729,40 @@ Step 8. The user now executes `list 3` command. The first 3 entries of the entir
 ** Cons: Maybe not the best implementation.
 // end::list[]
 
+=== Pin and Unpin Features
+==== Current Implementation
+The concept of pinned sources works on an index bases system rather than a separate list or any additional implementation. This allows pinned sources to function just like ordinary sources in that they can be searched and listed as normal.
+
+[NOTE]
+Pinned sources can be deleted with the delete command but cannot be swapped.
+
+Essentially, the pinned sources are governed by a single number within the `ModelManager` and is managed through a separate class called the `PinnedSourcesCoordinationCenter`. This coordination center is responsible for all operations which modify the number of pinned sources.
+
+image::pinUnpinStructure.png[width="900"]
+
+When a new source is pinned using the `pin INDEX` command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.
+
+image::pinSequence.png[width="900"]
+
+When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
+
+image::unpinSequence.png[width="900"]
+
+==== Source Checks
+When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
+
+These very same source checks will also be called during the `delete` and `order` commands.  For the `delete` command, the coordination center will check if the source to be deleted is a pinned source. If so, then the number of pinned sources will decrement by 1. If not, it just carries on with the deletion as usual. For the `order` command, the coordination center will check both the source being moved as well as the move location. If either of these indexes are of pinned sources, the `order` command will fail.
+
+==== Pinned Source Persistence
+For the pinned sources to be persistent, the number of pinned sources is updated into an external text file whenever a change is made to the number. This is consistent with the source database itself so the reordering of the sources when something is pinned or unpinned will occur together with the update to the number of pinned sources.
+
+The external storage is handled by a simple class called the `PinnedSourcesStorageOperationsCenter` which contains the path of the file which the number will be saved to.
+
+Dynamic pathing was necessary because when testing the function using a default file path, changes made during the test were saved to the actual file and that caused major problems for the program. Dynamic pathing ensured that for testing, a separate test file is written to thus maintaining the integrity of the actual file.
+
 // tag::devorder[]
-=== Custom Order Command
+=== Custom Order Feature
+==== Current Implementation
 The function is currently implemented using the functionality of the source model. It allows users to designate a source they want to move and a location they want to move it to.
 
 The primary uses of this feature are to facilitate source management and ordering sources by some user defined metric like personal importance.
@@ -764,6 +797,40 @@ The function takes the following steps to make the swap:
 * Step 3 -- The `addSourceAtIndex` function is used to place the recently deleted source back into the list at the designated location.
 
 * Step 4 -- The function then commits the database to save the recent changes.
+
+==== Swapping process
+The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
+
+===== Forward Swapping
+Forward swapping means that the index of the source to be moved is smaller than the index of the position it is to be moved to.
+
+An example of such a command could be `order 2 5`.
+
+image::forward1.PNG[width="400"]
+
+Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for forward swapping the initial source at the move position, in this case position 5, changes.
+
+image::forward2.PNG[width="400"]
+
+The source to be moved is then inserted into the current position 5, displacing all other sources after that and pushing them back.
+
+image::forward3.PNG[width="400"]
+
+===== Backward Swapping
+Backward swapping means that the index of the source to be moved is larger than the index of the position it is to be moved to.
+
+An example of such a command could be `order 5 2`.
+
+image::backward1.PNG[width="400"]
+
+Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for backward swapping the initial source at the move position, in this case position 2, does not change.
+
+image::backward2.PNG[width="400"]
+
+The source to be moved is then inserted into the current position 2, displacing all other sources after that and pushing them back.
+
+image::backward3.PNG[width="400"]
+
 // end::devorder[]
 
 === Biblio feature

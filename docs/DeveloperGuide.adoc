@@ -793,30 +793,30 @@ Forward swapping means that the index of the source to be moved is smaller than 
 
 An example of such a command could be `order 2 5`.
 
-image::forward1.png[width="400"]
+image::forward1.PNG[width="400"]
 
 Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for forward swapping the initial source at the move position, in this case position 5, changes.
 
-image::forward2.png[width="400"]
+image::forward2.PNG[width="400"]
 
 The source to be moved is then inserted into the current position 5, displacing all other sources after that and pushing them back.
 
-image::forward3.png[width="400"]
+image::forward3.PNG[width="400"]
 
 ===== Backward Swapping
 Backward swapping means that the index of the source to be moved is larger than the index of the position it is to be moved to.
 
 An example of such a command could be `order 5 2`.
 
-image::backward1.png[width="400"]
+image::backward1.PNG[width="400"]
 
 Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for backward swapping the initial source at the move position, in this case position 2, does not change.
 
-image::backward2.png[width="400"]
+image::backward2.PNG[width="400"]
 
 The source to be moved is then inserted into the current position 2, displacing all other sources after that and pushing them back.
 
-image::backward3.png[width="400"]
+image::backward3.PNG[width="400"]
 
 // end::devorder[]
 

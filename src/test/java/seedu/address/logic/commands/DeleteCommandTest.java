@@ -265,8 +265,8 @@ public class DeleteCommandTest {
             expectedModel.deleteSource(duplicateSourceToDelete);
             expectedModel.commitSourceManager();
         }
-        assertEquals(String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, duplicateSourceToDelete),
-                commandResult.getFeedbackToUser());
+        assertEquals(String.format(DeleteCommand.MESSAGE_DUPLICATE_SOURCE + DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS,
+                duplicateSourceToDelete), commandResult.getFeedbackToUser());
         assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
 
         // check deleted sources list

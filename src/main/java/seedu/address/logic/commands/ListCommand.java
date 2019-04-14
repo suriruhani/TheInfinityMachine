@@ -36,8 +36,8 @@ public class ListCommand extends Command {
     public static final String MESSAGE_LIST_X_TO_Y_SUCCESS = "Listed sources from %d to %d!";
 
     private Index targetIndex = null;
-    private Index fromIndex = null;
     private Index toIndex = null;
+    private Index fromIndex = null;
     private boolean posFlag = true;
 
     public ListCommand() {}
@@ -49,9 +49,9 @@ public class ListCommand extends Command {
     }
 
     //Constructor overloading to account for two optional parameter
-    public ListCommand(Index toIndex, Index fromIndex) {
-        this.toIndex = toIndex;
+    public ListCommand(Index fromIndex, Index toIndex) {
         this.fromIndex = fromIndex;
+        this.toIndex = toIndex;
     }
 
     /**
@@ -123,13 +123,13 @@ public class ListCommand extends Command {
             model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
             int size = model.getFilteredSourceList().size();
             if (toIndex != null && fromIndex != null) {
-                if (toIndex.getOneBased() > fromIndex.getOneBased()) {
+                if (fromIndex.getOneBased() > toIndex.getOneBased()) {
                     throw new CommandException("To-Index cannot be greater than From-Index!");
                 }
-                fromIndex = fromIndex.getOneBased() > size ? Index.fromOneBased(size) : fromIndex;
-                model.updateFilteredSourceList(makePredicateForXToY(toIndex.getOneBased(), fromIndex.getOneBased()));
+                toIndex = toIndex.getOneBased() > size ? Index.fromOneBased(size) : toIndex;
+                model.updateFilteredSourceList(makePredicateForXToY(fromIndex.getOneBased(), toIndex.getOneBased()));
                 return new CommandResult(String.format(MESSAGE_LIST_X_TO_Y_SUCCESS,
-                        toIndex.getOneBased(), fromIndex.getOneBased()));
+                        fromIndex.getOneBased(), toIndex.getOneBased()));
             } else if (targetIndex != null) { //when LIST is used with an argument (show N)
                 if (posFlag) {
                     //to ensure N is capped at list size

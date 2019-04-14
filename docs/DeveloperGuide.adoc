@@ -660,47 +660,114 @@ is not used.
 
 The list command is facilitated by `Infinity Machine`.
 It extends `Infinity Machine` with a list functionality, enumerating all or a specific number of
-entries in the source database and their details, in the order of their addition.
-It has mainly two usages: +
-1) Without a parameter, as just `list` : enumerates all the entries of the source database with their details +
-2) With a parameter N : where N is a positive integer, enumerates only the top - N or first - N sources from the source database +
+entries in the source database and their all their details, in the order of their addition, or custom order
+as may be supported by the application.
+
+The four main formats and their usages are described below:
+
+===== 1. list: (no arguments)
+When no arguments are passed to `list`, it works same way as in the original AB4 logic, listing *all* the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.
+
+Example: `list` +
+Lists all the sources indexed from 1 onwards with all their details.
+
+===== 2. list N: (one positive argument)
+When one positive integer is passed to `list`, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+The number N must be a positive, non-zero number for the command logic to work. A negative N alludes to the 3rd case below.
+
+Example: `list 5` +
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+===== 3. list -N: (one negative argument)
+When one negative integer is passed to `list`, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+The number after the negative sign but be a non-zero positive number for the command logic to work.
+
+Example: `list -5` +
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+===== 4. list N M: (two positive arguments)
+When two positive integers are passed to `list`, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 ... till (M-N+1).
+For valid functioning of the command, the two numbers passed must be positive and the first number must not be greater than the second number.
+I.e. both numbers should be non-zero and the second number can only be same or greater than the first number to produce a valid listing of the sources.
+
+Example: `list 6 9` +
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
+
+Some salient features which affect the command's working are discussed below:
+
+1. An argument passed which more than the current number of sources in the list is reduced to the index of the last source [i.e. the maximum number of sources].
+For example, executing `list 100` when the database has only 50 entries will automatically cap its display to 50 instead of throwing an error.
+Similarly, for other command formats too, the listing is capped by the total number of sources and the success message is too altered appropriately.
+
+2. Any number of arbitrary spaces between the list command word and its argument is accepted. The `command parser` will look for the valid command word and
+when `list command` is called, then the numbers will be plucked out in the right order and the appropriate command format will be executed.
+For example, 'list 2 3', ' <n spaces> list <x spaces> 2 <y spaces> 3 <z spaces> ' all commands work in the same, intended fashion for all values of n and z and all
+non-zero values of x and y.
+
+3. More than two arguments are ignored and only the first two arguments are evaluated as per the 4th case above.
+Thus, `list 2 3 4` and `list 2 3 4 ...` all are executed as `list 2 3` only.
+
+4. This list feature controls how many sources [based on indices passed] are displayed, *with respect to the original source list* only, and not the one
+currently being displayed to the user.
+Thus, if   `list 2 4` is carried out after `list 7 10` then the list index 2, 3 and 4 of the original list will be outputted and not of this currently displaying list.
+Similarly, if a user executes `list 3` post an operation, say search, then the first three sources of the entire databae are shown and *not* the first three sources of the filtered
+list of the resulting search operation.
+
+5. Having said (4), the new displayed list of sources after the executing of any list operation will update the internally maintained current list displayed, thus any operation [such as `edit`, `delete`]
+which are based on the indexes of the current displaying list will *still function as per normal* after a list command is executed.
+For example, after displaying `list 3 5`, if a user executes `delete 1`, it is akin to deleting the 3rd source in the entire list database.
 
 Motivation for such an enhancement is that one may feel that such act of populating *all* the sources on the GUI may be cluttering the view unnecessarily.
 Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
-which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view.
+which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view, or be able to limit by some sense
+of the time at which it was added.
+
 This could be helpful in:
 
-1. Iteratively examining all the sources by restricting how many are shown at one time.
-2. Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources.
+1. Iteratively examining all the sources by restricting how many are shown at one time. The user may begin with listing `list 10`, then `list 11 20` and so on to analyze
+all the source entries 10 at a time.
+2. Making more effective use of the GUI display to the user by not unnecessarily enumerating all sources, but rendering it more powerful by allowing the user to control what and how many sources
+he wants to see the details of.
+3. Enabling a pseudo-filtering by time-of-addition of the sources, something the application logic does not support currently [e.g. TimeAdded field]. This is possible because the list command alway alludes
+to the original databse list of all the sources, which are by defaul maintained in the order of their addition [with most recent at the end].
 
-Thus, the new modification to the command changes its format optionally, allowing user to be able to pass a parameter
-and list only those many sources from the top, that is from the least-recently added. This may be intuitively useful when say
-you want to perform certain operations in this new list of sources that are displayed by their time of addition.
+Thus, the new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those sources which have their indices falling in the range entered [as covered by the cases above].
+This may be intuitively useful when say you want to perform certain operations in this new list of sources that are displayed by their time of addition,
+since the sources are by default arranged in descending order of their time of addition.
+
 Example, a user wants to delete all of the sources that were added yesterday. And if 10 entries were added yesterday,
-the user could just execute `list 10` to access
-those entries and then perform a `delete <INDEX>` accordingly.
+the user could just execute `list 10` to access those entries and then perform a `delete <INDEX>` accordingly.
 
-For example, the user may still execute `list` command to see the updated list of all the source and their fields.
-
-But now, one may also enter `list 21` to list the top 21 sources only, allowing user to streamline their retrieval for more
-efficient operations on the sources.
-
-What it does is, it allows the user to now pass an optional argument to `list` command, a positive integer n, and then displays only the first n source entries.
-The original working of the `list` command showing all entries is still intact, thus just appending extra functionality without
-changing the original logic.
+The original working of the `list` command showing all entries is still intact, when the command is called without any parameter, thus
+this modification just appends extra functionality which renders the command more useful and powerful than it was before in AB4.
 
 Additionally, it uses:
 
-* `PREDICATE_SHOW_ALL_SOURCES` -- when the user does not pass an argument to the list command, all sources must be displayed displayed.
-This predicate results `true` for every source tested.
-* `makePredicateForTopN` -- when the user passes an argument, only first N sources must be listed.
+* `PREDICATE_SHOW_ALL_SOURCES` -- when the user does not pass an argument to the list command, all sources must be displayed.
+This predicate results `true` for every source tested. Also, this filtering mode is internally called before *any* list operation so the
+command is able to utilize the entire database list in its filtering logic and not just the one currently displayed.
+* `makePredicateForTopN` -- when the user passes a positive argument, only first N sources must be listed.
 This method returns a new object of type `Predicate<Source>` that keeps track of the `count` of sources,
-displaying `true` for the first N and `false` for the rest.
-* `targetIndex` -- the number N up to which the most recent sources are to be displayed to the user. Maintained internally.
-Set to the current size of the database if the value input is more that this current size.
+evaluating `true` for the first N sources and `false` for all the rest.
+* `makePredicateForLastN` -- when the user passes a negative argument, the last N sources must be listed.
+This method returns a new object of the type `Predicate<Source>` that keeps track of the `count` of the sources,
+evaluating `true` for the las N sources an `false` for all others.
+* `makePredicateForXToY` -- when the user passes two positive arguments, the sources between the two indices (included) must be listed.
+This method returns a new object of the type `Predicate<Source>` that keeps track of the `count` of the sources,
+evaluating `true` for all sources between indices N and M included, and `false` for all others.
+* `targetIndex` -- the number N up to which the most recent sources are to be displayed to the user, in both the positive N and negative N case (case 2 and 3).
+It is maintained internally. Set to the current size of the database if the value input is more that this current size.
+* `fromIndex` -- in the case of two arguments, this is the first index, must be non-zero positive number not greater than the `toIndex` below.
+* `toIndex` -- in the case of two arguments, this is the second index, must be non-zero positive number not less than the `fromIndex` above.
+* `posFlag` -- internally maintained, passed as `true` for positive single argument N and `false` for negative single argument N.
 
 This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
-It helps him to narrow down his search, say should he want to view the N first added sources. This ensures more effective retrieval and
+It helps him to narrow down his search, say should he want to view the N first or last added sources. This ensures more effective retrieval and
 operations on the sources, such as following it by index dependent operations such as `edit` and `delete` for instance.
 
 Some points to note:
@@ -712,11 +779,12 @@ Some design considerations were
 Interface `Parser<T>`. This technique did not work for making `ListCommand` objects for the same reason.
 ** Using method overloading: This did not work for `parser` method because of the interface restrictions, however
 this was used in the constructor of `LogicCommand` class, creating two objects depending on whether a `targetIndex` was passed
-or not.
+or not, and whether two indexes where passed or none.
 ** Using args.length(): Ultimately used in `parse` method for a simple check whether an
-argument is passed or not.
-- The implementation too was challenging, as the current format of `list` command had to be changed and be prepared to accept and parse an optional argument, ie. overloading
-functionality based on whether an argument was passed by the user or not.
+argument is passed and how many are passed.
+- The implementation too was challenging, as the current format of `list` command had to be changed and be prepared to accept and parse optional arguments, with the choice of
+ either one or two parameters, ie. implementing overloading functionality
+for the list command logic based on whether the number of arguments passed by the user if any.
 
 Given below is an example usage scenario and how the list mechanism behaves.
 
@@ -735,28 +803,38 @@ in the order of their addition.
 
 Step 6. The user now executes `list 2` command. The first 2 entries akin to the previous output are displayed.
 
-Step 7. The user now executes `list 3 5` command. An invalid command format exception is thrown, prompting the user
-to enter exactly 1 or no arguments.
+Step 7. The user now executes `list 3 5` command. The source entries 3, 4 and 5 are shown, indexed as 1, 2 and 3, with all their details.
 
-Step 8. The user now executes `list 3` command. The first 3 entries of the entire source database are listed with all their details.
+Step 8. The user now executes `list 3` command. The first 3 entries of the entire source database are listed with all their details, and not the first three of the currently
+showcased list.
+
+Step 9. The user now executes `list -2` and the last two sources from the entire database list (and not the currently displayed list) are shown.
+
+Step 10. The user now executes `delete 1` and the first entry of the current list or the second last entry of the entire database is deleted.
 
 ==== Design Considerations
 
-===== Aspect: How list & list n executes
+===== Aspect: How list, list N, and list N M executes
 
 * **List (current choice):** Filters using predicate that returns `true` for every source.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of time usage.
 
-* **List N (current choice):** Filters using predicate that returns `true` for first N sources.
+* **List N (current choice):** Filters using predicate that returns `true` for first/last N sources.
 ** Pros: Easy to implement. Intuitive to understand
 ** Cons: Can be made faster and cleaner using List operations or streams.
 
-===== Aspect: Data structure to support the list/list n commands
+* **List N (current choice):** Filters using predicate that returns `true` for sources between N and M included.
+** Pros: Easy to implement. Intuitive to understand
+** Cons: Can be made faster and cleaner using List operations or streams.
 
-* **Alternative 1 (current choice):** Forms predicates based on the input parameter, maintain targetIndex.
-** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Maybe not the best implementation.
+===== Aspect: Data structure to support the list/list N/list N M commands
+
+* **Alternative 1 (current choice):** Forms predicates based on the input parameter, maintain targetIndex, fromIndex, toIndex and posFlag.
+** Pros: Uses simple `count` parameter initialized to 0 or 1 and incremented each time a source is evaluated returning `true/false` depending on the format of the list command.
+Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Maybe not the best implementation in terms of the number of internal flags and indices maintained.
+
 // end::list[]
 
 === Pin and Unpin Features

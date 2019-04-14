@@ -20,6 +20,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -100,8 +101,9 @@ public class EditCommand extends Command {
         Author updatedAuthor = editSourceDescriptor.getAuthor().orElse(sourceToEdit.getAuthor());
         Detail updatedDetails = editSourceDescriptor.getDetails().orElse(sourceToEdit.getDetail());
         Set<Tag> updatedTags = editSourceDescriptor.getTags().orElse(sourceToEdit.getTags());
+        BiblioFields biblioFields = sourceToEdit.getBiblioFields();
 
-        return new Source(updatedTitle, updatedAuthor, updatedType, updatedDetails, updatedTags);
+        return new Source(updatedTitle, updatedAuthor, updatedType, updatedDetails, updatedTags, biblioFields);
     }
 
     @Override
@@ -201,6 +203,15 @@ public class EditCommand extends Command {
          */
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        }
+
+        @Override
+        public String toString(){
+            String result = title.title + "\n"
+                    + type.type + "\n"
+                    + author.author + "\n"
+                    + details.detail + "\n";
+            return result;
         }
 
         @Override

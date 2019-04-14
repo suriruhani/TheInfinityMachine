@@ -30,6 +30,7 @@ import seedu.address.model.UserPrefs;
 import seedu.address.model.source.Source;
 import seedu.address.testutil.EditSourceDescriptorBuilder;
 import seedu.address.testutil.SourceBuilder;
+import seedu.address.testutil.TypicalSources;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
@@ -41,7 +42,7 @@ public class EditCommandTest {
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
-        Source editedSource = new SourceBuilder().build();
+        Source editedSource = TypicalSources.getNonDefaultSource();
         EditSourceDescriptor descriptor = new EditSourceDescriptorBuilder(editedSource).build();
         EditCommand editCommand = new EditCommand(INDEX_FIRST_SOURCE, descriptor);
 
@@ -49,13 +50,15 @@ public class EditCommandTest {
 
         Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),
                 model.getDeletedSources());
-        expectedModel.setSource(model.getFilteredSourceList().get(0), editedSource);
+
+        Source sourceToReplace = expectedModel.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+
+        expectedModel.setSource(sourceToReplace, editedSource);
         expectedModel.commitSourceManager();
 
         assertCommandSuccess(editCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
-    @Ignore
     @Test
     public void execute_someFieldsSpecifiedUnfilteredList_success() {
         Index indexLastSource = Index.fromOneBased(model.getFilteredSourceList().size());

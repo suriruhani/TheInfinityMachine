@@ -29,8 +29,8 @@ public class BiblioCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Bibliography generated:\n";
     public static final String MESSAGE_UNPOPULATED_FIELDS = "\n\nWarning: Incomplete bibliography\n"
             + "The following fields are recommended for this source type but are not populated:\n";
-    public static final String MESSAGE_UNSUPPORTED_TYPE = "This source type is not supported\n"
-            + "Source must be one of the following:\n"
+    public static final String MESSAGE_UNSUPPORTED_TYPE = "This source type is currently not supported\n"
+            + "Source type must be one of the following:\n"
             + "Book\n"
             + "Journal Article\n"
             + "Website\n";

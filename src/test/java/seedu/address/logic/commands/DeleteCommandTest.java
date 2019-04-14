@@ -256,8 +256,9 @@ public class DeleteCommandTest {
         AddCommand addCommand = new AddCommand(sourceToDelete);
         addCommand.execute(model, commandHistory);
 
-        Source duplicateSourceToDelete = model.getFilteredSourceList().get(INDEX_SEVENTH_SOURCE.getZeroBased());
-        CommandResult commandResult = new DeleteCommand(INDEX_SEVENTH_SOURCE).execute(model, commandHistory);
+        Index indexLastSource = Index.fromOneBased(model.getFilteredSourceList().size());
+        Source duplicateSourceToDelete = model.getFilteredSourceList().get(indexLastSource.getZeroBased());
+        CommandResult commandResult = new DeleteCommand(indexLastSource).execute(model, commandHistory);
 
         // permanently delete if same source exists in recycle bin
         if (expectedModel.hasDeletedSource(duplicateSourceToDelete)) {

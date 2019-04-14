@@ -1,12 +1,12 @@
 package seedu.address.model.util;
 
-import seedu.address.model.DeletedSources;
-import seedu.address.model.SourceManager;
-import seedu.address.model.source.Source;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import seedu.address.model.DeletedSources;
+import seedu.address.model.SourceManager;
+import seedu.address.model.source.Source;
 
 /**
  * A utility class containing a list of {@code Source} objects to be used in tests.

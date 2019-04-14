@@ -1,10 +1,16 @@
 package seedu.address.model.util;
 
-import seedu.address.model.source.*;
-import seedu.address.model.tag.Tag;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
+import seedu.address.model.source.Detail;
+import seedu.address.model.source.Source;
+import seedu.address.model.source.Title;
+import seedu.address.model.source.Type;
+import seedu.address.model.tag.Tag;
+
 
 /**
  * A utility class to help with building Source objects.

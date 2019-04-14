@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
@@ -14,12 +15,8 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.SourceManager;
-import seedu.address.model.source.BiblioFields;
-import seedu.address.model.source.Source;
 import seedu.address.model.UserPrefs;
-import seedu.address.testutil.EditSourceDescriptorBuilder;
-import seedu.address.testutil.SourceBuilder;
-import seedu.address.testutil.TypicalSources;
+import seedu.address.model.source.Source;
 
 /**
  * Contains integration tests (interaction with the Model) and unit tests for

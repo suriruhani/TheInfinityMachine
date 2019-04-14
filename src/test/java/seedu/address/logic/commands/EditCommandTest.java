@@ -40,7 +40,6 @@ public class EditCommandTest {
     private Model model = new ModelManager(getTypicalSourceManager(), new UserPrefs(), getTypicalDeletedSources(), 0);
     private CommandHistory commandHistory = new CommandHistory();
 
-    @Ignore
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() {
         Source editedSource = TypicalSources.getNonDefaultSource();

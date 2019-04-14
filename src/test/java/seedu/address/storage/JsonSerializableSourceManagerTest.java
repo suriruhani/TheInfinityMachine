@@ -5,9 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.assertj.core.internal.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
-
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -27,7 +24,6 @@ public class JsonSerializableSourceManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    @Ignore
     @Test
     public void toModelType_typicalSourcesFile_success() throws Exception {
         JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(TYPICAL_SOURCES_FILE,

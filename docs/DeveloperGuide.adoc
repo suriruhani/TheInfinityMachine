@@ -309,53 +309,57 @@ Users may do one of the following:
 3. List all aliases
 4. Clear all aliases
 
+In designing and implementing this feature, the overarching principle is to maximize transparency and compatibility.
+This means that it should be transparent to future developers/maintainers (they should not need to understand how this feature works, or be subject to any design constraints).
+It should also be backwards-compatible with existing commands (existing code should not be modified).
+This allows for maximum extensibility and maintainability.
+
 ==== Overview
 
 This feature is backed by an in-memory database implemented as a Java `HashMap<String, String>`.
-A HashMap is chosen for several reasons:
+A HashMap is chosen for the following reasons:
 
-* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (in `O(1)` time)
-* Checking whether an alias exists is efficient (in `O(1)` time)
-* HashMaps naturally facilitate the process of looking up an associated value of a given key
+* Adding and removing an alias is straightforward (using Java HashMap API) and efficient (`O(1)` time)
+* Checking whether an alias exists (membership) is efficient (`O(1)` time)
+* HashMaps naturally facilitate the process of associating a key-value pair
 
-*Alternative*: An alternative implementation could use a Java `ArrayList`.
-However, that adds additional code complexity, as there needs to be a way of associating 2 strings.
+*Alternative*: No reasonable alternative implementations exist.
+For instance, using a Java `ArrayList` adds additional code complexity, as there needs to be a way of associating a key with a value.
 For instance, we could create an `ArrayList<AliasWrapper>`, where `AliasWrapper` is a wrapper class to associate 2 strings.
 However, that is inelegant and inefficient, as opposed to a `HashMap` solution.
 Furthermore, checking for membership in an `ArrayList` is an `O(N)` operation in an unsorted list, or `O(log(N))` in a sorted list.
-
-Therefore, due to the key-value association inherent in the idea of an alias manager, a `HashMap` is the most approriate data structure.
 
 image::AliasManagerClassDiagram.png[width="800"]
 
 ==== Aliasing feature: implementation
 Meta-commands are not implemented as regular commands.
 Regular commands inherit `Command`, and operate on the model (their main method is `public CommandResult execute(Model model, CommandHistory history) throws CommandException {}`).
-On the other hand, meta-commands operate on AliasManager.
+On the other hand, meta-commands operate on an AliasManager object.
 Therefore, it is desirable to draw a distinction between regular commands and meta-commands throughout the codebase.
 
-To implement aliasing, we created the AliasManager interface to practice design by contract.
+To implement aliasing, we first create an AliasManager interface to practice design by contract.
 AliasManager is command-agnostic.
-It operates through its API, and is not concerned with the choice of meta-commands selected (e.g. modifying `alias` to `alias-add`).
+It operates through its API (specified in the interface), and is not concerned with the choice of meta-commands (e.g. `alias-rm` vs `alias-remove`).
 We also created a class ConcreteAliasManager to implement the AliasManager interface.
 
-As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object for dependency injection.
+As for SourceManagerParser, we created an alternative constructor to accept an AliasManager object to support dependency injection.
 Otherwise, the default constructor instantiates ConcreteAliasManager.
 
 [NOTE]
 We chose to create the AliasManager interface to decouple SourceManagerParser and ConcreteAliasManager.
 In normal operation, we would always use ConcreteAliasManager.
-However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability and maintainability.
+However, working through an interface (and implementing an alternative constructor) provides the flexibility to swap out ConcreteAliasManager for an alternative AliasManager implementation, such as a stub, for unit testing. This improves testability, maintainability, and extensibility.
 
 To implement the meta-commands, we create an abstract superclass `AliasMetaCommandParser` that implements `Parser<DummyCommand>`.
 This serves as an alternative class of command parsers (for meta-commands), in contrast to the regular ones which are of the type `Parser<? extends Command>`.
+(As mentioned above,  meta-commands are fundamentally different from regular commands, and it is desirable to maintain this distinction.)
 The key difference between the two is that an AliasMetaCommandParser has a field storing a reference to the AliasManager object which it requires to interact with (e.g. when adding/removing an alias).
 
 [NOTE]
 Parsers are expected to return a Command object which SourceManagerParser returns in its `parseCommand(String userInput)` method.
 Typically, a Command object operates on the Model (e.g. AddCommand calls `model.addSource()`).
 However, meta-commands operate on the AliasManager, and not the model.
-Therefore, for this purpose, we created a class `DummyCommand` which does nothing except return a CommandResult object to display feedback to the user.
+Therefore, for this purpose, we created a class `DummyCommand` which nominally extends `Command`, but actually does nothing except return a CommandResult object to display feedback to the user. This promotes transparency and compatibility.
 
 Finally, we create a `CommandValidator` interface.
 AliasManager uses the CommandValidator for two purposes:
@@ -366,17 +370,21 @@ AliasManager uses the CommandValidator for two purposes:
 We chose this implementation and design pattern for several reasons:
 
 1. By designating an object as a CommandValidator, we are able to avoid hardcoding the list of valid and un-aliasable commands into AliasManager.
-This makes for a more reusable component and improves testability as well as maintainability.
+This makes for a more reusable component and improves testability and maintainability. It also embodies the Open-Closed Principle.
 
 2. Typically, the SourceManagerParser (which by definition should know about the various valid commands) is the designated CommandValidator.
 However, the SourceManagerParser also has an association with the AliasManager.
-By creating an interface, we avoid a situation of circular dependency where by both components are tightly coupled to each other.
+By creating an interface, we avoid a situation of circular dependency whereby both components are tightly coupled to each other.
 
 ==== Aliasing feature: operation
 ===== Meta-commands
 When a meta-command is detected to have been entered, SourceManagerParser delegates it to the appropriate AliasMetaCommandParser to handle.
 For instance, `alias FOO BAR` is delegated to the AliasAddMetaCommandParser (a concrete subclass of AliasMetaCommandParser) with the arguments "FOO BAR".
 The appropriate AliasMetaCommandParser parses the arguments and returns a DummyCommand response object.
+
+The following sequence diagram illustrates the operation of the "add alias" meta-command (assuming that valid user input is provided).
+
+image::AliasManagerMetaCommandSequenceDiagram.png[width="800"]
 
 [NOTE]
 

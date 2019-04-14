@@ -15,10 +15,15 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 
 == Summary of contributions
 
-* *Major enhancement*: Added the Custom Order command to the application
-** What it does: This function allows greater flexibility and personalisation for the application by giving users the ability to modify the order in which their sources are displayed.
-** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management component of the application. More important and critical sources can be given priority and placed on top while older or outdated sources can be relegated to the bottom of the list.
-** Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment.
+* *Major Enhancement*: Added the Pin command set to the application
+** What it does: This function allows for greater organisational capability by letting users pin important or frequently viewed sources to the top of the application.
+** Justification: This feature improves the product significantly because it gives users a fast and efficient way to make important sources more visible at the top. Critical sources can be immediately moved to the top while older or outdated sources will be pushed to the bottom of the list.
+** Implementation: This new feature required additional model functionality which needed to be added and tested thoroughly before deployment. Furthermore, it also required persistent storage of pinned sources so that users will be able to preserve their pinned sources. This required the implementation of additional storage functionality.
+
+* *Minor Enhancement*: Added the Custom Order command to the application
+** What it does: This function allows greater flexibility and personalisation for the application by giving users manual control over the order of which they want their sources to appear.
+** Justification: This feature improves the product significantly because it allows users greater customisation options for their own personal sources which enhances the management and organisation component of the application. Critical sources can be given priority and be moved to the top while older or outdated sources can be relegated to the bottom of the list.
+** Implementation: This new feature utilised the additional model functionality from the pin command but still required thorough testing before deployment.
 
 * *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=darrendragonlee[Project Dashboard]]
 
@@ -33,7 +38,13 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 
 ** Integration of existing functions:
 *** Updated the existing add and edit commands to be able to incorporate research sources (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/88[#88])
-**** Refactored a significant amount of code to ensure functionality across the entire model.
+**** Refactored a significant amount of code to ensure functionality across the entire model
+
+** Feature Enhancements
+*** Enhanced the Add and Edit functions to include a new Author field which made sources more comprehensive (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/218[#218])
+**** Allowed for additional functionality like the bibliographical generation
+*** Enhanced the Tags for sources to be able to include spaces for multi-word tags (https://github.com/CS2103-AY1819S2-W13-3/main/pull/220[#220], https://github.com/CS2103-AY1819S2-W13-3/main/pull/221[#221])
+**** Tags initially included special characters as well but was later narrowed down to just letters, numbers and spaces as special characters were deemed unnecessary for tags.
 
 ** Test Enhancements
 *** Added hashcode overrides to numerous existing features to ensure compliance with the hashcode contract (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203])
@@ -45,10 +56,9 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 *** Added a large section encompassing all the use cases for every function in the application to the Developer Guide to assist in testing the functions for the correct outputs (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/134[#134])
 
 ** Community:
-*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128], https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203])
+*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128], https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203], https://github.com/CS2103-AY1819S2-W13-3/main/pull/219[#219])
 
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._

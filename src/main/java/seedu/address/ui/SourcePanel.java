@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javafx.application.Platform;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
@@ -72,18 +74,32 @@ public class SourcePanel extends UiPart<Region> {
      */
     public String generateDetail(Source source) {
         String title = source.getTitle().toString();
+        String author = source.getAuthor().toString();
         String type = source.getType().toString();
         String detail = source.getDetail().toString();
         String tags = source.getTags().stream().map(Tag::toString).collect(
                 Collectors.joining(", "));
+        ObservableList<String> biblioFields =
+                FXCollections.observableArrayList(source.getBiblioFields().toString().split("\n"));
+        biblioFields.remove(0);
 
         StringBuilder htmlBuilder = new StringBuilder();
         htmlBuilder.append("<!DOCTYPE html><html><head></head>");
         htmlBuilder.append("<h1 class=\"source-title\">" + title + "</h1>");
         htmlBuilder.append("<body class=\"source-title\"></br>");
+        htmlBuilder.append("Source Author: " + author + "</br>");
         htmlBuilder.append("Source Type: " + type + "</br>");
         htmlBuilder.append("Source Tags: " + tags + "</br></br>");
-        htmlBuilder.append(detail + "</br>");
+        htmlBuilder.append("<b>Biblio Fields</b></br>");
+        htmlBuilder.append("--------------------------------------</br>");
+        for (String biblio: biblioFields) {
+            if (biblio.startsWith("[")) {
+                htmlBuilder.append(biblio.substring(1, biblio.length() - 1) + "</br>");
+            } else {
+                htmlBuilder.append(biblio + "</br>");
+            }
+        }
+        htmlBuilder.append("</br><br>" + detail + "</br>");
         htmlBuilder.append("</body></html>");
 
         return htmlBuilder.toString();

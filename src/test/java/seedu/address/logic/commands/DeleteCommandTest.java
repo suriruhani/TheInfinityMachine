@@ -274,6 +274,28 @@ public class DeleteCommandTest {
         assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
     }
 
+    /**
+     * Tests deleting a source in the Recycle Bin mode. Deletes the source permanently.
+     */
+    @Test
+    public void execute_deleteInRecycleBin_success() throws CommandException {
+        model.setParserMode(ParserMode.RECYCLE_BIN);
+        Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
+
+        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
+                model.getDeletedSources());
+        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
+
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
+
+        expectedModel.removeDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
+
+        CommandResult commandResult = new DeleteCommand(INDEX_FIRST_SOURCE).execute(model, commandHistory);
+        assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
+        assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
+    }
+
     @Test
     public void equals() {
         DeleteCommand deleteFirstCommand = new DeleteCommand(INDEX_FIRST_SOURCE);

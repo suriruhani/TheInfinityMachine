@@ -65,6 +65,7 @@ public class SourceManagerParserTest {
         assertTrue(parser.parseCommand(CountCommand.COMMAND_WORD) instanceof CountCommand);
         assertTrue(parser.parseCommand(CountCommand.COMMAND_WORD + " 3") instanceof CountCommand);
     }
+
     @Test
     public void parseCommand_delete() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(

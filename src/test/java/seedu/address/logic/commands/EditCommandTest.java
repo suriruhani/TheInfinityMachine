@@ -164,7 +164,6 @@ public class EditCommandTest {
         assertCommandFailure(editCommand, model, commandHistory, Messages.MESSAGE_INVALID_SOURCE_DISPLAYED_INDEX);
     }
 
-    @Ignore
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
         Source editedSource = new SourceBuilder().build();
@@ -210,7 +209,6 @@ public class EditCommandTest {
      * unfiltered list is different from the index at the filtered list.
      * 4. Redo the edit. This ensures {@code RedoCommand} edits the source object regardless of indexing.
      */
-    @Ignore
     @Test
     public void executeUndoRedo_validIndexFilteredList_sameSourceEdited() throws Exception {
         Source editedSource = new SourceBuilder().build();

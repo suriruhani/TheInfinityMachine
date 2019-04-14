@@ -32,6 +32,7 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SearchCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.model.DeletedSources;
 import seedu.address.model.Model;
 import seedu.address.model.SourceManager;
 import seedu.address.testutil.TypicalSources;
@@ -62,7 +63,11 @@ public abstract class SourceManagerSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(
+                this::getInitialData,
+                this::getDeletedData,
+                getDataFileLocation(),
+                getDeletedDataFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
         waitUntilBrowserLoaded(getSourcePanel());
@@ -81,11 +86,19 @@ public abstract class SourceManagerSystemTest {
         return TypicalSources.getTypicalSourceManager();
     }
 
+    protected DeletedSources getDeletedData() {
+        return TypicalSources.getTypicalDeletedSources();
+    }
+
     /**
      * Returns the directory of the data file.
      */
     protected Path getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    protected Path getDeletedDataFileLocation() {
+        return TestApp.SAVE_LOCATION_FOR_TESTING_DELETED_SOURCES;
     }
 
     public MainWindowHandle getMainWindowHandle() {

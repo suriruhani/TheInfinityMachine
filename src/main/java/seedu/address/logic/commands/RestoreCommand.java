@@ -23,6 +23,11 @@ public class RestoreCommand extends Command {
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MESSAGE_RESTORE_DUPLICATE_SOURCE =
+            "Since the same source exists in the Source Manager. It cannot be restored.\n"
+            + "To remove it, use the empty-bin or delete command.\n"
+            + "Refer to the help section to find out more about duplicate sources.\n";
+
     public static final String MESSAGE_RESTORE_SOURCE_SUCCESS = "Restored Source:\n---------------------"
             + "--------------\n%1$s";
 
@@ -43,12 +48,10 @@ public class RestoreCommand extends Command {
 
         Source toRestore = lastShownDeletedList.get(targetIndex.getZeroBased());
 
-        // Removes duplicate source from deleted source list
-        // if the exact same source exists in source manager list.
+        // To guard against conflicts rising from restoring a duplicate source
+        // if the exact same source exists in source manager list, restoration is blocked.
         if (model.hasSource(toRestore)) {
-            model.removeDeletedSource(toRestore);
-            model.commitDeletedSources();
-            return new CommandResult(String.format(Messages.MESSAGE_DUPLICATE_SOURCE_TO_RESTORE, toRestore));
+            throw new CommandException(MESSAGE_RESTORE_DUPLICATE_SOURCE);
         }
 
         // add deleted source back to source manager list

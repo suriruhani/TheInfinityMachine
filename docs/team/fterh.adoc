@@ -9,7 +9,7 @@
 
 == Overview
 
-Infinity Machine is a source manager to be used by tech-savvy university students who are comfortable with the command line interface (CLI). 
+Infinity Machine is a source manager to be used by tech-savvy university students who are comfortable with the command line interface (CLI).
 It is an application for the efficient storage, management, and retrieval of research information (sources).
 It is privacy-focused, powerful, and flexible.
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java.

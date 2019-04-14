@@ -9,7 +9,6 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_SOURCE;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SEVENTH_SOURCE;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
 

@@ -296,7 +296,7 @@ This is because when panic mode is activated, we store the original source manag
 Therefore, should panic mode be activated while already in panic mode, `sourceManagerBackup` will now store the dummy source manager, and the original source manager will be deallocated and eventually purged from memory by Java's garbage collector.
 
 Since the JSON file on disk automatically tracks the source manager through the observer pattern, it automatically updates to track and reflect the data in the dummy source manager.
-
+// end::panic[]
 
 // tag::alias[]
 === Command Alias feature
@@ -444,6 +444,7 @@ Conversely, `readAliases()` parses this string and reconstructs the aliases Hash
 JSON is more suited for "document-like" objects with different properties, some of which are possibly nested multiple layers.
 However, in our case, we only have a series of key:value pairs, in a predictable form, with no nesting.
 Therefore, we thought that a simple semicolon-separated key:value pair encoding scheme would suffice.
+// end::alias[]
 
 // tag::undoredo[]
 === Undo/Redo feature

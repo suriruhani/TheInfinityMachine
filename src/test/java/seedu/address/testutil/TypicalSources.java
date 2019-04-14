@@ -70,6 +70,12 @@ public class TypicalSources {
             .withType("Journal Article")
             .withAuthor("Lee Shin Hyung")
             .withDetail("The best way to conduct research.").build();
+    public static final Source AI_GAMES = new SourceBuilder()
+            .withTitle("Nurturing Artificial Intelligence through Games")
+            .withType("Website")
+            .withAuthor("OpenAI")
+            .withDetail("Learn about how the OpenAI team taught the OpenAI Five Bots to play a game as complex as "
+                    + "DotA against real humans and beat them").build();
 
     // Manually added
     public static final Source STRUCTURE = new SourceBuilder()
@@ -135,6 +141,8 @@ public class TypicalSources {
     }
 
     public static List<Source> getTypicalDeletedSourcesList() {
-        return new ArrayList<>(Arrays.asList(RESEARCH_METHOD));
+        return new ArrayList<>(Arrays.asList(
+                RESEARCH_METHOD,
+                AI_GAMES));
     }
 }

@@ -57,6 +57,7 @@ public class DeleteCommand extends Command {
         // for recycle bin mode, deletes source from recycle bin permanently
         if (model.getParserMode() == ParserMode.RECYCLE_BIN) {
             model.removeDeletedSource(sourceToDelete);
+            model.commitDeletedSources();
             return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
         }
 
@@ -64,6 +65,7 @@ public class DeleteCommand extends Command {
         // if the exact same source exists in deleted source list.
         if (model.hasDeletedSource(sourceToDelete)) {
             model.deleteSource(sourceToDelete);
+            model.commitSourceManager();
             return new CommandResult(String.format(MESSAGE_DUPLICATE_SOURCE + MESSAGE_DELETE_SOURCE_SUCCESS,
                     sourceToDelete));
         }

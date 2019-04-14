@@ -180,7 +180,7 @@ public class DeleteCommandTest {
 
     /**
      * Deletes a source from the Recycle Bin Filtered list.
-     * Note that this is a permanent delete for the current model.
+     * Deletes the source permanently.
      */
     @Test
     public void execute_validIndexRecycleBinFilteredList_success() {
@@ -198,10 +198,15 @@ public class DeleteCommandTest {
         // remove deleted source from recycle bin permanently
         expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
         expectedModel.removeDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
 
+    /**
+     * Deletes a source from the Recycle Bin Unfiltered list.
+     * Deletes the source permanently.
+     */
     @Test
     public void execute_validIndexRecycleBinUnfilteredList_success() {
         model.setParserMode(ParserMode.RECYCLE_BIN); // switch mode to Recycle Bin
@@ -217,6 +222,7 @@ public class DeleteCommandTest {
         // remove deleted source from recycle bin permanently
         expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
         expectedModel.removeDeletedSource(sourceToDelete);
+        expectedModel.commitDeletedSources();
 
         assertCommandSuccess(deleteCommand, model, commandHistory, expectedMessage, expectedModel);
     }
@@ -271,28 +277,6 @@ public class DeleteCommandTest {
         // check deleted sources list
         model.switchToDeletedSources();
         expectedModel.switchToDeletedSources();
-        assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
-    }
-
-    /**
-     * Tests deleting a source in the Recycle Bin mode. Deletes the source permanently.
-     */
-    @Test
-    public void execute_deleteInRecycleBin_success() throws CommandException {
-        model.setParserMode(ParserMode.RECYCLE_BIN);
-        Source sourceToDelete = model.getFilteredSourceList().get(INDEX_FIRST_SOURCE.getZeroBased());
-
-        ModelManager expectedModel = new ModelManager(model.getSourceManager(), new UserPrefs(),
-                model.getDeletedSources());
-        expectedModel.setParserMode(ParserMode.RECYCLE_BIN);
-
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete);
-
-        expectedModel.removeDeletedSource(sourceToDelete);
-        expectedModel.commitDeletedSources();
-
-        CommandResult commandResult = new DeleteCommand(INDEX_FIRST_SOURCE).execute(model, commandHistory);
-        assertEquals(commandResult.getFeedbackToUser(), expectedMessage);
         assertEquals(model.getFilteredSourceList(), expectedModel.getFilteredSourceList());
     }
 

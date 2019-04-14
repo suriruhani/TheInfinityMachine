@@ -737,11 +737,15 @@ Pinned sources can be deleted with the delete command but cannot be swapped.
 
 Essentially, the pinned sources are governed by a single number within the `ModelManager` and is managed through a separate class called the `PinnedSourcesCoordinationCenter`. This coordination center is responsible for all operations which modify the number of pinned sources.
 
-image::pinUnpinStructure.png[width="800"]
+image::pinUnpinStructure.png[width="900"]
 
 When a new source is pinned using the `pin INDEX` command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.
 
+image::pinSequence.png[width="900"]
+
 When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
+
+image::unpinSequence.png[width="900"]
 
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.

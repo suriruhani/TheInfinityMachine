@@ -104,13 +104,15 @@ public class Source {
      */
     public boolean isSameSource(Source otherSource) {
         if (otherSource.getTitle().title.equals(this.getTitle())
-                && otherSource.getDetail().detail.equals(this.getDetail())) {
+                && otherSource.getDetail().detail.equals(this.getDetail())
+                && otherSource.getAuthor().author.equals(this.getAuthor())) {
             return true;
         }
 
         return otherSource != null
                 && otherSource.getTitle().equals(getTitle())
-                && otherSource.getDetail().equals(getDetail());
+                && otherSource.getDetail().equals(getDetail())
+                && otherSource.getAuthor().equals(getAuthor());
     }
 
     /**

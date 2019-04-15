@@ -3,6 +3,8 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+image::darrendragonlee.png[width="150", align="left"]
+
 == PROJECT: The Infinity Machine
 
 ---
@@ -56,7 +58,8 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 *** Added a large section encompassing all the use cases for every function in the application to the Developer Guide to assist in testing the functions for the correct outputs (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/134[#134])
 
 ** Community:
-*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128], https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203], https://github.com/CS2103-AY1819S2-W13-3/main/pull/219[#219])
+*** Offered technical assistance to team mates by providing in depth code analysis for pull requests (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/128[#128], https://github.com/CS2103-AY1819S2-W13-3/main/pull/203[#203], https://github.com/CS2103-AY1819S2-W13-3/main/pull/219[#219], https://github.com/CS2103-AY1819S2-W13-3/main/pull/227[#227])
+*** Assisted in bug spotting by testing cross feature functionality (Pull request https://github.com/CS2103-AY1819S2-W13-3/main/pull/235[#235])
 
 == Contributions to the User Guide
 
@@ -64,11 +67,102 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=order]
+=== Organisational Tools : `order` and `pin`
+The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.
 
-include::../UserGuide.adoc[tag=add]
+Pinned sources are saved between sessions, allowing users to retain whatever edits they have made.
 
-include::../UserGuide.adoc[tag=edit]
+==== Pinning important sources : `pin`
+Marks a source as pinned and moves it to the top of the list where it will remain.
+
+Format: `pin INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
+
+****
+* The `INDEX` refers to the index number shown in the displayed source list.
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
+* The specified source to be pinned will move up and replace the source at the first position, pushing all sources after that down by 1 position.
+****
+
+[NOTE]
+====
+You can delete a pinned source with no issue by entering the `delete` command followed by the index of the pinned source.
+
+However, do note that deleting a pinned source will remove the source from the list.
+====
+
+[TIP]
+The maximum number of pinned sources you can have at a single time is 5.
+
+Examples:
+
+* `pin 4` +
+Marks source number 4 as pinned and moves it to the top of the list.
+
+==== Unpinning sources : `unpin`
+Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
+
+Format: `unpin INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
+
+****
+* The `INDEX` refers to the index number shown in the displayed source list.
+* The `INDEX` *must be a positive integer* 1, 2, 3, ...
+* The specified source to be unpinned will be moved down to the position of the first unpinned source if there are pinned sources after the source to be unpinned.
+* If the source to be unpinned is the only or the last pinned source, then its position does not change.
+****
+
+[TIP]
+Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
+
+Examples:
+
+* `unpin 4` +
+Reverts source 4, which was originally pinned, to its unpinned state and moves it down to the first unpinned source's position.
+
+==== Reordering sources to your liking : `order`
+Moves the specified source from one position to another as defined by the user.
+
+Format: `order ORIGINAL_INDEX NEW_INDEX`
+
+[NOTE]
+====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+====
+
+****
+* Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
+* The indexes refers to the index numbers shown in the displayed source list.
+* The indexes *must be positive integers* 1, 2, 3, ...
+* The specified source will replace the original source at that index.
+** If the souce was shifted forward, sources before the `NEW_INDEX` will be shifted back and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
+** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
+****
+
+[TIP]
+You cannot swap a source that is pinned or swap a source to the location of a pinned source.
+
+Examples:
+
+* `order 1 4` +
+Moves the source located at index 1 to index 4.
+
+* `order 1 6` +
+If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
 == Contributions to the Developer Guide
 
@@ -76,4 +170,124 @@ include::../UserGuide.adoc[tag=edit]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=devorder]
+=== Pin and Unpin Features
+==== Current Implementation
+The concept of pinned sources works on an index bases system rather than a separate list or any additional implementation. This allows pinned sources to function just like ordinary sources in that they can be searched and listed as normal.
+
+[NOTE]
+Pinned sources can be deleted with the delete command but cannot be swapped.
+
+Essentially, the pinned sources are governed by a single number within the `ModelManager` and is managed through a separate class called the `PinnedSourcesCoordinationCenter`. This coordination center is responsible for all operations which modify the number of pinned sources.
+
+image::pinUnpinStructure.png[width="900"]
+
+When a new source is pinned using the `pin INDEX` command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.
+
+image::pinSequence.png[width="900"]
+
+When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
+
+image::unpinSequence.png[width="900"]
+
+==== Operational Process
+When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.
+
+An example of this could be `unpin 1` command in a database with 3 pinned sources.
+
+image::unpin1.PNG[width="400"]
+
+The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.
+
+image::unpin2.PNG[width="400"]
+
+==== Source Checks
+When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
+
+These very same source checks will also be called during the `delete` and `order` commands.  For the `delete` command, the coordination center will check if the source to be deleted is a pinned source. If so, then the number of pinned sources will decrement by 1. If not, it just carries on with the deletion as usual. For the `order` command, the coordination center will check both the source being moved as well as the move location. If either of these indexes are of pinned sources, the `order` command will fail.
+
+==== Pinned Source Persistence
+For the pinned sources to be persistent, the number of pinned sources is updated into an external text file whenever a change is made to the number. This is consistent with the source database itself so the reordering of the sources when something is pinned or unpinned will occur together with the update to the number of pinned sources.
+
+The external storage is handled by a simple class called the `PinnedSourcesStorageOperationsCenter` which contains the path of the file which the number will be saved to.
+
+Dynamic pathing was necessary because when testing the function using a default file path, changes made during the test were saved to the actual file and that caused major problems for the program. Dynamic pathing ensured that for testing, a separate test file is written to thus maintaining the integrity of the actual file.
+
+==== Pinned Source UI Tag
+Pinned sources are denoted by a little golden badge on top of the source that says "Pinned". This is kept updated vis a flag set in the source object itself.
+
+At the start of the program, the `ModelManager` will use the number of pinned sources retrieved from the external storage to assign the flags accordingly. Every time a function affects the pinned sources, namely `delete`, `pin` and `unpin`, is called, the flag will be appropriately updated as well for consistency.
+
+It is important to note that the flag itself is not stored externally and is not persistent. It is assigned at the start of every session and modified accordingly as the functions are called. The rationale behind this implementation choice is to ensure that the external source storage is kept as clean and minimalist as possible.
+
+// tag::devorder[]
+=== Custom Order Feature
+==== Current Implementation
+The function is currently implemented using the functionality of the source model. It allows users to designate a source they want to move and a location they want to move it to.
+
+The primary uses of this feature are to facilitate source management and ordering sources by some user defined metric like personal importance.
+
+Given the function works purely on the parameters the user enters, a parser file was necessary to filter out invalid inputs like alphabets or special characters.
+
+Further consideration was necessary because of nature of the inputs. The inputs are array indexes which are very prone to being out or bounds that can result in system failures. Therefore, in addition to traditional exception handling, the function also implements its own checks for invalid user indexes.
+
+These check include the following:
+
+* Checking for inputs which are 0 or smaller
+** The user entered input follows traditional listing which starts from 1.  However array indexes in Java start from 0.  Therefore, 1 is always subtracted from any input added.
+** This means that any user input less than 1 are automatically invalid since that index cannot possibly exist
+
+* Checking for inputs which are larger than the size of the list of sources
+** The classic out of bounds exception occurs when a function attempts to extract an index from a point larger than the list's current size.
+** The function therefore checks the user input to ensure that it is always within the size of the list.
+
+Once the inputs are deemed as valid, the actual moving can begin. The model uses a list implementation for its primary storage model. This means that when a source is moved to a location, every source around it will need to be shifted to the front or the back depending on where the original source originated at.
+
+Thankfully, the Java List implementation does come with the function to add an item to the lest at a particular index, pushing everything aside automatically. The function called `addSourceAtIndex` was added to the model which took in the source to add as well as an index which the source should be added at.
+
+The function takes the following steps to make the swap:
+
+* Step 1 -- The function stores a copy of the source to be moved locally
+** The source to be moved is found using the index entered by the user and the `List.get` function that takes in an index and returns the source to be moved
+
+* Step 2 -- The function then deletes the source to be moved from the list
+** The `deleteSource` function automatically moves sources up to fill up the void left by the deleted source
+** A deletion is necessary in this step because the model does not accept duplicate sources. Therefore, adding the source to be moved first before deleting it would result in the function failing.
+
+* Step 3 -- The `addSourceAtIndex` function is used to place the recently deleted source back into the list at the designated location.
+
+* Step 4 -- The function then commits the database to save the recent changes.
+
+image::customOrderSequence.png[width="900"]
+
+==== Swapping process
+The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
+
+===== Forward Swapping
+Forward swapping means that the index of the source to be moved is smaller than the index of the position it is to be moved to.
+
+An example of such a command could be `order 2 5`.
+
+image::forward1.PNG[width="400"]
+
+Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for forward swapping the initial source at the move position, in this case position 5, changes.
+
+image::forward2.PNG[width="400"]
+
+The source to be moved is then inserted into the current position 5, displacing all other sources after that and pushing them back.
+
+image::forward3.PNG[width="400"]
+
+===== Backward Swapping
+Backward swapping means that the index of the source to be moved is larger than the index of the position it is to be moved to.
+
+An example of such a command could be `order 5 2`.
+
+image::backward1.PNG[width="400"]
+
+Once the source to be moved and the position it is to be moved to have been identified and validated, the source to be moved will be deleted from the list and stored separately. Notice that for backward swapping the initial source at the move position, in this case position 2, does not change.
+
+image::backward2.PNG[width="400"]
+
+The source to be moved is then inserted into the current position 2, displacing all other sources after that and pushing them back.
+
+image::backward3.PNG[width="400"]

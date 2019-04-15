@@ -595,13 +595,14 @@ Research materials can be very sensitive and private especially for high profile
 Will allow users to generate simple encryption keys which will help keep their research materials secure.
 // end::dataencryption[]
 
-[[Features]]
+[[RecycleBin]]
 === Recycle Bin Commands
 
 ====
 Note that Recycle Bin only support the following commands necessary to manage the deletion and restoration of a source .
 ====
 
+// tag::recyclebindelete[]
 ==== Deleting a source : `delete`
 
 Deletes the specified source permanently. +
@@ -628,7 +629,7 @@ Deletes the 1st source in the results of the `search` command.
 `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
-
+// end::recyclebindelete[]
 
 == FAQ
 

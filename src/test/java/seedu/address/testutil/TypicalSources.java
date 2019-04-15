@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.model.DeletedSources;
+import seedu.address.model.SourceManager;
 import seedu.address.model.source.Source;
 
 /**

@@ -18,7 +18,7 @@ The user interacts with it using a CLI, and it has a GUI created with JavaFX. It
 == Summary of contributions
 
 == Major enhancement: *added a recycle bin mode*
-** What it does: A recycle bin mode that allows users to safely delete from the source manager, revisit, retrieve and restore all previously deleted sources. Preceding restore commands can be reversed by using the redo command.
+** What it does: A recycle bin mode that allows users to safely delete from the source manager, visit, retrieve and restore all previously deleted sources. Preceding restore commands can be reversed by using the redo command.
 ** Justification: This feature improves the product significantly because it prevents the loss of important data when a user accidentally deletes an important research data.
 Since the recycle bin has persistent storage, users will not have to be worried about losing any data as well when they leave the application or if their computer accidentally crashes.
 This cannot be achieved with the current undo or redo commands because it would be inefficient to revert the commands other than the delete sources if that is what the user wishes to achieve and undo is not persistent.

@@ -1022,6 +1022,8 @@ It is currently implemented with the following syntax: `biblioEdit INDEX HEADER 
 "City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
 * `BODY` -- Indicates the new value that should stored under the relevant header.
 
+image::BiblioEditCommand.png[width="800"]
+
 An example would be `biblioEdit 1 City London`
 
 *Alternative*: The bibliofields of a source can be set at object creation with the add command. However, this makes using the add command excessively onerous. The current implementation allows the user to change each field as needed and preserves the information stored under the other headers in `Bibliofields`.

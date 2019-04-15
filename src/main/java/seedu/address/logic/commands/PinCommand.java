@@ -58,6 +58,7 @@ public class PinCommand extends Command {
         // essentially an "order" command where the source is moved to the top
         Source sourceToPin = completeSourceList.get(targetIndex);
         model.deleteSource(sourceToPin);
+        sourceToPin.setPinnedState(true);
         model.addSourceAtIndex(sourceToPin, 0);
         // model is not committed because the pin command is not undoable
 

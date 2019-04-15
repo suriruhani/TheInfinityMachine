@@ -96,7 +96,7 @@ public class SourceBuilder {
     public SourceBuilder withBiblioFields() {
         for (int i = 0; i < BiblioFields.ACCEPTED_FIELD_HEADERS.length; i++) {
             this.biblioFields.replaceField(BiblioFields.ACCEPTED_FIELD_HEADERS[i],
-                    "Placeholder " + BiblioFields.ACCEPTED_FIELD_HEADERS[i]);
+                    "Foo" + BiblioFields.ACCEPTED_FIELD_HEADERS[i]);
         }
         return this;
     }

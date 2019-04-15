@@ -80,7 +80,8 @@ Responsibilities:
 === Yang Yang
 
 image::doittomorrow.png[width="150", align="left"]
-{empty}[https://github.com/DoItTomorrow[github]]
+{empty}[https://github.com/DoItTomorrow[github]][<<doittomorrow#, portfolio>>]
+
 
 Role: Developer
 

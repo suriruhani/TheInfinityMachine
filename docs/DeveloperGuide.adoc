@@ -1042,8 +1042,6 @@ Given below is an example usage scenario and how the BiblioEdit mechanism behave
 `1` `APA`
 ** The user receives an appropriately formatted bibliography entry
 
-
-
 // end::biblio[]
 
 // tag::dataencryption[]

@@ -88,6 +88,7 @@ The entry fields for the various source information have the following limitatio
 * AUTHOR
 ** A mantatory field.
 ** No limitation on the characters to be entered.
+** For the purposes of generating an accurate bibliography entry later, it is recommended to enter the full name of an Author in the following way: `Last name, First name`.
 
 * DETAIL
 ** A mantatory field.
@@ -97,6 +98,11 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
+
+// tag::biblio[]
+[Tip]
+The created source comes with an empty set of biblio fields, used for storing information for creating a bibliography entry. Refer to `biblio` and `biblioEdit` for more information.
+// end::biblio[]
 
 ====
 
@@ -414,7 +420,8 @@ Moves the source located at index 1 to index 4.
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
-=== Generate bibliography entry : `biblio`
+// tag::biblio[]
+=== Generating a bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
 Format: `biblio INDEX FORMAT`
@@ -438,7 +445,7 @@ Generates an APA style bibliography entry for the first source.
 * `biblio 2 MLA` +
 Generates an MLA style bibliography entry for the second source.
 
-=== Edit a bibliography related field (bibliofield) in a source : `biblioEdit`
+=== Editing a bibliography related field (bibliofield): `biblioEdit`
 
 Replaces the information stored under the indicated header in the indicated source.
 
@@ -462,6 +469,7 @@ Replaces the "City" bibliofield in the first source with "London".
 
 * `biblioEdit 2 Publisher Penguin` +
 Replaces the "Publisher" bibliofield in the second source with "Penguin".
+// end::biblio[]
 
 === Listing entered commands : `history`
 

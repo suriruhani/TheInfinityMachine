@@ -30,13 +30,13 @@ public class BiblioFields {
      * @param body A valid biblio field body
      * @return true if edit is successful
      */
-    public boolean replaceField (String header, String body) {
+    public BiblioFields replaceField (String header, String body) {
         requireAllNonNull(header, body);
         if (getHeaderIndex(header) == -1) {
-            return false;
+            return null;
         } else {
-            fieldBodies[getHeaderIndex(header)] = body;
-            return true;
+            this.fieldBodies[getHeaderIndex(header)] = body;
+            return this;
         }
     }
 

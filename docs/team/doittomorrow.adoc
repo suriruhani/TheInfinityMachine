@@ -20,8 +20,8 @@ The user interacts with the application using a CLI, and it has a GUI created wi
 ** Justification: A typical user would expect a piece of software for managing sources to also be able to generate appropriate bibliography entries.
 ** Implementation: This new feature required a large number of additional fields in source. A new command, biblioEdit, was added to manage these fields.
 
-* *Code contributed*:
-[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=doittomorrow[Project Dashboard]]+
+* *Code contributed*: +
+[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=doittomorrow[Project Dashboard]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioCommand.java[biblio Command code]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/BiblioCommandTest.java[biblio command test]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioEditCommand.java[biblioEdit command]] +

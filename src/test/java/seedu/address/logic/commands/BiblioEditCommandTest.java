@@ -35,7 +35,7 @@ public class BiblioEditCommandTest {
 
         BiblioEditCommand biblioEditCommand = new BiblioEditCommand(INDEX_FIRST_SOURCE, "City", "London");
 
-        editedSource.biblioFields.replaceField("City", "London");
+        editedSource.getBiblioFields().replaceField("City", "London");
         String expectedMessage = BiblioEditCommand.MESSAGE_BIBLIO_EDIT_SUCCESS + editedSource.getBiblioFields();
 
         Model expectedModel = new ModelManager(new SourceManager(model.getSourceManager()), new UserPrefs(),

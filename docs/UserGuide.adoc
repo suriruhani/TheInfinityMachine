@@ -368,7 +368,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 * If the source to be unpinned is the only or the last pinned source, then its position does not change.
 ****
 
-[WARNING]
+[TIP]
 Pinning and unpinning a source is not considered an undoable command and therefore will not be undone or redone with the `undo` or `redo` commands respectively.
 
 Examples:
@@ -397,7 +397,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ** If the souce was shifted backwards, sources after the `NEW_INDEX` will be shifted forward and the source designated by `ORIGINAL_INDEX` will take the position of `NEW_INDEX`.
 ****
 
-[WARNING]
+[TIP]
 You cannot swap a source that is pinned or swap a source to the location of a pinned source.
 
 Examples:

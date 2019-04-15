@@ -62,6 +62,7 @@ public class UnpinCommand extends Command {
         // essentially an "order" command where the source is moved to the top of unpinned list
         Source sourceToUnpin = completeSourceList.get(targetIndex);
         model.deleteSource(sourceToUnpin);
+        sourceToUnpin.setPinnedState(false);
         model.addSourceAtIndex(sourceToUnpin, numPinnedSources);
         // model is not committed because the unpin command is not undoable
 

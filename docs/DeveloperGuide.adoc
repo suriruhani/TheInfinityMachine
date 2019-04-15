@@ -2178,6 +2178,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
+// tag::searchMT[]
 === Searching a source
 
 . Searches through the entire database of sources
@@ -2196,6 +2197,9 @@ These instructions only provide a starting point for testers to work on; testers
     all their details. Here, the empty tag implies the type can be anything, thus after conjunction, the 'web' constraint
     dominates the result.
 
+// end::searchMT[]
+
+// tag::listMT[]
 === Listing sources
 
 . Lists sources based on the indices passed by the user
@@ -2215,6 +2219,8 @@ with N not greater than M.
     Expected: error because range is invalid
 .. Test case: `list 0`
     Expected: error because all indices must be positive
+
+// end::listMT[]
 
 === Saving data
 

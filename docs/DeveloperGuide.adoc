@@ -592,6 +592,10 @@ contains the keywords entered by the user (case insensitive).
 * `LEVENSHTIEN_DISTANCE_CONSTANT` -- a positive integer which determines the number of swaps a string can have for it to pass the similarity test
 as per the `checkLevenshtienSimilarity` method. Currently set to 5, thus if less than 5 swaps are needed to convert between the user entered string and the entire string value fo the source field.
 
+Given below is a sequence diagram representation of the search command of the Infinity Machine:
+
+image::SearchCommandSequenceDiagram.png[width="800"]
+
 This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
 Not only that, the user can now just input whatever they are able to recall and the `search` returns all super strings instead of
 carrying out an exact matching.

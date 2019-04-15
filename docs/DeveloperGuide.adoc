@@ -244,10 +244,8 @@ Users may do one of the following:
 4. Undo and Redo any action in the recycle bin mode
 5. Exit the recycle bin and return to the source manager mode
 
-The restore feature is facilitated by `Infinity Machine`.
-
 ==== Overview
-It extends `Infinity Machine` with a recycle bin feature, allowing user to delete and restore source from a persistent deleted sources list.
+The restore feature is facilitated by `Infinity Machine`. It extends `Infinity Machine` with a recycle bin feature, allowing user to delete and restore source from a persistent deleted sources list.
 The Recycle Bin was extended from interactions with the delete command. Our rationale to create an entire mode is so that users can safely delete sources
 and have a place to access and retrieve them even after exiting the application accidentally or intentionally. Previously, this feature was implemented seperatedly
 as a restore and delete feature in the source manager however, after testing it, it proved to be very messy and confusing for our users if they did not had a mode that
@@ -259,8 +257,7 @@ specifically allows them to interact with the deleted sources.
 * In the Recycle bin, a `RecycleBinParser` was created which is a now child of `SourceManagerParser` in the logic component.
 Through the separation of different commands to different parsers, it allows us to enable or disable certain commands for Source Manager mode or
 Recycle Bin mode which helps to increase the usability of our application.
-* A listener has also been added in the `LogicManager` so that operations
-egarding the Recycle Bin can be detected accordingly.
+* A listener has also been added in the `LogicManager` so that operations regarding the Recycle Bin can be detected accordingly.
 
 ===== Model Component
 * In the Model Component, a `ParserMode` enum class was added which consists of two different modes `RECYCLE_BIN` and `SOURCE_MANAGER`.

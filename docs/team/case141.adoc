@@ -85,6 +85,4 @@ include::../UserGuide.adoc[tag=undoredo]
 
 include::../DeveloperGuide.adoc[tag=recyclebin]
 
-include::../DeveloperGuide.adoc[tag=delete]
-
 include::../DeveloperGuide.adoc[tag=undoredo]

@@ -130,7 +130,7 @@ Examples:
 * `add i/Algorithms Wikipedia y/Website a/Jason Mills d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
 * `add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
-
+// tag::delete[]
 ==== Deleting a source : `delete`
 
 Deletes the specified source. +
@@ -157,7 +157,7 @@ Deletes the 1st source in the results of the `search` command.
 `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
-
+// end::delete[]
 
 ==== Editing a source : `edit`
 
@@ -439,10 +439,9 @@ Format: `alias COMMAND ALIAS`
 Examples:
 
 * `alias count c` (`c` is now a valid pseudo-command that works exactly like `count`)
-* `alias invalid i` (`i` is now an invalid pseudo-command that works exactly like `invalid`)
+* `alias invalid i` (this doesn't work because `invalid` is not a valid command)
 
-The user is responsible for ensuring that he is creating aliases for valid commands.
-The successful creation of an alias does not provide any guarantee of the validity of the associated command.
+As the above examples demonstrate, aliases may only be created for valid commands.
 
 If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:
 
@@ -812,12 +811,14 @@ Displays the source selected.
 
 // end::recyclebin[]
 
-
-
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Infinity Machine folder.
+
+*Q*: What is a duplicate source? +
+*A*: A duplicate source is a source that has the exact same *title*, *author* and *details* as another existing source in the database.
+This is because if a research data has the exact same title, author and details it would mean that it is the exact same research data.
 
 == Command Summary
 

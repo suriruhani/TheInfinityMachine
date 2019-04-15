@@ -9,15 +9,14 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_DETAILS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
-import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
 import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
 import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.GAME_DEVELOPMENT;
 import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
+import static seedu.address.testutil.TypicalSources.getTypicalSources;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,7 +84,7 @@ public class SearchCommandTest {
     @Test
     public void execute_zeroTitleKeywords_allSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 7);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 20);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TITLE);
@@ -94,15 +93,14 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH, SMART_COMPUTERS,
-            VR_RESEARCH, AR_RESEARCH, GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
 
     }
 
     @Test
     public void execute_zeroTypeKeywords_allSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 7);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 20);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TYPE);
@@ -111,15 +109,14 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH, SMART_COMPUTERS,
-                VR_RESEARCH, AR_RESEARCH, GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
 
     }
 
     @Test
     public void execute_zeroDetailKeywords_allSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 7);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 20);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_DETAILS);
@@ -128,15 +125,14 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH, SMART_COMPUTERS,
-                VR_RESEARCH, AR_RESEARCH, GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
 
     }
 
     @Test
     public void execute_zeroTagKeywords_allSourcesFound() {
 
-        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 7);
+        String expectedMessage = String.format(MESSAGE_SOURCES_LISTED_OVERVIEW, 20);
         ArrayList<Prefix> pList = new ArrayList<>();
         ArrayList<String> sList = new ArrayList<>();
         pList.add(PREFIX_TAG);
@@ -145,8 +141,7 @@ public class SearchCommandTest {
         SearchCommand command = new SearchCommand(predicate);
         expectedModel.updateFilteredSourceList(predicate);
         assertCommandSuccess(command, model, commandHistory, expectedMessage, expectedModel);
-        assertEquals(Arrays.asList(ALGORITHM_RESEARCH, SENSOR_RESEARCH, SMART_COMPUTERS,
-                VR_RESEARCH, AR_RESEARCH, GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
 
     }
 

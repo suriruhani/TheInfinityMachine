@@ -28,9 +28,21 @@ public class ListCommandParserTest {
     }
 
     @Test
+    public void parse_singlePositiveArgEqualTotal_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(20), true);
+        assertParseSuccess(parser, " 20" , expectedListCommand);
+    }
+
+    @Test
     public void parse_singleNegativeArg_returnsSearchCommand() {
         ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(1), false);
         assertParseSuccess(parser, " -1" , expectedListCommand);
+    }
+
+    @Test
+    public void parse_singleNegativeArgEqualTotal_returnsSearchCommand() {
+        ListCommand expectedListCommand = new ListCommand(Index.fromOneBased(20), false);
+        assertParseSuccess(parser, " -20" , expectedListCommand);
     }
 
     @Test

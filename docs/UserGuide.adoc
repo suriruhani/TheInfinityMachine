@@ -85,6 +85,7 @@ Displays the source selected.
 * Selects the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+****
 
 ==== Adding a source: `add`
 

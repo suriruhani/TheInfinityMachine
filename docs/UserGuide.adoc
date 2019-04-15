@@ -397,7 +397,7 @@ Moves the source located at index 1 to index 4.
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
-=== Generate bibliography entry : `biblio`
+==== Generate bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
 Format: `biblio FORMAT INDEX`
@@ -409,16 +409,16 @@ Format: `biblio FORMAT INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-=== Listing entered commands : `history`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 // tag::alias[]
-=== Command aliases : `alias`
+==== Command aliases : `alias`
 Note: Aliases do not work in recycle-bin mode.
 
-==== Creating an alias: `alias`
+===== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +
 Format: `alias COMMAND ALIAS`
 
@@ -449,7 +449,7 @@ The alias must be syntatically valid. A valid syntax may only contain alphabets.
 * `alias count ct` (valid)
 * `alias clear $` (invalid)
 
-==== Removing an alias: `alias-rm`
+===== Removing an alias: `alias-rm`
 Allows the user to remove previously-defined aliases. +
 Format: `alias-rm ALIAS`
 
@@ -461,21 +461,21 @@ Examples:
 If the user attempts to remove a non-existent alias, nothing happens.
 `alias-rm` only guarantees that after it is performed, the alias argument does not exist.
 
-==== Listing all aliases: `alias-ls`
+===== Listing all aliases: `alias-ls`
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
 
-==== Clearing all aliases: `alias-clear`
+===== Clearing all aliases: `alias-clear`
 Clears all defined aliases and their associaetd commands. +
 Format: `alias-clear`
 
-==== Alias persistence
+===== Alias persistence
 Aliases are persistent across usage sessions.
 When an alias is created or removed, this is recorded to disk.
 No action is required on the user's part.
 // end::alias[]
 
-=== Counting total number of sources: `count`
+==== Counting total number of sources: `count`
 
 Counts and returns the total number of source entries retrieved. +
 Format: `count`
@@ -487,15 +487,15 @@ Result: `Total number of source(s): 6` +
 Counts the total number of sources retrieved from the database.
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Allows the user to reverse the last performed undoable action. +
 Format: `undo`
 
 [NOTE]
-====
+=====
 Undoable commands: those commands that modify the source's content (`add`, `delete`, `edit` and `clear`).
-====
+=====
 
 Examples:
 
@@ -513,7 +513,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Allows user to redo the last performed action. +
 Format: `redo`
@@ -537,7 +537,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 // tag::panic[]
-=== Enabling panic mode : `panic`
+==== Enabling panic mode : `panic`
 
 Allows the user to temporarily hide data. +
 Format: `panic`
@@ -554,15 +554,15 @@ In panic mode, the dummy data store behaves exactly like a real one.
 Therefore, all commands (e.g. add, remove, etc.) operate on the dummy data store (and the dummy JSON file), **without affecting the actual data store.** After exiting panic mode, all data created while in panic mode will be purged permanently. Therefore, dummy data created in panic mode will not persist between panic mode sessions.
 
 [NOTE]
-====
+=====
 If the user exits the application in panic mode (using the `exit` command), the application automatically restores the user's original data from memory and saves it to disk before exiting, to prevent permanent data loss.
 
 However, if the application is closed directly **while in panic mode**, **permanent data loss** will occur.
-====
+=====
 // end::panic[]
 
 // tag::unpanic[]
-=== Disabling panic mode : `unpanic`
+==== Disabling panic mode : `unpanic`
 
 Restores the user's original data. +
 Format: `unpanic`
@@ -571,24 +571,24 @@ This reverses the effect of panic mode by restoring the user's original data.
 The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.
 // end::unpanic[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from the source manager. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+==== Encrypting data files `[coming in v2.0]`
 
 Research materials can be very sensitive and private especially for high profile researchers. The Infinity Machine hopes to be able to help researchers by encrypting their data for only authorised viewers to access.
 
@@ -596,7 +596,7 @@ Will allow users to generate simple encryption keys which will help keep their r
 // end::dataencryption[]
 
 [[Features]]
-== Recycle Bin Commands
+=== Recycle Bin Commands
 
 == FAQ
 

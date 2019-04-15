@@ -18,6 +18,9 @@ public class SampleDataUtilTest {
     public void sampleDataEqualsTestData_success() {
         Source[] sampleData = SampleDataUtil.getSampleSources();
         Source[] testData = TypicalSources.getTypicalSources().toArray(new Source[0]);
+        for (Source s : testData) {
+            System.out.println(s);
+        }
         assert (Arrays.equals(sampleData, testData));
     }
 }

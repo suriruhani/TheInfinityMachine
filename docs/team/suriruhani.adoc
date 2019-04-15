@@ -3,6 +3,8 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+image::suriruhani.png[width="150", align="left"]
+
 == PROJECT: The Infinity Machine
 
 ---
@@ -134,7 +136,8 @@ relevant to our application's scope, changing parameter and return type along wi
 *** Reviewed and approved PRs of other team mates
 *** Helped in tracking issues including assigning severity, status, type, and closing it.
 
-//==== Tools:
+==== Tools:
+*** Set-up Coveralls
 
 == Contributions to the User Guide
 
@@ -153,8 +156,16 @@ include::../UserGuide.adoc[tag=search]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+=== Features
+
 include::../DeveloperGuide.adoc[tag=list]
 
 include::../DeveloperGuide.adoc[tag=search]
+
+=== Manual Testing
+
+include::../DeveloperGuide.adoc[tag=listMT]
+
+include::../DeveloperGuide.adoc[tag=searchMT]
 
 ---

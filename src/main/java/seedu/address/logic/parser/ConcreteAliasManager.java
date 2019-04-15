@@ -15,9 +15,9 @@ class ConcreteAliasManager implements AliasManager {
 
     private static final String ERROR_INVALID_SYNTAX = "Aliases must be alphabetical only";
     private static final String ERROR_DISALLOWED_COMMAND = "This command cannot be aliased";
-    private static final String ERROR_INVALID_COMMAND = "Provided command is invalid";
-    private static final String ERROR_COMMAND_IS_ALIAS = "Provided command is another alias";
-    private static final String ERROR_ALIAS_IS_COMMAND = "Provided alias is a command";
+    private static final String ERROR_INVALID_COMMAND = "The provided command is not a valid command";
+    private static final String ERROR_COMMAND_IS_ALIAS = "The provided command is another alias";
+    private static final String ERROR_ALIAS_IS_COMMAND = "The provided alias is an existing command";
     private static final String ERROR_ALIAS_IS_UNREGISTERED = "The provided alias is not registered";
     private static final String REGEX_VALIDATOR = "([a-z]|[A-Z])+";
 
@@ -50,7 +50,7 @@ class ConcreteAliasManager implements AliasManager {
     private void initialize() {
         logger.info("Initializing ConcreteAliasManager for use.");
         if (aliasStorage == null) {
-            logger.info("No AlaisStorage object provided. Terminating initialization.");
+            logger.info("No AliasStorage object provided. Terminating initialization.");
             return;
         }
 
@@ -60,7 +60,7 @@ class ConcreteAliasManager implements AliasManager {
     /**
      * Loads and restores previously-stored aliases from disk into memory,
      * if an AliasStorage object is provided. Otherwise, do nothing.
-     * If an exception is thrown, log, terminate the method, and keep the database `aliases` empty.
+     * If an exception is thrown, log, terminate the method, and keep the `aliases` database empty.
      */
     private void loadStoredAliases() {
         HashMap<String, String> loadedAliases;
@@ -122,7 +122,7 @@ class ConcreteAliasManager implements AliasManager {
      * Associates an alias with a command.
      * If alias already exists, it will be overwritten.
      * @throws IllegalArgumentException if command has an invalid syntax (must be alphabetical only).
-     * @throws IllegalArgumentException if command is a meta-command.
+     * @throws IllegalArgumentException if command is designated as un-aliasable.
      * @throws IllegalArgumentException if command is invalid.
      * @throws IllegalArgumentException if command is another registered alias.
      * @throws IllegalArgumentException if alias is an existing command.
@@ -142,7 +142,7 @@ class ConcreteAliasManager implements AliasManager {
             throw new IllegalArgumentException(ERROR_INVALID_SYNTAX);
         }
 
-        // Guard against command being a disallowed command
+        // Guard against command being designated as an un-aliasable command
         if (commandValidator.isUnaliasableCommand(command)) {
             logger.warning("Command cannot be aliased. Throwing IllegalArgumentException.");
             throw new IllegalArgumentException(ERROR_DISALLOWED_COMMAND);

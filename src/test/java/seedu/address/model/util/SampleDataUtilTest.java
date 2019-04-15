@@ -15,7 +15,7 @@ import seedu.address.testutil.TypicalSources;
 public class SampleDataUtilTest {
 
     @Test
-    public void sampleDataEqualsTestData_success(){
+    public void sampleDataEqualsTestData_success() {
         Source[] sampleData = SampleDataUtil.getSampleSources();
         Source[] testData = TypicalSources.getTypicalSources().toArray(new Source[0]);
         assert (Arrays.equals(sampleData, testData));

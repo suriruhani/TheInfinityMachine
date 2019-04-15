@@ -6,10 +6,10 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.showSourceAtIndex;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_SOURCE;
-import static seedu.address.testutil.TypicalSources.AI_RESEARCH;
 import static seedu.address.testutil.TypicalSources.ALGORITHM_RESEARCH;
 import static seedu.address.testutil.TypicalSources.AR_RESEARCH;
-import static seedu.address.testutil.TypicalSources.GAME_DEVELOPMENT;
+import static seedu.address.testutil.TypicalSources.COMPUTER_ORGANISATION;
+import static seedu.address.testutil.TypicalSources.NAVAL_HISTORY_THREE;
 import static seedu.address.testutil.TypicalSources.SENSOR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
@@ -74,7 +74,7 @@ public class ListCommandTest {
                 command.makePredicateForLastN(2, model.getFilteredSourceList().size()));
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_LAST_N_SUCCESS,
                 2), expectedModel);
-        assertEquals(Arrays.asList(GAME_DEVELOPMENT, AI_RESEARCH), model.getFilteredSourceList());
+        assertEquals(Arrays.asList(NAVAL_HISTORY_THREE, COMPUTER_ORGANISATION), model.getFilteredSourceList());
     }
 
     @Test

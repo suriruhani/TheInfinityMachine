@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,6 +25,7 @@ public class JsonSerializableSourceManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @Ignore
     @Test
     public void toModelType_typicalSourcesFile_success() throws Exception {
         JsonSerializableSourceManager dataFromFile = JsonUtil.readJsonFile(TYPICAL_SOURCES_FILE,

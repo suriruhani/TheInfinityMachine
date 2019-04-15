@@ -53,8 +53,9 @@ Role: Developer
 
 Responsibilities:
 
-- Generating history of searches made
-- Allowing custom command names (aliases)
+- Panic/unpanic mode
+- Aliasing command names
+- Refactoring and updating legacy code
 - Listing command usage under help
 
 

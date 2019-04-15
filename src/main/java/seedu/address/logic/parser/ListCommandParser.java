@@ -18,15 +18,30 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         try {
-            if (args.length() == 0) {
+            if (args.trim().length() == 0) {
                 return new ListCommand();
+            }
+            String[] splitArgs = args.split("\\s+");
+            if (splitArgs.length == 2) {
+                if (Integer.parseInt(splitArgs[1]) >= 0) {
+                    Index targetIndex = ParserUtil.parseIndex(splitArgs[1]);
+                    return new ListCommand(targetIndex, true);
+                } else {
+                    int targetNum = Math.abs(Integer.parseInt(splitArgs[1]));
+                    Index targetIndex = Index.fromOneBased(targetNum);
+                    return new ListCommand(targetIndex, false);
+                }
             } else {
-                Index index = ParserUtil.parseIndex(args);
-                return new ListCommand(index);
+                Index toIndex = ParserUtil.parseIndex(splitArgs[1]);
+                Index fromIndex = ParserUtil.parseIndex(splitArgs[2]);
+
+                return new ListCommand(toIndex, fromIndex);
             }
         } catch (ParseException pe) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), pe);
+        } catch (IndexOutOfBoundsException ie) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE), ie);
         }
     }
 

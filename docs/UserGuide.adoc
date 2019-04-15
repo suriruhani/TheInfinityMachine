@@ -231,17 +231,26 @@ Edits the 3rd source, changing the type and author of the source to be `Journal`
 * `edit 5 t/` +
 Edits the 5th source and clears all its existing tags.
 
+// tag::search[]
 
 === Searching a source: `search`
 
 Searches for entries amongst the list of sources. +
 Able to search by title, type, detail and tags as specified by the CLI prefixes.
-Able to perform substring matching.
+Able to perform substring matching. Able to implement autocorrect by searching for _'similar'_ strings,
+where similarity is defined by a pre-set Levenshtein distance.
+
 Finds all entries with a (case insensitive) field value that contains the value as specified by the user. +
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
 that satisfy all the keyword values are shown (logical `and` operation).
-Furthermore, the search command is able to take in multiple arguments of each prefix and search
+Enables substring matching for a more powerful retrieval of sources. Also able
+to take in multiple arguments of each prefix and search
 in conjunction such as all those fields are matched with the corresponding fields of the resulting sources.
+Similar fields are also shown, allowing for room should the user have made a typing mistake, or the user meant something
+else, or the user just wants to see other related sources with similar field values.
+If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
+the intended behaviour because of the reasons and rationale explained above or in the Developer Guide.
+Rest assured, the intended results will never be missed out.
 
 Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
@@ -251,6 +260,8 @@ Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 * There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
 * There can be multiple tags with same prefix and the result must satisfy all, eg. `search i/algo i/data` will result in `data struc. and algorithms`
 because it is a super-string of both the entered field values.
+* Closely related strings are matched even if the value is not exactly same, implemented using
+edit distance of the two strings.
 * Search implemented as a logical AND. eg. `search i/algorithm y/website` results in all those sources
 that have title `algorithm` AND type `website`
 ****
@@ -259,25 +270,66 @@ Examples:
 
 * `search i/Algorithms` +
 Returns the source(s) with the title `algorithms`
-* `search i/wiki i/algo y/web d/intelligence t/ML` +
-Returns any source having tags `ML` and having the word `intelligence` somewhere in their content
+* `search i/wiki y/web d/intelligence t/ML` +
+Returns any source(s) having tags `ML` and having the word `intelligence` somewhere in their content
 (detail) and having a type of `website` or `web series`.
+* `search i/data i/algo` +
+Returns the source(s) with both substrings 'data' and 'algo' included in them.
+* `search y/wesbite`
+Returns the source(s) of type 'website' [and other similar strings, if any]
+// end::search[]
+// tag::list[]
 
 === Listing all sources : `list`
 
-Displays a list of all sources currently in the database, without filtering. +
-Optional argument N used to list only the top N sources to the user, where N is a positive integer
-(any other value throws error). +
-Format: `list [N]`
-where argument N in [ ] is optional.
+Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed. +
+Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively. +
+With one parameter passed, a positive N lists top N sources from the top, a negative N lists top N sources from the bottom [bottom N sources]. +
+With two parameters, the range must have both N and M as positive indices and N must not be smaller than M. +
+None of the values can ever be 0. The listing feature is always relative to the original list of the entire database.
+
+Format: `list [N] [M]`
+where argument N and M in [ ] are optional [either enter none, N, or (N and M)]
+
+The four main formats and their usages are described below:
+
+==== list: (no arguments)
+When no arguments are passed to `list`, it works same way as in the original AB4 logic, listing *all* the sources in the entire database with all their title, type, author, detail and tag values.
+The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.
+
+Example: `list` +
+Lists all the sources indexed from 1 onwards with all their details.
+
+==== list N: (one positive argument)
+When one positive integer is passed to `list`, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
+Top N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+
+Example: `list 5` +
+Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+==== list -N: (one negative argument)
+When one negative integer is passed to `list`, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
+Bottom N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
+
+Example: `list -5` +
+Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
+
+==== list N, M: (two positive arguments)
+When two positive integers are passed to `list`, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
+N to M sources are listed with respect to the original source database list with indexes 1, 2 ... till (M-N+1).
+
+Example: `list 6, 9` +
+Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
 
 ****
-* Lists all sources present in the database in the order of their addition, if no argument passed
-* Lists top N sources if a single integer N is passed
-* Throws error if more than one arguments are passed
-* The paramter passed, N, must be a positive integer else error is thrown
+* More than 2 parameters passed will be ignored, and the first two will be tested for the fourth case of range(N,M) listing.
+* In single parameter, the integer can be positive or negative but not 0.
+* In two parameter, the two integers must both be positive, with second greater than or equal to the first (both non-zero).
+* Any number of spaces in between the number is accepted, they are trimed away and integers are used to determine the list command type.
 * Tags, Details, Type are also displayed along with the sources
 ****
+
+// end::list[]
 
 === Organisational Tools : `order` and `pin`
 The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.

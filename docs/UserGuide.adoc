@@ -125,6 +125,9 @@ The entry fields for the various source information have the following limitatio
 ** Can have any number including 0.
 =====
 
+[TIP]
+You cannot add a source with the same `i/TITLE` and `d/DETAILS` as another source in the database.
+
 Examples:
 
 * `add i/Algorithms Wikipedia y/Website a/Jason Mills d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
@@ -204,6 +207,9 @@ The entry fields for the various source information have the following limitatio
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
 =====
+
+[TIP]
+You cannot edit a source to have the same `i/TITLE` and `d/DETAILS` as another source in the database.
 
 Examples:
 

@@ -76,6 +76,17 @@ Format: `help`
 
 Displays the User Guide for a quick reference.
 
+==== Selecting a Source : `select`
+
+Format: `select INDEX`
+
+Displays the source selected.
+
+****
+* Selects the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+
 ==== Adding a source: `add`
 
 Adds a new source to the list of sources +
@@ -475,16 +486,18 @@ When an alias is created or removed, this is recorded to disk.
 No action is required on the user's part.
 // end::alias[]
 
+// tag::count[]
 ==== Counting total number of sources: `count`
 
-Counts and returns the total number of source entries retrieved. +
+Counts and returns the total number of source entries retrieved from Source Manager. +
 Format: `count`
 
 Examples:
 
 * `count` +
 Result: `Total number of source(s): 6` +
-Counts the total number of sources retrieved from the database.
+Counts the total number of sources retrieved from Source Manager.
+// end::count[]
 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
@@ -595,12 +608,38 @@ Research materials can be very sensitive and private especially for high profile
 Will allow users to generate simple encryption keys which will help keep their research materials secure.
 // end::dataencryption[]
 
+// tag::recyclebin[]
 [[RecycleBin]]
 === Recycle Bin Commands
 
 ====
 Note that Recycle Bin only support the following commands necessary to manage the deletion and restoration of a source.
 ====
+
+// tag::recyclebinlist[]
+==== Listing a deleted source : `recycle-bin`
+
+Switches to Recycle Bin mode and lists all the sources deleted in Source Manager. +
+Format: `recycle-bin`
+
+****
+* Switches modes from Source Manager to Recycle Bin.
+* Lists all sources previously deleted in the Source Manager.
+* Using this command in the Recycle Bin mode will list all sources deleted in the Source Manager.
+****
+
+Examples:
+
+* Test switching to Recycle Bin with deleted source: +
+1. Delete 1st source in the source manager database +
+`delete 1` +
+2. use recycle-bin to switch to Recycle Bin mode +
+`recycle-bin` +
+3. Deleted source is listed. +
+* Test using the command in Recycle Bin mode: +
+1. Lists all deleted sources +
+`recycle-bin` +
+// end::recyclebinlist[]
 
 // tag::recyclebindelete[]
 ==== Deleting a source : `delete`
@@ -647,26 +686,127 @@ Format: `restore INDEX`
 
 Examples:
 
-* Test Case 1:
+* Test restoring sources:
 1. Delete 1st source in the source manager database +
 `delete 1` +
 2. use recycle-bin to switch to Recycle Bin mode +
 `recycle-bin` +
-3. restores the 2nd source in the recycle bin database.
+3. restores the 2nd source in the recycle bin database. +
 `restore 1` +
-* Test Case 2:
-1. Add a source
+* Test restoring duplicate sources:
+1. Add a source +
 `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
-2. Delete the source
+2. Delete the source +
 `delete 1` +
-3. Add the same source
+3. Add the same source +
 `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
-4. Switch to Recycle Bin
+4. Switch to Recycle Bin +
 `recycle-bin` +
-5. Restore the deleted source
+5. Restore the deleted source +
 `restore 1` +
 6. An error message is thrown advising the removing of the source since it already exists in the source manager database.
 // end::restore[]
+
+// tag::emptybin[]
+==== Clears the Recycle Bin : `empty-bin`
+
+Clears all sources in Recycle Bin. +
+Format: `empty-bin`
+
+****
+* All sources in Recycle Bin will be removed.
+* Will not clear sources in Source Manager.
+****
+// end::emptybin[]
+
+// tag::exitbin[]
+==== Exits the Recycle Bin : `exit-bin`
+
+Switches modes from Recycle Bin to Source Manager. Lists all sources in Source Manager+
+Format: `exit-bin`
+// end::exitbin[]
+
+// tag::countrb[]
+==== Counting total number of sources: `count`
+
+Counts and returns the total number of deleted sources in the Recycle Bin. +
+Format: `count`
+
+Examples:
+
+* `count` +
+Result: `Total number of source(s): 6` +
+Counts the total number of sources retrieved from Recycle Bin.
+// end::countrb[]
+
+// tag::undoredorb[]
+==== Undoing previous command : `undo`
+
+Allows the user to reverse the last performed undoable action. +
+Format: `undo`
+
+[NOTE]
+=====
+Undoable commands: those commands that modify the source's content (`add`, `delete`, `edit` and `clear`).
+=====
+
+Examples:
+
+* `delete Algorithms` +
+`list` +
+`undo` (reverses the `delete Algorithms` command) +
+
+* `select 1` +
+`list` +
+`undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+
+==== Redoing the previously undone command : `redo`
+
+Allows user to redo the last performed action. +
+Format: `redo`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+// end::undoredorb[]
+
+==== Viewing help : `help`
+
+Format: `help`
+
+Displays the User Guide for a quick reference.
+
+==== Selecting a Source : `select`
+
+Format: `select INDEX`
+
+Displays the source selected.
+
+****
+* Selects the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+
+// end::recyclebin[]
 
 == FAQ
 

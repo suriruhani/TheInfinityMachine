@@ -20,12 +20,22 @@ public class RedoCommand extends Command {
     public CommandResult execute(Model model, CommandHistory history) throws CommandException {
         requireNonNull(model);
 
-        if (!model.canRedoSourceManager()) {
+        if (!model.canRedoSourceManager() && !model.canRedoDeletedSources()) {
             throw new CommandException(MESSAGE_FAILURE);
         }
 
-        if (!model.canRedoDeletedSources()) {
-            throw new CommandException(MESSAGE_FAILURE);
+        // if redo only interacts with source manager
+        if (model.canRedoSourceManager() && !model.canRedoDeletedSources()) {
+            model.redoSourceManager();
+            model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+
+        // if redo only interacts with delete source mode
+        if (!model.canRedoSourceManager() && model.canRedoDeletedSources()) {
+            model.redoDeletedSources();
+            model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            return new CommandResult(MESSAGE_SUCCESS);
         }
 
         model.redoSourceManager();

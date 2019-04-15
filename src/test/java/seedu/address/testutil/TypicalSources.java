@@ -147,6 +147,7 @@ public class TypicalSources {
     }
 
     public static List<Source> getTypicalDeletedSourcesList() {
-        return new ArrayList<>(Arrays.asList(RESEARCH_METHOD));
+        return new ArrayList<>(Arrays.asList(
+                RESEARCH_METHOD));
     }
 }

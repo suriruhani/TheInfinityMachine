@@ -167,7 +167,7 @@ If there are only 6 sources in the database, the command moves the source locate
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project. Some sections have been rearranged to fit the 10 page limit._
 |===
 
 === Pin and Unpin Features
@@ -198,12 +198,12 @@ image::pinSequence.png[width="900"]
 
 When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
 
-image::unpinSequence.png[width="900"]
-
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
 
 These very same source checks will also be called during the `delete` and `order` commands.  For the `delete` command, the coordination center will check if the source to be deleted is a pinned source. If so, then the number of pinned sources will decrement by 1. If not, it just carries on with the deletion as usual. For the `order` command, the coordination center will check both the source being moved as well as the move location. If either of these indexes are of pinned sources, the `order` command will fail.
+
+image::unpinSequence.png[width="900"]
 
 ==== Pinned Source Persistence
 For the pinned sources to be persistent, the number of pinned sources is updated into an external text file whenever a change is made to the number. This is consistent with the source database itself so the reordering of the sources when something is pinned or unpinned will occur together with the update to the number of pinned sources.

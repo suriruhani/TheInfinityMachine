@@ -104,8 +104,11 @@ public class ModelManager implements Model, PanicMode {
         storageOps.writeNumberOfPinnedSourcesToFile(this.numPinnedSources);
     }
 
+    /**
+     * Alternate ModelManager constructor with option where the pinned sources is set to 0. Used in tests only.
+     */
     public ModelManager() {
-        this(new SourceManager(), new UserPrefs(), new DeletedSources());
+        this(new SourceManager(), new UserPrefs(), new DeletedSources(), 0);
     }
 
     /**

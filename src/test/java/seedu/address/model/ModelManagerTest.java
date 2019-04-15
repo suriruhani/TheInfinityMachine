@@ -83,6 +83,19 @@ public class ModelManagerTest {
     }
 
     @Test
+    public void setDeletedSourcesFilePath_nullPath_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        modelManager.setDeletedSourceFilePath(null);
+    }
+
+    @Test
+    public void setDeleteManagerFilePath_validPath_setsDeleteManagerFilePath() {
+        Path path = Paths.get("source/manager/file/path");
+        modelManager.setDeletedSourceFilePath(path);
+        assertEquals(path, modelManager.getDeletedSourceFilePath());
+    }
+
+    @Test
     public void hasSource_nullSource_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         modelManager.hasSource(null);
@@ -169,7 +182,11 @@ public class ModelManagerTest {
         assertFalse(modelManager.equals(5));
 
         // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentSourceManager, userPrefs, differentDeletedSources)));
+        assertFalse(modelManager.equals(new ModelManager(
+                differentSourceManager,
+                userPrefs,
+                differentDeletedSources,
+                0)));
 
         // Temporarily comment out test for migration from address book to source manager.
         // Todo: Rewrite test in a way that makes sense for source manager.

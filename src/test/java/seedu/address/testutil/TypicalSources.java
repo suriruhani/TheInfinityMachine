@@ -12,6 +12,19 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERIN
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
+import static seedu.address.model.util.TypicalSources.BRIDGE_ENGINEERING;
+import static seedu.address.model.util.TypicalSources.BRITISH_HISTORY;
+import static seedu.address.model.util.TypicalSources.COMPUTER_ORGANISATION;
+import static seedu.address.model.util.TypicalSources.DIMENSIONS;
+import static seedu.address.model.util.TypicalSources.DIMENSIONS_THREE;
+import static seedu.address.model.util.TypicalSources.DIMENSIONS_TWO;
+import static seedu.address.model.util.TypicalSources.DRAGONS;
+import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY;
+import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY_THREE;
+import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY_TWO;
+import static seedu.address.model.util.TypicalSources.REPUBLIC;
+import static seedu.address.model.util.TypicalSources.SC_GUIDE;
+import static seedu.address.model.util.TypicalSources.SPACE_DEFENCE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,13 +150,28 @@ public class TypicalSources {
 
     public static List<Source> getTypicalSources() {
         return new ArrayList<>(Arrays.asList(
+                // Original 7
                 ALGORITHM_RESEARCH,
                 SENSOR_RESEARCH,
                 SMART_COMPUTERS,
                 VR_RESEARCH,
                 AR_RESEARCH,
                 GAME_DEVELOPMENT,
-                AI_RESEARCH));
+                AI_RESEARCH,
+                // Additional 13
+                SC_GUIDE,
+                REPUBLIC,
+                DRAGONS,
+                DIMENSIONS,
+                DIMENSIONS_TWO,
+                DIMENSIONS_THREE,
+                BRIDGE_ENGINEERING,
+                SPACE_DEFENCE,
+                BRITISH_HISTORY,
+                NAVAL_HISTORY,
+                NAVAL_HISTORY_TWO,
+                NAVAL_HISTORY_THREE,
+                COMPUTER_ORGANISATION));
     }
 
     public static List<Source> getTypicalDeletedSourcesList() {

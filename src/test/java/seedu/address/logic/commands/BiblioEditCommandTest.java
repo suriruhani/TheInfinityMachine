@@ -16,7 +16,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.SourceManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Source;
 
 /**

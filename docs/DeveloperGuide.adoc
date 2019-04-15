@@ -579,6 +579,9 @@ The algorithm implementation for this section of the code was inspired from http
 If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
 the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.
 
+[NOTE]
+Search by author name is not accounted for yet. Look forward in v2.0!
+
 Additionally, it uses:
 
 * `SourceContainsKeywordsPredicate.java` -- Here, the logic of running through all the respective fields of all the sources and matching it with the user inputs

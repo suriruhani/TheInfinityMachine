@@ -238,6 +238,7 @@ Rest assured, the intended results will never be missed out.
 Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
 ****
+* Search by author name is not accounted for yet. Look forward in v2.0.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The search implements substring matching. e.g. `algo` will match algorithm, algorithms, algo trading, etc.
 * There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)

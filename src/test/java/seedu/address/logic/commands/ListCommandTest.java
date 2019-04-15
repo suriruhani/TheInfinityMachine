@@ -47,15 +47,15 @@ public class ListCommandTest {
 
     @Test
     public void execute_listIsNotFiltered_showsSameList() {
-        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
-                expectedModel);
+        assertCommandSuccess(new ListCommand(), model, commandHistory,
+                String.format(ListCommand.MESSAGE_LIST_ALL_SUCCESS, 20 ), expectedModel);
     }
 
     @Test
     public void execute_listIsFiltered_showsEverything() {
         showSourceAtIndex(model, INDEX_FIRST_SOURCE);
-        assertCommandSuccess(new ListCommand(), model, commandHistory, ListCommand.MESSAGE_LIST_ALL_SUCCESS,
-                expectedModel);
+        assertCommandSuccess(new ListCommand(), model, commandHistory,
+                String.format(ListCommand.MESSAGE_LIST_ALL_SUCCESS, 20 ), expectedModel);
     }
 
     @Test

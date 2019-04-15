@@ -273,6 +273,10 @@ It consists of reading and writing operations implemented to manage the adding, 
 
 ==== Operation
 
+image::RecycleBinSequenceDiagram.png[width="800"]
+
+This sequence diagram shows what happens when a source is deleted pertaining to the recycle bin.
+
 Given below is an example usage scenario and how the recycle bin mode behaves at each step when a user deletes and restores a source.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources

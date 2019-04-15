@@ -13,8 +13,8 @@ image::suriruhani.png[width="150", align="left"]
 
 Our project, the Infinity Machine, is an application useful for efficient management of textual information
 of any kind, say research material. It allows users to store information by the their *title*, *type*, *details* and multiple *tags* and allows
-for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and intended
-for tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.
+for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and targeted at
+tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.
 
 == Summary of contributions
 
@@ -29,15 +29,15 @@ Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
 The work I have done on AB4's search feature can be divided into 3 major modifications as follows:
 
 1. *Multiple prefix tags of different (and same) kinds*: The search function now has an added functionality of being able to take in multiple
-arguments of the *same* and *different* type of source fields, and search for sources based on its conjunction.
+arguments of the *same* and *different* type of source fields [except author], and search for sources based on its conjunction.
 
 2. *Substring matching with incomplete words*: It is enabled with substring matching as against exact field matching.
 Each argument is checked for its presence inside the source
 fields and a source is found only if all the user entered arguments are present inside the source's respective field values.
 
 3. *Auto-correction feature for typing mistakes*: It is also able to find string matches with minor typing errors in the spelling,
-implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 3 character swaps needed to transform between the strings
-(lower bounded by the difference in the string lengths of the two strings).
+implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 5 character swaps needed to transform between the strings
+entered by the user and the entire field value of sources.
 
 ===== *What it does*:
 It allows the user to search through all the entries in the database through various fields at a time, same and different, and display
@@ -62,7 +62,7 @@ logical combination, along with allowing the user to not memorize his source fie
 - However, it changed the format of the original `search` command, which now not only takes parameters of different types, but also needs them to be prefixed by their
 CLI delimiters.
 - If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug as this is
-the intended behaviour because of the two features that render the search result space more broadened than before.
+the intended behaviour because of the two features that render the search result space more broadened than before [substring matching and typo accommodation].
 - Rest assured, the intended results will never be missed out.
 
 ===== *Credits*:
@@ -83,8 +83,8 @@ The various formats now accepted are:
 
 1. *`list` with no arguments*: Works as the original `list` command and shows all the sources and their details, unfiltered.
 2. *`list N` with one positive argument*: Shows the top N sources with all their details only.
-3. *`list -N` with one negative arguments*: Shows the last N sources or the TOp N sources from the bottom with their details.
-4. *`list N M` with two positive arguments*: With M>=N, shows sources between the indices N and M with all their details only.
+3. *`list -N` with one negative arguments*: Shows the last N sources or the Top N sources from the bottom with their details.
+4. *`list N M` with two positive arguments*: With M>=N, shows sources between the indices N and M (included) with all their details only.
 
 All these resulting sources are appropriately numbered as 1, 2 .. and so on regardless of their index in the original source list.
 
@@ -94,7 +94,7 @@ The original working of the `list` command showing all entries is still maintain
 
 ===== *Justification*:
 This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
-It helps him to narrow down his search by being able t specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
+It helps him to narrow down his search by being able to specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
 operations on the sources, such as following it by index dependent operations such as `edit` and `delete` for instance.
 
 ===== *Highlights*:
@@ -105,10 +105,14 @@ Most of the feature was developed independently, with some design and implementa
 
 === *Code contributed*:
 [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=suriruhani[Reposense contribution]] +
-[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/SearchCommand.java[search command code]] +
+Search Command: +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/model/source/SourceContainsKeywordsPredicate.java[main search command logic]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/SearchCommandTest.java[search command test]] +
-[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java[list command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/SearchCommandParserTest.java[search command parser test]] +
+List Command: +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java[main search command logic]] +
 [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/ListCommandTest.java[list command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/ListCommandParserTest.java[list command parser test]] +
 
 === *Other contributions*:
 
@@ -117,7 +121,8 @@ Most of the feature was developed independently, with some design and implementa
 pull requests.
 *** Helped in refactoring Storage AP in migrating the codebase from AB4 to The Infinity Machine for our team, helped in refactoring the entire Storage package
 to be compatible with the functionalities required by our application, mostly changing identifier names and method signatures to model
-our application's scope.
+our application's scope. Updated Storage class diagram in the Developer Guide.
+*** Assign PE-dry-run bug issues to relevant team members for fixing by the final milestone.
 
 ==== Enhancements to existing features:
 *** Fixed failing test cases of AB4 to accommodate the modified command formats, for both `search` and `list`.
@@ -131,9 +136,11 @@ relevant to our application's scope, changing parameter and return type along wi
 *** Added to and updated the Developer Guide
 *** Added to and updated the ContactUs.adoc
 *** Added to and updated the AboutUs.adoc
+*** Added to and updated the README.adoc
 
 ==== Community:
-*** Reviewed and approved PRs of other team mates
+*** Reviewed and approved PRs of other team mates [40 PRs approved]
+*** Opening and assigning relevant issues during product ideation phase and whenever feedback was received.
 *** Helped in tracking issues including assigning severity, status, type, and closing it.
 
 ==== Tools:

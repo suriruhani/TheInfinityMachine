@@ -64,7 +64,7 @@ class JsonAdaptedSource {
         tagged.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        fieldBodies = source.biblioFields.getFieldBodies();
+        fieldBodies = source.getBiblioFields().getFieldBodies();
     }
 
     /**

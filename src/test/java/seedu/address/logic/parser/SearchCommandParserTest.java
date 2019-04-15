@@ -27,7 +27,25 @@ public class SearchCommandParserTest {
     }
 
     @Test
-    public void parse_emptyPrefixArgs_returnsSearchCommand() {
+    public void parse_emptyTitlePrefixArgs_returnsSearchCommand() {
+        String input = " " + PREFIX_TITLE + " ";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
+                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
+        SearchCommand expectedSearchCommand = new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap));
+        assertParseSuccess(parser, " " + PREFIX_TITLE + " ", expectedSearchCommand);
+    }
+
+    @Test
+    public void parse_emptyTypePrefixArgs_returnsSearchCommand() {
+        String input = " " + PREFIX_TYPE + " ";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
+                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
+        SearchCommand expectedSearchCommand = new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap));
+        assertParseSuccess(parser, " " + PREFIX_TYPE + " ", expectedSearchCommand);
+    }
+
+    @Test
+    public void parse_emptyDetailPrefixArgs_returnsSearchCommand() {
         String input = " " + PREFIX_DETAILS + " ";
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
                 PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
@@ -36,7 +54,16 @@ public class SearchCommandParserTest {
     }
 
     @Test
-    public void parse_validArgs_returnsSearchCommand() {
+    public void parse_emptyTagPrefixArgs_returnsSearchCommand() {
+        String input = " " + PREFIX_TAG + " ";
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
+                PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);
+        SearchCommand expectedSearchCommand = new SearchCommand(new SourceContainsKeywordsPredicate(argMultimap));
+        assertParseSuccess(parser, " " + PREFIX_TAG + " ", expectedSearchCommand);
+    }
+
+    @Test
+    public void parse_validSingleArg_returnsSearchCommand() {
         String input = TITLE_DESC_ENGINEERING;
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(input,
                 PREFIX_TITLE, PREFIX_TYPE, PREFIX_DETAILS, PREFIX_TAG);

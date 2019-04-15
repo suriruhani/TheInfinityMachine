@@ -70,9 +70,9 @@ Role: Developer
 
 Responsibilities:
 
-- Searching a source with multiple fields
-- Listing all sources, top N sources
-- Refactor Storage API
+- Searching a source with multiple fields, substring matching, and auto-correct feature
+- Listing all sources, top/last N sources, and sources between N and M
+- Refactor Storage API, update storage sequence diagram in DG
 - Listing command usage under help
 
 

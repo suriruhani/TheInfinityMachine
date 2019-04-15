@@ -23,7 +23,8 @@ By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 The knowledge in the universe is infinite and there exists many things that are still beyond our comprehension. However, that does not mean that the process of learning what we have discovered should be a difficult one.
 
-Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval. Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
+Introducing the Infinity Machine, an application for efficient storing and retrieving of textual information on research material by allowing users to apply to it custom made tags and type for easy search and retrieval.
+Intended for tech-savvy university students who are able to use CLI and wish to organize and tag research information or any other data that they may wish to store.
 
 No longer will you miss out on important sources or developments in your field of interest.  No longer will you forget where you read something and struggle to find it again.
 
@@ -85,6 +86,7 @@ Displays the source selected.
 * Selects the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+* Displays all details of the source on the right hand side of the UI window.
 ****
 
 ==== Adding a source: `add`
@@ -152,7 +154,7 @@ Examples:
 * `list` +
 `delete 2` +
 Deletes the 2nd source in the database.
-* `search algorithms` +
+* `search i/algorithms` +
 `delete 1` +
 Deletes the 1st source in the results of the `search` command.
 * `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
@@ -225,9 +227,9 @@ Edits the 5th source and clears all its existing tags.
 ==== Searching a source: `search`
 
 Searches for entries amongst the list of sources. +
-Able to search by title, type, detail and tags as specified by the CLI prefixes.
+Able to search by title, type, detail and tags as specified by the CLI prefixes [author field not included].
 Able to perform substring matching. Able to implement autocorrect by searching for _'similar'_ strings,
-where similarity is defined by a pre-set Levenshtein distance.
+where similarity is defined by a pre-set Levenshtein distance as against the entire field value (and not substring)
 
 Finds all entries with a (case insensitive) field value that contains the value as specified by the user. +
 Searches with multiple arguments are taken as conjunction searches, i.e all those sources
@@ -244,15 +246,16 @@ Rest assured, the intended results will never be missed out.
 Format: `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...`
 
 ****
+* Search by author name is not accounted for yet. Look forward in v2.0.
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The search implements substring matching. e.g. `algo` will match algorithm, algorithms, algo trading, etc.
-* There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, check out `list` command instead)
+* There can have any number of tags but minimally 1 (just `search` results in error. To enumerate all entries, pass an empty CLI prefix to search or check out `list` command instead)
 * There can be multiple tags with same prefix and the result must satisfy all, eg. `search i/algo i/data` will result in `data struc. and algorithms`
 because it is a super-string of both the entered field values.
 * Closely related strings are matched even if the value is not exactly same, implemented using
-edit distance of the two strings.
+edit distance of the two strings. Only checked against the entire field value and not substring.
 * Search implemented as a logical AND. eg. `search i/algorithm y/website` results in all those sources
-that have title `algorithm` AND type `website`
+that have title `algorithm` AND type `website`.
 ****
 
 Examples:
@@ -309,6 +312,13 @@ N to M sources are listed with respect to the original source database list with
 
 Example: `list 6, 9` +
 Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
+
+[NOTE]
+=====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+=====
 
 ****
 * More than 2 parameters passed will be ignored, and the first two will be tested for the fourth case of range(N,M) listing.
@@ -604,7 +614,7 @@ Format: `exit`
 
 ==== Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Source Manager data are saved in the hard disk automatically after any command that changes the data. +
 
 There is no need to save manually.
 
@@ -835,7 +845,8 @@ e.g. `add i/Artificial Intelligence IEEE y/Journal Article a/Hugh Johnson d/Land
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
 e.g. `search i/algorithm y/journal`
-* *List* : `list [N]`
+* *List* : `list [N] [M]`  +
+N M non 0 and M>=N if both passed.
 * *Pin* : `pin INDEX` +
 e.g. `pin 3`
 * *Unpin* : `unpin INDEX` +

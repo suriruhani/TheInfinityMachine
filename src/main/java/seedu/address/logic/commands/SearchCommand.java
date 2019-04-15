@@ -13,7 +13,7 @@ import seedu.address.model.source.SourceContainsKeywordsPredicate;
 
 /**
  * Finds and lists all sources in Source Database which have any of their title, type, detail, source, tag(s)
- * containing the argument keywords.
+ * containing the argument keywords. Accounts for minor typing errors when entire field value is entered.
  * Keyword matching is case insensitive, substrings are matched.
  */
 public class SearchCommand extends Command {
@@ -22,7 +22,7 @@ public class SearchCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all sources whose title, type, details, "
             + "source and tags contains any of the specified keywords (case-insensitive, substring) and displays "
-            + "them as a list with index numbers. "
+            + "them as a list with index numbers. Accounts for minor typing errors when entire field value is entered."
             + "Parameters: "
             + PREFIX_TITLE + "SOURCE_TITLE "
             + PREFIX_TYPE + "SOURCE_TYPE "

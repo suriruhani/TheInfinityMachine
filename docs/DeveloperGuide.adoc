@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -114,7 +114,8 @@ image::Architecture.png[width="600"]
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
 [TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder.
+To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
 
@@ -161,7 +162,8 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `SourceListPanel`, `StatusBarFooter`, `BrowserPanel` etc.
+All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -180,7 +182,7 @@ image::LogicClassDiagram.png[width="800"]
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `SourceManagerParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person).
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
@@ -202,7 +204,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Source Manager data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -227,7 +229,7 @@ The `Storage` component,
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.sourcemanager.commons` package.
+Classes used by multiple components are in the `seedu.address.commons` package.
 
 == Implementation
 
@@ -919,6 +921,17 @@ When a pinned source is unpinned using the `unpin INDEX` command, the coordinati
 
 image::unpinSequence.png[width="900"]
 
+==== Operational Process
+When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.
+
+An example of this could be `unpin 1` command in a database with 3 pinned sources.
+
+image::unpin1.PNG[width="400"]
+
+The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.
+
+image::unpin2.PNG[width="400"]
+
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
 
@@ -976,6 +989,8 @@ The function takes the following steps to make the swap:
 
 * Step 4 -- The function then commits the database to save the recent changes.
 
+image::customOrderSequence.png[width="900"]
+
 ==== Swapping process
 The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
 
@@ -1011,33 +1026,104 @@ image::backward3.PNG[width="400"]
 
 // end::devorder[]
 
+// tag::biblio[]
 === Biblio feature
-==== Current Implementation
 
-The list command is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with a bibliography generating functionality, generating a bibliographical entry of the appropriate style based on the requested format and source index.
+==== Overview
 
-Additionally, it uses:
-* `FilteredSourceList` --
+Given that the `Infinity Machine` is used to manage sources, a user might reasonably expect to use the information stored to generate usable bibligraphy entries.
+This functionality is implemented by the `biblio` command and the `biblioEdit` command.
 
-Given below is an example usage scenario and how the biblio mechanism behaves.
+==== BiblioFields
+When a `Source` object is created, in addition to the compulsory fields of `Title`, `Author`, `Type`, and `Detail`, it is also created with a set of `BiblioFields` for storing additional information that might be needed for creating a bibliography entry.
 
-Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
-in an indexed fashion, with all details and in order of their addition.
+`BiblioFields` is used to store information under the following headers:
+"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
 
-Step 2. The user executes an `add` command to add another source entry to the database.
+`BiblioFields` is empty by default.
 
-Step 3. The user executes a `biblio` command with the requested style and the index of the added source as arguments. A bibliographical entry of the appropriate style is displayed.
+==== Biblio Command Implementation
 
+The biblio command extends `Infinity Machine` with a bibliography generating functionality.
 
-*Alternative*: As the bibliographic entry for each style is fixed, they may be generated on creation of a source. However, a user is not likely to need the entries for all sources and in all styles. If additional styles are added, this would result in even more clutter. As such, an as-needed implementation is preferable.
+It is currently implemented with the following syntax: `biblio INDEX FORMAT`
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+* `INDEX` -- Indicates the index of the source to generate a bibliography entry for.
+* `FORMAT` -- Indicates the format which the bibliography entry should follow.
+** Currently only APA and MLA formats are supported.
 
-_{Explain here how the data encryption feature will be implemented}_
+An example would be `biblio 1 APA`.
 
-// end::dataencryption[]
+When the command is entered, the following occurs:
+
+* The associated parser, `BiblioCommandParser`, checks the validity of the entered arguments.
+* The indicated source is fetched from the SourceManager.
+* A check is performed on the source to ensure that it is of a supported type.
+** Currently only Book, Journal Article and Website sources are supported. These are chosen as they are the most likely to be used.
+* Based on the type of the source and the requested format, a bibliography entry is generated by accessing each of the source's relevant fields.
+** If any of the necessary fields is empty, a placeholder value is used instead.
+** The empty field is noted for feedback to user later.
+* The bibliography entry is returned to the user along with feedback on empty fields.
+
+*Extensions*: Future implementations can include additional supported source types.
+
+==== BiblioEdit Command Implementation
+
+The biblioEdit command is a supporting command for the Biblio feature. It is responsible for changing the information stored in the `BiblioFields` of a source.
+
+It is currently implemented with the following syntax: `biblioEdit INDEX HEADER BODY`
+
+* `INDEX` -- Indicates the index of the source to generate a bibliography entry for.
+* `HEADER` -- Indicates the header for the information which the user wishes to change.
+** As mention in relation to `BiblioFields` above, valid headers are
+"City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
+* `BODY` -- Indicates the new value that should stored under the relevant header.
+
+image::BiblioEditCommand.png[width="800"]
+
+An example would be `biblioEdit 1 City London`
+
+*Alternative*: The bibliofields of a source can be set at object creation with the add command. However, this makes using the add command excessively onerous. The current implementation allows the user to change each field as needed and preserves the information stored under the other headers in `Bibliofields`.
+
+*Extensions*: A future implementation may allow information under multiple headers to be edited at once. Additionally, checks can be introduced to ensure the entered field bodies are appropriate e.g. the Month bibliofield should only accept values matching the English name of months.
+
+==== Example Usage Scenario
+
+Given below is an example usage scenario and how the BiblioEdit mechanism behaves.
+
+* Step 1 -- The user launches `Infinity Machine` for the first time.
+
+* Step 2 -- The user clears the database of sample sources using the clear command.
+
+* Step 3 -- The user executes an `add` command to add a source entry to the database. The source has type "Textbook".
+** `BiblioFields` is empty
+
+* Step 4 -- The user executes a `biblio` command with the following arguments: `1` `APA`
+** The user is informed that "Textbook" is not a supported source type
+
+* Step 5 -- The user executes an `Edit` command with the following arguments:
+`1` `y/Journal Article`
+** The source type is changed to "Book"
+
+* Step 6 -- The user executes a `biblio` command with the following arguments: `1` `APA`
+** A bibliography entry is generated with placeholder values as the requisite biblio fields are empty.
+** The user receives the bibliography entry along with a warning that some required fields are empty
+** The warning is appended with a list of empty but recommened fields: "Year", "City", "Publisher"
+
+* Step 7 -- The user executes a `biblioEdit` command with the following arguments:
+`1` `City` `London`
+
+* Step 8 -- The user executes a `biblioEdit` command with the following arguments:
+`1` `Publisher` `Penguin`
+
+* Step 9 -- The user executes a `biblioEdit` command with the following arguments:
+`1` `Year` `2001`
+
+* Step 10 -- The user executes a `biblio` command with the following arguments:
+`1` `APA`
+** The user receives an appropriately formatted bibliography entry
+
+// end::biblio[]
 
 === Logging
 
@@ -1265,16 +1351,21 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [discrete]
 ==== `Logic` component
 
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
+*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole
+command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the
+suggestions was to implement aliases for the command words. Your job is to implement such aliases.
 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`,
+the user can also type `c` to remove all sources in the list.
 +
 ****
 * Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java`
+(e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`],
+link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
 ** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
 * Solution
 ** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
@@ -1286,21 +1377,24 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help.
+He wants to implement a command such that the user is able to remove a particular tag from everyone
+in the SourceManager, but the model API does not support such a functionality at the moment. Your
+job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the SourceManager.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/SourceManager.java[`SourceManager`] and link:{repoURL}/src/main/java/seedu/address/model/source/Source.java[`Source`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/SourceManager.java[`SourceManager`]. Loop through each source, and remove the `tag` from each source.
+** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `SourceManager#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
 ****
@@ -1308,12 +1402,16 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your SourceManager application.
+You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually,
+and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message
+wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last source in the list.
+Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside source cards. For example, `CS2030` tags can be all in brown, and `CS2040` tags can be all in yellow.
 +
 **Before**
 +
@@ -1325,11 +1423,11 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/SourceCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
+** You can modify the existing test methods for `SourceCard` 's to include testing the tag's color as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
 *** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
@@ -1383,17 +1481,20 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the source manager to the cloud.
+However, the current implementation of the application constantly saves the source manager after the execution of each command, which is not ideal if the user is working on limited internet connection.
+Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application.
+Your job is to implement a backup API for the source manager storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupSourceManager(ReadOnlySourceManager)`, so that the address book can be saved in a fixed temporary location.
 +
 ****
 * Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/JsonAddressBookStorage.java[`JsonAddressBookStorage`] class.
+** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/SourceManagerStorage.java[`SourceManagerStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/JsonSourceManagerStorage.java[`JsonSourceManagerStorage`] class.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
 ****
@@ -1403,18 +1504,22 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for `source manager`, as the former developer team has moved on to new projects.
+ The current users of your application have a list of new feature requests that they hope the software will eventually have.
+ The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact,
+ rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing.
+ Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a source specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+* `remark 1 r/Due tomorrow.` +
+Edits the remark for the first source.
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first source.
 
 ==== Step-by-step Instructions
 
@@ -1424,15 +1529,15 @@ Let's start by teaching the application how to parse a `remark` command. We will
 **Main:**
 
 . Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/Command.java[`Command`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/SourceManagerParser.java[`SourceManagerParser`] to accept a `RemarkCommand`.
 
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `execute()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/SourceManagerParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
+Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/due tomorrow`
 
 **Main:**
 
@@ -1447,24 +1552,24 @@ Let's teach the application to parse arguments that our `remark` command will ac
 for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+===== [Step 3] Ui: Add a placeholder for remark in `SourceCard`
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/SourceCard.java[`SourceCard`] s to display a remark for each source later.
 
 **Main:**
 
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/SourceListCard.fxml[`SourceListCard.fxml`].
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/SourceCard.java[`SourceCard`] to tie the variable to the actual label.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
+. Modify link:{repoURL}/src/test/java/guitests/guihandles/SourceCardHandle.java[`SourceCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/Source/Source.java[`Source`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/Source/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -1472,16 +1577,16 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/Source/Source.java[`Source`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `data/addressbook.json` so that the application will load the sample data when you launch it.)
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/Source/Source.java[`Source`].
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the Source will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `data/sourcemanager.json` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `JsonAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/JsonAdaptedPerson.java[`JsonAdaptedPerson`] to include a `Remark` field so that it will be saved.
+We now have `Remark` s for `Source` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/JsonAdaptedSource.java[`JsonAdaptedSource`] to include a `Remark` field so that it will be saved.
 
 **Main:**
 
@@ -1492,7 +1597,7 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 . Fix `invalidAndValidPersonAddressBook.json`, `typicalPersonsAddressBook.json`, `validAddressBook.json` etc., such that the JSON tests will not fail due to a missing `remark` field.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Since `Source` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/SourceBuilder.java[`SourceBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/Source/Source.java[`Source`].
 
 **Tests:**
 
@@ -1504,7 +1609,7 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 
 **Main:**
 
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
+. Modify link:{repoURL}/src/main/java/seedu/address/ui/SourceCard.java[`SourceCard`]'s constructor to bind the `Remark` field to the `Source` 's remark.
 
 **Tests:**
 
@@ -1515,7 +1620,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a Source.
 
 **Tests:**
 
@@ -1574,8 +1679,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |see some ASCII art representations in the application |have nicer things to look at other than just text
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -1674,7 +1777,7 @@ Use case resumes at step 2.
 
 *MSS*
 
-1.  User requests to search for a source with specific keywords
+1.  User requests to search for a source with specific keywords and values of CLI prefixes.
 2.  The Infinity Machine shows a list of the sources currently in the database that match the user's keywords
 +
 Use case ends.
@@ -1703,8 +1806,9 @@ Use case ends with nothing being displayed.
 
 *MSS*
 
-1.  User requests to list all sources
-2.  The Infinity Machine shows a list of the sources currently in the database
+1.  User requests to list all sources, or sources of specific indices
+2.  The Infinity Machine shows a list of the sources currently in the database,
+as per the index entered by the user [optionally].
 +
 Use case ends.
 
@@ -1823,30 +1927,6 @@ Use case resumes at step 0.
 
 [none]
 * 2a. There are no previous commands.
-+
-Use case ends with nothing being displayed.
-
-[discrete]
-=== Use case: List the search history of database
-
-*MSS*
-
-1.  User requests to list all previously searched entities
-2.  The Infinity Machine shows the search history of the application
-+
-Use case ends.
-
-*Extensions*
-
-* 1a. The command entered is invalid. The command was misspelled.
-+
-[none]
-** 1a1. The Infinity Machine shows an error message together with a help text to guide the user along.
-+
-Use case resumes at step 0.
-
-[none]
-* 2a. There are no previous search commands.
 +
 Use case ends with nothing being displayed.
 
@@ -2162,10 +2242,9 @@ Use case resumes at step 0.
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be able to hold up to 1000 sources without a noticeable sluggishness in performance for typical usage.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands)
+should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 [appendix]
 == Glossary
@@ -2175,23 +2254,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -2278,10 +2340,3 @@ with N not greater than M.
     Expected: error because all indices must be positive
 
 // end::listMT[]
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-

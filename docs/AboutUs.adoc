@@ -53,8 +53,9 @@ Role: Developer
 
 Responsibilities:
 
-- Generating history of searches made
-- Allowing custom command names (aliases)
+- Panic/unpanic mode
+- Aliasing command names
+- Refactoring and updating legacy code
 - Listing command usage under help
 
 
@@ -69,9 +70,9 @@ Role: Developer
 
 Responsibilities:
 
-- Searching a source with multiple fields
-- Listing all sources, top N sources
-- Refactor Storage API
+- Searching a source with multiple fields, substring matching, and auto-correct feature
+- Listing all sources, top/last N sources, and sources between N and M
+- Refactor Storage API, update storage sequence diagram in DG
 - Listing command usage under help
 
 
@@ -80,7 +81,8 @@ Responsibilities:
 === Yang Yang
 
 image::doittomorrow.png[width="150", align="left"]
-{empty}[https://github.com/DoItTomorrow[github]]
+{empty}[https://github.com/DoItTomorrow[github]][<<doittomorrow#, portfolio>>]
+
 
 Role: Developer
 

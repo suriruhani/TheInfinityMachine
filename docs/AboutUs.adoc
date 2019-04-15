@@ -18,9 +18,11 @@ Role: Developer
 
 Responsibilities:
 
-- Deleting a source
-- Undo command
-- Redo command
+- All functionality under Recycle Bin Mode
+- Delete command in Source Manager Mode
+- Undo & Redo command in Source Manager Mode
+- Updating User Interface
+- Refactoring the Application
 - Listing command usage under help
 
 

@@ -56,7 +56,7 @@ public class SourceManagerParser implements CommandValidator {
     /**
      * Convenience constructor that instantiates SourceManagerParser with ConcreteAliasManager.
      */
-    public SourceManagerParser() {
+    public SourceManagerParser() { // This supports dependency injection
         this(null);
     }
 
@@ -104,6 +104,8 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(PanicCommand.COMMAND_WORD);
         validCommands.add(UnpanicCommand.COMMAND_WORD);
         validCommands.add(CountCommand.COMMAND_WORD);
+        validCommands.add(BiblioCommand.COMMAND_WORD);
+        validCommands.add(BiblioEditCommand.COMMAND_WORD);
         validCommands.add(RecycleBinCommand.COMMAND_WORD);
     }
 
@@ -196,7 +198,6 @@ public class SourceManagerParser implements CommandValidator {
         case RecycleBinCommand.COMMAND_WORD:
             return new RecycleBinCommand();
 
-        // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):
         // For these, we include implementation details because these are meta-commands
         // that relate directly to AliasManager (and by association, SourceManagerParser).

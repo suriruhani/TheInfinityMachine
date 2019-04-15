@@ -67,13 +67,15 @@ similar to how you would in a Recycle Bin on Windows.
 * Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Source Manager
+
+==== Viewing help : `help`
 
 Format: `help`
 
 Displays the User Guide for a quick reference.
 
-=== Adding a source: `add`
+==== Adding a source: `add`
 
 Adds a new source to the list of sources +
 Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
@@ -86,7 +88,7 @@ Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
 ****
 
 [NOTE]
-====
+=====
 The entry fields for the various source information have the following limitations:
 
 * TITLE
@@ -109,7 +111,7 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
-====
+=====
 
 Examples:
 
@@ -117,7 +119,7 @@ Examples:
 * `add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
 
-=== Deleting a source : `delete`
+==== Deleting a source : `delete`
 
 Deletes the specified source. +
 Format: `delete INDEX`
@@ -144,7 +146,7 @@ Deletes the 1st source in the results of the `search` command.
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 
 
-=== Restoring a source : `restore`
+==== Restoring a source : `restore`
 
 Restores the specified source. +
 Format: `restore INDEX`
@@ -164,7 +166,7 @@ Restores the 2nd deleted source in the database.
 Restores the 1st deleted source in the database.
 
 
-=== Listing a deleted source : `list-deleted`
+==== Listing a deleted source : `list-deleted`
 
 Lists all deleted sources. +
 Format: `list-deleted`
@@ -176,17 +178,17 @@ Examples:
 Lists all deleted sources in the database.
 
 
-=== Editing a source : `edit`
+==== Editing a source : `edit`
 
 Edits an existing source in the database. +
 Format: `edit INDEX [i/TITLE] [y/TYPE] [a/AUTHOR] [d/DETAILS] [t/TAG]...`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...
@@ -197,7 +199,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [NOTE]
-====
+=====
 The entry fields for the various source information have the following limitations:
 
 * TITLE
@@ -220,7 +222,7 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
-====
+=====
 
 Examples:
 
@@ -233,7 +235,7 @@ Edits the 5th source and clears all its existing tags.
 
 // tag::search[]
 
-=== Searching a source: `search`
+==== Searching a source: `search`
 
 Searches for entries amongst the list of sources. +
 Able to search by title, type, detail and tags as specified by the CLI prefixes.
@@ -280,7 +282,7 @@ Returns the source(s) of type 'website' [and other similar strings, if any]
 // end::search[]
 // tag::list[]
 
-=== Listing all sources : `list`
+==== Listing all sources : `list`
 
 Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed. +
 Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively. +
@@ -293,28 +295,28 @@ where argument N and M in [ ] are optional [either enter none, N, or (N and M)]
 
 The four main formats and their usages are described below:
 
-==== list: (no arguments)
+===== list: (no arguments)
 When no arguments are passed to `list`, it works same way as in the original AB4 logic, listing *all* the sources in the entire database with all their title, type, author, detail and tag values.
 The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.
 
 Example: `list` +
 Lists all the sources indexed from 1 onwards with all their details.
 
-==== list N: (one positive argument)
+===== list N: (one positive argument)
 When one positive integer is passed to `list`, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
 Top N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
 
 Example: `list 5` +
 Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
 
-==== list -N: (one negative argument)
+===== list -N: (one negative argument)
 When one negative integer is passed to `list`, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
 Bottom N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
 
 Example: `list -5` +
 Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
 
-==== list N, M: (two positive arguments)
+===== list N, M: (two positive arguments)
 When two positive integers are passed to `list`, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
 N to M sources are listed with respect to the original source database list with indexes 1, 2 ... till (M-N+1).
 
@@ -331,22 +333,22 @@ Lists the 4 sources from index 6 to 9 from the entire database list, indexed fro
 
 // end::list[]
 
-=== Organisational Tools : `order` and `pin`
+==== Organisational Tools : `order` and `pin`
 The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.
 
 Pinned sources are saved between sessions, allowing users to retain whatever edits they have made.
 
-==== Pinning important sources : `pin`
+===== Pinning important sources : `pin`
 Marks a source as pinned and moves it to the top of the list where it will remain.
 
 Format: `pin INDEX`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * The `INDEX` refers to the index number shown in the displayed source list.
@@ -355,28 +357,28 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [NOTE]
-====
+=====
 You can delete a pinned source with no issue by entering the `delete` command followed by the index of the pinned source.
 
 However, do note that deleting a pinned source will remove the source from the list.
-====
+=====
 
 Examples:
 
 * `pin 4` +
 Marks source number 4 as pinned and moves it to the top of the list.
 
-==== Unpinning sources : `unpin`
+===== Unpinning sources : `unpin`
 Reverts a pinned source back to its unpinned state, moving the source down to the first position of an unpinned source in the event there are pinned sources after the source to be unpinned.
 
 Format: `unpin INDEX`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * The `INDEX` refers to the index number shown in the displayed source list.
@@ -393,17 +395,17 @@ Examples:
 * `unpin 4` +
 Reverts source 4, which was originally pinned, to its unpinned state and moves it down to the first unpinned source's position.
 
-==== Reordering sources to your liking : `order`
+===== Reordering sources to your liking : `order`
 Moves the specified source from one position to another as defined by the user.
 
 Format: `order ORIGINAL_INDEX NEW_INDEX`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * Obtains the source at the specified `ORIGINAL_INDEX` and moves it to the `NEW_INDEX`.
@@ -425,7 +427,7 @@ Moves the source located at index 1 to index 4.
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
-=== Generate bibliography entry : `biblio`
+==== Generate bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
 Format: `biblio FORMAT INDEX`
@@ -437,16 +439,16 @@ Format: `biblio FORMAT INDEX`
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
-=== Listing entered commands : `history`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 // tag::alias[]
-=== Command aliases : `alias`
+==== Command aliases : `alias`
 Note: Aliases do not work in recycle-bin mode.
 
-==== Creating an alias: `alias`
+===== Creating an alias: `alias`
 Allows the user to create aliases create aliases for commands. +
 Format: `alias COMMAND ALIAS`
 
@@ -477,7 +479,7 @@ The alias must be syntatically valid. A valid syntax may only contain alphabets.
 * `alias count ct` (valid)
 * `alias clear $` (invalid)
 
-==== Removing an alias: `alias-rm`
+===== Removing an alias: `alias-rm`
 Allows the user to remove previously-defined aliases. +
 Format: `alias-rm ALIAS`
 
@@ -489,21 +491,21 @@ Examples:
 If the user attempts to remove a non-existent alias, nothing happens.
 `alias-rm` only guarantees that after it is performed, the alias argument does not exist.
 
-==== Listing all aliases: `alias-ls`
+===== Listing all aliases: `alias-ls`
 Lists all defined aliases and their associated commands. +
 Format: `alias-ls`
 
-==== Clearing all aliases: `alias-clear`
+===== Clearing all aliases: `alias-clear`
 Clears all defined aliases and their associaetd commands. +
 Format: `alias-clear`
 
-==== Alias persistence
+===== Alias persistence
 Aliases are persistent across usage sessions.
 When an alias is created or removed, this is recorded to disk.
 No action is required on the user's part.
 // end::alias[]
 
-=== Counting total number of sources: `count`
+==== Counting total number of sources: `count`
 
 Counts and returns the total number of source entries retrieved. +
 Format: `count`
@@ -515,15 +517,15 @@ Result: `Total number of source(s): 6` +
 Counts the total number of sources retrieved from the database.
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+==== Undoing previous command : `undo`
 
 Allows the user to reverse the last performed undoable action. +
 Format: `undo`
 
 [NOTE]
-====
+=====
 Undoable commands: those commands that modify the source's content (`add`, `delete`, `edit` and `clear`).
-====
+=====
 
 Examples:
 
@@ -541,7 +543,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
 
 Allows user to redo the last performed action. +
 Format: `redo`
@@ -565,7 +567,7 @@ The `redo` command fails as there are no `undo` commands executed previously.
 // end::undoredo[]
 
 // tag::panic[]
-=== Enabling panic mode : `panic`
+==== Enabling panic mode : `panic`
 
 Allows the user to temporarily hide data. +
 Format: `panic`
@@ -582,15 +584,15 @@ In panic mode, the dummy data store behaves exactly like a real one.
 Therefore, all commands (e.g. add, remove, etc.) operate on the dummy data store (and the dummy JSON file), **without affecting the actual data store.** After exiting panic mode, all data created while in panic mode will be purged permanently. Therefore, dummy data created in panic mode will not persist between panic mode sessions.
 
 [NOTE]
-====
+=====
 If the user exits the application in panic mode (using the `exit` command), the application automatically restores the user's original data from memory and saves it to disk before exiting, to prevent permanent data loss.
 
 However, if the application is closed directly **while in panic mode**, **permanent data loss** will occur.
-====
+=====
 // end::panic[]
 
 // tag::unpanic[]
-=== Disabling panic mode : `unpanic`
+==== Disabling panic mode : `unpanic`
 
 Restores the user's original data. +
 Format: `unpanic`
@@ -599,24 +601,24 @@ This reverses the effect of panic mode by restoring the user's original data.
 The restorated is reflected on the disk too; the JSON file is reset to its original state and will now track the original data store.
 // end::unpanic[]
 
-=== Clearing all entries : `clear`
+==== Clearing all entries : `clear`
 
 Clears all entries from the source manager. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+==== Exiting the program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+==== Saving the data
 
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 
 There is no need to save manually.
 
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+==== Encrypting data files `[coming in v2.0]`
 
 Research materials can be very sensitive and private especially for high profile researchers. The Infinity Machine hopes to be able to help researchers by encrypting their data for only authorised viewers to access.
 

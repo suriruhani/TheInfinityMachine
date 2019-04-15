@@ -69,13 +69,13 @@ similar to how you would in a Recycle Bin on Windows.
 * Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
 
-=== Viewing help : `help`
+==== Viewing help : `help`
 
 Format: `help`
 
 Displays the User Guide for a quick reference.
 
-=== Adding a source: `add`
+==== Adding a source: `add`
 
 Adds a new source to the list of sources +
 Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
@@ -88,7 +88,7 @@ Format: `add i/TITLE y/TYPE a/AUTHOR d/DETAILS [t/TAG]...`
 ****
 
 [NOTE]
-====
+=====
 The entry fields for the various source information have the following limitations:
 
 * TITLE
@@ -111,7 +111,7 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
-====
+=====
 
 Examples:
 
@@ -119,7 +119,7 @@ Examples:
 * `add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
 
-=== Deleting a source : `delete`
+==== Deleting a source : `delete`
 
 Deletes the specified source. +
 Format: `delete INDEX`
@@ -128,7 +128,8 @@ Format: `delete INDEX`
 * Deletes the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
-* If source to delete is already in the deleted sources list, it will be permanently deleted.
+* Deleted source is added to Recycle Bin mode.
+* If source to delete is already in the Recycle Bin, it will be permanently deleted.
 ****
 
 Examples:
@@ -139,31 +140,11 @@ Deletes the 2nd source in the database.
 * `search algorithms` +
 `delete 1` +
 Deletes the 1st source in the results of the `search` command.
-* `add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+* `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
-`add i/Wikipedia Algorithms y/Website d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
-
-
-=== Restoring a source : `restore`
-
-Restores the specified source. +
-Format: `restore INDEX`
-
-****
-* Restores the source at the specified `INDEX`.
-* The index refers to the index number shown in the displayed deleted source list.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `restore 2` +
-Restores the 2nd deleted source in the database.
-* `list-delete` +
-`restore 1` +
-Restores the 1st deleted source in the database.
 
 
 === Listing a deleted source : `list-deleted`

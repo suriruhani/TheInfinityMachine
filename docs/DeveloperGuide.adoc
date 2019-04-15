@@ -947,26 +947,53 @@ image::backward3.PNG[width="400"]
 
 // end::devorder[]
 
+// tag::biblio[]
 === Biblio feature
 ==== Current Implementation
 
-The list command is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with a bibliography generating functionality, generating a bibliographical entry of the appropriate style based on the requested format and source index.
+The biblio command is facilitated by `Infinity Machine`.
+It extends `Infinity Machine` with a bibliography generating functionality, generating a bibliographical entry of the appropriate style based on the requested format and the various fields of the Source at the indicated Index.
 
-Additionally, it uses:
-* `FilteredSourceList` --
+Given below is an example usage scenario and how the Biblio mechanism behaves.
 
-Given below is an example usage scenario and how the biblio mechanism behaves.
-
-Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+*Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
-Step 2. The user executes an `add` command to add another source entry to the database.
+*Step 2. The user executes an `add` command to add another source entry to the database.
 
-Step 3. The user executes a `biblio` command with the requested style and the index of the added source as arguments. A bibliographical entry of the appropriate style is displayed.
-
+*Step 3. The user executes a `biblio` command with the the index of the added source and a requested style as arguments.
+**e.g. biblio 1 APA
+**A bibliographical entry of the appropriate style is displayed if the indicated source is of a supported type. Otherwise, the user is informed that the indicated source has an unsupported type.
+**Any fields that is necessary but empty will use placeholder values. The user receives a warning that these fields are empty.
 
 *Alternative*: As the bibliographic entry for each style is fixed, they may be generated on creation of a source. However, a user is not likely to need the entries for all sources and in all styles. If additional styles are added, this would result in even more clutter. As such, an as-needed implementation is preferable.
+
+=== BiblioEdit feature
+==== Current Implementation
+
+The biblioEdit command is facilitated by `Infinity Machine`.
+It is a supporting feature for the Biblio feature. It is responsible for changing the fields associated with the optional fields associated with bibliography generation in a Source.
+
+Given below is an example usage scenario and how the BiblioEdit mechanism behaves.
+
+*Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
+in an indexed fashion, with all details and in order of their addition.
+
+*Step 2. The user executes an `add` command to add another source entry to the database.
+
+*Step 3. The user executes a `biblioEdit` command with the index of the source and the header of the bibliofield he wishes to edit, and the intended new value as arguments.
+**e.g. biblioEdit 1 City London
+**The bibliofield with `header` "City" will be changed to "London"
+
+*Step 3.1. The user executes a `biblioEdit` command with an invalid header.
+**e.g. biblioEdit 1 Cty London
+**The command fails and the user is informed of the accepted header types.
+
+*Alternative*: The bibliofields of a source can be set at object creation with the add command. However, this makes using the add command excessively onerous. The current implementation allows the user to change each field as needed. A future implementation may allow multiple bibliofields to be edited at once.
+
+
+
+// end::biblio[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption

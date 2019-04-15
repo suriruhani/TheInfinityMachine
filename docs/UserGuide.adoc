@@ -599,7 +599,7 @@ Will allow users to generate simple encryption keys which will help keep their r
 === Recycle Bin Commands
 
 ====
-Note that Recycle Bin only support the following commands necessary to manage the deletion and restoration of a source .
+Note that Recycle Bin only support the following commands necessary to manage the deletion and restoration of a source.
 ====
 
 // tag::recyclebindelete[]

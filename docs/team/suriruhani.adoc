@@ -1,0 +1,160 @@
+= Ruhani Suri - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: The Infinity Machine
+
+---
+
+== Overview
+
+Our project, the Infinity Machine, is an application useful for efficient management of textual information
+of any kind, say research material. It allows users to store information by the their *title*, *type*, *details* and multiple *tags* and allows
+for easy search, retrieval, edit and delete functions. Intended to be used through the Command Line Interface, and intended
+for tech-savvy, university students looking for an efficient, simple yet powerful way of maintaining their resources.
+
+== Summary of contributions
+
+== *Major enhancement*: +
+
+==== 1. Modified *the ability to search* through sources:
+
+===== *Modification*:
+
+Format: `search [n/TITLE] [y/TYPE] [d/DETAILS] [t/TAG] [t/TAG]...`
+
+The work I have done on AB4's search feature can be divided into 3 major modifications as follows:
+
+1. *Multiple prefix tags of different (and same) kinds*: The search function now has an added functionality of being able to take in multiple
+arguments of the *same* and *different* type of source fields, and search for sources based on its conjunction.
+
+2. *Substring matching with incomplete words*: It is enabled with substring matching as against exact field matching.
+Each argument is checked for its presence inside the source
+fields and a source is found only if all the user entered arguments are present inside the source's respective field values.
+
+3. *Auto-correction feature for typing mistakes*: It is also able to find string matches with minor typing errors in the spelling,
+implemented using Levenshtein distance or the edit distance. The implementation current accounts for less than 3 character swaps needed to transform between the strings
+(lower bounded by the difference in the string lengths of the two strings).
+
+===== *What it does*:
+It allows the user to search through all the entries in the database through various fields at a time, same and different, and display
+source entries that satisfy all of the entered tags in conjunction, with substring matching and typo accommodation.
+It allows compound searches to be made, allowing user to narrow down their search, hence helping in efficient retrieval
+of the sources, and making working on the database more efficient. It also reduces the onus on the user to remember and recall
+the source entries maintained by allowing them to enter as many consecutive characters for a field value they can enumerate.
+
+===== *Justification*:
+This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
+Furthermore, it removes the reliance on the user to memorize exact field values, by enabling substring matching and multiple tags
+entered so the user can enter as much as he remembers and see the results.
+
+It helps user greatly narrow down their search should they be looking for a specific source entry with particular values,
+instead of cluttering the screen with all those sources with share the same title as the one the user searches using the command.
+It also allows user to search sources based on other fields and not just title, such as type, tags and details, and even their
+logical combination, along with allowing the user to not memorize his source fields.
+
+===== *Highlights*:
+
+- This enhancement does not affect existing commands and commands to be added in future. +
+- However, it changed the format of the original `search` command, which now not only takes parameters of different types, but also needs them to be prefixed by their
+CLI delimiters.
+- If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug as this is
+the intended behaviour because of the two features that render the search result space more broadened than before.
+- Rest assured, the intended results will never be missed out.
+
+===== *Credits*:
+Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.
+
+=== *Minor enhancement*:
+
+==== 1. Modified *the ability to list* sources:
+
+===== *Modification*:
+Format: `list [N] [M]` +
+Inside [] means optional.
+
+The new modification to the command changes its format optionally, allowing user to be able to pass either one, two or no parameters
+and list only those many sources from the entire source list.
+
+The various formats now accepted are:
+
+1. *`list` with no arguments*: Works as the original `list` command and shows all the sources and their details, unfiltered.
+2. *`list N` with one positive argument*: Shows the top N sources with all their details only.
+3. *`list -N` with one negative arguments*: Shows the last N sources or the TOp N sources from the bottom with their details.
+4. *`list N M` with two positive arguments*: With M>=N, shows sources between the indices N and M with all their details only.
+
+All these resulting sources are appropriately numbered as 1, 2 .. and so on regardless of their index in the original source list.
+
+===== *What it does*:
+It allows the user to now pass optional arguments to `list` command and then displays only those indexed source entries in the original source database as per the cases above.
+The original working of the `list` command showing all entries is still maintained, with now 3 added functionalities.
+
+===== *Justification*:
+This feature improves the product significantly because a user can now list only as many item he wants and need not clutter the screen by displaying all.
+It helps him to narrow down his search by being able t specify what indices of the original sources (say by time of addition) what he like to view. This ensures more effective retrieval and
+operations on the sources, such as following it by index dependent operations such as `edit` and `delete` for instance.
+
+===== *Highlights*:
+- This enhancement does not affect existing commands and commands to be added in future.
+
+===== *Credits*:
+Most of the feature was developed independently, with some design and implementation considerations discussed with fellow team members.
+
+=== *Code contributed*:
+[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=suriruhani[Reposense contribution]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/SearchCommand.java[search command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/SearchCommandTest.java[search command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/ListCommand.java[list command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/ListCommandTest.java[list command test]] +
+
+=== *Other contributions*:
+
+==== Project management:
+*** Helped in maintaining issue tracker and milestone progress, along with managing project releases and reviewing and merging
+pull requests.
+*** Helped in refactoring Storage AP in migrating the codebase from AB4 to The Infinity Machine for our team, helped in refactoring the entire Storage package
+to be compatible with the functionalities required by our application, mostly changing identifier names and method signatures to model
+our application's scope.
+
+==== Enhancements to existing features:
+*** Fixed failing test cases of AB4 to accommodate the modified command formats, for both `search` and `list`.
+*** Adding relevant test cases for both `search` and `list` to test the various use cases of the commands and specifcally
+some problematic edge cases.
+***  Enhanced javadocs for implemented methods to make their functionality and logic more
+relevant to our application's scope, changing parameter and return type along with modifying format and functionality explanation.
+
+==== Documentation:
+*** Added to and updated the User Guide
+*** Added to and updated the Developer Guide
+*** Added to and updated the ContactUs.adoc
+*** Added to and updated the AboutUs.adoc
+
+==== Community:
+*** Reviewed and approved PRs of other team mates
+*** Helped in tracking issues including assigning severity, status, type, and closing it.
+
+//==== Tools:
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=list]
+
+include::../UserGuide.adoc[tag=search]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=list]
+
+include::../DeveloperGuide.adoc[tag=search]
+
+---

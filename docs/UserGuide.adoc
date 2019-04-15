@@ -97,6 +97,7 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
+
 ====
 
 Examples:
@@ -416,13 +417,27 @@ If there are only 6 sources in the database, the command moves the source locate
 === Generate bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
-Format: `biblio FORMAT INDEX`
+Format: `biblio INDEX FORMAT`
 
 ****
 * Generates a bibliographical entry of the appropriate style from the source at the specified `INDEX`.
-* The format must be APA or MLA
 * The index refers to the index number shown in the displayed source list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be valid (between the indexes of the first source and the last source inclusive.
+* The format must be APA or MLA
+* Currently, only source types of "Book","Journal Article" and "Website" are supported.
+****
+
+=== Edit a bibliography related field (bibliofield) in a source : `biblioEdit`
+
+Replaces . +
+Format: `biblio INDEX HEADER BODY`
+
+****
+* Replaces a bibliofield of matching `HEADER` of the source at the specified `INDEX` with `BODY`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be valid (between the indexes of the first source and the last source inclusive.
+* The header must be one of the following:
+*   "City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
 ****
 
 === Listing entered commands : `history`
@@ -637,8 +652,10 @@ e.g. `unpin 3`
 * *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` +
 e.g. `order 3 5`
 * *Help* : `help`
-  * *Biblio* : `biblio FORMAT INDEX` +
-  e.g. `biblio APA 1`
+* *Biblio* : `biblio INDEX FORMAT` +
+e.g. `biblio 1 APA`
+* *Biblio* : `biblioEdit INDEX HEADER BODY` +
+e.g. `biblioEdit 1 City London`
 * *History* : `history`
 * *Adding an alias* : `alias COMMAND ALIAS` +
 e.g. `alias list ls`

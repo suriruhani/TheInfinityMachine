@@ -462,6 +462,9 @@ Format: `biblioEdit INDEX HEADER BODY`
 [Note]
 To ensure the accuracy of the bibliography generated, please ensure the accuracy of entered `BODY`.
 
+[Tip]
+The <i></i> braces indicate that the text between should be italicized.
+
 Examples:
 
 * `biblioEdit 1 City London` +

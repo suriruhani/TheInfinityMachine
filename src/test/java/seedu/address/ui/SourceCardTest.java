@@ -26,6 +26,20 @@ public class SourceCardTest extends GuiUnitTest {
         sourceCard = new SourceCard(sourceWithTags, 2);
         uiPartRule.setUiPart(sourceCard);
         assertCardDisplay(sourceCard, sourceWithTags, 2);
+
+        // pinned source no tags
+        Source pinnedSourceNoTags = new SourceBuilder().withTags(new String[0]).build();
+        pinnedSourceNoTags.setPinnedState(true);
+        sourceCard = new SourceCard(pinnedSourceNoTags, 1);
+        uiPartRule.setUiPart(sourceCard);
+        assertCardDisplay(sourceCard, pinnedSourceNoTags, 1);
+
+        // pinned source with tags
+        Source pinnedSourceWithTags = new SourceBuilder().build();
+        pinnedSourceWithTags.setPinnedState(true);
+        sourceCard = new SourceCard(pinnedSourceWithTags, 1);
+        uiPartRule.setUiPart(sourceCard);
+        assertCardDisplay(sourceCard, pinnedSourceWithTags, 1);
     }
 
     @Test

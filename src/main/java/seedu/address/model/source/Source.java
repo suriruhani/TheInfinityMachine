@@ -27,6 +27,8 @@ public class Source {
     private final Set<Tag> tags = new HashSet<>();
     private final BiblioFields biblioFields;
 
+    private boolean isPinned = false;
+
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, BiblioFields biblioFields) {
         requireAllNonNull(title, author, type, detail, tags, biblioFields);
         this.title = title;
@@ -77,6 +79,14 @@ public class Source {
 
     public BiblioFields getBiblioFields() {
         return biblioFields;
+    }
+
+    public boolean getPinnedState() {
+        return isPinned;
+    }
+
+    public void setPinnedState(boolean isPinned) {
+        this.isPinned = isPinned;
     }
 
     /**

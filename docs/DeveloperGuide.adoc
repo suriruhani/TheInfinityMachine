@@ -717,6 +717,13 @@ I.e. both numbers should be non-zero and the second number can only be same or g
 Example: `list 6 9` +
 Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
 
+[NOTE]
+=====
+The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
+
+Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
+=====
+
 Some salient features which affect the command's working are discussed below:
 
 1. An argument passed which more than the current number of sources in the list is reduced to the index of the last source [i.e. the maximum number of sources].

@@ -7,10 +7,6 @@ or have suggestions on how we can improve our functionalities.
 All suggestions are welcomed!
 
 * *Contributing* : We welcome pull requests.
-* *Email us* : You can also reach the individual developers at:
- - Cassey Low:
- - Darren Lee:
- - Fabian Terh:
- - Ruhani Suri: suriruhani@u.nus.edu
- - Yang Yang:
+* *Email us* : You can also reach the individual developers at their GitHub accounts, as listed in
+<<AboutUs, About Us>>.
 

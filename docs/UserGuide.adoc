@@ -648,20 +648,20 @@ Format: `restore INDEX`
 Examples:
 
 * `delete 1` +
-`recycle-bin` +
-`restore 1` +
 1. Delete 1st source in the source manager database +
+`recycle-bin` +
 2. use recycle-bin to switch to Recycle Bin mode +
+`restore 1` +
 3. restores the 2nd source in the recycle bin database.
 * `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
-`delete 1` +
-`add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
-`recycle-bin` +
-`restore 1` +
 1. Add a source
+`delete 1` +
 2. Delete the source
+`add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 3. Add the same source
+`recycle-bin` +
 4. Switch to Recycle Bin
+`restore 1` +
 5. Restore the deleted source
 6. An error message is thrown advising the removing of the source since it already exists in the source manager database.
 // end::restore[]

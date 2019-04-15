@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -233,7 +233,7 @@ Classes used by multiple components are in the `seedu.sourcemanager.commons` pac
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::restore[]
+// tag::recyclebin[]
 === Restore Command feature
 The restore feature allows users to use the restore command to retrieve their research data they accidentally deleted.
 
@@ -450,54 +450,54 @@ Therefore, we thought that a simple semicolon-separated key:value pair encoding 
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by `VersionedAddressBook`.
-It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`.
+The undo/redo mechanism is facilitated by `VersionedSourceManager`.
+It extends `SourceManager` with an undo/redo history, stored internally as an `sourceManagerStateList` and `currentStatePointer`.
 Additionally, it implements the following operations:
 
-* `VersionedAddressBook#commit()` -- Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` -- Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` -- Restores a previously undone address book state from its history.
+* `VersionedSourceManager#commit()` -- Saves the current source manager state in its history.
+* `VersionedSourceManager#undo()` -- Restores the previous source manager state from its history.
+* `VersionedSourceManager#redo()` -- Restores a previously undone source manager state from its history.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+These operations are exposed in the `Model` interface as `Model#commitSourceManager()`, `Model#undoSourceManager()` and `Model#redoSourceManager()` respectively.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+Step 1. The user launches the application for the first time. The `VersionedSourceManager` will be initialized with the initial source manager state, and the `currentStatePointer` pointing to that single source manager state.
 
 image::UndoRedoStartingStateListDiagram.png[width="800"]
 
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
+Step 2. The user executes `delete 5` command to delete the 5th source in the source manager. The `delete` command calls `Model#commitSourceManager()`, causing the modified state of the source manager after the `delete 5` command executes to be saved in the `sourceManagerStateList`, and the `currentStatePointer` is shifted to the newly inserted source manager state.
 
 image::UndoRedoNewCommand1StateListDiagram.png[width="800"]
 
-Step 3. The user executes `add n/David ...` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
+Step 3. The user executes `add i/algorithm ...` to add a new source. The `add` command also calls `Model#commitSourceManager()`, causing another modified source manager state to be saved into the `sourceManagerStateList`.
 
 image::UndoRedoNewCommand2StateListDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
+If a command fails its execution, it will not call `Model#commitSourceManager()`, so the source manager state will not be saved into the `sourceManagerStateList`.
 
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
+Step 4. The user now decides that adding the source was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoSourceManager()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous source manager state, and restores the source manager to that state.
 
 image::UndoRedoExecuteUndoStateListDiagram.png[width="800"]
 
 [NOTE]
-If the `currentStatePointer` is at index 0, pointing to the initial address book state, then there are no previous address book states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
+If the `currentStatePointer` is at index 0, pointing to the initial source manager state, then there are no previous source manager states to restore. The `undo` command uses `Model#canUndoSourceManager()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the undo.
 
 The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The `redo` command does the opposite -- it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
+The `redo` command does the opposite -- it calls `Model#redoSourceManager()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the source manager to that state.
 
 [NOTE]
-If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone address book states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
+If the `currentStatePointer` is at index `sourceManagerStateList.size() - 1`, pointing to the latest source manager state, then there are no undone source manager states to restore. The `redo` command uses `Model#canRedoSourceManager()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
 
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
+Step 5. The user then decides to execute the command `list`. Commands that do not modify the source manager, such as `list`, will usually not call `Model#commitSourceManager()`, `Model#undoSourceManager()` or `Model#redoSourceManager()`. Thus, the `sourceManagerStateList` remains unchanged.
 
 image::UndoRedoNewCommand3StateListDiagram.png[width="800"]
 
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add n/David ...` command. This is the behavior that most modern desktop applications follow.
+Step 6. The user executes `clear`, which calls `Model#commitSourceManager()`. Since the `currentStatePointer` is not pointing at the end of the `sourceManagerStateList`, all address book states after the `currentStatePointer` will be purged. We designed it this way because it no longer makes sense to redo the `add i/algorithm ...` command. This is the behavior that most modern desktop applications follow.
 
 image::UndoRedoNewCommand4StateListDiagram.png[width="800"]
 
@@ -509,18 +509,18 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire source manager.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the source being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use a list to store the history of address book states.
+* **Alternative 1 (current choice):** Use a list to store the history of source manager states.
 ** Pros: Easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedAddressBook`.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `VersionedSourceManager`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate list, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
@@ -578,9 +578,6 @@ The algorithm implementation for this section of the code was inspired from http
 [NOTE]
 If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
 the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.
-
-[NOTE]
-Search by author name is not accounted for yet. Look forward in v2.0!
 
 Additionally, it uses:
 
@@ -716,13 +713,6 @@ I.e. both numbers should be non-zero and the second number can only be same or g
 
 Example: `list 6 9` +
 Lists the 4 sources from index 6 to 9 from the entire database list, indexed from 1, 2 .. till 4 with all their details.
-
-[NOTE]
-=====
-The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
-
-Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-=====
 
 Some salient features which affect the command's working are discussed below:
 
@@ -887,6 +877,17 @@ When a pinned source is unpinned using the `unpin INDEX` command, the coordinati
 
 image::unpinSequence.png[width="900"]
 
+==== Operational Process
+When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.
+
+An example of this could be `unpin 1` command in a database with 3 pinned sources.
+
+image::unpin1.PNG[width="400"]
+
+The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.
+
+image::unpin2.PNG[width="400"]
+
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
 
@@ -943,6 +944,8 @@ The function takes the following steps to make the swap:
 * Step 3 -- The `addSourceAtIndex` function is used to place the recently deleted source back into the list at the designated location.
 
 * Step 4 -- The function then commits the database to save the recent changes.
+
+image::customOrderSequence.png[width="900"]
 
 ==== Swapping process
 The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
@@ -2145,6 +2148,23 @@ Windows, Linux, Unix, OS-X
 A contact detail that is not meant to be shared with others
 
 [appendix]
+== Product Survey
+
+*Product Name*
+
+Author: ...
+
+Pros:
+
+* ...
+* ...
+
+Cons:
+
+* ...
+* ...
+
+[appendix]
 == Instructions for Manual Testing
 
 Given below are instructions to test the app manually.
@@ -2230,4 +2250,9 @@ with N not greater than M.
 
 // end::listMT[]
 
+=== Saving data
+
+. Dealing with missing/corrupted data files
+
+.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 

@@ -15,7 +15,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -877,6 +877,17 @@ When a pinned source is unpinned using the `unpin INDEX` command, the coordinati
 
 image::unpinSequence.png[width="900"]
 
+==== Operational Process
+When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.
+
+An example of this could be `unpin 1` command in a database with 3 pinned sources.
+
+image::unpin1.PNG[width="400"]
+
+The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.
+
+image::unpin2.PNG[width="400"]
+
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.
 
@@ -933,6 +944,8 @@ The function takes the following steps to make the swap:
 * Step 3 -- The `addSourceAtIndex` function is used to place the recently deleted source back into the list at the designated location.
 
 * Step 4 -- The function then commits the database to save the recent changes.
+
+image::customOrderSequence.png[width="900"]
 
 ==== Swapping process
 The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
@@ -2198,10 +2211,9 @@ Use case resumes at step 0.
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `9` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be able to hold up to 1000 sources without a noticeable sluggishness in performance for typical usage.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands)
+should be able to accomplish most of the tasks faster using commands than using the mouse.
 
 [appendix]
 == Glossary
@@ -2211,23 +2223,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -2314,10 +2309,3 @@ with N not greater than M.
     Expected: error because all indices must be positive
 
 // end::listMT[]
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-

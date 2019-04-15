@@ -14,20 +14,29 @@ import seedu.address.model.source.Source;
 
 
 /**
- * Lists all sources in the Source Database to the user, or the top N sources where N may
- * be an optional argument supplied by the user.
+ * Lists sources in the Source Database to the user, filtered by their count based on the
+ * indices passed by the user (if any).
+ * 4 usages:
+ *  1. with no arguments: lists all
+ *  2. one positive argument N: list top N
+ *  3. one negative argument N: list last N
+ *  4. two positive arguments N, M: list all between N and M (included)
  */
 public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": List all the sources in the database to the user, or optionally, the top N sources if"
-            + " an argument is supplied.\n"
-            + "Parameters: [INDEX] (Optional, must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 20";
+            + ":List sources in the database to the user, by their index. Takes 2 optional parameters N and M.\n"
+            + " 4 usages:"
+            + "*  1. with no arguments: lists all"
+            + "*  2. one positive argument N: list top N"
+            + "*  3. one negative argument N: list last N"
+            + "*  4. two positive arguments N, M: list all between N and M (included)"
+            + "Parameters: [N] [M] (Optional, must be non-zero)\n"
+            + "Example: " + COMMAND_WORD + " 7, 9";
 
-    public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all sources!";
+    public static final String MESSAGE_LIST_ALL_SUCCESS = "Listed all %d sources!";
 
     public static final String MESSAGE_LIST_TOP_N_SUCCESS = "Listed top %d sources!";
 
@@ -121,8 +130,9 @@ public class ListCommand extends Command {
             requireNonNull(model);
             //shortcut to obtain the entire list of all sources by first displaying an unfiltered list
             model.updateFilteredSourceList(PREDICATE_SHOW_ALL_SOURCES);
+            //get total size
             int size = model.getFilteredSourceList().size();
-            if (toIndex != null && fromIndex != null) {
+            if (toIndex != null && fromIndex != null) { //2 argument case
                 if (fromIndex.getOneBased() > toIndex.getOneBased()) {
                     throw new CommandException("To-Index cannot be greater than From-Index!");
                 }
@@ -130,19 +140,19 @@ public class ListCommand extends Command {
                 model.updateFilteredSourceList(makePredicateForXToY(fromIndex.getOneBased(), toIndex.getOneBased()));
                 return new CommandResult(String.format(MESSAGE_LIST_X_TO_Y_SUCCESS,
                         fromIndex.getOneBased(), toIndex.getOneBased()));
-            } else if (targetIndex != null) { //when LIST is used with an argument (show N)
-                if (posFlag) {
+            } else if (targetIndex != null) { //1 argument
+                if (posFlag) { //positive
                     //to ensure N is capped at list size
                     targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
                     model.updateFilteredSourceList(makePredicateForTopN(targetIndex.getOneBased()));
                     return new CommandResult(String.format(MESSAGE_LIST_TOP_N_SUCCESS, targetIndex.getOneBased()));
-                } else {
+                } else { //negative
                     targetIndex = targetIndex.getOneBased() > size ? Index.fromOneBased(size) : targetIndex;
                     model.updateFilteredSourceList(makePredicateForLastN(targetIndex.getOneBased(), size));
                     return new CommandResult(String.format(MESSAGE_LIST_LAST_N_SUCCESS, targetIndex.getOneBased()));
                 }
-            } else { //when LIST is used without an argument (show all)
-                return new CommandResult(MESSAGE_LIST_ALL_SUCCESS);
+            } else { //no argument case
+                return new CommandResult(String.format(MESSAGE_LIST_ALL_SUCCESS, size));
             }
         } catch (Exception ce) {
             throw new CommandException(

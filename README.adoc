@@ -23,8 +23,7 @@ Other useful functionalities implemented are:
 - Bibliography generator
 - Panic/unpanic mode
 - Restore command
-- History command
-- Greet command and many more!
+- History command and many more!
 
 == Target Users
 Tech-savvy university students or researchers who love to use the Command line Interface and wish to organize and tag

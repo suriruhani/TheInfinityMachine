@@ -13,7 +13,7 @@ import seedu.address.logic.parser.ArgumentMultimap;
 /**
  * Tests that a {@code Source}'s {@code Title}, {@code Type} {@code Detail}, and {@code Tag}
  * contain the keywords given. Performs a logical AND by checking if all those keywords
- * are present in the output source.
+ * are present in the output source. Substring matching enable. Minor typos accounted for.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {
     public static final int LEVENSHTIEN_DISTANCE_CONSTANT = 5;
@@ -37,6 +37,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
                 && (detailsKeywords.isEmpty() || checkAllEmpty(detailsKeywords))
                 && (tagKeywords.isEmpty() || checkAllEmpty(tagKeywords))) {
             return true;
+            //show all when tags empty
         }
 
         if (!titleKeywords.isEmpty() && !checkAllEmpty(titleKeywords)) {

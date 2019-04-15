@@ -43,7 +43,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
-== Overview
+== Modes
 
 ==== Source Manager
 
@@ -56,7 +56,9 @@ Worried about accidentally deleting important data? Don't worry you can recover 
 similar to how you would in a Recycle Bin on Windows.
 
 [[Features]]
-== Source Manager Commands
+== Features
+
+=== Source Manager Commands
 
 ====
 *Command Format*

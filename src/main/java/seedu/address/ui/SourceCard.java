@@ -27,6 +27,8 @@ public class SourceCard extends UiPart<Region> {
     @FXML
     private HBox cardPane;
     @FXML
+    private FlowPane pinned;
+    @FXML
     private Label id;
     @FXML
     private Label title;
@@ -42,6 +44,11 @@ public class SourceCard extends UiPart<Region> {
     public SourceCard(Source source, int displayedIndex) {
         super(FXML);
         this.source = source;
+
+        if (source.getPinnedState() == true) {
+            pinned.getChildren().add(new Label("Pinned"));
+        }
+
         id.setText(displayedIndex + ". ");
         title.setText(source.getTitle().title);
         author.setText(source.getAuthor().author);

@@ -20,13 +20,12 @@ import seedu.address.model.tag.Tag;
 public class Source {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    public final BiblioFields biblioFields;
-
     private final Title title;
     private final Author author;
     private final Type type;
     private final Detail detail;
     private final Set<Tag> tags = new HashSet<>();
+    private final BiblioFields biblioFields;
 
     private boolean isPinned = false;
 
@@ -140,7 +139,7 @@ public class Source {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(title, type, author, detail, tags);
+        return Objects.hash(title, type, author, detail, tags, biblioFields);
     }
 
     @Override

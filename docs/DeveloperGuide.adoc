@@ -881,6 +881,13 @@ The external storage is handled by a simple class called the `PinnedSourcesStora
 
 Dynamic pathing was necessary because when testing the function using a default file path, changes made during the test were saved to the actual file and that caused major problems for the program. Dynamic pathing ensured that for testing, a separate test file is written to thus maintaining the integrity of the actual file.
 
+==== Pinned Source UI Tag
+Pinned sources are denoted by a little golden badge on top of the source that says "Pinned". This is kept updated vis a flag set in the source object itself.
+
+At the start of the program, the `ModelManager` will use the number of pinned sources retrieved from the external storage to assign the flags accordingly. Every time a function affects the pinned sources, namely `delete`, `pin` and `unpin`, is called, the flag will be appropriately updated as well for consistency.
+
+It is important to note that the flag itself is not stored externally and is not persistent. It is assigned at the start of every session and modified accordingly as the functions are called. The rationale behind this implementation choice is to ensure that the external source storage is kept as clean and minimalist as possible.
+
 // tag::devorder[]
 === Custom Order Feature
 ==== Current Implementation

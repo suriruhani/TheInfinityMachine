@@ -439,10 +439,9 @@ Format: `alias COMMAND ALIAS`
 Examples:
 
 * `alias count c` (`c` is now a valid pseudo-command that works exactly like `count`)
-* `alias invalid i` (`i` is now an invalid pseudo-command that works exactly like `invalid`)
+* `alias invalid i` (this doesn't work because `invalid` is not a valid command)
 
-The user is responsible for ensuring that he is creating aliases for valid commands.
-The successful creation of an alias does not provide any guarantee of the validity of the associated command.
+As the above examples demonstrate, aliases may only be created for valid commands.
 
 If the user attempts to add an alias that has already been added, the old one will be overwritten. For example:
 

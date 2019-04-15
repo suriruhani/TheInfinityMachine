@@ -18,7 +18,6 @@ import seedu.address.logic.commands.CustomOrderCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
-import seedu.address.logic.commands.GreetCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -57,7 +56,7 @@ public class SourceManagerParser implements CommandValidator {
     /**
      * Convenience constructor that instantiates SourceManagerParser with ConcreteAliasManager.
      */
-    public SourceManagerParser() {
+    public SourceManagerParser() { // This supports dependency injection
         this(null);
     }
 
@@ -105,7 +104,8 @@ public class SourceManagerParser implements CommandValidator {
         validCommands.add(PanicCommand.COMMAND_WORD);
         validCommands.add(UnpanicCommand.COMMAND_WORD);
         validCommands.add(CountCommand.COMMAND_WORD);
-        validCommands.add(GreetCommand.COMMAND_WORD);
+        validCommands.add(BiblioCommand.COMMAND_WORD);
+        validCommands.add(BiblioEditCommand.COMMAND_WORD);
         validCommands.add(RecycleBinCommand.COMMAND_WORD);
     }
 
@@ -183,9 +183,6 @@ public class SourceManagerParser implements CommandValidator {
         case CountCommand.COMMAND_WORD:
             return new CountCommand();
 
-        case GreetCommand.COMMAND_WORD:
-            return new GreetCommand();
-
         case BiblioCommand.COMMAND_WORD:
             return new BiblioCommandParser().parse(arguments);
 
@@ -201,7 +198,6 @@ public class SourceManagerParser implements CommandValidator {
         case RecycleBinCommand.COMMAND_WORD:
             return new RecycleBinCommand();
 
-        // Meta-commands (pertaining to AliasManager)
         // Meta-commands (pertaining to AliasManager):
         // For these, we include implementation details because these are meta-commands
         // that relate directly to AliasManager (and by association, SourceManagerParser).

@@ -175,13 +175,28 @@ public class TypicalSources {
      */
     public static List<Source> getTypicalSources() {
         return new ArrayList<>(Arrays.asList(
+                // Original 7
                 ALGORITHM_RESEARCH,
                 SENSOR_RESEARCH,
                 SMART_COMPUTERS,
                 VR_RESEARCH,
                 AR_RESEARCH,
                 GAME_DEVELOPMENT,
-                AI_RESEARCH));
+                AI_RESEARCH,
+                // Additional 13
+                SC_GUIDE,
+                REPUBLIC,
+                DRAGONS,
+                DIMENSIONS,
+                DIMENSIONS_TWO,
+                DIMENSIONS_THREE,
+                BRIDGE_ENGINEERING,
+                SPACE_DEFENCE,
+                BRITISH_HISTORY,
+                NAVAL_HISTORY,
+                NAVAL_HISTORY_TWO,
+                NAVAL_HISTORY_THREE,
+                COMPUTER_ORGANISATION));
     }
 
     public static List<Source> getTypicalDeletedSourcesList() {

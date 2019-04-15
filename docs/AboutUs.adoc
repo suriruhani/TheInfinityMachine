@@ -12,7 +12,7 @@ Tutorial W-13 Group 3: The Infinity Machine - A safe place to store your researc
 === Cassey Low
 
 image::case141.png[width="150", align="left"]
-{empty}[https://github.com/case141[github]] [<<casseylow#, portfolio>>]
+{empty}[https://github.com/case141[github]] [<<case141#, portfolio>>]
 
 Role: Developer
 

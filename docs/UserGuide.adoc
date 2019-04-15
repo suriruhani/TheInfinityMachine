@@ -116,6 +116,7 @@ The entry fields for the various source information have the following limitatio
 * AUTHOR
 ** A mantatory field.
 ** No limitation on the characters to be entered.
+** For the purposes of generating an accurate bibliography entry later, it is recommended to enter the full name of an Author in the following way: `Last name, First name`.
 
 * DETAIL
 ** A mantatory field.
@@ -125,6 +126,12 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
+
+// tag::biblio[]
+[Tip]
+The created source comes with an empty set of biblio fields, used for storing information for creating a bibliography entry. Refer to `biblio` and `biblioEdit` for more information.
+// end::biblio[]
+
 =====
 
 [TIP]
@@ -427,17 +434,60 @@ Moves the source located at index 1 to index 4.
 * `order 1 6` +
 If there are only 6 sources in the database, the command moves the source located at index 1 to last position in the list.
 
-==== Generate bibliography entry : `biblio`
+
+// tag::biblio[]
+==== Generating a bibliography entry : `biblio`
 
 Generates an bibliographical entry from the source at the specified. +
-Format: `biblio FORMAT INDEX`
+Format: `biblio INDEX FORMAT`
 
 ****
 * Generates a bibliographical entry of the appropriate style from the source at the specified `INDEX`.
-* The format must be APA or MLA
 * The index refers to the index number shown in the displayed source list.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be valid (between the indexes of the first source and the last source inclusive.
+* The format must be APA or MLA
 ****
+
+[Note]
+Currently, only source types of "Book", "Journal Article" and "Website" are supported.
+If any suggested fields for a given source type are not populated, they will be reflected to the user when `biblio` is used.
+
+Examples:
+
+* `biblio 1 APA` +
+Generates an APA style bibliography entry for the first source.
+
+* `biblio 2 MLA` +
+Generates an MLA style bibliography entry for the second source.
+
+=== Editing a bibliography related field (bibliofield): `biblioEdit`
+
+Replaces the information stored under the indicated header in the indicated source.
+
+Format: `biblioEdit INDEX HEADER BODY`
+
+****
+* Replaces a bibliofield of matching `HEADER` of the source at the specified `INDEX` with `BODY`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be valid (between the indexes of the first source and the last source inclusive.
+* The header must be one of the following:
+*   "City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
+****
+
+[Note]
+To ensure the accuracy of the bibliography generated, please ensure the accuracy of entered `BODY`.
+
+[Tip]
+The <i></i> braces indicate that the text between should be italicized.
+
+Examples:
+
+* `biblioEdit 1 City London` +
+Replaces the "City" bibliofield in the first source with "London".
+
+* `biblioEdit 2 Publisher Penguin` +
+Replaces the "Publisher" bibliofield in the second source with "Penguin".
+// end::biblio[]
 
 ==== Listing entered commands : `history`
 
@@ -856,8 +906,10 @@ e.g. `order 3 5`
 * *Help* : `help`
 * *Select* : `select`
 * *Count* : `count`
-* *Biblio* : `biblio FORMAT INDEX` +
-e.g. `biblio APA 1`
+* *Biblio* : `biblio INDEX FORMAT` +
+e.g. `biblio 1 APA`
+* *Biblio* : `biblioEdit INDEX HEADER BODY` +
+e.g. `biblioEdit 1 City London`
 * *History* : `history`
 * *Adding an alias* : `alias COMMAND ALIAS` +
 e.g. `alias list ls`

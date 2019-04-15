@@ -3,6 +3,8 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
+image::case141.png[width="150", align="left"]
+
 == PROJECT: Infinity Machine
 
 ---

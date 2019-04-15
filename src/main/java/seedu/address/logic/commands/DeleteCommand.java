@@ -77,7 +77,7 @@ public class DeleteCommand extends Command {
 
         // set pinned flag for source to be false before moving it to deleted sources database and removing it
         sourceToDelete.setPinnedState(false);
-        
+
         // add deleted source to deleted sources database
         model.addDeletedSource(sourceToDelete);
         model.commitDeletedSources();

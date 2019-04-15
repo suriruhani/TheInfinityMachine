@@ -27,7 +27,7 @@ public class Source {
     private final Type type;
     private final Detail detail;
     private final Set<Tag> tags = new HashSet<>();
-    
+
     private boolean isPinned = false;
 
     public Source(Title title, Author author, Type type, Detail detail, Set<Tag> tags, BiblioFields biblioFields) {
@@ -81,7 +81,7 @@ public class Source {
     public BiblioFields getBiblioFields() {
         return biblioFields;
     }
-    
+
     public boolean getPinnedState() {
         return isPinned;
     }

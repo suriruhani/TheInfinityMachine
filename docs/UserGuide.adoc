@@ -782,11 +782,11 @@ Examples:
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
+`empty-bin` +
+`undo` (reverses the `empty-bin` command) +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`redo` (reapplies the `empty-bin` command) +
 // end::undoredorb[]
 
 ==== Viewing help : `help`

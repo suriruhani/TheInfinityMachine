@@ -134,7 +134,8 @@ relevant to our application's scope, changing parameter and return type along wi
 *** Reviewed and approved PRs of other team mates
 *** Helped in tracking issues including assigning severity, status, type, and closing it.
 
-//==== Tools:
+==== Tools:
+*** Set-up Coveralls
 
 == Contributions to the User Guide
 

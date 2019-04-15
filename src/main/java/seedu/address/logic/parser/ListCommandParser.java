@@ -7,7 +7,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Parses input arguments and creates a new ListCommand object
+ * Parses input arguments and creates a ListCommand object based on the arguments passed
  */
 public class ListCommandParser implements Parser<ListCommand> {
 
@@ -18,23 +18,22 @@ public class ListCommandParser implements Parser<ListCommand> {
      */
     public ListCommand parse(String args) throws ParseException {
         try {
-            if (args.trim().length() == 0) {
+            if (args.trim().length() == 0) { //no argument case
                 return new ListCommand();
             }
             String[] splitArgs = args.split("\\s+");
-            if (splitArgs.length == 2) {
-                if (Integer.parseInt(splitArgs[1]) >= 0) {
+            if (splitArgs.length == 2) { //1 argument case
+                if (Integer.parseInt(splitArgs[1]) >= 0) { //positve
                     Index targetIndex = ParserUtil.parseIndex(splitArgs[1]);
                     return new ListCommand(targetIndex, true);
-                } else {
+                } else { //negative
                     int targetNum = Math.abs(Integer.parseInt(splitArgs[1]));
                     Index targetIndex = Index.fromOneBased(targetNum);
                     return new ListCommand(targetIndex, false);
                 }
-            } else {
+            } else { //2 argument case
                 Index toIndex = ParserUtil.parseIndex(splitArgs[1]);
                 Index fromIndex = ParserUtil.parseIndex(splitArgs[2]);
-
                 return new ListCommand(toIndex, fromIndex);
             }
         } catch (ParseException pe) {

@@ -130,7 +130,7 @@ Examples:
 * `add i/Algorithms Wikipedia y/Website a/Jason Mills d/Basic definitions and history of algorithms t/Algorithm t/Wikipedia`
 * `add i/Artificial Intelligence IEEE y/Journal Article a/Yueyang d/introductory facts on artificial intelligence t/Science Journal t/AI`
 
-
+// tag::delete[]
 ==== Deleting a source : `delete`
 
 Deletes the specified source. +
@@ -157,7 +157,7 @@ Deletes the 1st source in the results of the `search` command.
 `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
 `delete 1` +
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
-
+// end::delete[]
 
 ==== Editing a source : `edit`
 

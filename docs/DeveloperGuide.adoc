@@ -233,7 +233,7 @@ Classes used by multiple components are in the `seedu.sourcemanager.commons` pac
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::restore[]
+// tag::recyclebin[]
 === Restore Command feature
 The restore feature allows users to use the restore command to retrieve their research data they accidentally deleted.
 

@@ -631,6 +631,41 @@ Deletes the 1st source in the results of the `search` command.
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 // end::recyclebindelete[]
 
+// tag::restore[]
+==== Restoring a source : `restore`
+
+Restores the specified source from Recycle Bin back to Source Manager. +
+Format: `restore INDEX`
+
+****
+* Restores the source at the specified `INDEX`.
+* The index refers to the index number shown in the displayed source list.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Restored source is added back to Source Manager mode.
+* If source to restore already exists in the Source Manager, an error message advising the removing of the source will be thrown.
+****
+
+Examples:
+
+* `delete 1` +
+`recycle-bin` +
+`restore 1` +
+1. Delete 1st source in the source manager database +
+2. use recycle-bin to switch to Recycle Bin mode +
+3. restores the 2nd source in the recycle bin database.
+* `add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`delete 1` +
+`add i/Wikipedia Algorithms y/Website a/Tom Show d/Basic definitions of algorithms t/Algorithms t/Introduction` +
+`recycle-bin` +
+`restore 1` +
+1. Add a source
+2. Delete the source
+3. Add the same source
+4. Switch to Recycle Bin
+5. Restore the deleted source
+6. An error message is thrown advising the removing of the source since it already exists in the source manager database.
+// end::restore[]
+
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +

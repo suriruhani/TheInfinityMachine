@@ -31,7 +31,7 @@ public class PinCommand extends Command {
 
     public static final String MESSAGE_SOURCE_PINNED_INVALID = "The source is already pinned.";
     public static final String MESSAGE_SOURCE_INDEX_INVALID = "The source index is invalid.";
-    public static final String MESSAGE_MAX_PINNED_INVALID = 
+    public static final String MESSAGE_MAX_PINNED_INVALID =
             "You have reached the maximum number of pinned sources. (" + PINNED_LIMIT + ")";
 
     private final int targetIndex;

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
@@ -64,6 +65,14 @@ public class ModelManager implements Model, PanicMode {
         logger.info("Loading number of pinned sources.");
         this.storageOps = new PinnedSourcesStorageOperationsCenter();
         this.numPinnedSources = storageOps.loadNumberOfPinnedSources();
+
+        List<Source> completeSourceList = versionedSourceManager.getSourceList();
+        for (int i = 0; i < this.numPinnedSources; i++) {
+            Source pinnedSource = completeSourceList.get(i);
+            Source enabledSource = pinnedSource;
+            enabledSource.setPinnedState(true);
+            versionedSourceManager.setSource(pinnedSource, enabledSource);
+        }
     }
 
     /**

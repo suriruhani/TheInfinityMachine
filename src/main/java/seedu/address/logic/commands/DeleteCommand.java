@@ -71,13 +71,17 @@ public class DeleteCommand extends Command {
                     sourceToDelete));
         }
 
+        // remove source from source manager database
+        model.deleteSource(sourceToDelete);
+        model.commitSourceManager();
+
+        // set pinned flag for source to be false before moving it to deleted sources database and removing it
+        sourceToDelete.setPinnedState(false);
+        
         // add deleted source to deleted sources database
         model.addDeletedSource(sourceToDelete);
         model.commitDeletedSources();
 
-        // remove source from source manager database
-        model.deleteSource(sourceToDelete);
-        model.commitSourceManager();
         return new CommandResult(String.format(MESSAGE_DELETE_SOURCE_SUCCESS, sourceToDelete));
     }
 

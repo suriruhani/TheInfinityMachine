@@ -62,7 +62,7 @@ public class BiblioEditCommand extends Command {
 
             return new CommandResult(MESSAGE_BIBLIO_EDIT_SUCCESS + editedSource.biblioFields);
         } else {
-            return new CommandResult(MESSAGE_BIBLIO_EDIT_FAILURE);
+            throw new CommandException(MESSAGE_BIBLIO_EDIT_FAILURE);
         }
     }
 

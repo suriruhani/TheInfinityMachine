@@ -12,19 +12,6 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERIN
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
-import static seedu.address.model.util.TypicalSources.BRIDGE_ENGINEERING;
-import static seedu.address.model.util.TypicalSources.BRITISH_HISTORY;
-import static seedu.address.model.util.TypicalSources.COMPUTER_ORGANISATION;
-import static seedu.address.model.util.TypicalSources.DIMENSIONS;
-import static seedu.address.model.util.TypicalSources.DIMENSIONS_THREE;
-import static seedu.address.model.util.TypicalSources.DIMENSIONS_TWO;
-import static seedu.address.model.util.TypicalSources.DRAGONS;
-import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY;
-import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY_THREE;
-import static seedu.address.model.util.TypicalSources.NAVAL_HISTORY_TWO;
-import static seedu.address.model.util.TypicalSources.REPUBLIC;
-import static seedu.address.model.util.TypicalSources.SC_GUIDE;
-import static seedu.address.model.util.TypicalSources.SPACE_DEFENCE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -111,6 +98,101 @@ public class TypicalSources {
             .withAuthor(VALID_AUTHOR_NETWORK)
             .withDetail(VALID_DETAIL_NETWORK)
             .withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
+
+    // Additional 13
+    // Some references to history, games, and movies were made in the following sources for entertainment purposes only
+    public static final Source SC_GUIDE = new seedu.address.model.util.SourceBuilder()
+            .withTitle("From Bronze to Grandmaster")
+            .withType("Book")
+            .withAuthor("Mun Seong-won")
+            .withDetail("A professional guide to getting better at Starcraft 2.")
+            .withTags("game")
+            .withBiblioFields()
+            .build();
+    public static final Source REPUBLIC = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Republic")
+            .withType("Book")
+            .withAuthor("Plato")
+            .withDetail("Translation of the iconic text by the renown philosopher.")
+            .withTags("philosophy", "history")
+            .build();
+    public static final Source DRAGONS = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Entering Dragons")
+            .withType("Journal")
+            .withAuthor("Alexander Eisenhower")
+            .withDetail("A guide to the legendary creatures which once inhabited our planet.")
+            .withTags("natural history")
+            .build();
+    public static final Source DIMENSIONS = new seedu.address.model.util.SourceBuilder()
+            .withTitle("What Lurks in the Void")
+            .withType("Journal Article")
+            .withAuthor("Julius Coldair")
+            .withDetail("A peek into the world beyond our own and the creatures that might dwell there.")
+            .build();
+    public static final Source DIMENSIONS_TWO = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Into the Void Dimensional Horrors")
+            .withType("Journal Article")
+            .withAuthor("Julius Coldair")
+            .withDetail("A malevolent intelligence, ancient beyond our concept of time, that occasionally passes "
+                    + "into our world. A brief summary of what we know about these monstrous beings.")
+            .build();
+    public static final Source DIMENSIONS_THREE = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Into the Void Spectral Wraiths")
+            .withType("Journal Article")
+            .withAuthor("Julius Coldair")
+            .withDetail("A spectral entity shining with the ominous light of a pale star that has been seen to roam "
+                    + "in the vast reaches of space. A brief summary of what we know about these strange creatures.")
+            .build();
+    public static final Source BRIDGE_ENGINEERING = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Introduction to Structural Engineering")
+            .withType("Website")
+            .withAuthor("Joseph Yeetus")
+            .withDetail("A brief introduction into the engineering of bridges and how they have changed over history.")
+            .withTags("engineering")
+            .withBiblioFields()
+            .build();
+    public static final Source SPACE_DEFENCE = new seedu.address.model.util.SourceBuilder()
+            .withTitle("The Earth Defence Initiative")
+            .withType("Book")
+            .withAuthor("David Levinson")
+            .withDetail("Since the invasion in 1996 that brought humanity to its knees, the Earth has had vast "
+                    + "improvements in its planetary defences. A brief overview of how our planet is defended.")
+            .withTags("planetary defences", "space warfare")
+            .build();
+    public static final Source BRITISH_HISTORY = new seedu.address.model.util.SourceBuilder()
+            .withTitle("The History of the British Empire")
+            .withType("Book")
+            .withAuthor("Mark Huey")
+            .withDetail("A timeline of the events leading to the formation of the United Kingdom.")
+            .build();
+    public static final Source NAVAL_HISTORY = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Naval History Aircraft Carriers")
+            .withType("Book")
+            .withAuthor("Jason Nimitz")
+            .withDetail("A overview of the massive capital ships that reshaped the world's navies.")
+            .withTags("warships")
+            .build();
+    public static final Source NAVAL_HISTORY_TWO = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Naval History Battleships")
+            .withType("Book")
+            .withAuthor("Jason Nimitz")
+            .withDetail("A overview of the big-gunned capital ships that were symbols of power in the world's navies.")
+            .withTags("warships")
+            .build();
+    public static final Source NAVAL_HISTORY_THREE = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Naval History Cruiser")
+            .withType("Book")
+            .withAuthor("Jason Nimitz")
+            .withDetail("A overview of the nimble escort vessels that formed the backbone of many navies.")
+            .withTags("warships")
+            .build();
+    public static final Source COMPUTER_ORGANISATION = new seedu.address.model.util.SourceBuilder()
+            .withTitle("Introductory Computer Organisation")
+            .withType("Book")
+            .withAuthor("Lee Ming Yuan")
+            .withDetail("A look to the working principle behind the world's most powerful computational devices.")
+            .withTags("computer science", "algorithms")
+            .build();
 
     public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches EXPERIMENT
 

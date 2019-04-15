@@ -16,7 +16,7 @@ import seedu.address.logic.parser.ArgumentMultimap;
  * are present in the output source.
  */
 public class SourceContainsKeywordsPredicate implements Predicate<Source> {
-    public static final int LEVENSHTIEN_DISTANCE_CONSTANT = 3;
+    public static final int LEVENSHTIEN_DISTANCE_CONSTANT = 5;
     private final ArgumentMultimap keywords;
 
     public SourceContainsKeywordsPredicate(ArgumentMultimap keywords) {
@@ -36,7 +36,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
                 && (typeKeywords.isEmpty() || checkAllEmpty(typeKeywords))
                 && (detailsKeywords.isEmpty() || checkAllEmpty(detailsKeywords))
                 && (tagKeywords.isEmpty() || checkAllEmpty(tagKeywords))) {
-            return false;
+            return true;
         }
 
         if (!titleKeywords.isEmpty() && !checkAllEmpty(titleKeywords)) {
@@ -53,11 +53,6 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
 
         if (!tagKeywords.isEmpty() && !checkAllEmpty(tagKeywords)) {
             result = result && matchTagKeywords(tagKeywords, source);
-        }
-
-
-        if (result) {
-            System.out.println(source.getTitle().title);
         }
 
         return result;
@@ -77,6 +72,7 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
 
     /**
      * Evaluates the number of swaps needed to transform one string to the other [case insensitive]
+     * Inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung].
      * @param a a string to be transformed from
      * @param b a string to be transformed to
      * @return int number of swaps needed for the transformation
@@ -101,14 +97,13 @@ public class SourceContainsKeywordsPredicate implements Predicate<Source> {
 
     /**
      * Evaluates true if the source field value is similar enough as per the Levenshtien Distance logic,
-     * with the threshold as LEVENSHTIEN_DISTANCE_CONSTANT, lower bounded by difference in string lengths
+     * with the threshold as LEVENSHTIEN_DISTANCE_CONSTANT
      * @param sourceField the field value of the source being tested [lower case]
      * @param userField the argument passed by the user [lower case]
      * @return true if words are similar enough, else false
      */
     public static boolean checkLevenshtienSimilarity(String sourceField, String userField) {
-        return levenshtienDist(sourceField, userField) < LEVENSHTIEN_DISTANCE_CONSTANT
-                + Math.abs(sourceField.length() - userField.length());
+        return levenshtienDist(sourceField, userField) < LEVENSHTIEN_DISTANCE_CONSTANT;
     }
 
     /**

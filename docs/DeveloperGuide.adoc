@@ -234,11 +234,22 @@ Classes used by multiple components are in the `seedu.sourcemanager.commons` pac
 This section describes some noteworthy details on how certain features are implemented.
 
 // tag::recyclebin[]
-=== Restore Command feature
-The restore feature allows users to use the restore command to retrieve their research data they accidentally deleted.
+=== Recycle Bin Mode feature
+The recycle bin mode allows users to access and manage the research data that they previously deleted.
+
+Users may do one of the following:
+1. Restore a previously delete source
+2. Permanently delete a source from the recycle bin
+3. Clear all sources from the recycle bin
+4. Undo and Redo any action in the recycle bin mode
+5. Exit the recycle bin and return to the source manager mode
 
 The restore feature is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with an restore feature, allowing user to restore source from a persistent deleted sources list.
+It extends `Infinity Machine` with a recycle bin feature, allowing user to delete and restore source from a persistent deleted sources list.
+
+==== Overview
+
+
 Additionally, it uses:
 
 * `DeletedSources.java` -- Here, the logic of running through all the deleted sources in the list.
@@ -267,7 +278,7 @@ Step 3. The user executes `restore 1` and only one entry will be deleted, which 
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 2 (current choice):** Using Json Managers and DeletedSources in the Model
-// end::restore[]
+// end::recyclebin[]
 
 // tag::panic[]
 === Panic Mode feature

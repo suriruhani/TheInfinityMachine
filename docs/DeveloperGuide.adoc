@@ -738,6 +738,10 @@ list of the resulting search operation.
 which are based on the indexes of the current displaying list will *still function as per normal* after a list command is executed.
 For example, after displaying `list 3 5`, if a user executes `delete 1`, it is akin to deleting the 3rd source in the entire list database.
 
+The sequence diagram of the working of the list command is as below:
+
+image::ListCommandSequenceDiagram.png[width="800"]
+
 Motivation for such an enhancement is that one may feel that such act of populating *all* the sources on the GUI may be cluttering the view unnecessarily.
 Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
 which would make the logic redundant. In contrast, the user may want to control the number of sources he wants to view, or be able to limit by some sense

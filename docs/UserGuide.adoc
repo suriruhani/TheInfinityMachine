@@ -1,6 +1,7 @@
 = The Infinity Machine - User Guide
 :site-section: UserGuide
 :toc:
+:toclevels: 3
 :toc-title:
 :toc-placement: preamble
 :sectnums:
@@ -58,8 +59,6 @@ similar to how you would in a Recycle Bin on Windows.
 [[Features]]
 == Features
 
-=== Source Manager Commands
-
 ====
 *Command Format*
 
@@ -68,6 +67,8 @@ similar to how you would in a Recycle Bin on Windows.
 * Items with `…`​ after them can be used multiple times including zero times e.g `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Computer Science`, `t/Computer Science t/Algorithms` etc.
 * Parameters can be in any order e.g. if the command specifies `i/TITLE y/TYPE`, `y/TYPE i/TITLE` is also acceptable.
 ====
+
+=== Source Manager Commands
 
 ==== Viewing help : `help`
 
@@ -147,29 +148,17 @@ Deletes the 1st source in the results of the `search` command.
 Permanently deletes the 1st source that is exactly the same source as the source that was previously deleted.
 
 
-=== Listing a deleted source : `list-deleted`
-
-Lists all deleted sources. +
-Format: `list-deleted`
-
-Examples:
-
-* `delete 1` +
-`list-deleted` +
-Lists all deleted sources in the database.
-
-
-=== Editing a source : `edit`
+==== Editing a source : `edit`
 
 Edits an existing source in the database. +
 Format: `edit INDEX [i/TITLE] [y/TYPE] [a/AUTHOR] [d/DETAILS] [t/TAG]...`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * Edits the source at the specified `INDEX`. The index refers to the index number shown in the displayed source list. The index *must be a positive integer* 1, 2, 3, ...
@@ -180,7 +169,7 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [NOTE]
-====
+=====
 The entry fields for the various source information have the following limitations:
 
 * TITLE
@@ -203,7 +192,7 @@ The entry fields for the various source information have the following limitatio
 ** An optional field.
 ** Cannot have special characters but can include numbers and spaces.
 ** Can have any number including 0.
-====
+=====
 
 Examples:
 
@@ -216,7 +205,7 @@ Edits the 5th source and clears all its existing tags.
 
 // tag::search[]
 
-=== Searching a source: `search`
+==== Searching a source: `search`
 
 Searches for entries amongst the list of sources. +
 Able to search by title, type, detail and tags as specified by the CLI prefixes.
@@ -263,7 +252,7 @@ Returns the source(s) of type 'website' [and other similar strings, if any]
 // end::search[]
 // tag::list[]
 
-=== Listing all sources : `list`
+==== Listing all sources : `list`
 
 Displays a list of sources currently in the database, filtering by number and position depending on the [optional] parameters passed. +
 Takes 1 or 2 optional argument which are used to list only the top/bottom N sources or the sources between N and M (included) indices respectively. +
@@ -314,22 +303,22 @@ Lists the 4 sources from index 6 to 9 from the entire database list, indexed fro
 
 // end::list[]
 
-=== Organisational Tools : `order` and `pin`
+==== Organisational Tools : `order` and `pin`
 The Infinity Machine offers users functionality that allows them to customise the way their sources are ordered and displayed to their liking.
 
 Pinned sources are saved between sessions, allowing users to retain whatever edits they have made.
 
-==== Pinning important sources : `pin`
+===== Pinning important sources : `pin`
 Marks a source as pinned and moves it to the top of the list where it will remain.
 
 Format: `pin INDEX`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * The `INDEX` refers to the index number shown in the displayed source list.
@@ -338,11 +327,11 @@ Any number larger than 2,147,483,647 will not be parsed as an integer and will b
 ****
 
 [NOTE]
-====
+=====
 You can delete a pinned source with no issue by entering the `delete` command followed by the index of the pinned source.
 
 However, do note that deleting a pinned source will remove the source from the list.
-====
+=====
 
 Examples:
 
@@ -355,11 +344,11 @@ Reverts a pinned source back to its unpinned state, moving the source down to th
 Format: `unpin INDEX`
 
 [NOTE]
-====
+=====
 The maximum possible index that will be processed by the system is limited to the largest positive value for a 32-bit signed binary integer.
 
 Any number larger than 2,147,483,647 will not be parsed as an integer and will be rejected.
-====
+=====
 
 ****
 * The `INDEX` refers to the index number shown in the displayed source list.

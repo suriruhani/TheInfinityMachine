@@ -68,8 +68,3 @@ include::../UserGuide.adoc[tag=alias]
 include::../DeveloperGuide.adoc[tag=panic]
 
 include::../DeveloperGuide.adoc[tag=alias]
-
-== PROJECTS
-
----
-

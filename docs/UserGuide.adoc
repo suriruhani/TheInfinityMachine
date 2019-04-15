@@ -265,28 +265,28 @@ where argument N and M in [ ] are optional [either enter none, N, or (N and M)]
 
 The four main formats and their usages are described below:
 
-==== list: (no arguments)
+===== list: (no arguments)
 When no arguments are passed to `list`, it works same way as in the original AB4 logic, listing *all* the sources in the entire database with all their title, type, author, detail and tag values.
 The sources are unfiltered and listed in entirety, with indexes 1, 2.. so on.
 
 Example: `list` +
 Lists all the sources indexed from 1 onwards with all their details.
 
-==== list N: (one positive argument)
+===== list N: (one positive argument)
 When one positive integer is passed to `list`, it lists the first N sources from the top, again listing all their title, type, author, detail and tag values.
 Top N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
 
 Example: `list 5` +
 Lists top 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
 
-==== list -N: (one negative argument)
+===== list -N: (one negative argument)
 When one negative integer is passed to `list`, it lists the last N resources from the top or first N sources from the bottom, again listing all their title, type, author, detail and tag values.
 Bottom N sources are listed with respect to the original source database list with indexes 1, 2 ... till N.
 
 Example: `list -5` +
 Lists the last 5 sources from the entire database indexed from 1, 2 .. 5 with all their details.
 
-==== list N, M: (two positive arguments)
+===== list N, M: (two positive arguments)
 When two positive integers are passed to `list`, it lists the sources between N and M (included) from the top, again listing all their title, type, author, detail and tag values.
 N to M sources are listed with respect to the original source database list with indexes 1, 2 ... till (M-N+1).
 

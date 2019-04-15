@@ -10,6 +10,8 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_ENGINEERI
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TITLE_NETWORK;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_ENGINEERING;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TYPE_NETWORK;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,7 +99,17 @@ public class TypicalSources {
             .withDetail(VALID_DETAIL_NETWORK)
             .withTags(VALID_TAG_BAR, VALID_TAG_FOO).build();
 
-    public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches MEIER
+    public static final String KEYWORD_MATCHING_EXPERIMENT = "Experiment"; // A keyword that matches EXPERIMENT
+
+    public static final String KEYWORD_MATCHING_RESEARCH = "Research";
+    public static final String TITLE_PREFIX_RESEARCH = " " + PREFIX_TITLE + KEYWORD_MATCHING_RESEARCH;
+    public static final String TAG_PREFIX_RESEARCH = " " + PREFIX_TAG + KEYWORD_MATCHING_RESEARCH;
+
+    public static final String KEYWORD_MATCHING_SMARTCOMP = "Smart Computers";
+    public static final String TITLE_PREFIX_SMARTCOMP = " " + PREFIX_TITLE + KEYWORD_MATCHING_SMARTCOMP;
+
+    public static final String KEYWORD_MATCHING_AI = "Artifical Intelligence";
+    public static final String TITLE_PREFIX_AI = " " + PREFIX_TITLE + KEYWORD_MATCHING_AI;
 
     private TypicalSources() {} // prevents instantiation
 

@@ -20,6 +20,8 @@ import seedu.address.model.source.Source;
 public class PinCommand extends Command {
     public static final String COMMAND_WORD = "pin";
 
+    public static final int PINNED_LIMIT = 5;
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Pins the source identified by the index number used in the displayed source list to the top.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
@@ -29,6 +31,8 @@ public class PinCommand extends Command {
 
     public static final String MESSAGE_SOURCE_PINNED_INVALID = "The source is already pinned.";
     public static final String MESSAGE_SOURCE_INDEX_INVALID = "The source index is invalid.";
+    public static final String MESSAGE_MAX_PINNED_INVALID = 
+            "You have reached the maximum number of pinned sources. (" + PINNED_LIMIT + ")";
 
     private final int targetIndex;
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
@@ -53,6 +57,11 @@ public class PinCommand extends Command {
         if (isSourcePinned == true) {
             logger.info("Source is already pinned.");
             throw new CommandException(MESSAGE_SOURCE_PINNED_INVALID);
+        }
+
+        if ((model.getNumberOfPinnedSources() + 1) > PINNED_LIMIT) {
+            logger.info("Max pinned sources reached.");
+            throw new CommandException(MESSAGE_MAX_PINNED_INVALID);
         }
 
         // essentially an "order" command where the source is moved to the top

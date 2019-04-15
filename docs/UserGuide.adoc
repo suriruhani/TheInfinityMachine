@@ -53,8 +53,8 @@ such as managing your research data through the adding of sources, adding of a b
 
 ==== Recycle Bin
 
-Worried about accidentally deleting important data? Don't worry you can recover your deleted sources in this mode
-similar to how you would in a Recycle Bin on Windows.
+Worried about accidentally deleting important data? Rest assured, we have created a mode call the Recycle Bin where
+you can recover your deleted sources.
 
 [[Features]]
 == Features
@@ -805,8 +805,11 @@ Displays the source selected.
 * Selects the source at the specified `INDEX`.
 * The index refers to the index number shown in the displayed source list.
 * The index *must be a positive integer* 1, 2, 3, ...
+****
 
 // end::recyclebin[]
+
+
 
 == FAQ
 
@@ -818,10 +821,6 @@ Displays the source selected.
 * *Add* `add i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `add i/Artificial Intelligence IEEE y/Journal Article a/Hugh Johnson d/Landmark paper on perils of artificial intelligence t/Science Journal t/AI`
 * *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Restore* : `restore INDEX` +
-e.g. `restore 3`
 * *Edit* : `edit INDEX i/TITLE y/TYPE d/DETAILS [t/TAG]...` +
 e.g. `edit 2 i/Photosynthesis Wikipedia t/Photosynthesis t/Biology`
 * *Search* : `search [i/TITLE] [y/TYPE] [d/DETAILS] [t/TAG]...` +
@@ -834,8 +833,10 @@ e.g. `unpin 3`
 * *Custom Order* : `order ORIGINAL_INDEX NEW_INDEX` +
 e.g. `order 3 5`
 * *Help* : `help`
-  * *Biblio* : `biblio FORMAT INDEX` +
-  e.g. `biblio APA 1`
+* *Select* : `select`
+* *Count* : `count`
+* *Biblio* : `biblio FORMAT INDEX` +
+e.g. `biblio APA 1`
 * *History* : `history`
 * *Adding an alias* : `alias COMMAND ALIAS` +
 e.g. `alias list ls`
@@ -847,3 +848,10 @@ e.g. `alias-rm ls`
 * *Redo* : `redo`
 * *Panic* : `panic`
 * *Unpanic* : `unpanic`
+* *Delete* : `delete INDEX` +
+e.g. `delete 3`
+* *Restore* : `restore INDEX` +
+e.g. `restore 3`
+* *Recycle Bin* : `recycle-bin`
+* *Empty Bin* : `empty-bin`
+* *Exit Bin* : `exit-bin`

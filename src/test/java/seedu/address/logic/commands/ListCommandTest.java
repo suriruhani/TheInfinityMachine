@@ -15,6 +15,7 @@ import static seedu.address.testutil.TypicalSources.SMART_COMPUTERS;
 import static seedu.address.testutil.TypicalSources.VR_RESEARCH;
 import static seedu.address.testutil.TypicalSources.getTypicalDeletedSources;
 import static seedu.address.testutil.TypicalSources.getTypicalSourceManager;
+import static seedu.address.testutil.TypicalSources.getTypicalSources;
 
 import java.util.Arrays;
 
@@ -68,6 +69,16 @@ public class ListCommandTest {
     }
 
     @Test
+    public void execute_listPositiveNMoreThanTotal_showsTopN() {
+        showSourceAtIndex(model, INDEX_FIRST_SOURCE);
+        ListCommand command = new ListCommand(Index.fromOneBased(25), true);
+        expectedModel.updateFilteredSourceList(command.makePredicateForTopN(20));
+        assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_TOP_N_SUCCESS,
+                20), expectedModel);
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
+    }
+
+    @Test
     public void execute_listNegativeN_showsLastN() {
         ListCommand command = new ListCommand(Index.fromOneBased(2), false);
         expectedModel.updateFilteredSourceList(
@@ -75,6 +86,17 @@ public class ListCommandTest {
         assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_LAST_N_SUCCESS,
                 2), expectedModel);
         assertEquals(Arrays.asList(NAVAL_HISTORY_THREE, COMPUTER_ORGANISATION), model.getFilteredSourceList());
+    }
+
+    @Test
+    public void execute_listNegativeNMoreThanTotal_showsTopN() {
+        showSourceAtIndex(model, INDEX_FIRST_SOURCE);
+        ListCommand command = new ListCommand(Index.fromOneBased(25), false);
+        expectedModel.updateFilteredSourceList(command.makePredicateForLastN(20,
+                model.getFilteredSourceList().size() ));
+        assertCommandSuccess(command, model, commandHistory, String.format(ListCommand.MESSAGE_LIST_LAST_N_SUCCESS,
+                20), expectedModel);
+        assertEquals(getTypicalSources(), model.getFilteredSourceList());
     }
 
     @Test

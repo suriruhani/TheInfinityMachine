@@ -257,8 +257,6 @@ The function takes the following steps to make the swap:
 
 * Step 4 -- The function then commits the database to save the recent changes.
 
-image::customOrderSequence.png[width="900"]
-
 ==== Swapping process
 The process for swapping is slightly different for each type of swap, namely forward swapping and backwards swapping.
 
@@ -291,3 +289,5 @@ image::backward2.PNG[width="400"]
 The source to be moved is then inserted into the current position 2, displacing all other sources after that and pushing them back.
 
 image::backward3.PNG[width="400"]
+
+image::customOrderSequence.png[width="900"]

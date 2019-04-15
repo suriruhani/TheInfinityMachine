@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.source.Author;
+import seedu.address.model.source.BiblioFields;
 import seedu.address.model.source.Detail;
 import seedu.address.model.source.Source;
 import seedu.address.model.source.Title;
@@ -49,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Detail details = ParserUtil.parseDetails(argMultimap.getValue(PREFIX_DETAILS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
-        Source source = new Source(title, author, type, details, tagList);
+        Source source = new Source(title, author, type, details, tagList, new BiblioFields());
 
         return new AddCommand(source);
     }

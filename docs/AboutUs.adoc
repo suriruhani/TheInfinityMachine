@@ -12,7 +12,7 @@ Tutorial W-13 Group 3: The Infinity Machine - A safe place to store your researc
 === Cassey Low
 
 image::case141.png[width="150", align="left"]
-{empty}[https://github.com/case141[github]]
+{empty}[https://github.com/case141[github]] [<<casseylow#, portfolio>>]
 
 Role: Developer
 
@@ -29,7 +29,7 @@ Responsibilities:
 === Darren Lee
 
 image::darrendragonlee.png[width="150", align="left"]
-{empty}[https://github.com/DarrenDragonLee[github]]
+{empty}[https://github.com/DarrenDragonLee[github]] [<<darrendragonlee#, portfolio>>]
 
 Role: Developer
 
@@ -45,7 +45,7 @@ Responsibilities:
 === Fabian Terh
 
 image::fterh.png[width="150", align="left"]
-{empty}[https://github.com/fterh[github]]
+{empty}[https://github.com/fterh[github]] [<<fterh#, portfolio>>]
 
 Role: Developer
 
@@ -61,7 +61,7 @@ Responsibilities:
 === Ruhani Suri
 
 image::suriruhani.png[width="150", align="left"]
-{empty}[https://github.com/suriruhani[github]]
+{empty}[https://github.com/suriruhani[github]] [<<suriruhani#, portfolio>>]
 
 Role: Developer
 

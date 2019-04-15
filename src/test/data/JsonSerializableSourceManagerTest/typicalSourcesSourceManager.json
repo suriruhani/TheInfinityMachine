@@ -19,7 +19,7 @@
     "type" : "Website",
     "author" : "David Kim",
     "detail" : "How to build smart computers",
-    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
+    "fieldBodies" : [ "Placeholder City", "Placeholder Journal", "Placeholder Medium", "Placeholder Pages", "Placeholder Publisher", "Placeholder URL", "Placeholder Website", "Placeholder Day", "Placeholder Month", "Placeholder Year" ],
     "tagged" : [ ]
   }, {
     "title" : "Virtual Reality Research",
@@ -33,7 +33,7 @@
     "type" : "Journal Article",
     "author" : "Joseph Jackson",
     "detail" : "A research about augmented reality.",
-    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
+    "fieldBodies" : [ "Placeholder City", "Placeholder Journal", "Placeholder Medium", "Placeholder Pages", "Placeholder Publisher", "Placeholder URL", "Placeholder Website", "Placeholder Day", "Placeholder Month", "Placeholder Year" ],
     "tagged" : [ ]
   }, {
     "title" : "Game Development",
@@ -47,7 +47,7 @@
     "type" : "Book",
     "author" : "Joana Micro",
     "detail" : "A research about artificial intelligence.",
-    "fieldBodies" : [ "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>", "<Placeholder>" ],
+    "fieldBodies" : [ "Placeholder City", "Placeholder Journal", "Placeholder Medium", "Placeholder Pages", "Placeholder Publisher", "Placeholder URL", "Placeholder Website", "Placeholder Day", "Placeholder Month", "Placeholder Year" ],
     "tagged" : [ ]
   } ]
 }

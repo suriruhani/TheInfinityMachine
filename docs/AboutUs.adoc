@@ -23,7 +23,6 @@ Responsibilities:
 - Undo & Redo command in Source Manager Mode
 - Updating User Interface
 - Refactoring the Application
--
 - Listing command usage under help
 
 

@@ -344,6 +344,9 @@ You can delete a pinned source with no issue by entering the `delete` command fo
 However, do note that deleting a pinned source will remove the source from the list.
 =====
 
+[TIP]
+The maximum number of pinned sources you can have at a single time is 5.
+
 Examples:
 
 * `pin 4` +

@@ -1,0 +1,59 @@
+= Yang Yang - Project Portfolio
+:site-section: AboutUs
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: The Infinity Machine
+
+---
+
+== Overview
+
+The Infinity Machine is a desktop application that lets users store research materials for future use. It provides a quick and easy way for tech-savvy users, like university students or researchers, to manage and organise their research materials.
+
+The user interacts with the application using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major Enhancement*: Added bibliography related functionalites
+** What it does: This set of functionalities allows the sources stored in the Infinity Machine to be used for generating bibliographical entries in the APA or MLA style.
+** Justification: A typical user would expect a piece of software for managing sources to also be able to generate appropriate bibliography entries.
+** Implementation: This new feature required a large number of additional fields in source. A new command, biblioEdit, was added to manage these fields.
+
+* *Code contributed*: +
+[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=doittomorrow[Project Dashboard]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioCommand.java[biblio command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/BiblioCommandTest.java[biblio command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/BiblioEditCommand.java[biblioEdit command]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/BiblioEditCommandTest.java[biblioEdit command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/model/source/Source.java[Source]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/model/source/BiblioFields.java[BiblioFields]]
+
+
+* *Other contributions*:
+
+** Integration of existing functions:
+*** Changes were made to storage to allow for persistent storage of the new Source objects.
+
+** Enhancement to existing features:
+*** Revamped utility for populating initial sources to more closely match that used in the test. Added readability, functionality, extensibility.
+
+** Test Enhancements
+*** Added a test for above mentioned utility.
+*** Added tests for biblio-related features.
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=biblio]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=biblio]

@@ -25,6 +25,11 @@ public class PinCommandTest {
             new UserPrefs(),
             getTypicalDeletedSources(),
             2);
+    private Model testModelWithMaxPinned = new ModelManager(
+            getTypicalSourceManager(),
+            new UserPrefs(),
+            getTypicalDeletedSources(),
+            PinCommand.PINNED_LIMIT);
     private CommandHistory commandHistory = new CommandHistory();
 
     @Test
@@ -88,6 +93,19 @@ public class PinCommandTest {
         assertCommandFailure(
                 new PinCommand(targetIndex),
                 testModelWithPinned,
+                commandHistory,
+                expectedMessage);
+    }
+
+    @Test
+    public void execute_exceedMaxPinnedSources_failure() {
+        int targetIndex = PinCommand.PINNED_LIMIT + 1;
+
+        String expectedMessage = PinCommand.MESSAGE_MAX_PINNED_INVALID;
+
+        assertCommandFailure(
+                new PinCommand(targetIndex),
+                testModelWithMaxPinned,
                 commandHistory,
                 expectedMessage);
     }

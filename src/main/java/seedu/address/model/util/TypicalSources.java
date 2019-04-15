@@ -30,7 +30,6 @@ public class TypicalSources {
             .withType("Website")
             .withAuthor("David Kim")
             .withDetail("How to build smart computers")
-            .withTags("tutorial")
             .withBiblioFields().build();
     public static final Source VR_RESEARCH = new SourceBuilder()
             .withTitle("Virtual Reality Research")
@@ -43,40 +42,26 @@ public class TypicalSources {
             .withType("Journal Article")
             .withAuthor("Joseph Jackson")
             .withDetail("A research about augmented reality.")
-            .withTags("research")
             .withBiblioFields().build();
     public static final Source GAME_DEVELOPMENT = new SourceBuilder()
             .withTitle("Game Development")
             .withType("Book")
             .withAuthor("Selena Macro")
-            .withTags("tutorial")
             .withDetail("How to develop games for today's market.").build();
     public static final Source AI_RESEARCH = new SourceBuilder()
             .withTitle("Artificial Intelligence Research")
             .withType("Book")
             .withAuthor("Joana Micro")
             .withDetail("A research about artificial intelligence.")
-            .withTags("research")
             .withBiblioFields().build();
     public static final Source RESEARCH_METHOD = new SourceBuilder()
             .withTitle("The Correct Way to Research")
             .withType("Journal Article")
             .withAuthor("Lee Shin Hyung")
-            .withTags("tutorial")
             .withDetail("The best way to conduct research.").build();
 
     private TypicalSources() {} // prevents instantiation
 
-    /**
-     * Returns a {@code SourceManager} with all the typical sources.
-     */
-    public static SourceManager getTypicalSourceManager() {
-        SourceManager sm = new SourceManager();
-        for (Source source : getTypicalSources()) {
-            sm.addSource(source);
-        }
-        return sm;
-    }
 
     /**
      * Returns a {@code DeletedSources} with all the typical deleted sources.

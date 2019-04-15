@@ -424,13 +424,24 @@ Format: `biblio INDEX FORMAT`
 * The index refers to the index number shown in the displayed source list.
 * The index *must be valid (between the indexes of the first source and the last source inclusive.
 * The format must be APA or MLA
-* Currently, only source types of "Book","Journal Article" and "Website" are supported.
 ****
+
+[TIP]
+Currently, only source types of "Book", "Journal Article" and "Website" are supported.
+If any suggested fields for a given source type are not populated, they will be reflected to the user when `biblio` is used.
+
+Examples:
+
+* `biblio 1 APA` +
+Generates an APA style bibliography entry for the first source.
+
+* `biblio 2 MLA` +
+Generates an MLA style bibliography entry for the second source.
 
 === Edit a bibliography related field (bibliofield) in a source : `biblioEdit`
 
 Replaces . +
-Format: `biblio INDEX HEADER BODY`
+Format: `biblioEdit INDEX HEADER BODY`
 
 ****
 * Replaces a bibliofield of matching `HEADER` of the source at the specified `INDEX` with `BODY`.
@@ -439,6 +450,17 @@ Format: `biblio INDEX HEADER BODY`
 * The header must be one of the following:
 *   "City", "Journal", "Medium", "Pages", "Publisher", "URL", "Website", "Day", "Month", "Year"
 ****
+
+[TIP]
+To ensure the accuracy of the bibliography generated, please ensure the accuracy of entered "BODY".
+
+Examples:
+
+* `biblioEdit 1 City London` +
+Replaces the "City" bibliofield in the first source with "London".
+
+* `biblioEdit 2 Publisher Penguin` +
+Replaces the "Publisher" bibliofield in the second source with "Penguin".
 
 === Listing entered commands : `history`
 

@@ -869,6 +869,14 @@ Essentially, the pinned sources are governed by a single number within the `Mode
 
 image::pinUnpinStructure.png[width="900"]
 
+When a new source is pinned using the `pin INDEX` command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.
+
+image::pinSequence.png[width="900"]
+
+When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
+
+image::unpinSequence.png[width="900"]
+
 ==== Operational Process
 When a source is unpinned and there are other pinned sources, the recently unpinned source will be pushed back to the position of the first unpinned source.
 
@@ -879,14 +887,6 @@ image::unpin1.PNG[width="400"]
 The first source will be unpinned and moved to the position of the first unpinned source, in this case position 3.
 
 image::unpin2.PNG[width="400"]
-
-When a new source is pinned using the `pin INDEX` command, the coordination center will increment the number of pinned sources by 1 as well as bring the newly pinned source to the top of the list.
-
-image::pinSequence.png[width="900"]
-
-When a pinned source is unpinned using the `unpin INDEX` command, the coordination center will decrement the numer of pinned sources by 1 and move the unpinned source down to the position of the first unpinned source.
-
-image::unpinSequence.png[width="900"]
 
 ==== Source Checks
 When checking to see if a source can be pinned or unpinned, the command will call on the coordination center to check if a source is already pinned or unpinned respectively. An already pinned source cannot be pinned again and an unpinned source cannot be unpinned.

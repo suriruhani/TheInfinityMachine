@@ -34,7 +34,7 @@ In other words, this enhancement will work seamlessly with any future command im
 
 * *Minor enhancement*: added a panic/unpanic mode command that allows the user to quickly hide the current list of sources from display.
 
-* *Code contributed*: [https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/parser/AliasManager.java[Functional code 1]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/storage/ConcreteAliasStorage.java[Functional code 2]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/AliasManagerTest.java[Test code 1]]
+* *Code contributed*: [https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=fterh[Reposense]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/parser/AliasManager.java[AliasManager]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/parser/ConcreteAliasManager.java[ConcreteAliasManager]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/ConcreteAliasManagerTest.java[ConcreteAliasManagerTest]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/storage/AliasStorage.java[AliasStorage]][https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/storage/ConcreteAliasStorage.java[ConcreteAliasStorage]]
 
 * *Other contributions*:
 
@@ -50,7 +50,6 @@ In other words, this enhancement will work seamlessly with any future command im
 https://github.com/nus-cs2103-AY1819S2/forum/issues/43[5])
 
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._

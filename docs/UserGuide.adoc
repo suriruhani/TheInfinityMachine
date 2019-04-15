@@ -43,6 +43,18 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 .  Refer to <<Features>> for details of each command.
 
+== Modes
+
+==== Source Manager
+
+The default mode that you will start with. This mode allows you to perform the main interactions with the Infinity Machine
+such as managing your research data through the adding of sources, adding of a bibliography to a source as well as removing of sources.
+
+==== Recycle Bin
+
+Worried about accidentally deleting important data? Don't worry you can recover your deleted sources in this mode
+similar to how you would in a Recycle Bin on Windows.
+
 [[Features]]
 == Features
 

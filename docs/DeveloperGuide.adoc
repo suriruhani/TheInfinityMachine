@@ -963,7 +963,7 @@ When a `Source` object is created, in addition to the compulsory fields of `Titl
 
 `BiblioFields` is empty by default.
 
-==== Biblio Command
+==== Biblio Command Implementation
 
 The biblio command extends `Infinity Machine` with a bibliography generating functionality.
 

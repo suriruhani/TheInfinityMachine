@@ -9,35 +9,59 @@
 
 == Overview
 
-Infinity Machine is a desktop source manager application used for storing research data. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Infinity Machine is a desktop application used for managing and storing research data.
+It is targeted at tech-savvy university students who are comfortable with using the Command Line Interface.
+It allows the adding of sources, generating and editing bibliography for a source as well as a fail-safe mode for easy
+retrieving of lost data in the event that our users accidentally deleted any important research data.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has more than 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to restore previous deleted sources*
-** What it does: allows the user to restore all previously deleted sources one at a time. Preceding restore commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user leave the application safely even if they accidentally deleted an important research data or if their computer accidentally crashes. This cannot be achieved with the current undo command because it would be inefficient to undo the commands other than the delete sources and undo is not persistent.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands as well as almost every component in the application.
+== Major enhancement: *added a recycle bin mode*
+** What it does: A recycle bin mode that allows users to revisit, retrieve and restore all previously deleted sources. Preceding restore commands can be reversed by using the redo command.
+** Justification: This feature improves the product significantly because it prevents the loss of important data when a user accidentally deletes an important research data.
+Since the recycle bin has persistent storage, users will not have to be worried about losing any data as well when they leave the application or if their computer accidentally crashes.
+This cannot be achieved with the current undo or redo commands because it would be inefficient to revert the commands other than the delete sources if that is what the user wishes to achieve and undo is not persistent.
+** Highlights: This enhancement affects the management of deleted sources and consists of an entire new mode which is the recycle bin mode.
+It required an in-depth analysis of design alternatives.
+The implementation too was challenging because:
+*** It required changes to existing commands as well as almost every component in the application.
+*** It required the implementation and generation of a new json file in order to store the deleted sources for persistent storage.
 ** Credits: Referenced and Analysed how AddressBook4's json data was implemented so that it can be used to implement the persistent storage for DeletedSources.
 
-* *Minor enhancement*: added a count command that allows the user to count the sources in the list retrieved from the database.
+== *Minor enhancement:
+** Added a count command that allows the user to count the sources in the list retrieved from the database.
+** Updated the Undo and Redo commands to account for undoing and redoing in the recycle bin state
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+== *Code contributed*
+[https://nus-cs2103-ay1819s2.github.io/cs2103-dashboard/#=undefined&search=case141[Reposense contribution]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java[delete command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/DeleteCommandTest.java[delete command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/commands/RestoreCommand.java[restore command code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/commands/RestoreCommandTest.java[restore command test]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/main/java/seedu/address/logic/parser/RecycleBinParser.java[recycle bin parser code]] +
+[https://github.com/CS2103-AY1819S2-W13-3/main/blob/master/src/test/java/seedu/address/logic/parser/RecycleBinParserTest.java[recycle bin parser test]] +
 
-* *Other contributions*:
+== *Other contributions*:
 
-** Project management:
-*** Managed releases `v1.1` - `v1.3` (all 3 releases so far) on GitHub
+== Project management:
+*** Managed and Wrote releases `v1.1` - `v1.4` (all 4 releases) on GitHub
 ** Enhancements to existing features:
-*** Refactored and fixed many parts of the application so that it can be used for Infinity Machine(Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/106)
-*** Wrote and fixed tests for existing features as well as Failing Tests and SystemTests when Refactoring (Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/issues/112)
-*** Helped to write releases for v1.1 - v1.3
-** Documentation:
+*** Updated codebase to morph from AddressBook to Infinity Machine(Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/106[#106])
+*** Wrote and fixed tests for existing features as well as Failing Tests and SystemTests when Refactoring (Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/issues/112[#112])
+*** Managed and kept the User Interface relevant for Infinity Machine. (Pull requests https://github.com/CS2103-AY1819S2-W13-3/main/pull/193[#193], https://github.com/CS2103-AY1819S2-W13-3/main/pull/228[#228])
+
+==== Documentation:
 *** Write features section of the User Guide
+*** Restructured User Guide to reflect current project features
 *** Write developer guide sections as well
-** Community:
-*** PRs reviewed (with non-trivial review comments): many PRs reviewed
-*** Contributed to forum discussions (examples:  asked questions)
-*** Reported bugs and suggestions for other teams in the class (examples:)
+
+==== Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103-AY1819S2-W13-3/main/pull/54[#54], https://github.com/CS2103-AY1819S2-W13-3/main/pull/176[#176], https://github.com/CS2103-AY1819S2-W13-3/main/pull/195[#195]
+*** Contributed to forum discussions (examples:  https://github.com/nus-cs2103-AY1819S2/forum/issues/28[#28])
+
+==== Tools:
+*** Set-up Coveralls
 
 _{you can add/remove categories in the list above}_
 
@@ -49,7 +73,9 @@ _{you can add/remove categories in the list above}_
 
 include::../UserGuide.adoc[tag=recyclebin]
 
-include::../UserGuide.adoc[tag=alias]
+include::../UserGuide.adoc[tag=delete]
+
+include::../UserGuide.adoc[tag=undoredo]
 
 == Contributions to the Developer Guide
 
@@ -57,6 +83,8 @@ include::../UserGuide.adoc[tag=alias]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=panic]
+include::../DeveloperGuide.adoc[tag=recyclebin]
 
-include::../DeveloperGuide.adoc[tag=alias]
+include::../DeveloperGuide.adoc[tag=delete]
+
+include::../DeveloperGuide.adoc[tag=undoredo]

@@ -245,39 +245,73 @@ Users may do one of the following:
 5. Exit the recycle bin and return to the source manager mode
 
 The restore feature is facilitated by `Infinity Machine`.
-It extends `Infinity Machine` with a recycle bin feature, allowing user to delete and restore source from a persistent deleted sources list.
 
 ==== Overview
+It extends `Infinity Machine` with a recycle bin feature, allowing user to delete and restore source from a persistent deleted sources list.
+The Recycle Bin was extended from interactions with the delete command. Our rationale to create an entire mode is so that users can safely delete sources
+and have a place to access and retrieve them even after exiting the application accidentally or intentionally. Previously, this feature was implemented seperatedly
+as a restore and delete feature in the source manager however, after testing it, it proved to be very messy and confusing for our users if they did not had a mode that
+specifically allows them to interact with the deleted sources.
 
+==== Implementation
 
-Additionally, it uses:
+===== Logic Component
+* In the Recycle bin, a `RecycleBinParser` was created which is a now child of `SourceManagerParser` in the logic component.
+Through the separation of different commands to different parsers, it allows us to enable or disable certain commands for Source Manager mode or
+Recycle Bin mode which helps to increase the usability of our application.
+* A listener has also been added in the `LogicManager` so that operations
+egarding the Recycle Bin can be detected accordingly.
 
-* `DeletedSources.java` -- Here, the logic of running through all the deleted sources in the list.
-(trimmed by space, case insensitive) is implemented.
+===== Model Component
+* In the Model Component, a `ParserMode` enum class was added which consists of two different modes `RECYCLE_BIN` and `SOURCE_MANAGER`.
+* A `DeletedSources` class which implements a `ReadonlyDeletedSources` class and is extended by `VersionedDeletedSources` is created. This class contains operations that allow commands to interact
+with the model such as adding a deleted source to `deletedsources.json` data folder, deleting a source from the json file mentioned and committing any
+changes to the DeletedSources state to name a few.
+* The file path for the deletedsource.json data file was also added to the UserPrefs class in order to save the file path of the recycle bin database.
 
-Given below is an example usage scenario and how the restore mechanism behaves at each step.
+===== Storage Component
+* A `JsonDeletedSourcesStorage` class was created so that Recycle Bin operations can interact with the `deletedsources.json` data storage.
+It consists of reading and writing operations implemented to manage the adding, updating and removing of json data.
+* A `JsonSerializableDeletedSources` is also created as is it necessary in assisting the generation of sources structured in Json data format.
+
+==== Operation
+
+Given below is an example usage scenario and how the recycle bin mode behaves at each step when a user deletes and restores a source.
 
 Step 1. The user launches the application for the first time. The `Infinity Machine` will be initialized with the initial source database state, by default listing all the sources
 in an indexed fashion, with all details and in order of their addition.
 
 Step 2. The user executes `delete 1` command and only one entry, the first one, is deleted.
 
-Step 3. The user executes `restore 1` and only one entry will be deleted, which is the source recently deleted.
+Step 3. The user executes `recycle-bin` command and the `Infinity Machine` switches from the Source Manager mode to the Recycle Bin mode.
+A list of sources that was previously deleted in the Recycle Bin is shown.
+
+Step 4. The user executes `restore 1` and only one entry will be deleted, which is the source recently deleted in the Source Manager mode.
+
+Step 5. The user executes `exit-bin` and only switches the Source Manager mode.
 
 [NOTE]
 `restore` alone, without any arguments, will result in error. See `restore` command for enumerating all database entries.
 
 ==== Design Considerations
 
-===== Aspect: How restore executes
-
 * **Alternative 1 :** Using a simple read and write class in the storage.
 ** Pros: Easy to implement.
-** Cons: May have performance issues in terms of time usage.
+** Cons: May have performance issues in terms of time usage as well as limited usability in terms of operations.
 
-===== Aspect: Data structure to support the undo/redo commands
+* **Alternative 2 (current choice):** Using a full DeletedSource interaction structure
+** Pros: High usability and little to none performance issues.
+** Cons: Highly complex structure and since implementation touches on many components of the application there is a high chance of breaking other components or commands.
 
-* **Alternative 2 (current choice):** Using Json Managers and DeletedSources in the Model
+==== Additional Considerations
+* **Deleting a source from the Source Manager mode that already exists in the Recycle Bin mode:**
+Previously this issue caused a bug. When the user tried to delete a source from the Source Manager mode that already exists in the Recycle Bin mode.
+To guard against this, we deleted the source that the user is trying to delete from the source manager permanently if it already exists in the Recycle Bin
+so that it will not cause any conflicts this is one of the many solutions available and we chose it because this was the most efficient and logic solution to implement.
+* **Restoring a source from the Recycle Bin mode that already exists in the Source Manager mode:**
+We also considered this case as it may also cause conflicts and resolved it by displaying an advising error message that the source that the user is trying to restore already exists
+in the Source Manager. This is a better solution in this case compared to deleting it permanently as the user may want to do additional changes to this source.
+
 // end::recyclebin[]
 
 // tag::panic[]

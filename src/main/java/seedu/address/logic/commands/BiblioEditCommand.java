@@ -53,14 +53,16 @@ public class BiblioEditCommand extends Command {
         }
 
         Source sourceToEdit = lastShownList.get(targetIndex.getZeroBased());
-        Source editedSource = sourceToEdit;
+        BiblioFields editedFields = sourceToEdit.getBiblioFields().replaceField(header, body);
 
-        if (editedSource.biblioFields.replaceField(header, body) == true) {
+        if (editedFields != null) {
+            Source editedSource = new Source(sourceToEdit.getTitle(), sourceToEdit.getAuthor(), sourceToEdit.getType(),
+                    sourceToEdit.getDetail(), sourceToEdit.getTags(), editedFields);
             model.setSource(sourceToEdit, editedSource);
             model.updateFilteredSourceList(Model.PREDICATE_SHOW_ALL_SOURCES);
             model.commitSourceManager();
 
-            return new CommandResult(MESSAGE_BIBLIO_EDIT_SUCCESS + editedSource.biblioFields);
+            return new CommandResult(MESSAGE_BIBLIO_EDIT_SUCCESS + editedSource.getBiblioFields());
         } else {
             throw new CommandException(MESSAGE_BIBLIO_EDIT_FAILURE);
         }

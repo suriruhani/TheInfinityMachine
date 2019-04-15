@@ -222,12 +222,12 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in json format and read it back.
+* can save the Source Manager data in json format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.sourcemanager.commons` package.
 
 == Implementation
 
@@ -552,8 +552,14 @@ of the sources, and making working on the database more efficient.
 
 Lastly, the search is able to find string matches with minor typing errors in the spelling. This feature renders the search more
 powerful by accommodating any minor typing error user may make when keying in their search argument. This includes minor flips of two characters
-or a missing character etc. The implementation current accounts for less than 3 character swaps needed to transform between the strings
-(lower bounded by the difference in the string lengths of the two strings).
+or a missing character or few extra characters etc. The implementation current accounts for less than 5 character swaps needed to transform between the strings.
+
+[NOTE]
+Auto-correction feature only works when entire field value is entered and not for substring matching.
+
+i.e. misspelling a single word in the title will not be caught unless the entire title is entered, then the
+user entry will be matched against the entire title to see if there are less than 5 corrections needed to transform
+between the two strings.
 
 However, it may seem that such an additional renders the search feature a bit too general, thus making the search output space
 broadened by including more sources that would have otherwise been ignored. But, one may see this as an advantage as:
@@ -569,6 +575,7 @@ one string to the other.
 
 The algorithm implementation for this section of the code was inspired from https://www.baeldung.com/java-levenshtein-distance[Baeldung].
 
+[NOTE]
 If any seemingly unwanted results are displayed after a search command is executed, it should not be seen as a bug and this is
 the intended behaviour because of the reasons and rationale explained above. Rest assured, the intended results will never be missed out.
 
@@ -578,6 +585,16 @@ Additionally, it uses:
 (trimmed by space, case insensitive and take as substring) is implemented. It is split by the CLI prefixes and implements conjunction logic, by only returning `true`
 for those sources that satisfy all the constraints, i.e. have all the fields matching as entered by the user, where matching is checked by if the string
 contains the keywords entered by the user (case insensitive).
+* `checkAllEmpty` -- method inside SourceContainsKeywordsPredicate which checks if all the entries of all the tags is empty, and returns true thus showing all sources.
+* `levenshtienDist` -- returns the number of swaps needed to transform one string to the other
+* `checkLevenshtienSimilarity` -- returns true if the number of swaps needed, as returned by `levenshtienDist` above is less than the
+`LEVENSHTIEN_DISTANCE_CONSTANT` below
+* `LEVENSHTIEN_DISTANCE_CONSTANT` -- a positive integer which determines the number of swaps a string can have for it to pass the similarity test
+as per the `checkLevenshtienSimilarity` method. Currently set to 5, thus if less than 5 swaps are needed to convert between the user entered string and the entire string value fo the source field.
+
+Given below is a sequence diagram representation of the search command of the Infinity Machine:
+
+image::SearchCommandSequenceDiagram.png[width="800"]
 
 This feature improves the product significantly because a user can now search an entry with a particular title AND a particular type and so on.
 Not only that, the user can now just input whatever they are able to recall and the `search` returns all super strings instead of
@@ -601,10 +618,11 @@ Step 3. The user executes `search i/homework y/website` and only those entries a
 Step 4. The user executes `search t/CS` and all those sources that have any of their tags having 'CS' in it listed, including `CS2030`, `CS2040` and `CS2103`
 
 [NOTE]
-`search` alone, without any arguments, will result in error. See `list` command for enumerating all database entries.
+`search` alone, without any arguments, will result in error. However search with empty CLI tags will output all sources. Thus, a shortcut
+to display all sources is to search `search i/` and a source with *any* title will be displayed.
 
 Step 5. The user executes `search i/algorihtm` as a typing error, the command still displays all those sources that have their title as
-`algorithms` and other related words.
+`algorithms` or other related words exactly [not contains].
 
 Step 6. The user executes `search d/training an intelligent agent t/CS2039`, the search displays all sources with
 having the exact sentence 'training an intelligent agent' or any of its related similar strings in it's body, and those with
@@ -719,6 +737,10 @@ list of the resulting search operation.
 5. Having said (4), the new displayed list of sources after the executing of any list operation will update the internally maintained current list displayed, thus any operation [such as `edit`, `delete`]
 which are based on the indexes of the current displaying list will *still function as per normal* after a list command is executed.
 For example, after displaying `list 3 5`, if a user executes `delete 1`, it is akin to deleting the 3rd source in the entire list database.
+
+The sequence diagram of the working of the list command is as below:
+
+image::ListCommandSequenceDiagram.png[width="800"]
 
 Motivation for such an enhancement is that one may feel that such act of populating *all* the sources on the GUI may be cluttering the view unnecessarily.
 Now, what could be the parameters a user may want to limit the list by? Limiting merely by their field values is akin to search,
@@ -2143,7 +2165,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the GUI with a set of sample sources. The window size may not be optimum.
 
 . Saving window preferences
 
@@ -2151,21 +2173,69 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+. Shutdown:
 
-=== Deleting a person
+.. Execute command `exit` on the command line (or)
+.. Click on dropdown menu 'file' and press 'exit' button +
+    Expected: The GUI should disappear.
 
-. Deleting a person while all persons are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+=== Deleting a source
+
+. Deleting a source while all sources are listed
+
+.. Prerequisites: List all sources using the `list` command. Multiple sources in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First source is deleted from the list. Details of the deleted source shown in the status message.
+   Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+   Expected: No source is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+// tag::searchMT[]
+=== Searching a source
+
+. Searches through the entire database of sources
+
+.. Prerequisites: Pass values with the appropriate CLI tags to search the sources against
+.. Test case: `search i/Algorithm` +
+    Expected: the source(s) with the word 'algorithm' (case insensitive and minor typo accounted for) in their entire title
+    string will be showed, with all its details.
+.. Test case: `search i/AlGo i/dataa t/CS` +
+    Expected: the source(s) with their title containing both the words 'algo', 'data' and tags contain 'cs' will
+    be displayed with all their details.
+.. Test case: `search i/` +
+    Expected: list all sources as title can be anything [does not throw an error].
+.. Test case: `search y/web y/` +
+    Expected:  the source(s) with their types containing the word 'web' will be displayed with
+    all their details. Here, the empty tag implies the type can be anything, thus after conjunction, the 'web' constraint
+    dominates the result.
+
+// end::searchMT[]
+
+// tag::listMT[]
+=== Listing sources
+
+. Lists sources based on the indices passed by the user
+
+.. Prerequisites: Lists all sources when no argument passed, list top N sources when one positive integer passed,
+lists last N sources when one negative integer passed, lists sources from N to M (inclusive) when two positive arguments N and M are passed
+with N not greater than M.
+.. Test case: `list`
+    Expected: lists all sources with their details
+.. Test case: `list 5`
+    Expected: lists top 5 sources with their details
+.. Test case: `list -4`
+    Expected: lists last 4 sources with their details
+.. Test case: `list 3 5`
+    Expected: lists sources 3, 4 and 5 with their details
+.. Test case: `list 5 3`
+    Expected: error because range is invalid
+.. Test case: `list 0`
+    Expected: error because all indices must be positive
+
+// end::listMT[]
 
 === Saving data
 
@@ -2173,4 +2243,3 @@ _{ more test cases ... }_
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
